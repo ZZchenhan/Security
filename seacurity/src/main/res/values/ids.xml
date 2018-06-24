@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="company_icon" type="id"/>
+    <item name="company_title" type="id"/>
+    <item name="tv_version" type="id"/>
+    <item name="person_icon" type="id"/>
+
+</resources>
