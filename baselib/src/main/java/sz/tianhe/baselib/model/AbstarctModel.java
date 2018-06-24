@@ -2,6 +2,10 @@ package sz.tianhe.baselib.model;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
+import java.util.Map;
+
 import sz.tianhe.baselib.api.Api;
 import sz.tianhe.baselib.http.RetrofitClient;
 
@@ -13,29 +17,36 @@ import sz.tianhe.baselib.http.RetrofitClient;
  * @email 869360026@qq.com
  * 创建时间:2018/6/22 14:25
  */
-public class AbstarctModel<A extends Api> implements IBaseModel {
+public class AbstarctModel implements IBaseModel {
     /**
      * 缺省的服务器地址
      */
     public String serverUrl = "http://192.168.10.108:8080/ectWallet";
 
-    public String  getServerUrl(){
+    public String getServerUrl() {
         return serverUrl;
     }
 
     private Context mContext;
 
-    private RetrofitClient retrofitClient;
+    protected RetrofitClient retrofitClient;
 
-    private A api;
+    private static AbstarctModel abstarctModel;
 
-    public AbstarctModel(Context context, A api) {
+    private Api api;
+
+    private AbstarctModel(Context context) {
         this.mContext = context;
-        this.api = api;
-        retrofitClient = new RetrofitClient(context,serverUrl);
+        retrofitClient = new RetrofitClient(context, serverUrl);
 
-        retrofitClient.getRetrofit().create(api.getClass());
+        api = retrofitClient.getRetrofit().create(Api.class);
     }
 
+    public static AbstarctModel getInstance(Context context) {
+        if (abstarctModel == null) {
+            abstarctModel = new AbstarctModel(context);
+        }
+        return abstarctModel;
+    }
 
 }

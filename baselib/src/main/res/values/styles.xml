@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--圆形ImageView-->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />  //边界线的宽度
+        <attr name="border_color" format="color" />  //边界线的颜色
+    </declare-styleable>
+</resources>

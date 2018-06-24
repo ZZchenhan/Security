@@ -11,7 +11,7 @@ import sz.tianhe.baselib.view.IBaseView;
  * @email 869360026@qq.com
  * 创建时间:2018/6/22 14:20
  */
-public interface IBasePresenter<M extends IBaseModel,V extends IBaseView> {
+public interface IBasePresenter{
     /**
      * 绑定视图
      * @param view
@@ -19,4 +19,6 @@ public interface IBasePresenter<M extends IBaseModel,V extends IBaseView> {
     void attachView(IBaseView view);
 
     void dettacheView();
+
+    void init();
 }

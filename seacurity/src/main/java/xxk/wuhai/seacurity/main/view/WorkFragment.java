@@ -23,6 +23,6 @@ public class WorkFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.content_main,null);
+        return inflater.inflate(R.layout.fragment_work,null);
     }
 }

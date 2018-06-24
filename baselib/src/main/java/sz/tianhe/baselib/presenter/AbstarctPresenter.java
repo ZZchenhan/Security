@@ -1,7 +1,10 @@
 package sz.tianhe.baselib.presenter;
 
+import android.content.Context;
+
 import java.lang.ref.WeakReference;
 
+import sz.tianhe.baselib.model.AbstarctModel;
 import sz.tianhe.baselib.model.IBaseModel;
 import sz.tianhe.baselib.view.IBaseView;
 
@@ -17,15 +20,23 @@ public abstract class AbstarctPresenter<M extends IBaseModel, V extends IBaseVie
     /**
      * 存储的视图应用，防止null指针应用
      */
-    private WeakReference<IBaseView> mBaseView;
+    protected WeakReference<IBaseView> mBaseView;
 
+    protected Context mContext;
+
+    protected IBaseModel baseModel;
+
+    public AbstarctPresenter(Context context) {
+        this.mContext = context;
+        this.baseModel = baseModel();
+    }
 
     /**
      * prensenter强制要求一个请求模型，可以为null
      *
      * @return
      */
-    public abstract IBaseModel baseModel();
+    public abstract M baseModel();
 
 
     @Override

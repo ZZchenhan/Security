@@ -28,8 +28,4 @@ public interface IBaseView<P extends IBasePresenter> {
     void toast(String msg);
 
 
-    /**
-     * 创建代理
-     */
-    void createPrensenter();
 }
