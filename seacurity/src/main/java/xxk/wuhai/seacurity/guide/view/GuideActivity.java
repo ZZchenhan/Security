@@ -7,6 +7,7 @@ import android.widget.TextView;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import xxk.wuhai.seacurity.login.view.LoginActivity;
 import xxk.wuhai.seacurity.main.view.MainActivity;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.CompanyBean;
@@ -74,7 +75,7 @@ public class GuideActivity extends BaseActivity implements IGuideView {
 
     @Override
     public void handover() {
-        MainActivity.openActivity(this, MainActivity.class);
+        MainActivity.openActivity(this, LoginActivity.class);
         finish();
     }
 
