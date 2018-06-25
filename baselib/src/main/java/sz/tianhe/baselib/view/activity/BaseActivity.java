@@ -1,5 +1,6 @@
 package sz.tianhe.baselib.view.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,5 +108,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     public static void openActivity(Context context,Class cls){
         context.startActivity(new Intent(context,cls));
+    }
+
+    public static void openActivity(Activity context, Class cls, int requestCode){
+        context.startActivityForResult(new Intent(context,cls),requestCode);
     }
 }
