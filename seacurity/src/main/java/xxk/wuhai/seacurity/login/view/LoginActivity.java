@@ -81,7 +81,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         etPass = findViewById(R.id.pass);
         btnLogin = findViewById(R.id.btn_login);
         tvForgetPass = findViewById(R.id.tv_forget_pass);
-        tvForgetPass.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         tvForgetPass.setOnClickListener(this);
     }

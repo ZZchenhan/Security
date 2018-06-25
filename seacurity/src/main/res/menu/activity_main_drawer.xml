@@ -7,15 +7,15 @@
         android:id="@+id/g1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_user_info"
             android:icon="@drawable/ic_menu_camera"
             android:title="电子保安证,个人信息" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_update_user_info"
             android:icon="@drawable/ic_menu_gallery"
             android:title="修改资料" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="注销账户" />
     </group>
@@ -23,15 +23,15 @@
     <group android:id="@+id/g2">
 
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_settin"
             android:icon="@drawable/ic_menu_manage"
             android:title="系统设置" />
         <item
-            android:id="@+id/nav_share"
+            android:id="@+id/nav_agust"
             android:icon="@drawable/ic_menu_share"
             android:title="意见反馈" />
         <item
-            android:id="@+id/nav_send"
+            android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_send"
             android:title="使用帮助" />
     </group>

@@ -146,20 +146,14 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id){
+            case R.id.nav_settin:
+                SettingActivity.openActivity(this,SettingActivity.class);
+                break;
+            case R.id.nav_update_user_info:
+                UpdateUserInfoActivity.openActivity(this,UpdateUserInfoActivity.class);
+                break;
         }
-
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

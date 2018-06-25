@@ -1,14 +1,15 @@
 package xxk.wuhai.seacurity.login.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.AppCompatEditText;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.login.view.itf.IForgetView;
 
 /**
@@ -61,7 +62,20 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
 
     @Override
     public IBaseNavagation navagation() {
-        return null;
+        LeftIconNavagation leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
+            @Override
+            public String title() {
+                return "忘记密码";
+            }
+        }.setNavagationBackgroudColor(R.color.colorPrimary);
+        leftIconNavagation.setIconClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        leftIconNavagation.setTitleColor(R.color.white);
+        return leftIconNavagation;
     }
 
     @Override
