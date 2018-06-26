@@ -7,9 +7,11 @@
     <color name="colorAccent">#FF4081</color>
 
 
-    <color name="text_color1">#333333</color>
-    <color name="text_color2">#666666</color>
+    <color name="text_color1">#3F3F3F</color>
+    <color name="text_color2">#B2B2B2</color>
     <color name="text_color3">#999999</color>
     <color name="text_color4">#bbbbbb</color>
     <color name="text_color5">#eeeeee</color>
+
+    <color name="line_color">#ffe5e5e5</color>
 </resources>

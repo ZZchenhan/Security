@@ -28,6 +28,7 @@ import xxk.wuhai.seacurity.bean.CompanyBean;
 import xxk.wuhai.seacurity.bean.DutyInfoBean;
 import xxk.wuhai.seacurity.bean.UserInfoBean;
 import xxk.wuhai.seacurity.main.view.itf.IMainView;
+import xxk.wuhai.seacurity.work.view.SignActivity;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,IMainView{
@@ -68,6 +69,7 @@ public class MainActivity extends BaseActivity
     @Override
     public void initView() {
         setSupportActionBar(toolbar);
+        toolbar.setTitle("嘉兴南湖保安服务有限公司");
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -170,4 +172,14 @@ public class MainActivity extends BaseActivity
         toolbar.setTitle(companyInfo.getCompanyName()+"");
     }
 
+
+
+
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_sign:
+                SignActivity.openActivity(this,SignActivity.class);
+                break;
+        }
+    }
 }

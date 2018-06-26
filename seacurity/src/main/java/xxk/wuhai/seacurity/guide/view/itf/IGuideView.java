@@ -17,4 +17,6 @@ public interface IGuideView {
     void versionName(String apkName,String versionName);
 
     void handover();
+
+    void showPermisionUnAccept();
 }

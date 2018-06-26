@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.work.view.SignActivity;
 
 /**
  * 描述 工作台
@@ -20,9 +21,15 @@ import xxk.wuhai.seacurity.R;
  * @创建时间 2018/6/24 22:22
  */
 public class WorkFragment extends Fragment {
+    View root;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_work,null);
+        root = inflater.inflate(R.layout.fragment_work,null);
+        return root;
+    }
+
+    private void findViews(){
+
     }
 }

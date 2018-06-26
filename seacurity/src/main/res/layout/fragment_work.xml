@@ -59,17 +59,21 @@
                     android:padding="20dp"
                     android:layout_height="match_parent">
                     <TextView
+                        android:id="@+id/tv_work"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/icon_back"
                         android:text="上下班打卡"
+                        android:onClick="onClick"
                         android:gravity="center"
                         android:layout_height="60dp" />
                     <TextView
+                        android:id="@+id/tv_sign"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/icon_back"
                         android:text="签到、外出"
+                        android:onClick="onClick"
                         android:gravity="center"
                         android:layout_height="60dp" />
                 </LinearLayout>
@@ -83,24 +87,30 @@
                     android:padding="20dp"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/tv_clue"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/icon_back"
                         android:text="线索爆料"
+                        android:onClick="onClick"
                         android:gravity="center"
                         android:layout_height="60dp" />
                     <TextView
+                        android:id="@+id/tv_examination"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/icon_back"
                         android:text="保安员考试"
+                        android:onClick="onClick"
                         android:gravity="center"
                         android:layout_height="60dp" />
                     <TextView
+                        android:id="@+id/tv_duty"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/icon_back"
                         android:text="我的排班"
+                        android:onClick="onClick"
                         android:gravity="center"
                         android:layout_height="60dp" />
                 </LinearLayout>
@@ -114,17 +124,21 @@
                     android:padding="20dp"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/tv_apply"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/icon_back"
                         android:text="审批申请"
+                        android:onClick="onClick"
                         android:gravity="center"
                         android:layout_height="60dp" />
                     <TextView
+                        android:id="@+id/tv_study"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:drawableTop="@drawable/icon_back"
                         android:text="学习中心"
+                        android:onClick="onClick"
                         android:gravity="center"
                         android:layout_height="60dp" />
                     <android.support.v4.widget.Space

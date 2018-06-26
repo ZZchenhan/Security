@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgColor"
+    tools:context="xxk.wuhai.seacurity.work.view.SignActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/location"
+            android:text="杭州广播大厦"
+            android:textSize="14sp"
+            android:textColor="@color/text_color1"
+            android:layout_marginTop="10dp"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_adjustment"
+            android:layout_width="match_parent"
+            android:text="地点微调"
+            android:gravity="bottom|right"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/tv_map"
+        android:elevation="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="30dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_time"
+            android:layout_width="100dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:background="@drawable/bg_sign_time"
+            android:text="签到\n17:25"
+            android:layout_height="100dp" />
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/btn_camora"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:text="相机"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:layout_height="80dp">
+        <android.support.v4.widget.Space
+            android:layout_weight="0"
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/iv_pic1"
+            android:layout_weight="1"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <android.support.v4.widget.Space
+            android:layout_weight="0"
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/iv_pic2"
+            android:layout_weight="1"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <android.support.v4.widget.Space
+            android:layout_weight="0"
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/iv_pic3"
+            android:layout_weight="1"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <android.support.v4.widget.Space
+            android:layout_weight="0"
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tv_sign_numbers"
+        android:layout_width="wrap_content"
+        android:text="今天你已签到1次"
+        android:layout_gravity="center_horizontal"
+        android:textSize="14sp"
+        android:textColor="@color/text_color1"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="40dp">
+        <Button
+            android:id="@+id/btn_sign"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"
+            android:text="签到"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/btn_sign_info"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:textColor="@color/white"
+            android:text="签到详情"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

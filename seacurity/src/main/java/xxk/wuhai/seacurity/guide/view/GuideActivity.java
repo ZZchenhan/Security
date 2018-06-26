@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.guide.view;
 
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,4 +80,15 @@ public class GuideActivity extends BaseActivity implements IGuideView {
         finish();
     }
 
+    @Override
+    public void showPermisionUnAccept() {
+        toast("请前往设置页面打开当前应用权限");
+        finish();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        ((GuidPrensenter) presenter).onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
