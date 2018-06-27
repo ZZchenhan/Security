@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="xxk.wuhai.seacurity.work.view.SignComfirmActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_item"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/date"
+            android:text="-年-月-日"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color1"
+            android:drawablePadding="6dp"
+            android:layout_width="240dp"
+            android:drawableLeft="@mipmap/icon_times"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/adress"
+            android:text="签到地址："
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="13dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color1"
+            android:drawablePadding="6dp"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:drawableLeft="@mipmap/icn_locaion"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_item"
+        android:layout_marginLeft="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:elevation="5dp"
+        android:paddingBottom="25dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="填写备注信息:"
+            android:textColor="@color/text_color1"
+            android:textSize="14sp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/extra"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="这里是备注信息"
+            android:padding="8dp"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="70dp">
+            <ImageView
+                android:id="@+id/iv_camero"
+                android:layout_width="60dp"
+                android:background="@drawable/bg_camore"
+                android:src="@mipmap/icon_camero"
+                android:scaleType="center"
+                android:layout_weight="0"
+                android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/iv_pic1"
+                android:layout_width="60dp"
+                android:layout_marginLeft="15dp"
+                android:scaleType="fitCenter"
+                android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/iv_pic2"
+                android:layout_width="60dp"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="15dp"
+                android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/iv_pic3"
+                android:layout_width="60dp"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="15dp"
+                android:layout_height="60dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="258dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="38dp"
+        android:background="@color/colorPrimary"
+        android:elevation="3dp"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+</LinearLayout>

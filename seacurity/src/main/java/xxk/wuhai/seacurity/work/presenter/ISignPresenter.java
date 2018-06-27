@@ -9,13 +9,19 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdate;
 import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MyLocationStyle;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.IBaseView;
 import xxk.wuhai.seacurity.work.view.itf.ISignView;
@@ -26,7 +32,7 @@ import xxk.wuhai.seacurity.work.view.itf.ISignView;
  * @QQ 869360026
  */
 
-public class ISignPresenter implements IBasePresenter, LocationSource, AMapLocationListener {
+public class ISignPresenter implements IBasePresenter, AMapLocationListener {
 
     ISignView iSignView;
 
@@ -45,10 +51,40 @@ public class ISignPresenter implements IBasePresenter, LocationSource, AMapLocat
     public void dettacheView() {
         this.iSignView = null;
         mlocationClient.onDestroy();
+        observable.unsubscribeOn(AndroidSchedulers.mainThread());
     }
-
+    Observable observable;
     @Override
     public void init() {
+        observable = Observable.interval(1, TimeUnit.MINUTES);
+        observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                if(iSignView!=null){
+                    iSignView.time();
+                }
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                if(iSignView!=null){
+                    iSignView.time();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
 
     }
 
@@ -62,7 +98,6 @@ public class ISignPresenter implements IBasePresenter, LocationSource, AMapLocat
         mapView.getMap().getUiSettings().setCompassEnabled(false);//指南针
         mapView.getMap().getUiSettings().setMyLocationButtonEnabled(false); //显示默认的定位按钮
         mapView.getMap().getUiSettings().setScaleControlsEnabled(false); //控制比例尺控件是否显示
-        mapView.getMap().getUiSettings().setLogoPosition(-100); //隐藏Logo
         startLocaion(mapView.getMap());
     }
 
@@ -106,37 +141,17 @@ public class ISignPresenter implements IBasePresenter, LocationSource, AMapLocat
         }
     }
 
-
-    OnLocationChangedListener mListener;
     AMapLocationClient mlocationClient;
     AMapLocationClientOption mLocationOption;
 
     @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener) {
-        mListener = onLocationChangedListener;
-
-    }
-
-
-    @Override
-    public void deactivate() {
-        mListener = null;
-        if (mlocationClient != null) {
-            mlocationClient.stopLocation();
-            mlocationClient.onDestroy();
-        }
-        mlocationClient = null;
-    }
-
-    @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        if (mListener != null && aMapLocation != null) {
+        if (aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
                 if (iSignView != null) {
-                    mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
                     LatLng latLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
-                    iSignView.locaionSuccess(aMapLocation.getAddress(),latLng);
+                    iSignView.locaionSuccess(aMapLocation.getCity()+aMapLocation.getCountry()+aMapLocation.getPoiName(),latLng);
                 }
             }
         }

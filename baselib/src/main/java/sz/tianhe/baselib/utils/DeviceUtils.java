@@ -11,7 +11,7 @@ import android.location.LocationManager;
  */
 
 public class DeviceUtils {
-    public boolean gpsIsOpen(Context context) {
+    public static boolean gpsIsOpen(Context context) {
         LocationManager locationManager
                 = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）

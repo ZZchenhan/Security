@@ -2,14 +2,14 @@
 <resources>
     <color name="tran">#00000000</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ff2196f3</color>
+    <color name="colorPrimaryDark">#ff2196f3</color>
+    <color name="colorAccent">#ff2196f3</color>
 
 
     <color name="text_color1">#3F3F3F</color>
     <color name="text_color2">#B2B2B2</color>
-    <color name="text_color3">#999999</color>
+    <color name="text_color3">#888888</color>
     <color name="text_color4">#bbbbbb</color>
     <color name="text_color5">#eeeeee</color>
 

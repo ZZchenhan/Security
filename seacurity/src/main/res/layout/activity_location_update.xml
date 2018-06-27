@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="xxk.wuhai.seacurity.work.view.LocationUpdateActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="375dp">
+
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="16dp"
+            android:paddingLeft="16dp"
+            android:textSize="20sp"
+            android:elevation="3dp"
+            android:drawableLeft="@mipmap/icon_search"
+            android:textColor="@color/text_color3"
+            android:hint="搜索位置"
+            android:drawablePadding="35dp"
+            android:background="@drawable/bg_item"
+            android:layout_marginRight="16dp"
+            android:maxLines="1"
+            android:layout_height="48dp" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

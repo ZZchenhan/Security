@@ -2,6 +2,7 @@ package xxk.wuhai.seacurity.common.navagation;
 
 import android.content.Context;
 import android.support.annotation.ColorRes;
+import android.view.View;
 import android.widget.TextView;
 
 import sz.tianhe.baselib.navagation.AbstarctNavagation;
@@ -45,4 +46,6 @@ public abstract class LeftTitleNavagation extends AbstarctNavagation {
         this.tvTitle.setTextColor(mContext.getResources().getColor(colors));
         return this;
     }
+
+
 }

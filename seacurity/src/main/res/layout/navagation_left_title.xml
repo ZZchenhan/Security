@@ -3,6 +3,7 @@
     android:id="@+id/frame_navigation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true">
 
     <TextView
@@ -15,6 +16,6 @@
         android:gravity="center"
         android:maxLength="10"
         android:text="title"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 </FrameLayout>
