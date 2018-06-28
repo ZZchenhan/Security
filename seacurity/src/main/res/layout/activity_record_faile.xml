@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    tools:context="xxk.wuhai.seacurity.work.view.RecordFaileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_item_white"
+        android:orientation="horizontal"
+        android:elevation="3dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:elevation="3dp"
+            android:layout_height="180dp">
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <View
+                android:layout_width="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_ring"
+                android:layout_height="10dp"/>
+            <View
+                android:layout_width="2dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="19dp"
+                android:background="@color/colorPrimary"
+                />
+            <View
+                android:layout_width="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_ring"
+                android:layout_height="10dp"/>
+            <View
+                android:layout_width="2dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="19dp"
+                android:background="@color/colorPrimary"
+                />
+            <View
+                android:layout_width="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_ring"
+                android:layout_height="10dp"/>
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:elevation="3dp"
+            android:layout_height="180dp">
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="0"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_toRightOf="@+id/ring1"
+                    android:text="距离打卡地点"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/distance"
+                    android:layout_toRightOf="@+id/ring1"
+                    android:text="483km"
+                    android:textColor="@color/text_color3"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v4.widget.Space
+                android:layout_width="3dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_toRightOf="@+id/ring1"
+                    android:text="当前位置"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_toRightOf="@+id/ring1"
+                    android:text="浙江汉州"
+                    android:maxLines="1"
+                    android:textColor="@color/text_color3"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v4.widget.Space
+                android:layout_width="3dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_toRightOf="@+id/ring1"
+                    android:text="要求位置"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_toRightOf="@+id/ring1"
+                    android:text="距离打卡地点"
+                    android:textColor="@color/text_color3"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+        android:background="@drawable/bg_item_white"
+        android:layout_height="160dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="可能存在的问题"
+            android:drawableLeft="@mipmap/icon_question"
+            android:gravity="center"
+            android:drawablePadding="6dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:background="@color/text_color4"
+            android:layout_height="0.3dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="26dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color4"
+            android:gravity="center_vertical"
+            android:text="1、网络服务不稳定"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="26dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color4"
+            android:gravity="center_vertical"
+            android:text="2、定位服务未打开"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="26dp"
+            android:textSize="14sp"
+            android:textColor="@color/text_color4"
+            android:gravity="center_vertical"
+            android:text="3、软件没有定位权限"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

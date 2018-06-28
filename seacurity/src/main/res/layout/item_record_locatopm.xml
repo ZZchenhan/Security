@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="15dp"
+    android:elevation="3dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    android:background="@drawable/bg_item_white"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/record_type"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/text_color1"
+            android:textSize="16sp"
+            android:text="上班打卡"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/cls_name"
+            android:layout_marginLeft="14dp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/text_color1"
+            android:textSize="16sp"
+            android:text="班次:白班"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/red"
+            android:text="未打卡"
+            android:layout_marginLeft="14dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="170dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="100dp"
+            android:text="时间要求："
+            android:textColor="@color/text_color1"
+            android:textSize="14sp"
+            android:drawablePadding="4dp"
+            android:drawableLeft="@mipmap/icon_times"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:text="9:00"
+            android:textColor="@color/text_color1"
+            android:textSize="14sp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/adress"
+            android:layout_width="100dp"
+            android:text="位置要求："
+            android:textColor="@color/text_color1"
+            android:textSize="14sp"
+            android:drawablePadding="4dp"
+            android:drawableLeft="@mipmap/icn_locaion"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="浙江省嘉兴市南湖区某某路某某某路交叉口"
+            android:textColor="@color/text_color1"
+            android:textSize="14sp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_record"
+        android:layout_width="120dp"
+        android:background="@color/red"
+        android:layout_marginTop="17dp"
+        android:textColor="@color/white"
+        android:text="4小时36分20秒"
+        android:textSize="14sp"
+        android:layout_height="44dp" />
+</LinearLayout>

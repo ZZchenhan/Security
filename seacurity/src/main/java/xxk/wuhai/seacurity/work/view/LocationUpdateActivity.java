@@ -193,11 +193,12 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
     private static String city;
     private static String time;
     private static LatLng latlng;
-    private String addrrss;
+    private static String addrrss;
 
-    public static void openActivity(Activity activity, String city, String time, LatLng latLng){
+    public static void openActivity(Activity activity,String addrrss,String city, String time, LatLng latLng){
         LocationUpdateActivity.city = city;
         LocationUpdateActivity.time = time;
+        LocationUpdateActivity.addrrss = addrrss;
         LocationUpdateActivity.latlng = latlng;
         openActivity(activity,LocationUpdateActivity.class,1);
     }

@@ -28,7 +28,9 @@ import xxk.wuhai.seacurity.bean.CompanyBean;
 import xxk.wuhai.seacurity.bean.DutyInfoBean;
 import xxk.wuhai.seacurity.bean.UserInfoBean;
 import xxk.wuhai.seacurity.main.view.itf.IMainView;
+import xxk.wuhai.seacurity.work.view.RecordActivity;
 import xxk.wuhai.seacurity.work.view.SignActivity;
+import xxk.wuhai.seacurity.work.view.SupplementSignActivity;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,IMainView{
@@ -179,6 +181,9 @@ public class MainActivity extends BaseActivity
         switch (view.getId()){
             case R.id.tv_sign:
                 SignActivity.openActivity(this,SignActivity.class);
+                break;
+            case R.id.tv_work:
+                RecordActivity.openActivity(this,RecordActivity.class);
                 break;
         }
     }

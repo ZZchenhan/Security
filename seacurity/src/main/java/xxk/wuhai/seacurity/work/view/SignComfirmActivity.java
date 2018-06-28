@@ -143,7 +143,7 @@ public class SignComfirmActivity extends BaseActivity  implements View.OnClickLi
                 openCamera(this);
                 break;
             case R.id.btn_confirm:
-                toast("提交数据");
+                RecordFaileActivity.openActivity(this,RecordFaileActivity.class);
                 break;
         }
     }

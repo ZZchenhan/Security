@@ -23,7 +23,6 @@
         android:layout_marginLeft="8dp"
         android:ellipsize="end"
         android:gravity="center"
-        android:maxLength="10"
         android:text="title"
         android:textColor="@color/white"
         android:textSize="18sp" />

@@ -156,7 +156,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener,I
                     toast("请您打开定位（GPS）");
                     return;
                 }
-                LocationUpdateActivity.openActivity(this,location,new SimpleDateFormat("HH:mm").format(new Date()),currentLatLng);
+                LocationUpdateActivity.openActivity(this,location,city,new SimpleDateFormat("HH:mm").format(new Date()),currentLatLng);
                 break;
             case R.id.btn_time:
                 if(!DeviceUtils.gpsIsOpen(this)){

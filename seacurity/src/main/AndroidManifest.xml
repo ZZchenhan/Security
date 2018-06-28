@@ -60,7 +60,9 @@
         <activity android:name=".work.view.SupplementSignActivity" />
         <activity android:name=".work.view.SignActivity" />
         <activity android:name=".work.view.SignComfirmActivity" />
-        <activity android:name=".work.view.LocationUpdateActivity"></activity>
+        <activity android:name=".work.view.LocationUpdateActivity" />
+        <activity android:name=".work.view.RecordFaileActivity" />
+        <activity android:name=".work.view.RecordActivity"></activity>
     </application>
 
 </manifest>

@@ -19,7 +19,7 @@ import xxk.wuhai.seacurity.R;
  * @email 869360026@qq.com
  * @创建时间 2018/6/25 1:17
  */
-public abstract class LeftIconNavagation extends AbstarctNavagation {
+public  class LeftIconNavagation extends AbstarctNavagation {
 
     private TextView tvTitle;
     private ImageView ivLeft;
@@ -29,6 +29,10 @@ public abstract class LeftIconNavagation extends AbstarctNavagation {
         tvTitle = (TextView) navagationView.findViewById(sz.tianhe.baselib.R.id.tv_title);
         ivLeft = navagationView.findViewById(R.id.iv_left);
         tvTitle.setText(title());
+    }
+
+    public void setTvTitle(String string){
+        tvTitle.setText(string);
     }
 
     @Override
@@ -41,7 +45,9 @@ public abstract class LeftIconNavagation extends AbstarctNavagation {
      *
      * @return
      */
-    public abstract String title();
+    public  String title(){
+        return "";
+    }
 
     public void setLeftResuoce(int resouce) {
         ivLeft.setImageResource(resouce);
