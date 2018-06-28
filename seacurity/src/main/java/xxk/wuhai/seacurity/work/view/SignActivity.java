@@ -156,7 +156,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener,I
                     toast("请您打开定位（GPS）");
                     return;
                 }
-                LocationUpdateActivity.openActivity(this,LocationUpdateActivity.class);
+                LocationUpdateActivity.openActivity(this,location,new SimpleDateFormat("HH:mm").format(new Date()),currentLatLng);
                 break;
             case R.id.btn_time:
                 if(!DeviceUtils.gpsIsOpen(this)){
@@ -192,9 +192,11 @@ public class SignActivity extends BaseActivity implements View.OnClickListener,I
      * 当前地址
      */
     private String location;
+    private String city;
     @Override
     public void locaionSuccess(String city, LatLng latLng) {
         this.location = city;
+        this.city = city;
         this.currentLatLng = latLng;
         this.tvLocation.setText(this.location);
     }

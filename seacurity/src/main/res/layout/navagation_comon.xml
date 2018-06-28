@@ -36,6 +36,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
         android:paddingLeft="10dp"
+        android:elevation="3dp"
         android:paddingRight="10dp"
         android:layout_centerVertical="true"
         android:text="title2"

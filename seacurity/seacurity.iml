@@ -122,6 +122,7 @@
     <orderEntry type="library" name="io.reactivex.rxjava2:rxjava:2.1.15@jar" level="project" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:disklrucache:4.6.1@jar" level="project" />
+    <orderEntry type="library" name="com.github.CymChad:BaseRecyclerViewAdapterHelper-2.9.28" level="project" />
     <orderEntry type="library" scope="TEST" name="com.squareup:javawriter:2.1.1@jar" level="project" />
     <orderEntry type="library" name="com.android.support:viewpager-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="com.amap.api:search:6.1.0@jar" level="project" />

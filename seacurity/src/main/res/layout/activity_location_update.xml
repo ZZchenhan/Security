@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white"
     tools:context="xxk.wuhai.seacurity.work.view.LocationUpdateActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="375dp">
-
+        android:layout_height="340dp">
         <com.amap.api.maps2d.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
@@ -22,18 +22,22 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="16dp"
             android:paddingLeft="16dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:elevation="3dp"
+            android:singleLine="true"
             android:drawableLeft="@mipmap/icon_search"
             android:textColor="@color/text_color3"
+            android:imeOptions="actionSearch"
             android:hint="搜索位置"
             android:drawablePadding="35dp"
             android:background="@drawable/bg_item"
             android:layout_marginRight="16dp"
             android:maxLines="1"
-            android:layout_height="48dp" />
+            android:layout_height="40dp" />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
+        android:background="@color/text_color3"
+        android:elevation="3dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

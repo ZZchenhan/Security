@@ -1,25 +1,52 @@
 package xxk.wuhai.seacurity.work.view;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.services.core.PoiItem;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import sz.tianhe.baselib.navagation.IBaseNavagation;
+import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
+import xxk.wuhai.seacurity.work.adapter.PoiAdapter;
+import xxk.wuhai.seacurity.work.presenter.IUpdateLocaionPresenter;
+import xxk.wuhai.seacurity.work.view.itf.IUpdateLocationView;
 
 /**
  * 地址调整
  */
-public class LocationUpdateActivity extends BaseActivity {
+public class LocationUpdateActivity extends BaseActivity implements IUpdateLocationView{
+
+    /**
+     * 数据
+     */
+    List<PoiItem> datas = new ArrayList<>();
 
     /**
      * 输入
@@ -35,6 +62,14 @@ public class LocationUpdateActivity extends BaseActivity {
      * 搜索结果列表
      */
     private RecyclerView recyclerView;
+
+    private IUpdateLocaionPresenter updateLocaionPresenter;
+
+    @Override
+    public IBasePresenter createPrensenter() {
+        updateLocaionPresenter = new IUpdateLocaionPresenter(this);
+        return updateLocaionPresenter;
+    }
 
     @Override
     public int layoutId() {
@@ -81,7 +116,7 @@ public class LocationUpdateActivity extends BaseActivity {
         }.setRight("确定").setRight(R.drawable.bg_item).setRight(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toast("确认");
+                SignComfirmActivity.openActivity(LocationUpdateActivity.this,addrrss,time,latlng);
             }
         }).setRightColor(R.color.colorPrimary);
         leftIconNavagation.setIconClick(new View.OnClickListener() {
@@ -92,16 +127,85 @@ public class LocationUpdateActivity extends BaseActivity {
         });
         return leftIconNavagation;
     }
-
+    PoiAdapter poiAdapter;
     @Override
     public void initView() {
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    datas.clear();
+                    InputMethodManager imm = (InputMethodManager) LocationUpdateActivity.this
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    updateLocaionPresenter.search(editText,city);
+                    return true;
+                }
+                return false;
+            }
+        });
+        updateLocaionPresenter.initMap(mapView);
+        poiAdapter = new PoiAdapter(R.layout.item_poi,datas);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        poiAdapter.bindToRecyclerView(recyclerView);
+        poiAdapter.setEnableLoadMore(true);
+        poiAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                updateLocaionPresenter.loadMore();
+            }
+        },recyclerView);
+        poiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                updateLocaionPresenter.onItemClick(datas.get(position),mapView);
+                PoiItem item = datas.get(position);
+                addrrss = item.getProvinceName()+item.getCityName()+item.getBusinessArea()+item.getTitle();
+                latlng = new LatLng(item.getLatLonPoint().getLatitude(),item.getLatLonPoint().getLongitude());
+            }
+        });
+        TextView empty = new TextView(this);
+        ViewGroup.LayoutParams params = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        empty.setGravity(Gravity.CENTER);
+        empty.setBackgroundColor(Color.WHITE);
+        empty.setLayoutParams(params);
+        empty.setText("请输入搜索地址");
+        poiAdapter.setEmptyView(empty);
+    }
+
+    @Override
+    public void findViews() {
         mapView = findViewById(R.id.map_view);
         editText = findViewById(R.id.et_input);
         recyclerView = findViewById(R.id.recyclerView);
     }
 
     @Override
-    public void findViews() {
+    public void poiResult(List<PoiItem> poiItems) {
+        poiAdapter.loadMoreComplete();
+        if(poiItems != null && poiItems.size() !=0){
+            datas.addAll(poiItems);
+            poiAdapter.notifyDataSetChanged();
+        }else{
+            poiAdapter.loadMoreEnd();
+        }
+    }
+    private static String city;
+    private static String time;
+    private static LatLng latlng;
+    private String addrrss;
 
+    public static void openActivity(Activity activity, String city, String time, LatLng latLng){
+        LocationUpdateActivity.city = city;
+        LocationUpdateActivity.time = time;
+        LocationUpdateActivity.latlng = latlng;
+        openActivity(activity,LocationUpdateActivity.class,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        setResult(resultCode);
+        finish();
     }
 }
