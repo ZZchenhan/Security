@@ -16,7 +16,7 @@ public interface ISignView extends IBaseView {
      * @param city
      * @param latLng
      */
-    void locaionSuccess(String city, LatLng latLng);
+    void locaionSuccess(String city,String adress, LatLng latLng);
 
     void time();
 }

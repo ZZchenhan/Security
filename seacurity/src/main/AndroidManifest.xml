@@ -58,11 +58,12 @@
         <activity android:name=".main.view.UpdateUserInfoActivity" />
         <activity android:name=".main.view.SettingActivity" />
         <activity android:name=".work.view.SupplementSignActivity" />
-        <activity android:name=".work.view.SignActivity" />
         <activity android:name=".work.view.SignComfirmActivity" />
+        <activity android:name=".work.view.SignActivity" />
         <activity android:name=".work.view.LocationUpdateActivity" />
         <activity android:name=".work.view.RecordFaileActivity" />
-        <activity android:name=".work.view.RecordActivity"></activity>
+        <activity android:name=".work.view.RecordActivity" />
+        <activity android:name=".work.view.SignListFragment"></activity>
     </application>
 
 </manifest>

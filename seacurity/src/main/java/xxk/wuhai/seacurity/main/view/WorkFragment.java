@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import xxk.wuhai.seacurity.R;
-import xxk.wuhai.seacurity.work.view.SignActivity;
 
 /**
  * 描述 工作台

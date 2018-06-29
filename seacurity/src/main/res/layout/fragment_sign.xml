@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="xxk.wuhai.seacurity.work.view.SignFragment">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:elevation="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="@color/gray"
+        android:layout_height="180dp">
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/tv_map"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/location"
+            android:text="杭州广播大厦"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:textColor="@color/text_color1"
+            android:drawablePadding="6dp"
+            android:layout_width="240dp"
+            android:drawableLeft="@mipmap/icn_locaion"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_adjustment"
+            android:layout_width="match_parent"
+            android:text="地点微调"
+            android:gravity="bottom|right"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/date"
+        android:text="-年-月-日"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:textColor="@color/text_color1"
+        android:drawablePadding="6dp"
+        android:layout_width="240dp"
+        android:drawableLeft="@mipmap/icon_times"
+        android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_time"
+            android:layout_width="140dp"
+            android:gravity="center"
+            android:layout_marginTop="35dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:background="@drawable/bg_sign_time"
+            android:text="签到\n17:25"
+            android:layout_height="140dp" />
+    <TextView
+        android:id="@+id/tv_sign_numbers"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="今天你已签到1次"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:textColor="@color/text_color1"
+        android:layout_height="wrap_content" />
+</LinearLayout>

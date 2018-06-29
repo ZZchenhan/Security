@@ -50,40 +50,10 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
     @Override
     public void dettacheView() {
         this.iSignView = null;
-        mlocationClient.onDestroy();
-        observable.unsubscribeOn(AndroidSchedulers.mainThread());
     }
-    Observable observable;
+
     @Override
     public void init() {
-        observable = Observable.interval(1, TimeUnit.MINUTES);
-        observable.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Long>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                if(iSignView!=null){
-                    iSignView.time();
-                }
-            }
-
-            @Override
-            public void onNext(Long aLong) {
-                if(iSignView!=null){
-                    iSignView.time();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
 
 
     }
@@ -108,7 +78,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
      */
     private void startLocaion(AMap aMap) {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
-        myLocationStyle.interval(20000);//设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE) ;//定位一次，且将视角移动到地图中心点。
         myLocationStyle.radiusFillColor(Color.argb(0x80, 0, 0, 0));
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
@@ -116,7 +86,6 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-
                  latLng = new LatLng(location.getLatitude(),location.getLongitude());
             }
         });
@@ -127,6 +96,10 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
             mlocationClient = new AMapLocationClient(mContext);
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
+            //设置未签到模式
+            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+            //指定位一次
+            mLocationOption.setOnceLocation(true);
             //设置定位回调监听
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
@@ -137,6 +110,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
             // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
             // 在定位结束后，在合适的生命周期调用onDestroy()方法
             // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+            mlocationClient.stopLocation();
             mlocationClient.startLocation();//启动定位
         }
     }
@@ -151,7 +125,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
                     && aMapLocation.getErrorCode() == 0) {
                 if (iSignView != null) {
                     LatLng latLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
-                    iSignView.locaionSuccess(aMapLocation.getCity()+aMapLocation.getCountry()+aMapLocation.getPoiName(),latLng);
+                    iSignView.locaionSuccess(aMapLocation.getCity(),aMapLocation.getCity()+aMapLocation.getCountry()+aMapLocation.getPoiName(),latLng);
                 }
             }
         }

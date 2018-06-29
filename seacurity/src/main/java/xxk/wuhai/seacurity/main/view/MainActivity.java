@@ -25,12 +25,11 @@ import sz.tianhe.baselib.view.activity.BaseActivity;
 import sz.tianhe.baselib.weight.CircleImageView;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.CompanyBean;
-import xxk.wuhai.seacurity.bean.DutyInfoBean;
 import xxk.wuhai.seacurity.bean.UserInfoBean;
 import xxk.wuhai.seacurity.main.view.itf.IMainView;
 import xxk.wuhai.seacurity.work.view.RecordActivity;
 import xxk.wuhai.seacurity.work.view.SignActivity;
-import xxk.wuhai.seacurity.work.view.SupplementSignActivity;
+import xxk.wuhai.seacurity.work.view.SignFragment;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,IMainView{
@@ -173,9 +172,6 @@ public class MainActivity extends BaseActivity
     public void setCompanyInfo(CompanyBean companyInfo) {
         toolbar.setTitle(companyInfo.getCompanyName()+"");
     }
-
-
-
 
     public void onClick(View view) {
         switch (view.getId()){

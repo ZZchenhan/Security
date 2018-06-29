@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.core.PoiItem;
@@ -116,7 +117,15 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
         }.setRight("确定").setRight(R.drawable.bg_item).setRight(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignComfirmActivity.openActivity(LocationUpdateActivity.this,addrrss,time,latlng);
+                if(selectLatLng == null){
+                    finish();
+                }else {
+                    Intent data = new Intent();
+                    data.putExtra("address", selectAddress);
+                    data.putExtra("latlng", selectLatLng);
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
             }
         }).setRightColor(R.color.colorPrimary);
         leftIconNavagation.setIconClick(new View.OnClickListener() {
@@ -158,10 +167,18 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
         poiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                updateLocaionPresenter.onItemClick(datas.get(position),mapView);
                 PoiItem item = datas.get(position);
-                addrrss = item.getProvinceName()+item.getCityName()+item.getBusinessArea()+item.getTitle();
-                latlng = new LatLng(item.getLatLonPoint().getLatitude(),item.getLatLonPoint().getLongitude());
+                LatLng latlng = new LatLng(item.getLatLonPoint().getLatitude(),item.getLatLonPoint().getLongitude());
+                if(AMapUtils.calculateLineDistance(locionLatlng,latlng)<=200) {
+                    updateLocaionPresenter.onItemClick(datas.get(position), mapView);
+                    selectLatLng =  latlng;
+                    selectAddress =item.getProvinceName()+item.getCityName()+item.getBusinessArea()+item.getTitle();
+                }else{
+                    toast("不在打卡范围之类");
+                    selectLatLng =null;
+                    selectAddress = null;
+                    return;
+                }
             }
         });
         TextView empty = new TextView(this);
@@ -190,23 +207,21 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
             poiAdapter.loadMoreEnd();
         }
     }
-    private static String city;
-    private static String time;
-    private static LatLng latlng;
-    private static String addrrss;
 
-    public static void openActivity(Activity activity,String addrrss,String city, String time, LatLng latLng){
+
+    private static String city;
+    private static LatLng locionLatlng;
+    private LatLng selectLatLng;
+    private String selectAddress;
+
+    public static void openActivity(Activity activity,String city,LatLng latLng){
         LocationUpdateActivity.city = city;
-        LocationUpdateActivity.time = time;
-        LocationUpdateActivity.addrrss = addrrss;
-        LocationUpdateActivity.latlng = latlng;
-        openActivity(activity,LocationUpdateActivity.class,1);
+        LocationUpdateActivity.locionLatlng = latLng;
+        openActivity(activity,LocationUpdateActivity.class,2);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        setResult(resultCode);
-        finish();
     }
 }
