@@ -91,8 +91,8 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
             root = inflater.inflate(layoutId(),null);
             findViews();
             createPrensenter();
-            initView();
             mapView.onCreate(savedInstanceState);// 此方法必须重写
+            initView();
         }
         return root;
     }
@@ -128,8 +128,6 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
         btnTime = root.findViewById(R.id.btn_time);
 
         tvSignNumbers = root.findViewById(R.id.tv_sign_numbers);
-
-
 
         tvAdjust.setOnClickListener(this);
         btnTime.setOnClickListener(this);
@@ -168,9 +166,10 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1 && resultCode == Activity.RESULT_OK){
             getActivity().finish();
-        }else if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+        }else if(requestCode == 2 && resultCode == Activity.RESULT_OK){
             currentLatLng = data.getParcelableExtra("latlng");
             location = data.getStringExtra("address");
+            ((ISignPresenter)presenter).refresh(currentLatLng);
             locaionSuccess(city,location,currentLatLng);
         }
     }

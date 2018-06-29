@@ -1,6 +1,7 @@
 package xxk.wuhai.seacurity.work.presenter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 
@@ -11,7 +12,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.MyLocationStyle;
 
 import java.util.concurrent.TimeUnit;
@@ -24,6 +28,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.IBaseView;
+import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.work.view.itf.ISignView;
 
 /**
@@ -57,6 +62,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
 
 
     }
+    MapView mapView;
 
     /**
      * 初始化道德地图
@@ -64,6 +70,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
      * @param mapView
      */
     public void initMap(MapView mapView) {
+        this.mapView = mapView;
         mapView.getMap().getUiSettings().setZoomControlsEnabled(false);//缩放按钮
         mapView.getMap().getUiSettings().setCompassEnabled(false);//指南针
         mapView.getMap().getUiSettings().setMyLocationButtonEnabled(false); //显示默认的定位按钮
@@ -77,18 +84,18 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
      * 开始定位
      */
     private void startLocaion(AMap aMap) {
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE) ;//定位一次，且将视角移动到地图中心点。
-        myLocationStyle.radiusFillColor(Color.argb(0x80, 0, 0, 0));
-        aMap.setMyLocationStyle(myLocationStyle);
-        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
-        aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
-                 latLng = new LatLng(location.getLatitude(),location.getLongitude());
-            }
-        });
+//        MyLocationStyle myLocationStyle = new MyLocationStyle();
+//        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE) ;//定位一次，且将视角移动到地图中心点。
+//        myLocationStyle.radiusFillColor(Color.argb(0x80, 0, 0, 0));
+//        aMap.setMyLocationStyle(myLocationStyle);
+//        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+//        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+//        aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
+//            @Override
+//            public void onMyLocationChange(Location location) {
+//                 latLng = new LatLng(location.getLatitude(),location.getLongitude());
+//            }
+//        });
 
         //启动定位获取详细位置
         if (mlocationClient == null) {
@@ -99,7 +106,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
             //设置未签到模式
             mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
             //指定位一次
-            mLocationOption.setOnceLocation(true);
+//            mLocationOption.setOnceLocation(true);
             //设置定位回调监听
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
@@ -117,17 +124,28 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
 
     AMapLocationClient mlocationClient;
     AMapLocationClientOption mLocationOption;
-
+    Marker marker;
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
+                LatLng latLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18));
+                 marker = mapView.getMap().addMarker(new MarkerOptions().position(latLng).title(aMapLocation.getPoiName()).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
                 if (iSignView != null) {
-                    LatLng latLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
                     iSignView.locaionSuccess(aMapLocation.getCity(),aMapLocation.getCity()+aMapLocation.getCountry()+aMapLocation.getPoiName(),latLng);
                 }
             }
         }
+    }
+
+    public void refresh(LatLng latLng){
+        if(marker != null){
+            marker.remove();
+        }
+        marker = mapView.getMap().addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
     }
 }
