@@ -1,4 +1,4 @@
-package xxk.wuhai.seacurity.main.view;
+package xxk.wuhai.seacurity.me.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,18 +11,23 @@ import android.view.ViewGroup;
 import xxk.wuhai.seacurity.R;
 
 /**
- * 描述 通讯录
+ * Created by 86936 on 2018/6/30.
  *
- * @author ch
- * @微信 xrbswo
- * @qq 869360026
- * @email 869360026@qq.com
- * @创建时间 2018/6/24 22:22
+ * @QQ 869360026
  */
-public class ContactFragment extends Fragment {
+
+public class MeInfoUpdateFragment extends Fragment {
+    private View root;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.content_main,null);
+        if(root == null){
+            root = inflater.inflate(R.layout.fragment_me_info_update,null);
+        }
+        return root;
     }
+
+
+
 }

@@ -13,4 +13,6 @@
 
     <dimen name="s12">14sp</dimen>
     <dimen name="s14">14sp</dimen>
+
+    <dimen name="side_letter_bar_letter_size">13sp</dimen>
 </resources>

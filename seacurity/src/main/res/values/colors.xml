@@ -14,8 +14,20 @@
     <color name="text_color5">#eeeeee</color>
     <color name="text_color6">#666666</color>
     <color name="text_color7">#777777</color>
+    <color name="text_b2b2b2">#B2B2B2</color>
 
     <color name="line_color">#ffe5e5e5</color>
     <color name="red">#ff0000</color>
     <color name="color2196F3">#2196F3</color>
+
+
+    <color name="cp_divider">#E5E5E5</color>
+    <color name="cp_shadow">#AAEBEBEB</color>
+    <color name="cp_common_bg">#FAFAFA</color>
+    <color name="cp_content_bg">@color/colorAccent</color>
+    <color name="cp_gray">#8c8c8c</color>
+    <color name="cp_gray_deep">#5c5c5c</color>
+    <color name="cp_alpha_gray">#CC646464</color>
+    <color name="cp_theme_gray">#646464</color>
+
 </resources>

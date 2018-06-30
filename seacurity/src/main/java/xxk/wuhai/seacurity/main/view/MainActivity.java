@@ -3,22 +3,20 @@ package xxk.wuhai.seacurity.main.view;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
-import me.majiajie.pagerbottomtabstrip.item.NormalItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.R;
-import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
-import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftTitleNavagation;
+import xxk.wuhai.seacurity.contact.view.ContactFragment;
 import xxk.wuhai.seacurity.main.view.custorm.MyNormalItem;
+import xxk.wuhai.seacurity.me.view.MeFragment;
 import xxk.wuhai.seacurity.work.view.RecordActivity;
 import xxk.wuhai.seacurity.work.view.SignActivity;
 

@@ -9,9 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.amap.api.maps2d.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +51,7 @@ public class SignListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(root == null){
-            root = inflater.inflate(R.layout.activity_sign_list,null);
+            root = inflater.inflate(R.layout.fragment_sign_list,null);
             findViews();
             signDetailHead.onCreate(savedInstanceState);
         }
