@@ -12,6 +12,8 @@
     <color name="text_color3">#888888</color>
     <color name="text_color4">#bbbbbb</color>
     <color name="text_color5">#eeeeee</color>
+    <color name="text_color6">#666666</color>
+    <color name="text_color7">#777777</color>
 
     <color name="line_color">#ffe5e5e5</color>
     <color name="red">#ff0000</color>

@@ -77,8 +77,7 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
     /***
      * 开始定位
      */
-    private void startLocaion(AMap aMap) {
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+    private void startLocaion(final AMap aMap) {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.showMyLocation(false);
         myLocationStyle.interval(20000);//设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
@@ -89,6 +88,7 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
             @Override
             public void onMyLocationChange(Location location) {
                 latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18));
             }
         });
     }

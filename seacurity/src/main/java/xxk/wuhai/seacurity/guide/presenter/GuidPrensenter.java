@@ -18,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import rx.Observable;
+import rx.Subscription;
 import sz.tianhe.baselib.model.IBaseModel;
 import sz.tianhe.baselib.model.bean.Result;
 import sz.tianhe.baselib.presenter.AbstarctPresenter;
@@ -85,6 +86,7 @@ public class GuidPrensenter extends AbstarctPresenter {
                     if (showRequestPermission) {
                         //有权限被拒绝
                         iGuideView.showPermisionUnAccept();
+                        return;
                     }
                 }
             }
@@ -157,7 +159,7 @@ public class GuidPrensenter extends AbstarctPresenter {
      * 延迟跳转
      */
     public void handOver() {
-        Observable.timer(3, TimeUnit.SECONDS)
+        Subscription subscription = Observable.timer(3, TimeUnit.SECONDS)
                 .subscribe(new rx.Observer<Long>() {
                     @Override
                     public void onCompleted() {

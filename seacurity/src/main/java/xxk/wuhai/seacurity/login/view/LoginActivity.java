@@ -3,9 +3,13 @@ package xxk.wuhai.seacurity.login.view;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import sz.tianhe.baselib.navagation.IBaseNavagation;
@@ -32,6 +36,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     Button btnLogin;
     LoginPrensenter loginPrensenter;
+
+    ImageView ivSee;
+    boolean isShow = false;
 
     /**
      * 手机
@@ -61,13 +68,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public IBaseNavagation navagation() {
-        return new LeftTitleNavagation(this) {
-            @Override
-            public String title() {
-                return "登录";
-            }
-        }.setTitleColor(R.color.white).
-                setNavagationBackgroudColor(R.color.colorPrimary);
+        return null;
     }
 
     @Override
@@ -81,8 +82,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         etPass = findViewById(R.id.pass);
         btnLogin = findViewById(R.id.btn_login);
         tvForgetPass = findViewById(R.id.tv_forget_pass);
+        ivSee = findViewById(R.id.see);
         btnLogin.setOnClickListener(this);
         tvForgetPass.setOnClickListener(this);
+        ivSee.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +96,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.tv_forget_pass:
                 ForgetActivity.openActivity(this, ForgetActivity.class, 1);
+                break;
+            case R.id.see:
+                isShow = !isShow;
+                if(isShow){
+                    etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else{
+                    etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
                 break;
         }
     }

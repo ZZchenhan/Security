@@ -2,14 +2,19 @@ package xxk.wuhai.seacurity.login.view;
 
 import android.content.Intent;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import sz.tianhe.baselib.navagation.IBaseNavagation;
+import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
+import xxk.wuhai.seacurity.login.presenter.ForgetPrensenter;
 import xxk.wuhai.seacurity.login.view.itf.IForgetView;
 
 /**
@@ -55,6 +60,16 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
      */
     private Button btnConfirm;
 
+
+    private ImageView ivSee1;
+
+    private ImageView ivSee2;
+
+    private boolean isShow1 = false;
+
+    private boolean isSho2 = false;
+
+
     @Override
     public int layoutId() {
         return R.layout.activity_forget;
@@ -86,6 +101,41 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
         etPass = findViewById(R.id.pass);
         etConfirmPass = findViewById(R.id.confirm_pass);
         btnConfirm = findViewById(R.id.btn_confirm);
+        ivSee1 = findViewById(R.id.see);
+        ivSee2 = findViewById(R.id.see2);
+        ivSee1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isShow1 = !isShow1;
+                if(isShow1){
+                    etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else{
+                    etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
+        ivSee2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isSho2 = !isSho2;
+                if(isSho2){
+                    etConfirmPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }else{
+                    etConfirmPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+            }
+        });
+        tvGetCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ForgetPrensenter)presenter).getCode(tvGetCode);
+            }
+        });
+    }
+
+    @Override
+    public IBasePresenter createPrensenter() {
+        return new ForgetPrensenter();
     }
 
     @Override

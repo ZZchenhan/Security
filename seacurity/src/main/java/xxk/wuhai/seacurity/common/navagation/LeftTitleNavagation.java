@@ -47,5 +47,8 @@ public abstract class LeftTitleNavagation extends AbstarctNavagation {
         return this;
     }
 
+    public void setTvTitle(String tvTitle){
+        this.tvTitle.setText(tvTitle);
+    }
 
 }

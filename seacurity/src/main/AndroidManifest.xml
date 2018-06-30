@@ -52,7 +52,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".guide.view.GuideActivity" />
+        <activity android:name=".guide.view.GuideActivity" >
+
+        </activity>
         <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".login.view.ForgetActivity" />
         <activity android:name=".main.view.UpdateUserInfoActivity" />
@@ -63,7 +65,6 @@
         <activity android:name=".work.view.LocationUpdateActivity" />
         <activity android:name=".work.view.RecordFaileActivity" />
         <activity android:name=".work.view.RecordActivity" />
-        <activity android:name=".work.view.SignListFragment"></activity>
     </application>
 
 </manifest>

@@ -16,7 +16,7 @@ import xxk.wuhai.seacurity.guide.presenter.GuidPrensenter;
 import xxk.wuhai.seacurity.guide.view.itf.IGuideView;
 
 /**
- * 描述
+ * 引导页面
  *
  * @author ch
  * @微信 xrbswo
@@ -48,7 +48,7 @@ public class GuideActivity extends BaseActivity implements IGuideView {
 
     @Override
     public void initView() {
-
+        presenter.init();
     }
 
     @Override
@@ -61,7 +61,6 @@ public class GuideActivity extends BaseActivity implements IGuideView {
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.init();
     }
 
     @Override
@@ -76,7 +75,7 @@ public class GuideActivity extends BaseActivity implements IGuideView {
 
     @Override
     public void handover() {
-        MainActivity.openActivity(this, LoginActivity.class);
+        LoginActivity.openActivity(this, LoginActivity.class);
         finish();
     }
 

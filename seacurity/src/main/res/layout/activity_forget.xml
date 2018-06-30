@@ -4,130 +4,150 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".login.view.ForgetActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:padding="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@color/gray" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:hint="手机号"
-            android:paddingLeft="20dp"
-            android:textSize="@dimen/s12" />
-    </LinearLayout>
+        android:orientation="vertical"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginRight="45dp"
+        android:layout_height="wrap_content">
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:paddingLeft="3dp"
+        android:drawablePadding="10dp"
+        android:textColor="@color/text_color1"
+        android:textColorHint="@color/text_color7"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:hint="手机号"
+        android:background="@null"
+        android:inputType="phone"
+        android:drawableLeft="@mipmap/icon_phone"
+        android:textSize="@dimen/s12" />
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/line_color"
+        android:layout_height="0.3dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@color/gray" />
+       >
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/code"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
             android:gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:inputType="number"
+            android:drawableLeft="@mipmap/icon_code"
             android:hint="验证码"
+            android:textColor="@color/text_color1"
+            android:textColorHint="@color/text_color7"
             android:layout_weight="1"
-            android:paddingLeft="20dp"
-            android:textSize="@dimen/s12" />
+            android:background="@null"
+            android:paddingLeft="3dp"
+            android:textSize="13sp" />
         <TextView
             android:id="@+id/tv_get_code"
             android:layout_weight="0"
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorPrimary"
             android:text="点击获取"
+            android:gravity="center"
+            android:padding="2dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/line_color"
+            android:layout_height="0.3dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@color/gray" />
-
+        >
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/pass"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawableRight="@drawable/icon_back"
+            android:layout_height="40dp"
             android:gravity="center_vertical"
+            android:layout_weight="1"
             android:hint="密码"
-            android:paddingLeft="20dp"
-            android:textSize="@dimen/s12" />
+            android:inputType="textPassword"
+            android:background="@null"
+            android:drawableLeft="@mipmap/icon_lock"
+            android:paddingLeft="2dp"
+            android:textColor="@color/text_color1"
+            android:textColorHint="@color/text_color7"
+            android:drawablePadding="10dp"
+            android:textSize="13sp" />
+        <ImageView
+            android:id="@+id/see"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:src="@mipmap/icon_see"
+            android:padding="5dp"
+            android:layout_height="match_parent" />
     </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/line_color"
+            android:layout_height="0.3dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@color/gray" />
+    >
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/confirm_pass"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawableRight="@drawable/icon_back"
+            android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:hint="再输入一次密码"
-            android:paddingLeft="20dp"
-            android:textSize="@dimen/s12" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <Space
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-        <Button
-            android:id="@+id/btn_confirm"
-            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:text="确认"
-            android:elevation="2dp"
+            android:hint="再输入一次密码"
+            android:inputType="textPassword"
+            android:drawableLeft="@mipmap/icon_lock"
+            android:background="@null"
+            android:paddingLeft="2dp"
+            android:drawablePadding="10dp"
+            android:textColor="@color/text_color1"
+            android:textColorHint="@color/text_color7"
+            android:textSize="13sp" />
+        <ImageView
+            android:id="@+id/see2"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:src="@mipmap/icon_see"
+            android:background="@null"
+            android:padding="5dp"
             android:layout_height="match_parent" />
-
     </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/line_color"
+            android:layout_height="0.3dp"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="259dp"
+        android:layout_weight="0"
+        android:layout_gravity="center"
+        android:layout_marginTop="43dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:text="确认"
+        android:elevation="2dp"
+        android:layout_height="44dp" />
     <Space
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -135,10 +155,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_weight="0"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="29dp"
         android:layout_gravity="center_horizontal"
         android:text="客服热线:400-666-1234"
-        android:textSize="@dimen/s12"
-        android:textColor="@color/text_color4"
+        android:textSize="13dp"
+        android:textColor="@color/text_color7"
         android:layout_height="wrap_content" />
 </LinearLayout>

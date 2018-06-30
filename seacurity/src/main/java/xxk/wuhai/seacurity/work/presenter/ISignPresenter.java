@@ -84,19 +84,6 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
      * 开始定位
      */
     private void startLocaion(AMap aMap) {
-//        MyLocationStyle myLocationStyle = new MyLocationStyle();
-//        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE) ;//定位一次，且将视角移动到地图中心点。
-//        myLocationStyle.radiusFillColor(Color.argb(0x80, 0, 0, 0));
-//        aMap.setMyLocationStyle(myLocationStyle);
-//        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
-//        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
-//        aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
-//            @Override
-//            public void onMyLocationChange(Location location) {
-//                 latLng = new LatLng(location.getLatitude(),location.getLongitude());
-//            }
-//        });
-
         //启动定位获取详细位置
         if (mlocationClient == null) {
             //初始化定位

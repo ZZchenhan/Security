@@ -11,6 +11,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
  */
 
 public class RecoderBean implements MultiItemEntity {
+
+    public static LatLng currentLatLng = null;
     /**
      * 0 不需要位置 1需要位置
      */
