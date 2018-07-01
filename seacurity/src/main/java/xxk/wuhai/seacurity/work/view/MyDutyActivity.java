@@ -68,6 +68,8 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     public void initView() {
         adapter = new RecordAdapter(data);
         duyteHead = new DuyteHead(this);
+        View head1 = LayoutInflater.from(this).inflate(R.layout.layout_duty_head3,null);
+        tvDate = head1.findViewById(R.id.tv_month);
         adapter.addHeaderView(duyteHead);
         View headrview = LayoutInflater.from(this).inflate(R.layout.layout_duty_head2,null);
         headrview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -101,7 +103,6 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     public void findViews() {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tvDate = findViewById(R.id.tv_month);
     }
 
     private void similarData(){
