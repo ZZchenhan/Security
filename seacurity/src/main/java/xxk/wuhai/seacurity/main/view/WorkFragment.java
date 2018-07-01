@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.haibin.calendarview.CalendarView;
+
+import java.util.Calendar;
+
 import xxk.wuhai.seacurity.R;
 
 /**
@@ -21,14 +25,17 @@ import xxk.wuhai.seacurity.R;
  */
 public class WorkFragment extends Fragment {
     View root;
+    CalendarView calendarView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_work,null);
+        if(root ==null) {
+            root = inflater.inflate(R.layout.fragment_work, null);
+        }
         return root;
     }
 
     private void findViews(){
-
+        calendarView =root.findViewById(R.id.calendarView);
     }
 }

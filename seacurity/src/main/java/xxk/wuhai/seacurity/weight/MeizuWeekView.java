@@ -54,7 +54,7 @@ public class MeizuWeekView extends WeekView {
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, boolean hasScheme) {
         mSelectedPaint.setStyle(Paint.Style.FILL);
-        mSelectedPaint.setColor(0x80cfcfcf);
+        mSelectedPaint.setColor(0xffff0000);
         canvas.drawRect(x + mPadding, mPadding, x + mItemWidth - mPadding, mItemHeight - mPadding, mSelectedPaint);
         return true;
     }

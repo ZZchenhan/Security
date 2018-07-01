@@ -3,3 +3,27 @@
          MD5:  78:F5:44:37:FF:7C:D3:83:05:7A:11:F3:6B:AC:BE:F2
          SHA1: 5C:7A:92:60:4B:07:8B:AE:39:08:AC:50:A2:82:06:EA:31:0B:4E:BD
          SHA256: 7A:D1:4B:9E:31:C0:EC:E1:E7:90:F4:B2:1F:AF:84:8B:C1:04:1F:83:93:56:FD:8E:F7:7B:2A:9F:58:25:FC:E2
+
+正式版本Key：
+        位置：:/seacurity/key.jks
+        密码:147258
+        别名:security 密码147258
+        包名:xxk.wuhai.seacurity
+        密钥库类型: JKS
+        密钥库提供方: SUN
+
+        您的密钥库包含 1 个条目
+
+        别名: security
+        创建日期: 2018-7-1
+        条目类型: PrivateKeyEntry
+        证书链长度: 1
+        证书[1]:
+        所有者: CN=chen, OU=xinxunke, O=ch, L=wuhan, ST=hubei, C=20
+        发布者: CN=chen, OU=xinxunke, O=ch, L=wuhan, ST=hubei, C=20
+        序列号: 4116493d
+        有效期为 Sun Jul 01 15:36:08 CST 2018 至 Thu Jun 25 15:36:08 CST 2043
+        证书指纹:
+                 MD5:  C1:7B:A8:CF:EB:88:1B:48:F4:CC:96:0B:5D:E9:85:62
+                 SHA1: F7:80:69:0B:B8:8F:1B:BE:53:1E:E3:1B:0F:15:DF:BE:37:E4:ED:2B
+                 SHA256: 2E:FC:28:94:15:B1:79:AC:FD:8E:C5:5B:01:5B:B7:64:25:02:00:40:B2:78:F1:6C:74:90:38:06:A6:ED:9C:51

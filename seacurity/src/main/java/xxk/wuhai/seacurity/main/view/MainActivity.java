@@ -17,6 +17,7 @@ import xxk.wuhai.seacurity.common.navagation.LeftTitleNavagation;
 import xxk.wuhai.seacurity.contact.view.ContactFragment;
 import xxk.wuhai.seacurity.main.view.custorm.MyNormalItem;
 import xxk.wuhai.seacurity.me.view.MeFragment;
+import xxk.wuhai.seacurity.work.view.MyDutyActivity;
 import xxk.wuhai.seacurity.work.view.RecordActivity;
 import xxk.wuhai.seacurity.work.view.SignActivity;
 
@@ -92,6 +93,9 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                 break;
             case R.id.tv_work:
                 RecordActivity.openActivity(this,RecordActivity.class);
+                break;
+            case R.id.tv_duty:
+                MyDutyActivity.openActivity(this,MyDutyActivity.class);
                 break;
         }
     }

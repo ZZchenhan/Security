@@ -67,7 +67,8 @@
         <activity android:name=".contact.view.UserInfoActivity" />
         <activity android:name=".contact.view.AddImpressionActivity" />
         <activity android:name=".me.view.MeTAgActivity" />
-        <activity android:name=".me.view.MeInfoActivity"></activity>
+        <activity android:name=".me.view.MeInfoActivity" />
+        <activity android:name=".work.view.MyDutyActivity"></activity>
     </application>
 
 </manifest>
