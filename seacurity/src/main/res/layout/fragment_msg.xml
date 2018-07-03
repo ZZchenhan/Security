@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <TextView
+            android:id="@+id/select_text"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="公司消息"
+            android:textSize="17sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_color1"
+            android:drawableRight="@mipmap/icon_arrow_down"
+            android:drawablePadding="4dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/hinit"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:text="最近有10秒消息"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:background="#71C0F8"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
