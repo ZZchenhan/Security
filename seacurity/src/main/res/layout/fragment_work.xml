@@ -23,7 +23,7 @@
             app:current_month_text_color="#333333"
             app:max_year="2020"
             app:min_year="2004"
-            app:month_view="xxk.wuhai.seacurity.weight.MeiZuMonthView"
+            app:month_view="xxk.wuhai.seacurity.weight.CustomMonthView2"
             app:other_month_lunar_text_color="#e1e1e1"
             app:other_month_text_color="#e1e1e1"
             app:scheme_text="假"
@@ -34,8 +34,7 @@
             app:selected_theme_color="#108cd4"
             app:week_background="#fff"
             app:week_text_color="#3F3F3F"
-            app:week_view="xxk.wuhai.seacurity.weight.MeizuWeekView"
-            app:week_bar_view="xxk.wuhai.seacurity.weight.MeWeekBar"
+            app:week_view="xxk.wuhai.seacurity.weight.CustomWeekView2"
             app:year_view_day_text_color="#333333"
             app:year_view_day_text_size="9sp"
             app:year_view_month_text_color="#ff0000"
@@ -54,101 +53,9 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:fitsSystemWindows="true">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_work"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/icon_back"
-                        android:text="上下班打卡"
-                        android:onClick="onClick"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                    <TextView
-                        android:id="@+id/tv_sign"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/icon_back"
-                        android:text="签到、外出"
-                        android:onClick="onClick"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/gray"
-                    android:layout_height="0.3dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_clue"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/icon_back"
-                        android:text="线索爆料"
-                        android:onClick="onClick"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                    <TextView
-                        android:id="@+id/tv_examination"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/icon_back"
-                        android:text="保安员考试"
-                        android:onClick="onClick"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                    <TextView
-                        android:id="@+id/tv_duty"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/icon_back"
-                        android:text="我的排班"
-                        android:onClick="onClick"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/gray"
-                    android:layout_height="0.3dp"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_apply"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/icon_back"
-                        android:text="审批申请"
-                        android:onClick="onClick"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                    <TextView
-                        android:id="@+id/tv_study"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:drawableTop="@drawable/icon_back"
-                        android:text="学习中心"
-                        android:onClick="onClick"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_height="60dp" />
-                </LinearLayout>
-
+                <include
+                    layout="@layout/layout_work_mennue"
+                    />
             </LinearLayout>
         </ScrollView>
 
