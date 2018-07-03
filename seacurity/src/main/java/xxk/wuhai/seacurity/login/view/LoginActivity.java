@@ -57,7 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public IBasePresenter createPrensenter() {
-        loginPrensenter = new LoginPrensenter();
+        loginPrensenter = new LoginPrensenter(this);
         return loginPrensenter;
     }
 

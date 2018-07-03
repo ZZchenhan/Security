@@ -48,14 +48,16 @@
         <activity
             android:name=".main.view.MainActivity"
             android:label="@string/app_name">
+
+        </activity>
+        <activity android:name=".guide.view.GuideActivity" />
+        <activity android:name=".login.view.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".guide.view.GuideActivity" />
-        <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".login.view.ForgetActivity" />
         <activity android:name=".main.view.UpdateUserInfoActivity" />
         <activity android:name=".main.view.SettingActivity" />

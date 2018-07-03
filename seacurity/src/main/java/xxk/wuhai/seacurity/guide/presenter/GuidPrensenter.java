@@ -9,16 +9,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+;
 import io.reactivex.schedulers.Schedulers;
-import rx.Observable;
-import rx.Subscription;
 import sz.tianhe.baselib.model.IBaseModel;
 import sz.tianhe.baselib.model.bean.Result;
 import sz.tianhe.baselib.presenter.AbstarctPresenter;
@@ -159,11 +161,17 @@ public class GuidPrensenter extends AbstarctPresenter {
      * 延迟跳转
      */
     public void handOver() {
-        Subscription subscription = Observable.timer(3, TimeUnit.SECONDS)
-                .subscribe(new rx.Observer<Long>() {
+    Observable.timer(3, TimeUnit.SECONDS)
+                .subscribe(new Observer<Long>() {
+
                     @Override
-                    public void onCompleted() {
-                        iGuideView.handover();
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+
                     }
 
                     @Override
@@ -172,8 +180,8 @@ public class GuidPrensenter extends AbstarctPresenter {
                     }
 
                     @Override
-                    public void onNext(Long aLong) {
-
+                    public void onComplete() {
+                        iGuideView.handover();
                     }
                 });
     }

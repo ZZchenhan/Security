@@ -1,9 +1,7 @@
 package sz.tianhe.baselib.api;
 
-import android.telecom.Call;
-
+import io.reactivex.Observable;
 import retrofit2.http.POST;
-import rx.Observable;
 import sz.tianhe.baselib.model.bean.Result;
 
 /**

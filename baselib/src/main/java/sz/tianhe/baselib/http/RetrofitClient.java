@@ -3,19 +3,29 @@ package sz.tianhe.baselib.http;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
-import sz.tianhe.baselib.http.interceptor.CacheInterceptor;
 import sz.tianhe.baselib.http.interceptor.CookieManagerInterceptor;
+import sz.tianhe.baselib.http.interceptor.HttpLogger;
 
 /**
  * 项目名称:etc_wallet
@@ -69,7 +79,9 @@ public class RetrofitClient {
         this.serverUrl = serverUrl;
         this.mContext = context;
         this.headers = headers;
-
+        if(this.headers == null){
+            headers = new HashMap<>();
+        }
 
         /**
          * 判断服务器路径是否正确
@@ -92,7 +104,8 @@ public class RetrofitClient {
                 //设置缓存失败
             }
         }
-
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //1、添加自定义头
         //2 Cookie管理
         //3 缓存管理
@@ -100,9 +113,7 @@ public class RetrofitClient {
         this.okHttpClient = new OkHttpClient().newBuilder()
                 .addInterceptor(new BaseInterceptor(this.headers))
                 .cookieJar(new CookieManagerInterceptor(this.mContext))
-                .cache(this.cache)
-                .addInterceptor(new CacheInterceptor(this.mContext))
-                .addNetworkInterceptor(new CacheInterceptor(this.mContext))
+                .addNetworkInterceptor(logInterceptor)
                 .connectionPool(new ConnectionPool(8, 10, TimeUnit.SECONDS))
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(15, TimeUnit.SECONDS)
@@ -110,12 +121,29 @@ public class RetrofitClient {
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(this.serverUrl).client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create()).
-                        addCallAdapterFactory(RxJavaCallAdapterFactory.create()).
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(new Gson())).
                         build();
     }
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    public RequestBody getRequestBody(Map<String,String> prams){
+        JSONObject jsonObject = new JSONObject();
+        Iterator iterator = prams.keySet().iterator();
+        try {
+        while (iterator.hasNext()){
+            String k = iterator.next().toString();
+
+                jsonObject.put(k,prams.get(k));
+
+        }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString());
+        return requestBody;
     }
 }

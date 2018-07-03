@@ -4,15 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
+import android.util.Log;
 
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.IBaseView;
+import xxk.wuhai.seacurity.MyApplication;
+import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.login.api.UserApi;
+import xxk.wuhai.seacurity.login.result.LoginResult;
+import xxk.wuhai.seacurity.login.vo.LoginBean;
 import xxk.wuhai.seacurity.login.view.itf.ILoginView;
 
 /**
@@ -27,6 +36,11 @@ import xxk.wuhai.seacurity.login.view.itf.ILoginView;
 public class LoginPrensenter implements IBasePresenter {
 
     ILoginView loginView;
+
+    private Context mContext;
+    public LoginPrensenter(Context context){
+        this.mContext = context;
+    }
 
     @Override
     public void attachView(IBaseView view) {
@@ -58,6 +72,40 @@ public class LoginPrensenter implements IBasePresenter {
             loginView.toast("密码长度在6-18位之间");
             return;
         }
-        loginView.loginSuccess(null);
+        final LoginBean loginBean = new LoginBean(MyApplication.deviceId,phone.getText().toString(),pass.getText().toString());
+         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .login(loginBean).subscribeOn(Schedulers.newThread())
+         .observeOn(AndroidSchedulers.mainThread()).map(new Function<Result<LoginResult>, LoginResult>() {
+             @Override
+             public LoginResult apply(Result<LoginResult> loginResultResult) throws Exception {
+                 if(loginResultResult.getCode().equals("200")) {
+                     return loginResultResult.getResult();
+                 }
+                 throw new Exception("登陆异常");
+             }
+         })
+         .subscribe(new Observer<LoginResult>() {
+             @Override
+             public void onSubscribe(Disposable d) {
+
+             }
+
+             @Override
+             public void onNext(LoginResult loginResult) {
+
+             }
+
+             @Override
+             public void onError(Throwable e) {
+
+             }
+
+             @Override
+             public void onComplete() {
+
+             }
+         });
+         ;
+
     }
 }

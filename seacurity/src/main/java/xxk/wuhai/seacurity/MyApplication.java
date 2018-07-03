@@ -1,8 +1,11 @@
 package xxk.wuhai.seacurity;
 
 import android.app.Application;
+import android.os.Build;
 
 import cn.jpush.android.api.JPushInterface;
+import sz.tianhe.baselib.http.RetrofitClient;
+import xxk.wuhai.seacurity.login.result.LoginResult;
 
 
 /**
@@ -12,10 +15,18 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class MyApplication extends Application {
+    public static RetrofitClient retrofitClient;
+
+    public static String deviceId;
+
+    public static LoginResult loginResult;
+
    @Override
     public void onCreate() {
         super.onCreate();
        JPushInterface.setDebugMode(true);
        JPushInterface.init(this);
+       retrofitClient = new RetrofitClient(this,"http://47.98.241.211:9001/");
+       deviceId = Build.SERIAL;
     }
 }

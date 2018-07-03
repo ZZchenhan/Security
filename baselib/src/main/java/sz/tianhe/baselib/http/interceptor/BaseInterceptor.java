@@ -1,11 +1,18 @@
 package sz.tianhe.baselib.http.interceptor;
 
+import android.support.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 
+import okhttp3.FormBody;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 
 /**
  * 项目名称:etc_wallet
@@ -16,22 +23,30 @@ import okhttp3.Response;
  * 创建时间:2018/6/22 16:50
  */
 public class BaseInterceptor implements Interceptor{
-
+    public  static String name = "";
+    public static String token="";
     private Map<String,String> mHeaders;
-
+    Random  random = new Random();
     public BaseInterceptor(Map<String,String> headers){
         this.mHeaders = headers;
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request.Builder requestBuilder = chain.request().newBuilder();
+        Request original  = chain.request();
+        Request.Builder requestBuilder = original.newBuilder();
         if(null!= this.mHeaders && this.mHeaders.size() >0){
             for (String key:this.mHeaders.keySet()
                  ) {
                 requestBuilder.addHeader(key,mHeaders.get(key));
             }
         }
-        return chain.proceed(requestBuilder.build());
+        requestBuilder.addHeader("x-random",random.nextLong()+"");
+        requestBuilder.addHeader("x-terminal-type","2");
+        requestBuilder.addHeader("x-username",name);
+        requestBuilder.addHeader("x-access-token",token);
+        requestBuilder.addHeader("Accept","application/json;charset=UTF-8");
+        Request request = requestBuilder.build();
+        return chain.proceed(request);
     }
 }
