@@ -94,7 +94,9 @@
         <activity android:name=".msg.view.DutyMsgActivity" />
         <activity android:name=".work.view.CulActivity" />
         <activity android:name=".work.view.StudyActivity" />
-        <activity android:name=".work.view.WebActivity"></activity>
+        <activity android:name=".work.view.WebActivity" />
+        <activity android:name=".work.view.ApplyActivity" />
+        <activity android:name=".work.view.ApplyLeaveActivity"></activity>
     </application>
 
 </manifest>

@@ -169,7 +169,7 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
-            android:text="补  签  人"
+            android:text="审  批  人"
             android:textSize="17sp"
             android:textColor="@color/text_color1"
             android:layout_height="wrap_content" />
