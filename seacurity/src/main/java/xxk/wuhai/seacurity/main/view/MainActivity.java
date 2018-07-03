@@ -18,9 +18,11 @@ import xxk.wuhai.seacurity.contact.view.ContactFragment;
 import xxk.wuhai.seacurity.main.view.custorm.MyNormalItem;
 import xxk.wuhai.seacurity.me.view.MeFragment;
 import xxk.wuhai.seacurity.msg.view.MsgFragment;
+import xxk.wuhai.seacurity.work.view.CulActivity;
 import xxk.wuhai.seacurity.work.view.MyDutyActivity;
 import xxk.wuhai.seacurity.work.view.RecordActivity;
 import xxk.wuhai.seacurity.work.view.SignActivity;
+import xxk.wuhai.seacurity.work.view.StudyActivity;
 
 public class MainActivity extends BaseActivity implements OnTabItemSelectedListener {
 
@@ -97,6 +99,12 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                 break;
             case R.id.tv_duty:
                 MyDutyActivity.openActivity(this,MyDutyActivity.class);
+                break;
+            case R.id.tv_clue:
+                CulActivity.openActivity(this,CulActivity.class);
+                break;
+            case R.id.tv_study:
+                StudyActivity.openActivity(this,StudyActivity.class);
                 break;
         }
     }

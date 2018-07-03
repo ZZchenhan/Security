@@ -91,7 +91,10 @@
         <activity android:name=".msg.view.NotifyMsgActivity" />
         <activity android:name=".msg.view.ExamineActivity" />
         <activity android:name=".msg.view.LeaveActivity" />
-        <activity android:name=".msg.view.DutyMsgActivity"></activity>
+        <activity android:name=".msg.view.DutyMsgActivity" />
+        <activity android:name=".work.view.CulActivity" />
+        <activity android:name=".work.view.StudyActivity" />
+        <activity android:name=".work.view.WebActivity"></activity>
     </application>
 
 </manifest>

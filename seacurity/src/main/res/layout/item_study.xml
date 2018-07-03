@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:elevation="3dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bg_item_white"
+        android:paddingBottom="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:src="@color/text_color7"
+            android:layout_height="150dp" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:text="内容学习中心——标题"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/text_color1"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:textColor="#88888888"
+            android:text="由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="xxk.wuhai.seacurity.work.view.CulActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="75dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/text_color1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:textSize="17sp"
+            android:text="内容"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center_vertical"
+            android:hint="最多不超过60个字"
+            android:textSize="14sp"
+            android:background="@null"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/line_color"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="录音"
+            android:textSize="17sp"
+            android:textColor="@color/text_color1"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iv_recode"
+            android:layout_width="60dp"
+            android:background="@drawable/bg_camore"
+            android:src="@mipmap/icon_camero"
+            android:layout_marginLeft="15dp"
+            android:scaleType="center"
+            android:layout_weight="0"
+            android:layout_height="60dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="图片"
+            android:textSize="17sp"
+            android:textColor="@color/text_color1"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_camero"
+                android:layout_width="60dp"
+                android:background="@drawable/bg_camore"
+                android:src="@mipmap/icon_camero"
+                android:scaleType="center"
+                android:layout_weight="0"
+                android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/iv_pic1"
+                android:layout_width="60dp"
+                android:layout_marginLeft="15dp"
+                android:scaleType="fitCenter"
+                android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/iv_pic2"
+                android:layout_width="60dp"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="15dp"
+                android:layout_height="60dp" />
+            <ImageView
+                android:id="@+id/iv_pic3"
+                android:layout_width="60dp"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="15dp"
+                android:layout_height="60dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="地址"
+            android:textSize="17sp"
+            android:textColor="@color/text_color1"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/icon_cur_loction1"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/location"
+                    android:textColor="@color/text_color1"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:text="浙江省杭州市下城区环城北路139杭州国际创意中心ICC"
+                    android:scaleType="center"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <com.amap.api.maps2d.MapView
+                android:elevation="3dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="165dp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent" />
+    <Button
+        android:layout_width="match_parent"
+        android:elevation="3dp"
+        android:text="提交"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="0"
+        android:background="@color/colorPrimaryDark"
+        android:layout_height="45dp" />
+</LinearLayout>
