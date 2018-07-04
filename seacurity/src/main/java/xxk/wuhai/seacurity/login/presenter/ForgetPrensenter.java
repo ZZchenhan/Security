@@ -11,10 +11,18 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.presenter.IBasePresenter;
+import sz.tianhe.baselib.utils.PhoneUtils;
 import sz.tianhe.baselib.view.IBaseView;
+import xxk.wuhai.seacurity.MyApplication;
+import xxk.wuhai.seacurity.login.bean.CodeBean;
+import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.login.bean.UpdateBean;
+import xxk.wuhai.seacurity.login.api.UserApi;
 import xxk.wuhai.seacurity.login.view.itf.IForgetView;
+import xxk.wuhai.seacurity.login.vo.ForgetPassVo;
+import xxk.wuhai.seacurity.login.vo.GetCodeVo;
 
 /**
  * 描述
@@ -32,9 +40,6 @@ public class ForgetPrensenter implements IBasePresenter {
     @Override
     public void attachView(IBaseView view) {
         this.iForgetView = (IForgetView) view;
-        if(obeObservable != null){
-            obeObservable.unsubscribeOn(AndroidSchedulers.mainThread());
-        }
     }
 
     @Override
@@ -77,46 +82,114 @@ public class ForgetPrensenter implements IBasePresenter {
 
         if(!etConfirm.getText().toString().equals(etPass.getText().toString())){
             iForgetView.toast("两次密码不一致");
+            return;
         }
-        iForgetView.updateForgetSuccess();
+
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .updatePass(new ForgetPassVo("2",etPhone.getText().toString(),etCode.getText().toString(),etPass.getText().toString()))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<UpdateBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<UpdateBean> updateBeanResult) {
+                        if(iForgetView == null){
+                            return;
+                        }
+                        if(updateBeanResult.getCode().equals("200")){
+                            if(updateBeanResult.getResult().getStatus().equals("0")){
+                                iForgetView.updateForgetFaile("修改密码失败");
+                            }else{
+                                iForgetView.updateForgetSuccess();
+                            }
+                        }else{
+                            iForgetView.toast(updateBeanResult.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(iForgetView == null){
+                            return;
+                        }
+                        iForgetView.toast("程序出现异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
-    Observable obeObservable;
-    Observer observer;
-    public void getCode(final TextView textView){
-        if(observer == null || obeObservable==null) {
-            observer = new Observer<Long>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-                    textView.setClickable(false);
-                }
 
-                @Override
-                public void onNext(Long o) {
-                    textView.setText("剩余" + o + "秒");
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    obeObservable = null;
-                }
-
-                @Override
-                public void onComplete() {
-                    obeObservable = null;
-                    textView.setClickable(true);
-                    textView.setText("获取验证码");
-                }
-            };
-
-            obeObservable = Observable.interval(1, TimeUnit.SECONDS).take(60).map(new Function<Long, Long>() {
-                @Override
-                public Long apply(Long aLong) throws Exception {
-                    return new Long(60 - aLong);
-                }
-            }).observeOn(AndroidSchedulers.mainThread());
+    public void getCode(final TextView phone,final TextView tvShow){
+        tvShow.setClickable(false);
+        if(!PhoneUtils.isMobile0(phone.getText().toString())){
+            iForgetView.toast("请输入正确的手机号码");
+            tvShow.setClickable(true);
+            return;
         }
 
-        obeObservable.subscribe(observer);
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class).
+                getCode(new GetCodeVo(phone.getText().toString(),"2"))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<CodeBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<CodeBean> codeBeanResult) {
+                        if(codeBeanResult.getCode().equals("200")){
+                            Observable.interval(1,TimeUnit.SECONDS)
+                                    .take(60).observeOn(Schedulers.newThread())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<Long>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(Long aLong) {
+                                            if(tvShow!=null)
+                                            tvShow.setText(60-aLong+"秒");
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                            if(tvShow!=null)
+                                            tvShow.setClickable(true);
+                                        }
+                                    });
+                        }else{
+                            if(iForgetView!=null)
+                            iForgetView.toast(codeBeanResult.getMessage());
+                            tvShow.setClickable(true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 }

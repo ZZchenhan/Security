@@ -25,8 +25,9 @@ import okio.BufferedSink;
 public class BaseInterceptor implements Interceptor{
     public  static String name = "";
     public static String token="";
+    public static String random = "";
     private Map<String,String> mHeaders;
-    Random  random = new Random();
+
     public BaseInterceptor(Map<String,String> headers){
         this.mHeaders = headers;
     }
@@ -41,7 +42,7 @@ public class BaseInterceptor implements Interceptor{
                 requestBuilder.addHeader(key,mHeaders.get(key));
             }
         }
-        requestBuilder.addHeader("x-random",random.nextLong()+"");
+        requestBuilder.addHeader("x-random",random);
         requestBuilder.addHeader("x-terminal-type","2");
         requestBuilder.addHeader("x-username",name);
         requestBuilder.addHeader("x-access-token",token);

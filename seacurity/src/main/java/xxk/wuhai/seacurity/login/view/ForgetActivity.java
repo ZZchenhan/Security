@@ -128,7 +128,13 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
         tvGetCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((ForgetPrensenter)presenter).getCode(tvGetCode);
+                ((ForgetPrensenter)presenter).getCode(etPhone,tvGetCode);
+            }
+        });
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ForgetPrensenter)presenter).updatePass(ForgetActivity.this,etPhone,etCode,etPass,etConfirmPass);
             }
         });
     }

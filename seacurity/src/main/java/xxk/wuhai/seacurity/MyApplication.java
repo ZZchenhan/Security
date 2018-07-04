@@ -5,6 +5,7 @@ import android.os.Build;
 
 import cn.jpush.android.api.JPushInterface;
 import sz.tianhe.baselib.http.RetrofitClient;
+import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.result.LoginResult;
 
 
@@ -19,7 +20,7 @@ public class MyApplication extends Application {
 
     public static String deviceId;
 
-    public static LoginResult loginResult;
+    public static UserDetailInfo userDetailInfo;
 
    @Override
     public void onCreate() {

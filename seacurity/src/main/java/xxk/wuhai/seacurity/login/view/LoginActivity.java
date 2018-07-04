@@ -19,6 +19,7 @@ import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.UserInfoBean;
 import xxk.wuhai.seacurity.common.navagation.LeftTitleNavagation;
+import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.presenter.LoginPrensenter;
 import xxk.wuhai.seacurity.login.view.itf.ILoginView;
 import xxk.wuhai.seacurity.main.view.MainActivity;
@@ -109,7 +110,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void loginSuccess(UserInfoBean userInfoBean) {
+    public void loginSuccess(UserDetailInfo userInfoBean) {
         MainActivity.openActivity(this, MainActivity.class);
         finish();
     }
