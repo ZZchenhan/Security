@@ -20,6 +20,7 @@ import xxk.wuhai.seacurity.me.view.MeFragment;
 import xxk.wuhai.seacurity.msg.view.MsgFragment;
 import xxk.wuhai.seacurity.work.view.ApplyActivity;
 import xxk.wuhai.seacurity.work.view.CulActivity;
+import xxk.wuhai.seacurity.work.view.CulListActivity;
 import xxk.wuhai.seacurity.work.view.MyDutyActivity;
 import xxk.wuhai.seacurity.work.view.RecordActivity;
 import xxk.wuhai.seacurity.work.view.SignActivity;
@@ -102,7 +103,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                 MyDutyActivity.openActivity(this,MyDutyActivity.class);
                 break;
             case R.id.tv_clue:
-                CulActivity.openActivity(this,CulActivity.class);
+                CulListActivity.openActivity(this,CulListActivity.class);
                 break;
             case R.id.tv_study:
                 StudyActivity.openActivity(this,StudyActivity.class);

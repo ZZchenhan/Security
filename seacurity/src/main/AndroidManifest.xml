@@ -96,7 +96,10 @@
         <activity android:name=".work.view.StudyActivity" />
         <activity android:name=".work.view.WebActivity" />
         <activity android:name=".work.view.ApplyActivity" />
-        <activity android:name=".work.view.ApplyLeaveActivity"></activity>
+        <activity android:name=".work.view.ApplyLeaveActivity" />
+        <activity android:name=".work.view.CulListActivity" />
+        <activity android:name=".work.view.CulDetailActivity" />
+        <activity android:name=".work.view.MyAplyListActivity"></activity>
     </application>
 
 </manifest>
