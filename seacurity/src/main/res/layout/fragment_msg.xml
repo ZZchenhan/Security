@@ -26,11 +26,17 @@
             android:text="最近有10秒消息"
             android:textSize="15sp"
             android:gravity="center"
+            android:visibility="gone"
             android:background="#71C0F8"
             android:layout_height="match_parent" />
     </RelativeLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

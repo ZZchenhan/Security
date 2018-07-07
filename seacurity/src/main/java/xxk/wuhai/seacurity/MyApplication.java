@@ -27,7 +27,7 @@ public class MyApplication extends Application {
         super.onCreate();
        JPushInterface.setDebugMode(true);
        JPushInterface.init(this);
-       retrofitClient = new RetrofitClient(this,"http://47.98.241.211:9001/");
+       retrofitClient = new RetrofitClient(this,"http://47.98.241.211/");
        deviceId = Build.SERIAL;
     }
 }

@@ -42,10 +42,10 @@ public class BaseInterceptor implements Interceptor{
                 requestBuilder.addHeader(key,mHeaders.get(key));
             }
         }
-        requestBuilder.addHeader("x-random",random);
+        requestBuilder.addHeader("x-random","1530984849836");
         requestBuilder.addHeader("x-terminal-type","2");
-        requestBuilder.addHeader("x-username",name);
-        requestBuilder.addHeader("x-access-token",token);
+        requestBuilder.addHeader("x-username","CE5D55AE79D4F853B3F5EFFF1A1F0EAF");
+        requestBuilder.addHeader("x-access-token","aV2AzezaRM13REkYU/q1yQgW/Rm6YP42DlywAFgS7DlcDiWqJVAJIaJZxqU78yah");
         requestBuilder.addHeader("Accept","application/json;charset=UTF-8");
         Request request = requestBuilder.build();
         return chain.proceed(request);

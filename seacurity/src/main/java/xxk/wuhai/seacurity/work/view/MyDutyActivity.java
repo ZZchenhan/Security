@@ -17,16 +17,24 @@ import com.amap.api.maps2d.model.Marker;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
+import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.view.custorm.DuyteHead;
+import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
 
 /**
  *我的值班
@@ -173,5 +181,26 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     protected void onDestroy() {
         mlocationClient.stopLocation();
         super.onDestroy();
+    }
+
+
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    /**
+     * 初始化数据
+     */
+    private void initData(){
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .getClockRateForEmp(new GetSchedulingByUserIdVo(simpleDateFormat.format(new Date()),21))
+                .subscribeOn(Schedulers.newThread())
+                .doOnNext(new Consumer<Result<String>>() {
+                    @Override
+                    public void accept(Result<String> stringResult) throws Exception {
+                        //获得本月拥有班次的信息
+                    }
+                });
+    }
+
+    private void getOneDayDuty(){
+
     }
 }

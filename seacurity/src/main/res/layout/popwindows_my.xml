@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/triangle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_item"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/compnay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="9dp"
+                android:paddingTop="9dp"
+                android:gravity="center"
+                android:text="公司消息"
+                android:textColor="#3F3F3F"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+            <TextView
+                android:id="@+id/change"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="9dp"
+                android:paddingTop="9dp"
+                android:gravity="center"
+                android:text="排班变动"
+                android:textColor="#3F3F3F"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+
+            <TextView
+                android:id="@+id/remind_apply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="9dp"
+                android:paddingTop="9dp"
+                android:gravity="center"
+                android:text="审批提醒"
+                android:textColor="#3F3F3F"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+
+            <TextView
+                android:id="@+id/remind_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="9dp"
+                android:paddingTop="9dp"
+                android:gravity="center"
+                android:text="提醒打卡"
+                android:textColor="#3F3F3F"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

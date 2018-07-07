@@ -25,7 +25,7 @@ import xxk.wuhai.seacurity.R;
  */
 public class WorkFragment extends Fragment {
     View root;
-    CalendarView calendarView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +36,6 @@ public class WorkFragment extends Fragment {
     }
 
     private void findViews(){
-        calendarView =root.findViewById(R.id.calendarView);
+
     }
 }

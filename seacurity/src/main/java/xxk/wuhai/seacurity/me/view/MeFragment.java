@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.contact.view.AddImpressionActivity;
 import xxk.wuhai.seacurity.contact.view.UserInfoActivity;
+import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
+import xxk.wuhai.seacurity.login.bean.UserInfoBean;
 
 /**
  * Created by 86936 on 2018/6/30.
@@ -49,6 +52,23 @@ public class MeFragment extends Fragment {
 
     private TextView idCard;
 
+    private void setDada(UserInfoBean userDetailInfo){
+        name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(0,2));
+        userName.setText(userDetailInfo.getName()+"");
+        tvZhiwei.setText(MyApplication.userDetailInfo.getDeptVo()==null?"":MyApplication.userDetailInfo.getDeptVo().getDeptName()+"");
+        sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
+        age.setText(userDetailInfo.getAge()+"");
+        phone.setText(userDetailInfo.getPhone()+"");
+        tvZan.setText(String.format("赞：%s","0"));
+        tvCai.setText(String.format("踩：%s","0"));
+        tag1.setVisibility(View.GONE);
+        tag1.setVisibility(View.GONE);
+        tag1.setVisibility(View.GONE);
+        tag1.setVisibility(View.GONE);
+        tag1.setVisibility(View.GONE);
+        tag1.setVisibility(View.GONE);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +80,7 @@ public class MeFragment extends Fragment {
         if(root == null) {
             root = inflater.inflate(R.layout.fragment_me, null);
             findViews();
+            setDada(MyApplication.userDetailInfo.getUserInfo());
         }
         return root;
     }
@@ -104,4 +125,5 @@ public class MeFragment extends Fragment {
             }
         });
     }
+
 }

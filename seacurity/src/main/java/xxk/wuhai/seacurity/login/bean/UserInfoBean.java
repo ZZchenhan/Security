@@ -52,7 +52,7 @@ public class UserInfoBean {
     private String phone;
     private String email;
     private String nation;
-    private Object maritalStatus;
+    private String maritalStatus;
     private String birthday;
     private String politicsType;
     private String residenceAddress;
@@ -156,11 +156,11 @@ public class UserInfoBean {
         this.nation = nation;
     }
 
-    public Object getMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(Object maritalStatus) {
+    public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
