@@ -80,15 +80,33 @@ public class MsgFragment extends Fragment {
         msgAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(position == 0){
-                    NotifyMsgActivity.openActivity(getContext(),NotifyMsgActivity.class);
-                }else if(position == 1){
-                    ExamineActivity.openActivity(getContext(),ExamineActivity.class);
-                }else if(position == 2){
-                    LeaveActivity.openActivity(getContext(),LeaveActivity.class);
-                }else if(position ==3){
-                    DutyMsgActivity.openActivity(getContext(),DutyMsgActivity.class);
+                switch (datas.get(position).getMessageTypeId()){
+                    // 2：排班变动 3：审批提醒消息 4：提醒打卡消息
+                    case "1":
+                        CompanyMsgActivity.openActivity(getContext(),datas.get(position).getMessageTypeId(),datas.get(position).getMessageId());
+                        break;
+                    case "2":
+                        DutyMsgActivity.openActivity(getContext(),DutyMsgActivity.class);
+                        break;
+                    case "3":
+                        ExamineActivity.openActivity(getContext(),ExamineActivity.class);
+                        break;
+                    case "4":
+                        NotifyMsgActivity.openActivity(getContext(),datas.get(position));
+                        break;
+                    case "6":
+                        CompanyMsgActivity.openActivity(getContext(),datas.get(position).getMessageTypeId(),datas.get(position).getMessageId());
+                        break;
                 }
+//                if(datas.get(position).getMessageTypeId() == 0){
+//                    NotifyMsgActivity.openActivity(getContext(),NotifyMsgActivity.class);
+//                }else if(position == 1){
+//                    ExamineActivity.openActivity(getContext(),ExamineActivity.class);
+//                }else if(position == 2){
+//                    LeaveActivity.openActivity(getContext(),LeaveActivity.class);
+//                }else if(position ==3){
+//                    DutyMsgActivity.openActivity(getContext(),DutyMsgActivity.class);
+//                }
             }
         });
         swipeRefreshLayout = root.findViewById(R.id.swipe);

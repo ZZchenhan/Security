@@ -1,5 +1,7 @@
 package xxk.wuhai.seacurity.msg.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +16,12 @@ import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.msg.adapter.NotifyMsgAdapter;
+import xxk.wuhai.seacurity.msg.bean.MessageInfoListBean;
 
 public class NotifyMsgActivity extends BaseActivity {
     RecyclerView recyclerView;
 
-    List<String> datas = new ArrayList<>();
+    List<MessageInfoListBean> datas = new ArrayList<>();
 
     private NotifyMsgAdapter notifyMsgAdapter;
 
@@ -32,7 +35,7 @@ public class NotifyMsgActivity extends BaseActivity {
         LeftIconNavagation leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
             @Override
             public String title() {
-                return "通知消息";
+                return "提醒打卡消息";
             }
         };
         leftIconNavagation.setIconClick(new View.OnClickListener() {
@@ -47,13 +50,7 @@ public class NotifyMsgActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
+        datas.add(messageInfoListBean);
         notifyMsgAdapter.notifyDataSetChanged();
     }
 
@@ -64,6 +61,19 @@ public class NotifyMsgActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         notifyMsgAdapter.bindToRecyclerView(recyclerView);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        messageInfoListBean = null;
+    }
+
+    private static MessageInfoListBean messageInfoListBean;
+    public static void openActivity(Context context, MessageInfoListBean messageInfoListBean){
+        NotifyMsgActivity.messageInfoListBean = messageInfoListBean;
+        context.startActivity(new Intent(context,NotifyMsgActivity.class));
+    }
+
 
 
 }
