@@ -1,11 +1,11 @@
 package xxk.wuhai.seacurity.login.bean;
 
 /**
- * Created by 86936 on 2018/7/4.
+ * Created by 86936 on 2018/7/8.
  *
  * @QQ 869360026
  */
-public class UserInfoBean {
+public class UserInfoBean implements Cloneable{
     /**
      * userId : 21
      * userType : 4
@@ -20,7 +20,23 @@ public class UserInfoBean {
      * maritalStatus : null
      * birthday : 2018-06-30T00:00:00.000+0000
      * politicsType : 01
+     * residenceStreetId : null
+     * residenceStreetName : null
+     * residenceDistrictId : null
+     * residenceDistrictName : null
+     * residenceCityId : null
+     * residenceCityName : null
+     * residenceProvinceId : null
+     * residenceProvinceName : null
      * residenceAddress : 杭州
+     * livingStreetId : null
+     * livingStreetName : null
+     * livingDistrictId : null
+     * livingDistrictName : null
+     * livingCityId : null
+     * livingCityName : null
+     * livingProvinceId : null
+     * livingProvinceName : null
      * livingAddress : 浙江杭州
      * photoUrl : http://www.baidu.com/
      * education : 0
@@ -32,10 +48,11 @@ public class UserInfoBean {
      * remark :
      * status : 0
      * namePinyin : guanliyuan
-     * gmtCreate : 2018-07-04T14:52:15.000+0000
+     * gmtCreate : 2018-07-07T13:59:52.000+0000
      * deviceNumber : RJCDU17616001737
-     * deviceType : null
+     * deviceType : 2
      * clientId :
+     * activeTime : 2018-07-07T13:59:53.000+0000
      * guardUserInfo : null
      * orgId : 19
      * deptId : 15
@@ -55,7 +72,23 @@ public class UserInfoBean {
     private String maritalStatus;
     private String birthday;
     private String politicsType;
+    private Integer residenceStreetId;
+    private String residenceStreetName;
+    private Integer residenceDistrictId;
+    private String residenceDistrictName;
+    private Integer residenceCityId;
+    private String residenceCityName;
+    private Integer residenceProvinceId;
+    private String residenceProvinceName;
     private String residenceAddress;
+    private Integer livingStreetId;
+    private String livingStreetName;
+    private Integer livingDistrictId;
+    private String livingDistrictName;
+    private Integer livingCityId;
+    private String livingCityName;
+    private Integer livingProvinceId;
+    private String livingProvinceName;
     private String livingAddress;
     private String photoUrl;
     private int education;
@@ -69,9 +102,10 @@ public class UserInfoBean {
     private String namePinyin;
     private String gmtCreate;
     private String deviceNumber;
-    private Object deviceType;
+    private String deviceType;
     private String clientId;
-    private Object guardUserInfo;
+    private String activeTime;
+    private GuardUserVo guardUserInfo;
     private int orgId;
     private int deptId;
     private RelUserDeptOrgVoBean relUserDeptOrgVo;
@@ -180,12 +214,140 @@ public class UserInfoBean {
         this.politicsType = politicsType;
     }
 
+    public Integer getResidenceStreetId() {
+        return residenceStreetId;
+    }
+
+    public void setResidenceStreetId(Integer residenceStreetId) {
+        this.residenceStreetId = residenceStreetId;
+    }
+
+    public String getResidenceStreetName() {
+        return residenceStreetName;
+    }
+
+    public void setResidenceStreetName(String residenceStreetName) {
+        this.residenceStreetName = residenceStreetName;
+    }
+
+    public Integer getResidenceDistrictId() {
+        return residenceDistrictId;
+    }
+
+    public void setResidenceDistrictId(Integer residenceDistrictId) {
+        this.residenceDistrictId = residenceDistrictId;
+    }
+
+    public String getResidenceDistrictName() {
+        return residenceDistrictName;
+    }
+
+    public void setResidenceDistrictName(String residenceDistrictName) {
+        this.residenceDistrictName = residenceDistrictName;
+    }
+
+    public Integer getResidenceCityId() {
+        return residenceCityId;
+    }
+
+    public void setResidenceCityId(Integer residenceCityId) {
+        this.residenceCityId = residenceCityId;
+    }
+
+    public String getResidenceCityName() {
+        return residenceCityName;
+    }
+
+    public void setResidenceCityName(String residenceCityName) {
+        this.residenceCityName = residenceCityName;
+    }
+
+    public Integer getResidenceProvinceId() {
+        return residenceProvinceId;
+    }
+
+    public void setResidenceProvinceId(Integer residenceProvinceId) {
+        this.residenceProvinceId = residenceProvinceId;
+    }
+
+    public String getResidenceProvinceName() {
+        return residenceProvinceName;
+    }
+
+    public void setResidenceProvinceName(String residenceProvinceName) {
+        this.residenceProvinceName = residenceProvinceName;
+    }
+
     public String getResidenceAddress() {
         return residenceAddress;
     }
 
     public void setResidenceAddress(String residenceAddress) {
         this.residenceAddress = residenceAddress;
+    }
+
+    public Integer getLivingStreetId() {
+        return livingStreetId;
+    }
+
+    public void setLivingStreetId(Integer livingStreetId) {
+        this.livingStreetId = livingStreetId;
+    }
+
+    public String getLivingStreetName() {
+        return livingStreetName;
+    }
+
+    public void setLivingStreetName(String livingStreetName) {
+        this.livingStreetName = livingStreetName;
+    }
+
+    public Integer getLivingDistrictId() {
+        return livingDistrictId;
+    }
+
+    public void setLivingDistrictId(Integer livingDistrictId) {
+        this.livingDistrictId = livingDistrictId;
+    }
+
+    public String getLivingDistrictName() {
+        return livingDistrictName;
+    }
+
+    public void setLivingDistrictName(String livingDistrictName) {
+        this.livingDistrictName = livingDistrictName;
+    }
+
+    public Integer getLivingCityId() {
+        return livingCityId;
+    }
+
+    public void setLivingCityId(Integer livingCityId) {
+        this.livingCityId = livingCityId;
+    }
+
+    public String getLivingCityName() {
+        return livingCityName;
+    }
+
+    public void setLivingCityName(String livingCityName) {
+        this.livingCityName = livingCityName;
+    }
+
+    public Integer getLivingProvinceId() {
+        return livingProvinceId;
+    }
+
+    public void setLivingProvinceId(Integer livingProvinceId) {
+        this.livingProvinceId = livingProvinceId;
+    }
+
+    public String getLivingProvinceName() {
+        return livingProvinceName;
+    }
+
+    public void setLivingProvinceName(String livingProvinceName) {
+        this.livingProvinceName = livingProvinceName;
     }
 
     public String getLivingAddress() {
@@ -292,11 +454,11 @@ public class UserInfoBean {
         this.deviceNumber = deviceNumber;
     }
 
-    public Object getDeviceType() {
+    public String getDeviceType() {
         return deviceType;
     }
 
-    public void setDeviceType(Object deviceType) {
+    public void setDeviceType(String deviceType) {
         this.deviceType = deviceType;
     }
 
@@ -308,11 +470,19 @@ public class UserInfoBean {
         this.clientId = clientId;
     }
 
-    public Object getGuardUserInfo() {
+    public String getActiveTime() {
+        return activeTime;
+    }
+
+    public void setActiveTime(String activeTime) {
+        this.activeTime = activeTime;
+    }
+
+    public GuardUserVo getGuardUserInfo() {
         return guardUserInfo;
     }
 
-    public void setGuardUserInfo(Object guardUserInfo) {
+    public void setGuardUserInfo(GuardUserVo guardUserInfo) {
         this.guardUserInfo = guardUserInfo;
     }
 
@@ -338,91 +508,5 @@ public class UserInfoBean {
 
     public void setRelUserDeptOrgVo(RelUserDeptOrgVoBean relUserDeptOrgVo) {
         this.relUserDeptOrgVo = relUserDeptOrgVo;
-    }
-
-    public static class RelUserDeptOrgVoBean {
-        /**
-         * deptId : 15
-         * orgId : 19
-         * level : 0
-         * status : 0
-         * joinTime : 2018-07-04T13:37:56.000+0000
-         * quitTime : 2018-07-04T13:37:56.000+0000
-         * beOfficialTime : 2018-07-04T13:37:56.000+0000
-         * rank : null
-         */
-
-        private int deptId;
-        private int orgId;
-        private String level;
-        private String status;
-        private String joinTime;
-        private String quitTime;
-        private String beOfficialTime;
-        private Object rank;
-
-        public int getDeptId() {
-            return deptId;
-        }
-
-        public void setDeptId(int deptId) {
-            this.deptId = deptId;
-        }
-
-        public int getOrgId() {
-            return orgId;
-        }
-
-        public void setOrgId(int orgId) {
-            this.orgId = orgId;
-        }
-
-        public String getLevel() {
-            return level;
-        }
-
-        public void setLevel(String level) {
-            this.level = level;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getJoinTime() {
-            return joinTime;
-        }
-
-        public void setJoinTime(String joinTime) {
-            this.joinTime = joinTime;
-        }
-
-        public String getQuitTime() {
-            return quitTime;
-        }
-
-        public void setQuitTime(String quitTime) {
-            this.quitTime = quitTime;
-        }
-
-        public String getBeOfficialTime() {
-            return beOfficialTime;
-        }
-
-        public void setBeOfficialTime(String beOfficialTime) {
-            this.beOfficialTime = beOfficialTime;
-        }
-
-        public Object getRank() {
-            return rank;
-        }
-
-        public void setRank(Object rank) {
-            this.rank = rank;
-        }
     }
 }

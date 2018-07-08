@@ -22,12 +22,13 @@ public class MyApplication extends Application {
 
     public static UserDetailInfo userDetailInfo;
 
+    public static String baseUrl = "http://47.98.241.211/";
    @Override
     public void onCreate() {
         super.onCreate();
        JPushInterface.setDebugMode(true);
        JPushInterface.init(this);
-       retrofitClient = new RetrofitClient(this,"http://47.98.241.211/");
+       retrofitClient = new RetrofitClient(this,baseUrl);
        deviceId = Build.SERIAL;
     }
 }

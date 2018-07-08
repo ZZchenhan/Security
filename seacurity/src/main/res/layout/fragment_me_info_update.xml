@@ -190,12 +190,11 @@
                         android:textColor="@color/text_color1"
                         android:textSize="17sp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/nation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableRight="@mipmap/icon_left_arrow"
-
+                        android:background="@null"
                         android:text="未设置"
                         android:textColor="@color/text_color1"
                         android:textSize="17sp" />
@@ -595,7 +594,6 @@
                         android:id="@+id/weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableRight="@mipmap/icon_left_arrow"
                         android:text=""
                         android:hint="如168cm"
                         android:background="@null"
@@ -638,6 +636,7 @@
         </ScrollView>
 
         <Button
+            android:id="@+id/confirm"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginBottom="15dp"

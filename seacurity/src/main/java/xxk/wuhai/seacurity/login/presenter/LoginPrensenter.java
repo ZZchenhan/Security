@@ -133,8 +133,44 @@ public class LoginPrensenter implements IBasePresenter {
 
             }
         });
-        ;
+    }
 
+    public void test(){
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .getUserInfo(new GetUserInfoVo()).subscribeOn(Schedulers.newThread()).
+                observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<UserDetailInfo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(Result<UserDetailInfo> result) {
+                        if(loginView==null){
+                            return;
+                        }
+                        if(result.getCode().equals("200")){
+                            MyApplication.userDetailInfo = result.getResult();
+                            loginView.loginSuccess(result.getResult());
+                        }else{
+                            if(loginView!=null){
+                                loginView.toast(result.getMessage());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(loginView!=null){
+                            loginView.toast(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

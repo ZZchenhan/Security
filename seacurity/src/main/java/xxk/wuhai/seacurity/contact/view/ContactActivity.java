@@ -1,5 +1,7 @@
 package xxk.wuhai.seacurity.contact.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,11 +39,19 @@ public class ContactActivity extends BaseActivity {
     @Override
     public void initView() {
         contactFragment = new ContactFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("title",getIntent().getStringExtra("title"));
+        bundle.putInt("depId",getIntent().getIntExtra("depId",0));
+        contactFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.content,contactFragment).show(contactFragment).commit();
     }
 
     @Override
     public void findViews() {
 
+    }
+
+    public  static void openActivity(Context context,String title,int depId){
+        context.startActivity(new Intent(context,ContactActivity.class).putExtra("title",title).putExtra("depId",depId));
     }
 }

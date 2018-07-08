@@ -22,11 +22,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.contact.ContactApi;
 import xxk.wuhai.seacurity.contact.adapter.ContactAdapter;
-import xxk.wuhai.seacurity.contact.bean.ContactBean;
 import xxk.wuhai.seacurity.contact.bean.ContactGroup;
+import xxk.wuhai.seacurity.contact.bean.ContanctResult;
+import xxk.wuhai.seacurity.contact.bean.DirDeptVoListBean;
+import xxk.wuhai.seacurity.contact.bean.DirectoryVo;
 import xxk.wuhai.seacurity.contact.utils.PinYin2Abbreviation;
+import xxk.wuhai.seacurity.contact.vo.ApiGetDirectoryVo;
 import xxk.wuhai.seacurity.weight.SideLetterBar;
 
 /**
@@ -83,7 +93,10 @@ public class ContactFragment extends Fragment {
         sideLetterBar.setOnLetterChangedListener(new SideLetterBar.OnLetterChangedListener() {
             @Override
             public void onLetterChanged(String letter) {
-                int location = maps.get(letter);
+                Integer location = maps.get(letter);
+                if(null == location){
+                    return;
+                }
                 Log.i("TAG","Location"+location);
                 if(location!=-1) {
                     recyclerView.scrollToPosition(adapter.getHeaderLayoutCount() + location);
@@ -98,65 +111,66 @@ public class ContactFragment extends Fragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                UserInfoActivity.openActivity(getContext(),UserInfoActivity.class);
+                if(!datas.get(position).isHeader) {
+                    UserInfoActivity.openActivity(getContext(), datas.get(position).t);
+                }
             }
         });
-        similart();
+        currentDepartment.setText(getArguments() == null ||getArguments().getString("title") == null?"公司":getArguments().getString("title"));
+        getData();
     }
     List<ContactGroup> datas = new ArrayList<>();
-    private void similart(){
-        List<ContactBean> contactBeans = new ArrayList<>();
-        contactBeans.add(new ContactBean("陈玉明"));
-        contactBeans.add(new ContactBean("石先生"));
-        contactBeans.add(new ContactBean("龙先生"));
-        contactBeans.add(new ContactBean("爱先生"));
-        contactBeans.add(new ContactBean("我"));
-        contactBeans.add(new ContactBean("名"));
-        contactBeans.add(new ContactBean("陈玉明"));
-        contactBeans.add(new ContactBean("石先生"));
-        contactBeans.add(new ContactBean("龙先生"));
-        contactBeans.add(new ContactBean("爱先生"));
-        contactBeans.add(new ContactBean("我"));
-        contactBeans.add(new ContactBean("名"));
-        contactBeans.add(new ContactBean("陈玉明"));
-        contactBeans.add(new ContactBean("石先生"));
-        contactBeans.add(new ContactBean("龙先生"));
-        contactBeans.add(new ContactBean("爱先生"));
-        contactBeans.add(new ContactBean("我"));
-        contactBeans.add(new ContactBean("名"));
-        contactBeans.add(new ContactBean("陈玉明"));
-        contactBeans.add(new ContactBean("石先生"));
-        contactBeans.add(new ContactBean("龙先生"));
-        contactBeans.add(new ContactBean("爱先生"));
-        contactBeans.add(new ContactBean("我"));
-        contactBeans.add(new ContactBean("名"));
-        contactBeans.add(new ContactBean("陈玉明"));
-        contactBeans.add(new ContactBean("石先生"));
-        contactBeans.add(new ContactBean("龙先生"));
-        contactBeans.add(new ContactBean("爱先生"));
-        contactBeans.add(new ContactBean("我"));
-        contactBeans.add(new ContactBean("名"));
-        contactBeans.add(new ContactBean("陈玉明"));
-        contactBeans.add(new ContactBean("石先生"));
-        contactBeans.add(new ContactBean("龙先生"));
-        contactBeans.add(new ContactBean("爱先生"));
-        contactBeans.add(new ContactBean("我"));
-        contactBeans.add(new ContactBean("名"));
-        initHeadItem();
-        initHeadItem();
-        initHeadItem();
-        initHeadItem();
-        setData(contactBeans);
+
+
+    private void getData(){
+        MyApplication.retrofitClient.getRetrofit().create(ContactApi.class)
+                .getDirectory(new ApiGetDirectoryVo(getArguments() != null?getArguments().getInt("depId",0):0,""))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<ContanctResult>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<ContanctResult> contanctResultResult) {
+                        if(!contanctResultResult.getCode().equals("200")){
+                            Toast.makeText(getContext(),contanctResultResult.getMessage(),Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        setData(contanctResultResult.getResult());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
-    private void setData(List<ContactBean> contactBeans){
+    private void setData(ContanctResult contanctResult){
+        setHead(contanctResult.getDirDeptVoList());
+        setList(contanctResult.getDirectoryVoList());
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setList(List<DirectoryVo> directoryVos){
         strings.clear();
         maps.clear();
+        if(directoryVos == null){
+            return;
+        }
         int postion = 0;
-        ContactBean.sort(contactBeans);
+        DirectoryVo.sort(directoryVos);
         String lastPinying = "";
-        for(int i=0; i<contactBeans.size();i++){
-            ContactBean contactBean =contactBeans.get(i);
+        for(int i=0; i<directoryVos.size();i++){
+            DirectoryVo contactBean =directoryVos.get(i);
             if(contactBean.getName() != null && contactBean.getName().length() !=0) {
                 String curent = PinYin2Abbreviation.cn2py(contactBean.getName().substring(0,1));
                 if(curent.equals(lastPinying)){
@@ -176,19 +190,32 @@ public class ContactFragment extends Fragment {
             }
         }
         adapter.notifyDataSetChanged();
-        sideLetterBar.b = strings;
-        sideLetterBar.invalidate();
+//        sideLetterBar.b = strings;
+//        sideLetterBar.invalidate();
+    }
+
+    private void setHead(List<DirDeptVoListBean> dirDeptVoListBeans){
+        if(dirDeptVoListBeans == null){
+            return;
+        }
+        for (DirDeptVoListBean vo:dirDeptVoListBeans){
+            initHeadItem(vo);
+        }
     }
 
 
-    private void initHeadItem(){
+    private void initHeadItem(final DirDeptVoListBean deptVoListBean){
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_contact_head,null);
+        TextView tvName = view.findViewById(R.id.name);
+        tvName.setText(deptVoListBean.getDeptName()+"");
         adapter.addHeaderView(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContactActivity.openActivity(getContext(),ContactActivity.class);
+                ContactActivity.openActivity(getContext(),deptVoListBean.getDeptName(),deptVoListBean.getDeptId());
             }
         });
     }
+
+
 }

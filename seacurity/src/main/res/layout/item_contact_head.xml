@@ -5,16 +5,18 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:layout_height="wrap_content">
+
     <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:text="组织部"
-        android:gravity="center"
-        android:drawableLeft="@mipmap/icon_zhuzhi"
+        android:layout_height="40dp"
         android:layout_marginLeft="16dp"
+        android:drawableLeft="@mipmap/icon_zhuzhi"
         android:drawablePadding="12dp"
+        android:gravity="center"
+        android:text="组织部"
         android:textColor="@color/text_color1"
-        android:textSize="17sp"
-        android:layout_height="40dp" />
+        android:textSize="17sp" />
     <View
         android:layout_width="match_parent"
         android:background="@color/line_color"

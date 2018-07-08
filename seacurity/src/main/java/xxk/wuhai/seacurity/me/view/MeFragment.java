@@ -15,6 +15,7 @@ import xxk.wuhai.seacurity.contact.view.AddImpressionActivity;
 import xxk.wuhai.seacurity.contact.view.UserInfoActivity;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.bean.UserInfoBean;
+import xxk.wuhai.seacurity.weight.site.SiteDialogFragment;
 
 /**
  * Created by 86936 on 2018/6/30.
@@ -53,7 +54,7 @@ public class MeFragment extends Fragment {
     private TextView idCard;
 
     private void setDada(UserInfoBean userDetailInfo){
-        name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(0,2));
+        name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(userDetailInfo.getName().length()-2,userDetailInfo.getName().length()));
         userName.setText(userDetailInfo.getName()+"");
         tvZhiwei.setText(MyApplication.userDetailInfo.getDeptVo()==null?"":MyApplication.userDetailInfo.getDeptVo().getDeptName()+"");
         sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
@@ -62,11 +63,11 @@ public class MeFragment extends Fragment {
         tvZan.setText(String.format("赞：%s","0"));
         tvCai.setText(String.format("踩：%s","0"));
         tag1.setVisibility(View.GONE);
-        tag1.setVisibility(View.GONE);
-        tag1.setVisibility(View.GONE);
-        tag1.setVisibility(View.GONE);
-        tag1.setVisibility(View.GONE);
-        tag1.setVisibility(View.GONE);
+        tag2.setVisibility(View.GONE);
+        tag3.setVisibility(View.GONE);
+        tag4.setVisibility(View.GONE);
+        tag5.setVisibility(View.GONE);
+        see.setVisibility(View.GONE);
     }
 
     @Override
@@ -108,13 +109,15 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MeInfoActivity.openActivity(getContext(),MeInfoActivity.class);
+//                SiteDialogFragment siteDialogFragment = new SiteDialogFragment(getContext());
+//                siteDialogFragment.show();
             }
         });
 
         idCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ElectIDcardActivity.openActivity(getContext(),ElectIDcardActivity.class);
             }
         });
 

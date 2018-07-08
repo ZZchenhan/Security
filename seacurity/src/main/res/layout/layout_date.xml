@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="#f7f7f7"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <xxk.wuhai.seacurity.weight.date.YearPicker
+        app:selectedTextColor="#3F3F3F"
+        app:selectedTextSize="20sp"
+        android:id="@+id/yearPicker_layout_date"
+        app:halfVisibleItemCount="2"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        app:wheelCurtain="false"
+        app:wheelCurtainBorder="false"
+        android:layout_height="wrap_content" />
+    <xxk.wuhai.seacurity.weight.date.MonthPicker
+        android:id="@+id/monthPicker_layout_date"
+        app:halfVisibleItemCount="2"
+        app:wheelCurtain="false"
+        app:selectedTextSize="20sp"
+        app:selectedTextColor="#3F3F3F"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        app:wheelCurtainBorder="false"
+        android:layout_height="wrap_content" />
+    <xxk.wuhai.seacurity.weight.date.DayPicker
+        android:id="@+id/dayPicker_layout_date"
+        app:halfVisibleItemCount="2"
+        android:layout_weight="1"
+        app:selectedTextColor="#3F3F3F"
+        app:selectedTextSize="20sp"
+        app:wheelCurtain="false"
+        app:wheelCurtainBorder="false"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

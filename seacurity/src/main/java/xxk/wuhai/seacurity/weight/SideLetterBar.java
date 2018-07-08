@@ -16,7 +16,35 @@ import xxk.wuhai.seacurity.R;
 
 
 public class SideLetterBar extends View {
-    public static  List<String> b = new ArrayList<>();
+    public  static List<String> b = new ArrayList<>();
+    static {
+        b.add("a");
+        b.add("b");
+        b.add("c");
+        b.add("d");
+        b.add("e");
+        b.add("f");
+        b.add("g");
+        b.add("h");
+        b.add("i");
+        b.add("j");
+        b.add("k");
+        b.add("l");
+        b.add("m");
+        b.add("n");
+        b.add("o");
+        b.add("p");
+        b.add("q");
+        b.add("r");
+        b.add("s");
+        b.add("t");
+        b.add("u");
+        b.add("v");
+        b.add("w");
+        b.add("x");
+        b.add("y");
+        b.add("z");
+    }
     private int choose = -1;
     private Paint paint = new Paint();
     private boolean showBg = false;
@@ -134,4 +162,11 @@ public class SideLetterBar extends View {
         void onLetterChanged(String letter);
     }
 
+    public List<String> getB() {
+        return b;
+    }
+
+    public void setB(List<String> b) {
+        this.b = b;
+    }
 }

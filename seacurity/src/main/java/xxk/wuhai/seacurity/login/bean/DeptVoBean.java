@@ -1,7 +1,7 @@
 package xxk.wuhai.seacurity.login.bean;
 
 /**
- * Created by 86936 on 2018/7/4.
+ * Created by 86936 on 2018/7/8.
  *
  * @QQ 869360026
  */

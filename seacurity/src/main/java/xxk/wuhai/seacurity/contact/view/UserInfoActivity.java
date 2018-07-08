@@ -1,5 +1,7 @@
 package xxk.wuhai.seacurity.contact.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +9,11 @@ import android.widget.TextView;
 
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
+import xxk.wuhai.seacurity.contact.bean.DirectoryVo;
+import xxk.wuhai.seacurity.login.bean.UserInfoBean;
 
 public class UserInfoActivity extends BaseActivity {
 
@@ -34,6 +39,8 @@ public class UserInfoActivity extends BaseActivity {
     private TextView tag4;
     private TextView tag5;
     private TextView see;
+
+    DirectoryVo directoryVo;
 
     @Override
     public void findViews() {
@@ -85,9 +92,37 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        directoryVo = (DirectoryVo) getIntent().getSerializableExtra("data");
+        if(directoryVo == null){
+            return;
+        }
 
+        setDada(directoryVo);
     }
 
+
+
+    private void setDada(DirectoryVo userDetailInfo){
+        name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(userDetailInfo.getName().length()-2,userDetailInfo.getName().length()));
+        userName.setText(userDetailInfo.getName()+"");
+        tvZhiwei.setText(MyApplication.userDetailInfo.getDeptVo()==null?"":MyApplication.userDetailInfo.getDeptVo().getDeptName()+"");
+        sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
+        age.setText(userDetailInfo.getSex()+"");
+        phone.setText(userDetailInfo.getPhone()+"");
+        tvZan.setText(String.format("赞：%s","0"));
+        tvCai.setText(String.format("踩：%s","0"));
+        tag1.setVisibility(View.GONE);
+        tag2.setVisibility(View.GONE);
+        tag3.setVisibility(View.GONE);
+        tag4.setVisibility(View.GONE);
+        tag5.setVisibility(View.GONE);
+        see .setVisibility(View.GONE);
+    }
+
+
+    public static void openActivity(Context context,DirectoryVo directoryVo){
+        context.startActivity(new Intent(context,UserInfoActivity.class).putExtra("data",directoryVo));
+    }
 
 
 }

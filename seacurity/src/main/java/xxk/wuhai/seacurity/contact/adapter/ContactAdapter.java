@@ -3,14 +3,11 @@ package xxk.wuhai.seacurity.contact.adapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import xxk.wuhai.seacurity.R;
-import xxk.wuhai.seacurity.contact.bean.ContactBean;
 import xxk.wuhai.seacurity.contact.bean.ContactGroup;
+import xxk.wuhai.seacurity.contact.bean.DirectoryVo;
 
 /**
  * Created by 86936 on 2018/6/30.
@@ -34,7 +31,7 @@ public class ContactAdapter extends BaseSectionQuickAdapter<ContactGroup, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, ContactGroup item) {
-        ContactBean contactBean = item.t;
+        DirectoryVo contactBean = item.t;
         if (contactBean.getName() != null && contactBean.getName().length() > 0) {
             helper.setText(R.id.tv_name, contactBean.getName().substring(contactBean.getName().length() - 1, contactBean.getName().length()));
         }

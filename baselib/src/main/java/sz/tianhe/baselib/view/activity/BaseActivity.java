@@ -66,7 +66,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         if (null != navagation()) {
             this.root.addView(navagation().getNavagation());
         }
-        View rootView = LayoutInflater.from(this).inflate(layoutId(), null);
+        View rootView =databindViews();
+        if(rootView == null) {
+            rootView = LayoutInflater.from(this).inflate(layoutId(), null);
+        }
         rootView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         this.root.addView(rootView);
 
@@ -77,6 +80,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         }
         findViews();
         initView();
+    }
+
+    protected View databindViews(){
+        return null;
     }
 
 
