@@ -108,4 +108,26 @@ public class PesonInfoHelper {
             return "转换出错";
         }
     }
+
+
+    public static String leaveType(String type){
+        if(type == null){
+            return "其他";
+        }
+        switch (type){
+            case "1":
+                return "事假";
+            case "2":
+                return "病假";
+            case "3":
+                return "年假";
+            case "4":
+                return "调休假";
+            case "5":
+                return "产假";
+            case "6":
+                return "陪产假";
+        }
+        return "其他";
+    }
 }

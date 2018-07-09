@@ -48,7 +48,7 @@ public class ApplyActivity extends BaseActivity {
     public void onClick(View view){
         switch (view.getId()){
             case R.id.levae:
-                ApplyActivity.openActivity(this,ApplyActivity.class);
+                ApplyLeaveActivity.openActivity(this,ApplyLeaveActivity.class);
                 break;
             case R.id.supplement:
                 SupplementSignActivity.openActivity(this,SupplementSignActivity.class);
