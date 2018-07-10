@@ -25,12 +25,15 @@ public class MyApplyAdapter extends BaseQuickAdapter<ApprovalRecordListBean,Base
 
     @Override
     protected void convert(BaseViewHolder helper, ApprovalRecordListBean item) {
-            helper.setText(R.id.type, item.getTypeId()==null?"补签申请":"请假申请")
+            helper.setText(R.id.type, item.getPatchTime()!=null?"补签申请":"请假申请")
                     .setText(R.id.status,PesonInfoHelper.aplyStatus(item.getStatus()))
-                    .setText(R.id.name,"姓名："+item.getApName())
-                    .setText(R.id.time, item.getTypeId()==null?"补签时间："+item.getPatchTime():"请假时间："+item.getLrBeginTime()+item.getLrEndTime())
+                    .setText(R.id.name,"姓名:"+item.getApName())
+                    .setText(R.id.time, item.getPatchTime()!=null?"补签时间："+
+                            item.getPatchTime().replace("-","."):
+                            "请假时间:"+item.getLrBeginTime().replace("-",".")+
+                                    "-"+item.getLrEndTime().replace("-","."))
                     .setText(R.id.reson,item.getSupplement());
-            if(PesonInfoHelper.aplyStatus(item.getStatus()).equals("已通过")){
+            if(!PesonInfoHelper.aplyStatus(item.getStatus()).equals("已驳回")){
                 helper.setTextColor(R.id.status, Color.parseColor("#49B1FA"));
             }else{
                 helper.setTextColor(R.id.status, Color.parseColor("#F43530"));

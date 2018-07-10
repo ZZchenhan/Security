@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
@@ -19,6 +20,7 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityLeaveBinding;
+import xxk.wuhai.seacurity.utils.GlideUtils;
 import xxk.wuhai.seacurity.utils.PesonInfoHelper;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.ApDetailResult;
@@ -29,6 +31,9 @@ import xxk.wuhai.seacurity.work.vo.ApDetailVo;
  */
 public class LeaveActivity extends BaseActivity {
     ActivityLeaveBinding binding;
+    ImageView imageView1;
+    ImageView imageView2;
+    ImageView imageView3;
     @Override
     public int layoutId() {
         return R.layout.activity_leave;
@@ -66,7 +71,9 @@ public class LeaveActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-
+        imageView1 = findViewById(R.id.pic1);
+        imageView2 = findViewById(R.id.pic2);
+        imageView3 = findViewById(R.id.pic3);
     }
 
     /**
@@ -76,7 +83,7 @@ public class LeaveActivity extends BaseActivity {
      * @param type 是否能够审核
      */
     public static void openActivity(Context context, int id, int type){
-        context.startActivity(new Intent(context,ExamineActivity.class)
+        context.startActivity(new Intent(context,LeaveActivity.class)
                 .putExtra("id",id)
                 .putExtra("type",type)
         );
@@ -97,7 +104,7 @@ public class LeaveActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<ApDetailResult> detail) {
-                        if(detail.getCode().equals("200")){
+                        if(!detail.getCode().equals("200")){
                             toast(detail.getMessage());
                             return;
                         }
@@ -114,13 +121,13 @@ public class LeaveActivity extends BaseActivity {
                         binding.result.setText(apDetailBean.getSupplement()+"");
                         try {
                             Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
+                                    .load(apDetailBean.getPictureUrls().get(1)).into(imageView1);
                             Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
+                                    .load(apDetailBean.getPictureUrls().get(1)).into(imageView2);
                             Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                                    .load(apDetailBean.getPictureUrls().get(2)).into(imageView3);
                         }catch (Exception e){
-
+                            e.getMessage();
                         }
                         binding.name1.setText(apDetailBean.getApproverName());
                         binding.resul1.setText(PesonInfoHelper.detailStatus(apDetailBean.getStatus()));

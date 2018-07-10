@@ -11,11 +11,20 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.work.adapter.StudyAdapter;
+import xxk.wuhai.seacurity.work.api.WorkDutyApi;
+import xxk.wuhai.seacurity.work.bean.StudyListResult;
+import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
 
 public class StudyActivity extends BaseActivity {
 
@@ -23,7 +32,7 @@ public class StudyActivity extends BaseActivity {
 
     StudyAdapter studyAdapter;
 
-    List<String> datas = new ArrayList<>();
+    List<StudyListResult.StudyNoticeInfoListBean> datas = new ArrayList<>();
 
     @Override
     public int layoutId() {
@@ -50,11 +59,14 @@ public class StudyActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        studyAdapter.notifyDataSetChanged();
+        studyAdapter.setEnableLoadMore(true);
+        studyAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                initData(page);
+            }
+        },recyclerView);
+        initData(page);
     }
 
     @Override
@@ -66,9 +78,58 @@ public class StudyActivity extends BaseActivity {
         studyAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WebActivity.openActivity(StudyActivity.this,"学习中心");
+                WebActivity.openActivity(StudyActivity.this,"学习中心",datas.get(position).getStudyNoticeId());
             }
         });
+    }
+    private int page = 1;
+    private void initData(final int page){
+        GetStudyNoticeListVo getStudyNoticeListVo = new GetStudyNoticeListVo();
+        getStudyNoticeListVo.setPageNum(page);
+        getStudyNoticeListVo.setPageSize(20);
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .getStudyNoticeList(getStudyNoticeListVo)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<StudyListResult>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<StudyListResult> studyListResultResult) {
+                            if(!studyListResultResult.getCode().equals("200")){
+                                toast(studyListResultResult.getMessage());
+                                return;
+                            }
+                            studyAdapter.loadMoreComplete();
+                            if(studyListResultResult.getResult().getStudyNoticeInfoList() == null){
+                                studyAdapter.loadMoreEnd();
+                                toast("当前没有更多数据了");
+                                return;
+                            }
+                            StudyActivity.this.page = page +1;
+                            if(!studyListResultResult.getResult().isHaveNext()){
+                                studyAdapter.loadMoreEnd();
+                            }
+                            datas.addAll(studyListResultResult.getResult().getStudyNoticeInfoList());
+                            studyAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(e!=null){
+                            studyAdapter.loadMoreFail();
+                            toast(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 }

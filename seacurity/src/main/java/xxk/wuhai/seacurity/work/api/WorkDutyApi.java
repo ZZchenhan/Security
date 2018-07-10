@@ -1,21 +1,24 @@
 package xxk.wuhai.seacurity.work.api;
 
-import java.util.List;
-
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.work.bean.ApDetailResult;
 import xxk.wuhai.seacurity.work.bean.AplyResult;
-import xxk.wuhai.seacurity.work.bean.AplyUser;
 import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
+import xxk.wuhai.seacurity.work.bean.ClueBursList;
+import xxk.wuhai.seacurity.work.bean.StudyDetail;
+import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
+import xxk.wuhai.seacurity.work.vo.ClueBurstListVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
+import xxk.wuhai.seacurity.work.bean.StudyListResult;
+import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
+import xxk.wuhai.seacurity.work.vo.GetStudyNoticeVo;
 import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
 
 /**
@@ -57,9 +60,39 @@ public interface WorkDutyApi {
      * @param apListVo
      * @return
      */
-    @POST("/client-api//aPDetails/apList")
+    @POST("/client-api/aPDetails/apList")
     Observable<Result<AplyResult>> apList(@Body ApListVo apListVo);
 
-    @POST("/aPDetails/apDetail")
-    Observable<Result<ApDetailResult>> apDetail(ApDetailVo apDetailVo);
+    /**
+     * 审核详情
+     * @param apDetailVo
+     * @return
+     */
+    @POST("/client-api/aPDetails/apDetail")
+    Observable<Result<ApDetailResult>> apDetail(@Body ApDetailVo apDetailVo);
+
+    /**
+     * 获取学习中心列表
+     */
+    @POST("/client-api/studyProcess/getStudyNoticeList")
+    Observable<Result<StudyListResult>> getStudyNoticeList(@Body GetStudyNoticeListVo studyNoticeListVo);
+
+    /**
+     * 学习中心详情
+     * @param studyNoticeVo
+     * @return
+     */
+    @POST("/client-api/studyProcess/getStudyNoticeDetails")
+    Observable<Result<StudyDetail>> getStudyDetails(@Body GetStudyNoticeVo studyNoticeVo);
+
+    /**
+     * 列表
+     * @param clueBurstListVo
+     * @return
+     */
+    @POST("/client-api/clueBurstProcess/clueBurstList")
+    Observable<Result<ClueBursList>> clueBurstList(@Body ClueBurstListVo clueBurstListVo);
+
+    @POST("/client-api/clueBurstProcess/addClueBurst")
+    Observable<Result<String>> addClueBurst(@Body AddClueBurstVo addClueBurstVo);
 }

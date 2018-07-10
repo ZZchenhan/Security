@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.work.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,4 +47,7 @@ public class CulDetailActivity extends BaseActivity {
 
     }
 
+    public static void openActivity(Context context,int id){
+        context.startActivity(new Intent(context,CulDetailActivity.class).putExtra("id",id));
+    }
 }

@@ -94,7 +94,7 @@ public class ElectIDcardActivity extends BaseActivity {
         });
 
     }
-    ImageDialog imageDialog;
+
     ActivityElectIdcardBinding binding;
     public View databindViews(){
         binding =  DataBindingUtil.inflate(LayoutInflater.from(this),layoutId(),null,false);

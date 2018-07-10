@@ -30,7 +30,7 @@ public class MyApplication extends Application {
 
     public static String baseUrl = "http://47.98.241.211/";
 
-    public static String aluyun = "https://tongyongbucket.oss-cn-hangzhou.aliyuncs.com/";
+    public static String aluyun = "http://tongyongbucket.oss-cn-hangzhou.aliyuncs.com/";
 
     public static OSS oss = null;
 

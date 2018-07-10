@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
@@ -26,6 +27,9 @@ import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 
 public class ExamineActivity extends BaseActivity {
     ActivityExamineBinding binding;
+    ImageView imageView1;
+    ImageView imageView2;
+    ImageView imageView3;
     @Override
     public int layoutId() {
         return R.layout.activity_examine;
@@ -62,7 +66,9 @@ public class ExamineActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-
+        imageView1 = findViewById(R.id.pic1);
+        imageView2 = findViewById(R.id.pic2);
+        imageView3 = findViewById(R.id.pic3);
     }
 
     /**
@@ -92,7 +98,7 @@ public class ExamineActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<ApDetailResult> detail) {
-                        if(detail.getCode().equals("200")){
+                        if(!detail.getCode().equals("200")){
                             toast(detail.getMessage());
                             return;
                         }
@@ -101,17 +107,17 @@ public class ExamineActivity extends BaseActivity {
                             toast("获取详情为空");
                             return;
                         }
-                        binding.name.setText(apDetailBean.getApName());
+                        binding.name.setText(apDetailBean.getName());
                         binding.time.setText(apDetailBean.getPatchTime());
                         binding.type.setText("补签");
                         binding.result.setText(apDetailBean.getSupplement()+"");
                         try {
                             Glide.with(ExamineActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
+                                    .load(apDetailBean.getPictureUrls().get(0)).into(imageView1);
                             Glide.with(ExamineActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
+                                    .load(apDetailBean.getPictureUrls().get(1)).into(imageView2);
                             Glide.with(ExamineActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                                    .load(apDetailBean.getPictureUrls().get(2)).into(imageView3);
                         }catch (Exception e){
 
                         }

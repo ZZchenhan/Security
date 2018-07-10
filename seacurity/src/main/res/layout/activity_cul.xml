@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -46,15 +48,71 @@
             android:textColor="@color/text_color1"
             android:layout_marginLeft="15dp"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/iv_recode"
-            android:layout_width="60dp"
-            android:background="@drawable/bg_camore"
-            android:src="@mipmap/icon_camero"
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:scaleType="center"
-            android:layout_weight="0"
-            android:layout_height="60dp" />
+            >
+
+            <xxk.wuhai.seacurity.weight.record.RecordButton
+                android:id="@+id/record_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:background="@drawable/bg_record_button"
+                android:paddingBottom="2dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:paddingTop="2dp"
+                android:text="按住说话"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/lose_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:background="@drawable/bg_record_button"
+                android:paddingBottom="2dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:paddingTop="2dp"
+                android:text="松开结束"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/record_done_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:background="@drawable/voice_play_bg"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/voice_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/voice_animation" />
+
+                <TextView
+                    android:id="@+id/voice_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="35dp"
+                    android:text="0″"
+                    android:textColor="#ffffffff"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,21 +141,21 @@
                 android:layout_weight="0"
                 android:layout_height="60dp" />
             <ImageView
-                android:id="@+id/iv_pic1"
+                android:id="@+id/pic1"
                 android:layout_width="60dp"
                 android:layout_marginLeft="15dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:layout_height="60dp" />
             <ImageView
-                android:id="@+id/iv_pic2"
+                android:id="@+id/pic2"
                 android:layout_width="60dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:layout_marginLeft="15dp"
                 android:layout_height="60dp" />
             <ImageView
-                android:id="@+id/iv_pic3"
+                android:id="@+id/pic3"
                 android:layout_width="60dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:layout_marginLeft="15dp"
                 android:layout_height="60dp" />
         </LinearLayout>
@@ -137,15 +195,17 @@
                     android:textColor="@color/text_color1"
                     android:textSize="14sp"
                     android:layout_width="match_parent"
-                    android:text="浙江省杭州市下城区环城北路139杭州国际创意中心ICC"
+                    android:text=""
                     android:scaleType="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <com.amap.api.maps2d.MapView
-                android:elevation="3dp"
-                android:layout_marginTop="20dp"
+                android:id="@+id/mapview"
                 android:layout_width="match_parent"
-                android:layout_height="165dp"/>
+                android:layout_height="165dp"
+                android:layout_marginTop="20dp"
+                android:elevation="3dp" />
         </LinearLayout>
     </LinearLayout>
     <android.support.v4.widget.Space
@@ -153,6 +213,7 @@
         android:layout_weight="1"
         android:layout_height="match_parent" />
     <Button
+        android:id="@+id/submit"
         android:layout_width="match_parent"
         android:elevation="3dp"
         android:text="提交"
@@ -165,3 +226,4 @@
         android:background="@color/colorPrimaryDark"
         android:layout_height="45dp" />
 </LinearLayout>
+</layout>

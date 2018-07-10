@@ -148,6 +148,10 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
     private int page = 1;
 
     public void intData(final int page) {
+        if(page == 1 && datas.size()>0){
+            datas.clear();
+            adapter.notifyDataSetChanged();
+        }
         ApListVo apListVo = new ApListVo();
         apListVo.setHandle("0");
         apListVo.setPageNum(page + "");
@@ -158,7 +162,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                 .create(WorkDutyApi.class)
                 .apList(apListVo)
                 .subscribeOn(Schedulers.newThread())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<AplyResult>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -171,19 +175,18 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                             toast(stringResult.getMessage());
                             return;
                         }
+                        adapter.loadMoreComplete();
                         if (stringResult.getResult().getApprovalRecordList() == null) {
+                            toast("没有更多数据了");
                             adapter.loadMoreEnd();
                             return;
                         }
                         if (!stringResult.getResult().isHaveNext()) {
                             adapter.loadMoreEnd();
-                            MyAplyListActivity.this.page = page + 1;
-                            toast("没有更多数据了");
-                            return;
                         }
+                        MyAplyListActivity.this.page = page + 1;
                         editText.setText("");
                         contenxt = null;
-                        adapter.loadMoreComplete();
                         datas.addAll(stringResult.getResult().getApprovalRecordList());
                         adapter.notifyDataSetChanged();
                     }
