@@ -1,201 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="补  签  人"
-            android:textSize="17sp"
-            android:textColor="@color/text_color1"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/et_name"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:background="@null"
-            android:layout_marginLeft="30dp"
-            android:hint="用户名"
-            android:textSize="17sp"
-            android:textColor="@color/text_color4"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="补  签  人"
+                    android:textColor="@color/text_color1"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:background="@null"
+                    android:hint=""
+                    android:textColor="@color/text_color4"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:id="@+id/ll_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="申请时间"
+                    android:textColor="@color/text_color1"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="15dp"
+                    android:text="2018-08-07 19:00:20"
+                    android:textColor="@color/text_color4"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请类型"
+                    android:textColor="@color/text_color1"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:background="@null"
+                    android:hint="补签"
+                    android:textColor="@color/text_color4"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="补签原因"
+                    android:textColor="@color/text_color1"
+                    android:textSize="17sp" />
+
+                <EditText
+                    android:id="@+id/result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:background="@null"
+                    android:hint="原因"
+                    android:textColor="@color/text_color2" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="图        片"
+                android:textColor="@color/text_color1"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_camero"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/bg_camore"
+                    android:scaleType="center"
+                    android:src="@mipmap/icon_camero" />
+
+                <ImageView
+                    android:id="@+id/iv_pic1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="fitXY" />
+
+                <ImageView
+                    android:id="@+id/iv_pic2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="fitXY" />
+
+                <ImageView
+                    android:id="@+id/iv_pic3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/line_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="审  批  人"
+                    android:textColor="@color/text_color1"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/approve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:background="@null"
+                    android:hint="用户名"
+                    android:textColor="@color/text_color4"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="258dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="38dp"
+            android:background="@color/colorPrimary"
+            android:elevation="3dp"
+            android:text="确    定"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/line_color"
-        android:layout_height="1dp"/>
-    <LinearLayout
-        android:id="@+id/ll_time"
-        android:layout_width="match_parent"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="申请时间"
-            android:textSize="17sp"
-            android:textColor="@color/text_color1"
-            android:layout_height="match_parent" />
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="match_parent"
-            android:text="2018-08-07 19:00:20"
-            android:layout_marginLeft="30dp"
-            android:drawableRight="@mipmap/icon_arrow_down"
-            android:textSize="17sp"
-            android:textColor="@color/text_color4"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/line_color"
-        android:layout_height="1dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="申请类型"
-            android:textSize="17sp"
-            android:textColor="@color/text_color1"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="match_parent"
-            android:background="@null"
-            android:layout_marginLeft="30dp"
-            android:hint="补签"
-            android:textSize="17sp"
-            android:textColor="@color/text_color4"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/line_color"
-        android:layout_height="1dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="补签原因"
-            android:textSize="17sp"
-            android:textColor="@color/text_color1"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/result"
-            android:layout_width="match_parent"
-            android:background="@null"
-            android:layout_marginLeft="30dp"
-            android:hint="原因"
-            android:textColor="@color/text_color2"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/line_color"
-        android:layout_height="1dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="图        片"
-        android:textSize="17sp"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/text_color1"
-        android:layout_height="wrap_content" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="10dp"
-        android:layout_height="70dp">
-        <ImageView
-            android:id="@+id/iv_camero"
-            android:layout_width="60dp"
-            android:background="@drawable/bg_camore"
-            android:src="@mipmap/icon_camero"
-            android:scaleType="center"
-            android:layout_weight="0"
-            android:layout_height="60dp" />
-        <ImageView
-            android:id="@+id/iv_pic1"
-            android:layout_width="60dp"
-            android:layout_marginLeft="15dp"
-            android:scaleType="fitCenter"
-            android:layout_height="60dp" />
-        <ImageView
-            android:id="@+id/iv_pic2"
-            android:layout_width="60dp"
-            android:scaleType="fitCenter"
-            android:layout_marginLeft="15dp"
-            android:layout_height="60dp" />
-        <ImageView
-            android:id="@+id/iv_pic3"
-            android:layout_width="60dp"
-            android:scaleType="fitCenter"
-            android:layout_marginLeft="15dp"
-            android:layout_height="60dp" />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/line_color"
-        android:layout_marginTop="10dp"
-        android:layout_height="1dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="审  批  人"
-            android:textSize="17sp"
-            android:textColor="@color/text_color1"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="match_parent"
-            android:background="@null"
-            android:layout_marginLeft="30dp"
-            android:hint="用户名"
-            android:textSize="17sp"
-            android:textColor="@color/text_color4"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/line_color"
-        android:layout_height="1dp"/>
-    </LinearLayout>
-    <Button
-        android:id="@+id/btn_confirm"
-        android:layout_width="258dp"
-        android:layout_height="44dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="38dp"
-        android:background="@color/colorPrimary"
-        android:elevation="3dp"
-        android:text="确    定"
-        android:textColor="@color/white"
-        android:textSize="14sp" />
-</LinearLayout>
+</layout>

@@ -11,6 +11,7 @@ import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
+import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
 
 /**
  * Created by 86936 on 2018/7/4.
@@ -30,7 +31,19 @@ public interface WorkDutyApi {
     @POST("/client-api/approvalProcess/getApprover")
     Observable<Result<ApproverUser>> getApprover();
 
-
+    /**
+     * 请假
+     * @param applyLeaveVo
+     * @return
+     */
     @POST("/client-api/approvalProcess/applyLeave ")
     Observable<Result<String>> applyLeave(@Body ApplyLeaveVo applyLeaveVo);
+
+
+    /**
+     * 补签
+     * @return
+     */
+    @POST("/approvalProcess/supplementApply")
+    Observable<Result<String>> supplementApply(@Body SupplementApplyVo supplementApplyVo);
 }
