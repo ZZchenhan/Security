@@ -18,9 +18,9 @@ public class PutObjectSamples extends BaseSamples {
     private String testObject;
     private String uploadFilePath;
 
-    public PutObjectSamples(OSS client, String testBucket, String testObject, String uploadFilePath) {
+    public PutObjectSamples(OSS client, String testObject, String uploadFilePath) {
         this.oss = client;
-        this.testBucket = testBucket;
+        this.testBucket = "tongyongbucket";
         this.testObject = testObject;
         this.uploadFilePath = uploadFilePath;
     }

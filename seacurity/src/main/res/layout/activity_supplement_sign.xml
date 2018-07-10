@@ -206,6 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:background="@null"
+                    android:drawableRight="@mipmap/icon_leave_down_arrow"
                     android:hint="用户名"
                     android:textColor="@color/text_color4"
                     android:textSize="17sp" />

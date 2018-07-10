@@ -418,7 +418,7 @@ public class ApplyLeaveActivity extends BaseActivity {
         for(int i=0;i<imagesUrl.size();i++){
             String objName = MyApplication.userDetailInfo.getUserInfo().getUserId()+System.currentTimeMillis()+"";
             subImags.add(MyApplication.aluyun+objName);
-            PutObjectSamples putObjectSamples = new PutObjectSamples(MyApplication.oss,"chenhantest",objName,imagesUrl.get(i));
+            PutObjectSamples putObjectSamples = new PutObjectSamples(MyApplication.oss,objName,imagesUrl.get(i));
             try {
                 putObjectSamples.putObjectFromLocalFile();
             } catch (ClientException e) {

@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -96,9 +97,15 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                             all.setText(string);
                             hand = type;
                             stausPopWindows.dismiss();
-                            darkenBackground(1f);
                             page = 1;
                             intData(page);
+                        }
+                    });
+
+                    stausPopWindows.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            darkenBackground(1f);
                         }
                     });
                 }

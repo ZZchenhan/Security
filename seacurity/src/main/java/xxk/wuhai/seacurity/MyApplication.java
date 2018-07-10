@@ -30,7 +30,7 @@ public class MyApplication extends Application {
 
     public static String baseUrl = "http://47.98.241.211/";
 
-    public static String aluyun = "https://chenhantest.oss-cn-beijing.aliyuncs.com/";
+    public static String aluyun = "https://tongyongbucket.oss-cn-hangzhou.aliyuncs.com/";
 
     public static OSS oss = null;
 
@@ -41,9 +41,9 @@ public class MyApplication extends Application {
        JPushInterface.init(this);
        retrofitClient = new RetrofitClient(this,baseUrl);
        deviceId = Build.SERIAL;
-       String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+       String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
 
-       OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAIGu0vRj8pAUKW","YaVd5NYbWJVa1i2qO6Q893dfqo1v3a");
+       OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAIqNxd4rFLe0l6","xZEViV4zH0VaVza8kd4cdNZ8TGvFLS");
         oss = new OSSClient(this, endpoint, credentialProvider);
     }
 }
