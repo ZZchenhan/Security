@@ -54,10 +54,10 @@ public class ApplyActivity extends BaseActivity {
                 SupplementSignActivity.openActivity(this,SupplementSignActivity.class);
                 break;
             case R.id.tv_apply:
-                MyAplyListActivity.openActivity(this,1);
+                MyAplyListActivity.openActivity(this,0);
                 break;
             case R.id.tv_recive:
-                MyAplyListActivity.openActivity(this,0);
+                MyAplyListActivity.openActivity(this,1);
                 break;
         }
     }

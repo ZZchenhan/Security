@@ -6,9 +6,11 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.work.bean.AplyResult;
 import xxk.wuhai.seacurity.work.bean.AplyUser;
 import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
+import xxk.wuhai.seacurity.work.vo.ApListVo;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
 import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
@@ -44,6 +46,10 @@ public interface WorkDutyApi {
      * 补签
      * @return
      */
-    @POST("/approvalProcess/supplementApply")
+    @POST("/client-api/approvalProcess/supplementApply")
     Observable<Result<String>> supplementApply(@Body SupplementApplyVo supplementApplyVo);
+
+
+    @POST("/client-api//aPDetails/apList")
+    Observable<Result<AplyResult>> apList(@Body ApListVo apListVo);
 }

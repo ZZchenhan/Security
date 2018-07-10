@@ -29,19 +29,22 @@
             android:paddingLeft="20dp"
             android:maxLines="1"
             android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
             android:drawableLeft="@mipmap/icon_search"
             android:background="@drawable/bg_item_white_r20"
             android:layout_height="34dp" />
         <TextView
             android:id="@+id/all"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:textColor="@color/white"
             android:text="全部"
+            android:gravity="center"
             android:textSize="17sp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

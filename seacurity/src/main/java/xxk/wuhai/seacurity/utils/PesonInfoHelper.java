@@ -130,4 +130,24 @@ public class PesonInfoHelper {
         }
         return "其他";
     }
+
+    //0：全部，1：待审核，2：已驳回 ，3：已通过,4：未处理 5：已处理 ,
+    public static String aplyStatus(String status){
+        if(status == null){
+            return "全部";
+        }
+        switch (status){
+            case "1":
+                return "待审核";
+            case "2":
+                return "已驳回";
+            case "3":
+                return "已通过";
+            case "4":
+                return "未处理";
+            case "5":
+                return "已处理";
+        }
+        return "全部";
+    }
 }
