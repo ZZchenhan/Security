@@ -96,7 +96,7 @@ public class ApplyLeaveActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        if(!(MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo()!=null &&
+        if((MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo()!=null &&
                 MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getLevel() != null
                 && MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getLevel().equals("1"))){
             initData();

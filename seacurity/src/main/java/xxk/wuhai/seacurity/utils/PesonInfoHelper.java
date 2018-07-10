@@ -150,4 +150,21 @@ public class PesonInfoHelper {
         }
         return "全部";
     }
+
+
+    //0-未处理1-通过2-驳回 ,
+    public static String detailStatus(String stauts){
+        if(stauts == null){
+            return "异常";
+        }
+        switch (stauts){
+            case "0":
+                return "未处理";
+            case "1":
+                return "通过";
+            case "2":
+                return "驳回";
+        }
+        return "未处理";
+    }
 }

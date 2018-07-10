@@ -24,7 +24,7 @@ import xxk.wuhai.seacurity.utils.PesonInfoHelper;
 import xxk.wuhai.seacurity.weight.ImageDialog;
 
 public class ElectIDcardActivity extends BaseActivity {
-
+    ImageDialog imageDialog;
     @Override
     public int layoutId() {
         return R.layout.activity_elect_idcard;

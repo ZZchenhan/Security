@@ -31,6 +31,8 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.main.view.MainActivity;
+import xxk.wuhai.seacurity.msg.view.ExamineActivity;
+import xxk.wuhai.seacurity.msg.view.LeaveActivity;
 import xxk.wuhai.seacurity.weight.AplyStausPopWindows;
 import xxk.wuhai.seacurity.work.adapter.MyApplyAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
@@ -119,6 +121,19 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                 intData(page);
             }
         }, recyclerView);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if(datas.get(position).getPatchTime() != null){
+                    //补签
+                    ExamineActivity.openActivity(MyAplyListActivity.this,
+                            datas.get(position).getApprovalRecordId(),type);
+                }else{
+                    LeaveActivity.openActivity(MyAplyListActivity.this,
+                            datas.get(position).getApprovalRecordId(),type);
+                }
+            }
+        });
         intData(page);
     }
 
