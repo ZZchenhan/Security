@@ -135,42 +135,10 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
         leftIconNavagation.setTitleColor(R.color.white);
         return leftIconNavagation;
     }
-    private AnimationDrawable animator;
+
     @Override
     public void initView() {
-        binding.recordDoneLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Acp.getInstance(CulActivity.this).request(new AcpOptions.Builder().setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE).build(), new AcpListener() {
-                    @Override
-                    public void onGranted() {
-                        try {
-                            mediaPlayer.reset();
-                            File file = new File(binding.recordVoice.getFilePath());
-                            boolean exists = file.exists();
-                            if (exists) {
-                                mediaPlayer.setDataSource(binding.recordVoice.getFilePath());
-                            } else {
-                                mediaPlayer.setDataSource(voiceUrl);
-                            }
-                            mediaPlayer.setVolume(100f, 100f);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            animator = (AnimationDrawable) binding.voiceImg.getBackground();
-                            animator.start();
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onDenied(List<String> permissions) {
-
-                    }
-                });
-            }
-        });
     }
 
     @Override
@@ -186,13 +154,6 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             }
         });
         mediaPlayer = new MediaPlayer();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                animator.selectDrawable(0);
-                animator.stop();
-            }
-        });
         binding.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -223,7 +184,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                     case RecordButton.RECORD_Done:  //RECORD_Done:2
                         binding.recordVoice.setVisibility(View.GONE);
                         binding.loseVoice.setVisibility(View.GONE);
-                        binding.recordDoneLayout.setVisibility(View.GONE);
+                        binding.seconds.setVisibility(View.GONE);
                         String filePath = binding.recordVoice.getFilePath();
 
                         //写入sd卡后刷新显示
@@ -266,7 +227,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             String objName = MyApplication.userDetailInfo.getUserInfo().getUserId()+System.currentTimeMillis()+"";
             PutObjectSamples putObjectSamples = new PutObjectSamples(MyApplication.oss,objName,voiceUrl);
             putObjectSamples.putObjectFromLocalFile();
-            addClueBurstVo.setTapeUrl(objName);
+            addClueBurstVo.setTapeUrl(MyApplication.aluyun+objName);
         }
 
         List<String> subImags = new ArrayList<>();
@@ -458,11 +419,13 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             binding.recordVoice.setVisibility(View.GONE);
             binding.loseVoice.setVisibility(View.GONE);
             try {
+                mediaPlayer.reset();
                 mediaPlayer.setDataSource(voiceUrl);
                 mediaPlayer.setVolume(100f, 100f);
                 mediaPlayer.prepare();
                 binding.recordVoice.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
-                binding.recordDoneLayout.setVisibility(View.VISIBLE);
+                binding.seconds.setVisibility(View.VISIBLE);
+                binding.seconds.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -484,9 +447,9 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
         }
 
         if (done) {
-            binding.recordDoneLayout.setVisibility(View.VISIBLE);
+            binding.seconds.setVisibility(View.VISIBLE);
         } else {
-            binding.recordDoneLayout.setVisibility(View.GONE);
+            binding.seconds.setVisibility(View.GONE);
         }
     }
 }

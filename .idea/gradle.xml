@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselib" />
+            <option value="$PROJECT_DIR$/mp3Utils" />
             <option value="$PROJECT_DIR$/seacurity" />
           </set>
         </option>

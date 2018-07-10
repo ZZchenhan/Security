@@ -1,1 +1,1 @@
-include ':app', ':baselib', ':seacurity'
+include ':app', ':baselib', ':seacurity', ':mp3Utils'

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Security.iml" filepath="$PROJECT_DIR$/Security.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselib/baselib.iml" filepath="$PROJECT_DIR$/baselib/baselib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mp3Utils/mp3Utils.iml" filepath="$PROJECT_DIR$/mp3Utils/mp3Utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/seacurity/seacurity.iml" filepath="$PROJECT_DIR$/seacurity/seacurity.iml" />
     </modules>
   </component>

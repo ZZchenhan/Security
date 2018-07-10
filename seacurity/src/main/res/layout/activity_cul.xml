@@ -83,35 +83,19 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:visibility="gone" />
-
-            <RelativeLayout
-                android:id="@+id/record_done_layout"
+            <TextView
+                android:id="@+id/seconds"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:background="@drawable/voice_play_bg"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/voice_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:background="@drawable/voice_animation" />
-
-                <TextView
-                    android:id="@+id/voice_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="35dp"
-                    android:text="0″"
-                    android:textColor="#ffffffff"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
+                android:background="@drawable/bg_record_button"
+                android:paddingBottom="2dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
+                android:paddingTop="2dp"
+                android:text="3''"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                android:visibility="gone"  />
         </FrameLayout>
     </LinearLayout>
     <LinearLayout

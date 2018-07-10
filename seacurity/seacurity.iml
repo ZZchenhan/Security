@@ -131,11 +131,9 @@
     <orderEntry type="library" name="com.github.bumptech.glide:disklrucache:4.3.1@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:monitor-1.0.2" level="project" />
     <orderEntry type="library" name="com.android.support:cursoradapter-28.0.0-alpha3" level="project" />
-    <orderEntry type="library" name="com.android.support:support-v4-25.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:runner-1.0.2" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.2@jar" level="project" />
     <orderEntry type="library" name="com.android.support:transition-28.0.0-alpha3" level="project" />
-    <orderEntry type="library" name="com.android.support:support-media-compat-25.3.1" level="project" />
     <orderEntry type="library" scope="TEST" name="com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
     <orderEntry type="library" name="com.android.support:collections:28.0.0-alpha3@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test.espresso:espresso-idling-resource-3.0.2" level="project" />
@@ -156,9 +154,11 @@
     <orderEntry type="library" name="com.android.support:design-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="com.android.support:slidingpanelayout-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="cn.jiguang.sdk:jcore-1.1.9" level="project" />
+    <orderEntry type="library" name="com.android.support:support-media-compat-27.0.2" level="project" />
     <orderEntry type="library" name="com.haibin:calendarview-3.2.9" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:annotations:4.3.1@jar" level="project" />
     <orderEntry type="library" name="me.majiajie:pager-bottom-tab-strip-2.2.5" level="project" />
+    <orderEntry type="library" name="com.android.support:support-v4-27.0.2" level="project" />
     <orderEntry type="library" name="com.squareup.retrofit2:adapter-rxjava2:2.4.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" name="com.android.support:drawerlayout-28.0.0-alpha3" level="project" />
@@ -196,5 +196,6 @@
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.1.2@jar" level="project" />
     <orderEntry type="library" name="cn.jiguang.sdk:jpush-3.1.1" level="project" />
     <orderEntry type="module" module-name="baselib" />
+    <orderEntry type="module" module-name="mp3Utils" />
   </component>
 </module>
