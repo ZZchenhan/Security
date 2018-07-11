@@ -11,6 +11,7 @@ import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.bean.ClueBursList;
 import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
 import xxk.wuhai.seacurity.work.bean.StudyDetail;
+import xxk.wuhai.seacurity.work.bean.UserSignListResult;
 import xxk.wuhai.seacurity.work.bean.UserSignResult;
 import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
@@ -22,6 +23,7 @@ import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
 import xxk.wuhai.seacurity.work.bean.StudyListResult;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeVo;
+import xxk.wuhai.seacurity.work.vo.GetUserSignVo;
 import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
 import xxk.wuhai.seacurity.work.vo.UserSignVo;
 
@@ -122,4 +124,11 @@ public interface WorkDutyApi {
     @POST("/client-api/attendance/userSign")
     Observable<Result<UserSignResult>> userSign(@Body UserSignVo userSignVo);
 
+    /**
+     * 获取用户随手签到记录
+     * @param getUserSignVo
+     * @return
+     */
+    @POST("/client-api/attendance/getUserSignList")
+    Observable<Result<UserSignListResult>> userSignList(@Body GetUserSignVo getUserSignVo);
 }

@@ -10,18 +10,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.work.adapter.SignListAdapter;
+import xxk.wuhai.seacurity.work.api.WorkDutyApi;
+import xxk.wuhai.seacurity.work.bean.UserSignListResult;
 import xxk.wuhai.seacurity.work.view.custorm.SignDetailHead;
+import xxk.wuhai.seacurity.work.vo.GetUserSignVo;
 
 public class SignListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private SignListAdapter signListAdapter;
-    private List<String> datas = new ArrayList<>();
+    private List<UserSignListResult.UserSignInfoVosBean> datas = new ArrayList<>();
     private SignDetailHead signDetailHead;
     private void findViews(){
         recyclerView = root.findViewById(R.id.recyclerView);
@@ -31,17 +43,18 @@ public class SignListFragment extends Fragment {
         signListAdapter.addHeaderView(signDetailHead);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         signListAdapter.bindToRecyclerView(recyclerView);
-
-
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        datas.add("");
-        signListAdapter.notifyDataSetChanged();
+        getSignList(page,signDetailHead.tvDate.getText().toString());
+        signDetailHead.name.setText(MyApplication.userDetailInfo.getUserInfo().getName().length()<2?MyApplication.userDetailInfo.getUserInfo().getName():
+                MyApplication.userDetailInfo.getUserInfo().getName().substring(MyApplication.userDetailInfo.getUserInfo().getName().length()-2,MyApplication.userDetailInfo.getUserInfo().getName().length()));
+        signDetailHead.userName.setText(MyApplication.userDetailInfo.getUserInfo().getName());
+        signListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                getSignList(page,signDetailHead.tvDate.getText().toString());
+            }
+        },recyclerView);
     }
-
+    private int page = 1;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,5 +94,57 @@ public class SignListFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         signDetailHead.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    private void  getSignList(final int page, String month){
+        if(page == 1 && datas.size()>10){
+            datas.clear();
+            signListAdapter.notifyDataSetChanged();
+        }
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .userSignList(new GetUserSignVo(month,page,20))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<UserSignListResult>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<UserSignListResult> userSignListResultResult) {
+                        if(!userSignListResultResult.getCode().equals("200")){
+                            ToastUtils.showShort(userSignListResultResult.getMessage());
+                            return;
+                        }
+                        signDetailHead.signNumbers.setText(String.format("本月已签到%d次",userSignListResultResult.getResult().getCount()));
+                        if(userSignListResultResult.getResult().getUserSignInfoVos()
+                                ==null || userSignListResultResult.getResult().getUserSignInfoVos().size() == 0){
+                            signListAdapter.loadMoreEnd();
+                            return;
+                        }
+                        if(userSignListResultResult.getResult().getUserSignInfoVos().size()>20) {
+                            signListAdapter.loadMoreComplete();
+                        }else{
+                            signListAdapter.loadMoreEnd();
+                        }
+                        SignListFragment.this.page++;
+                        datas.addAll(userSignListResultResult.getResult().getUserSignInfoVos());
+                        signDetailHead.setMarkes(datas);
+                        signListAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                            if(e != null){
+                                ToastUtils.showShort(e.getMessage());
+                            }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

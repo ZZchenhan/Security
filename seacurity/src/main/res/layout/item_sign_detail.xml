@@ -76,7 +76,7 @@
                     android:textColor="@color/text_color1"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/beizhu"
+                    android:id="@+id/remark"
                     android:layout_width="wrap_content"
                     android:text="杭州"
                     android:textSize="16sp"
@@ -114,18 +114,18 @@
                 <ImageView
                     android:id="@+id/pic1"
                     android:layout_width="60dp"
-                    android:src="@color/gray"
+                    android:scaleType="fitXY"
                     android:layout_height="60dp" />
                 <ImageView
                     android:id="@+id/pic2"
                     android:layout_width="60dp"
                     android:layout_marginLeft="15dp"
-                    android:src="@color/gray"
+                    android:scaleType="fitXY"
                     android:layout_height="60dp" />
                 <ImageView
                     android:id="@+id/pic3"
                     android:layout_width="60dp"
-                    android:src="@color/gray"
+                    android:scaleType="fitXY"
                     android:layout_marginLeft="15dp"
                     android:layout_height="60dp" />
             </LinearLayout>
