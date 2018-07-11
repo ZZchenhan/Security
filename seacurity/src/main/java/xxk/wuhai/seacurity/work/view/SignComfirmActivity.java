@@ -248,8 +248,8 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
 
         UserSignVo signVo = new UserSignVo();
         signVo.setPoiName(adrress);
-        signVo.setAttendanceLat(latlng.latitude + "");
-        signVo.setAttendanceLon(latlng.longitude + "");
+        signVo.setAttendanceLat(latlng!=null?latlng.latitude + "":"0");
+        signVo.setAttendanceLon(latlng!=null?latlng.longitude + "":"0");
         signVo.setAttendanceLocation(adrress);
         signVo.setRemark(tvExtra.getText().toString());
         List<String> subImags = new ArrayList<>();
