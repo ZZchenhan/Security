@@ -152,8 +152,7 @@ public class CulDetailActivity extends BaseActivity {
                                binding.ivRecode.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
                            }catch (IOException e){}
                         }else{
-                            binding.ivRecode.setText("0");
-                            binding.ivRecode.setVisibility(View.GONE);
+                            binding.ivRecode.setText("无录音");
                         }
                         binding.location.setText("地址");
 
