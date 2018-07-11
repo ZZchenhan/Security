@@ -114,6 +114,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     protected void onDestroy() {
         if(binding.mapview!=null){
             binding.mapview.onDestroy();
+            mlocationClient.onDestroy();
         }
         super.onDestroy();
     }
@@ -312,6 +313,9 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 });
     }
 
+
+
+
     private void upLoadMp3(String path){
 
     }
@@ -403,7 +407,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
             //设置未签到模式
-            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Transport);
+            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
             //指定位一次
 //            mLocationOption.setOnceLocation(true);
             //设置定位回调监听

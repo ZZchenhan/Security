@@ -25,6 +25,7 @@ import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeVo;
 import xxk.wuhai.seacurity.work.vo.GetUserSignVo;
 import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
+import xxk.wuhai.seacurity.work.vo.UploadTrajectoryVo;
 import xxk.wuhai.seacurity.work.vo.UserSignVo;
 
 /**
@@ -131,4 +132,11 @@ public interface WorkDutyApi {
      */
     @POST("/client-api/attendance/getUserSignList")
     Observable<Result<UserSignListResult>> userSignList(@Body GetUserSignVo getUserSignVo);
+
+    /**
+     * 1分钟上传一次轨迹
+     * @return
+     */
+    @POST("/client-api/attendance/uploadTrajectory")
+    Observable<Result<String>> uploadTrajectory(@Body UploadTrajectoryVo uploadTrajectoryVo);
 }
