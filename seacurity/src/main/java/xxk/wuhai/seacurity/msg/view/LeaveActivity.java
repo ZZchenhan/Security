@@ -121,7 +121,7 @@ public class LeaveActivity extends BaseActivity {
                         binding.result.setText(apDetailBean.getSupplement()+"");
                         try {
                             Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(1)).into(imageView1);
+                                    .load(apDetailBean.getPictureUrls().get(0)).into(imageView1);
                             Glide.with(LeaveActivity.this)
                                     .load(apDetailBean.getPictureUrls().get(1)).into(imageView2);
                             Glide.with(LeaveActivity.this)
