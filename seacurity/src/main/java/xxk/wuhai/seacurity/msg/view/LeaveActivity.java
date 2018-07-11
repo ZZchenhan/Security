@@ -119,6 +119,8 @@ public class LeaveActivity extends BaseActivity {
                         binding.days.setText(apDetailBean.getLraDays());
                         binding.type.setText(PesonInfoHelper.leaveType(apDetailBean.getTypeId()));
                         binding.result.setText(apDetailBean.getSupplement()+"");
+                        binding.name1.setText(apDetailBean.getApproverName());
+                        binding.resul1.setText(PesonInfoHelper.detailStatus(apDetailBean.getStatus()));
                         try {
                             Glide.with(LeaveActivity.this)
                                     .load(apDetailBean.getPictureUrls().get(0)).into(imageView1);
@@ -129,8 +131,6 @@ public class LeaveActivity extends BaseActivity {
                         }catch (Exception e){
                             e.getMessage();
                         }
-                        binding.name1.setText(apDetailBean.getApproverName());
-                        binding.resul1.setText(PesonInfoHelper.detailStatus(apDetailBean.getStatus()));
                     }
 
                     @Override

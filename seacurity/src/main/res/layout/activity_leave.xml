@@ -243,7 +243,7 @@
                 android:id="@+id/name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="黄燕"
+                android:text=""
                 android:textColor="@color/text_b2b2b2"
                 android:textSize="17sp" />
         </LinearLayout>
@@ -271,7 +271,7 @@
                 android:id="@+id/resul1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="驳回"
+                android:text=""
                 android:textColor="@color/text_b2b2b2"
                 android:textSize="17sp" />
         </LinearLayout>

@@ -160,12 +160,9 @@ public class CulDetailActivity extends BaseActivity {
                             Glide.with(CulDetailActivity.this)
                                     .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(0))
                                     .into(pic1);
-
                             Glide.with(CulDetailActivity.this)
                                     .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(1))
                                     .into(pic2);
-
-
                             Glide.with(CulDetailActivity.this)
                                     .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(2))
                                     .into(pic3);
