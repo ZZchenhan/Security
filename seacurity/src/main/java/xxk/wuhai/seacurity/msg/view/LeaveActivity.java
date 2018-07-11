@@ -31,9 +31,7 @@ import xxk.wuhai.seacurity.work.vo.ApDetailVo;
  */
 public class LeaveActivity extends BaseActivity {
     ActivityLeaveBinding binding;
-    ImageView imageView1;
-    ImageView imageView2;
-    ImageView imageView3;
+
     @Override
     public int layoutId() {
         return R.layout.activity_leave;
@@ -43,7 +41,7 @@ public class LeaveActivity extends BaseActivity {
     @Override
     protected View databindViews() {
         binding =  DataBindingUtil.inflate(LayoutInflater.from(this),layoutId(),null,false);
-        return super.databindViews();
+        return binding.getRoot();
     }
 
     @Override
@@ -71,9 +69,7 @@ public class LeaveActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-        imageView1 = findViewById(R.id.pic1);
-        imageView2 = findViewById(R.id.pic2);
-        imageView3 = findViewById(R.id.pic3);
+
     }
 
     /**
@@ -119,18 +115,18 @@ public class LeaveActivity extends BaseActivity {
                         binding.days.setText(apDetailBean.getLraDays());
                         binding.type.setText(PesonInfoHelper.leaveType(apDetailBean.getTypeId()));
                         binding.result.setText(apDetailBean.getSupplement()+"");
+                        binding.name1.setText(apDetailBean.getApproverName());
+                        binding.resul1.setText(PesonInfoHelper.detailStatus(apDetailBean.getStatus()));
                         try {
                             Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(1)).into(imageView1);
+                                    .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
                             Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(1)).into(imageView2);
+                                    .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
                             Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(2)).into(imageView3);
+                                    .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
                         }catch (Exception e){
                             e.getMessage();
                         }
-                        binding.name1.setText(apDetailBean.getApproverName());
-                        binding.resul1.setText(PesonInfoHelper.detailStatus(apDetailBean.getStatus()));
                     }
 
                     @Override

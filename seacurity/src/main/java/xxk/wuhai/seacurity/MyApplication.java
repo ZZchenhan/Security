@@ -8,6 +8,7 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.blankj.utilcode.util.Utils;
 
 import cn.jpush.android.api.JPushInterface;
 import sz.tianhe.baselib.http.RetrofitClient;
@@ -41,6 +42,7 @@ public class MyApplication extends Application {
        JPushInterface.init(this);
        retrofitClient = new RetrofitClient(this,baseUrl);
        deviceId = Build.SERIAL;
+       Utils.init(this);
        String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
 
        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAIqNxd4rFLe0l6","xZEViV4zH0VaVza8kd4cdNZ8TGvFLS");

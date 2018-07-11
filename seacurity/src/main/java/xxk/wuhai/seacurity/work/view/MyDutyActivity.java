@@ -146,7 +146,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
             //设置未签到模式
-            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Transport);
+            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
             //指定位一次
 //            mLocationOption.setOnceLocation(true);
             //设置定位回调监听

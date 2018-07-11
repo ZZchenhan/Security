@@ -54,7 +54,9 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
 
     @Override
     public void dettacheView() {
+        mlocationClient.onDestroy();
         this.iSignView = null;
+
     }
 
     @Override
