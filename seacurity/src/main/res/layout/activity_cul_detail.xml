@@ -88,21 +88,21 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="15dp"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitXY" />
 
                 <ImageView
                     android:id="@+id/iv_pic2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="15dp"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitXY" />
 
                 <ImageView
                     android:id="@+id/iv_pic3"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="15dp"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitXY" />
             </LinearLayout>
         </LinearLayout>
 
