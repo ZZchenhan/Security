@@ -23,9 +23,9 @@ import okio.BufferedSink;
  * 创建时间:2018/6/22 16:50
  */
 public class BaseInterceptor implements Interceptor{
-    public  static String name = "CE5D55AE79D4F853B3F5EFFF1A1F0EAF";
-    public static String token="aV2AzezaRM13REkYU/q1yQgW/Rm6YP42DlywAFgS7DlcDiWqJVAJIaJZxqU78yah";
-    public static String random = "1530984849836";
+    public  static String name = "84C52C14B65BD89693AEFCABAE1C41F6";
+    public static String token="D4b3H5/VtmEGgPfEQBDb1fJ/l9Rs9ogfaOpJcU+TYEh64Xl4CykMfPELE5bVF5Or";
+    public static String random = "1531321332998";
     private Map<String,String> mHeaders;
 
     public BaseInterceptor(Map<String,String> headers){

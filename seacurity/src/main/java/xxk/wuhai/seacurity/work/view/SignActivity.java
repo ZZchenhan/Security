@@ -1,5 +1,7 @@
 package xxk.wuhai.seacurity.work.view;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -72,5 +74,11 @@ public class SignActivity extends BaseActivity {
         signFragment = new SignFragment();
         signListFragment = new SignListFragment();
        fragmentManager.beginTransaction().add(R.id.content,signFragment,"sign").add(R.id.content,signListFragment,"signList").commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        signFragment.onActivityResult(requestCode,resultCode,data);
     }
 }

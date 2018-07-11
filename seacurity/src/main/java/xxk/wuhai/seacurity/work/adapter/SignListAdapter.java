@@ -32,6 +32,9 @@ public class SignListAdapter extends BaseQuickAdapter<UserSignListResult.UserSig
                 .setText(R.id.remark,item.getRemark()+"")
                 .setText(R.id.locaion,item.getAttendanceLocation()+"");
         try{
+            ((ImageView) helper.getView(R.id.pic1)).setImageResource(R.color.white);
+            ((ImageView) helper.getView(R.id.pic2)).setImageResource(R.color.white);
+            ((ImageView) helper.getView(R.id.pic3)).setImageResource(R.color.white);
             Glide.with(mContext).load(item.getImageUrls().get(0))
                     .into((ImageView) helper.getView(R.id.pic1));
             Glide.with(mContext).load(item.getImageUrls().get(1))

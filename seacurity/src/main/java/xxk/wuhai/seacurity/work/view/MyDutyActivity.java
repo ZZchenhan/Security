@@ -14,14 +14,24 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
+import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
@@ -31,9 +41,12 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
+import xxk.wuhai.seacurity.utils.DateUtils;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
+import xxk.wuhai.seacurity.work.bean.ScheduingResult;
 import xxk.wuhai.seacurity.work.view.custorm.DuyteHead;
+import xxk.wuhai.seacurity.work.vo.GetPersonScheduingVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
 
 /**
@@ -78,6 +91,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         duyteHead = new DuyteHead(this);
         View head1 = LayoutInflater.from(this).inflate(R.layout.layout_duty_head3,null);
         tvDate = head1.findViewById(R.id.tv_month);
+        adapter.addHeaderView(head1);
         adapter.addHeaderView(duyteHead);
         View headrview = LayoutInflater.from(this).inflate(R.layout.layout_duty_head2,null);
         headrview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -100,12 +114,17 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         duyteHead.setMonthChange(new CalendarView.OnMonthChangeListener() {
             @Override
             public void onMonthChange(int year, int month) {
-                tvDate.setText(year+"年"+month+"月" );
+                page = 1;
+                getOneMoneyDuty(page,year,month);
             }
         });
-        similarData();
+       java.util.Calendar calendar =  java.util.Calendar.getInstance();
+        getOneMoneyDuty(page,calendar.get(java.util.Calendar.YEAR),calendar.get(java.util.Calendar.MONTH)+1);
+        tvDate.setText(calendar.get(java.util.Calendar.YEAR)+"年"+(calendar.get(java.util.Calendar.MONTH)+1)+"月" );
         startLocaion();
     }
+
+    private int page = 1;
 
     @Override
     public void findViews() {
@@ -183,8 +202,6 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         super.onDestroy();
     }
 
-
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     /**
      * 初始化数据
      */
@@ -196,6 +213,73 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                     @Override
                     public void accept(Result<String> stringResult) throws Exception {
                         //获得本月拥有班次的信息
+                    }
+                });
+    }
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private void getOneMoneyDuty(int page, final int year, final int month){
+        GetPersonScheduingVo getPersonScheduingVo = new GetPersonScheduingVo();
+        getPersonScheduingVo.setPageNum(page);
+        getPersonScheduingVo.setStartDay(DateUtils.getMonthFistDay(year,month-1));
+        getPersonScheduingVo.setEndDay(DateUtils.getMonthLastDay(year,month-1));
+        getPersonScheduingVo.setPageSize(20);
+        getPersonScheduingVo.setEmpId(MyApplication.userDetailInfo.getUserInfo().getDeptId());
+        getPersonScheduingVo.setStaffId(MyApplication.userDetailInfo.getUserInfo().getUserId());
+
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .getPersonSchedulingByEmpId(getPersonScheduingVo)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ScheduingResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ScheduingResult scheduingResultResult) {
+                        if(!scheduingResultResult.getCode().equals("200")){
+                            toast(scheduingResultResult.getMessage());
+                            return;
+                        }
+
+                        if(scheduingResultResult.getResult().getPersonSchedulingList() == null
+                                ||scheduingResultResult.getResult().getPersonSchedulingList().size() == 0
+                                ){
+                           toast("没有更多数据了");
+                            return;
+                        }
+                        List<Calendar> schemes = new ArrayList<>();
+                        for(ScheduingResult.ResultBean.PersonSchedulingListBean personSchedulingListBean :scheduingResultResult.getResult().getPersonSchedulingList()){
+                            Map<String,List<ScheduingResult.ResultBean.PersonSchedulingListBean.ScheduingDetails>>  map =    personSchedulingListBean.getSchedulingList();
+                            Set<String> keys = map.keySet();
+                            for (String key : keys){
+                                List<ScheduingResult.ResultBean.PersonSchedulingListBean.ScheduingDetails> scheduingDetailsList = map.get(key);
+                                if(scheduingDetailsList!=null) {
+                                    try {
+                                       Date date =  simpleDateFormat.parse(key);
+                                        schemes.add(duyteHead.getSchemeCalendar(year, month, date.getDay(), "班"));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                        duyteHead.setSchemes(schemes);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(e != null){
+                            toast(e.getMessage());
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

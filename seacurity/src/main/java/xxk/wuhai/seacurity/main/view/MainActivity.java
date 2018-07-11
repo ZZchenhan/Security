@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
             //设置未签到模式
-            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
+            mLocationOption.setInterval(1000*30);
             //指定位一次
 //            mLocationOption.setOnceLocation(true);
             //设置定位回调监听

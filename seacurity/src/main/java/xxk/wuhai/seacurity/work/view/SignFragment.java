@@ -82,6 +82,8 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
         super.onCreate(savedInstanceState);
     }
 
+
+
     private View root;
 
     @Nullable
@@ -93,6 +95,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
             createPrensenter();
             mapView.onCreate(savedInstanceState);// 此方法必须重写
             initView();
+            presenter.attachView(this);
         }
         return root;
     }
@@ -113,6 +116,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        presenter.dettacheView();
     }
 
     @Override

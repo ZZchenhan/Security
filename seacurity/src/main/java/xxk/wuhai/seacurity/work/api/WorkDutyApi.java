@@ -10,6 +10,7 @@ import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.bean.ClueBursList;
 import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
+import xxk.wuhai.seacurity.work.bean.ScheduingResult;
 import xxk.wuhai.seacurity.work.bean.StudyDetail;
 import xxk.wuhai.seacurity.work.bean.UserSignListResult;
 import xxk.wuhai.seacurity.work.bean.UserSignResult;
@@ -19,6 +20,7 @@ import xxk.wuhai.seacurity.work.vo.ApListVo;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
 import xxk.wuhai.seacurity.work.vo.ClueBurstListVo;
 import xxk.wuhai.seacurity.work.vo.GetClueBurstDetailsVo;
+import xxk.wuhai.seacurity.work.vo.GetPersonScheduingVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
 import xxk.wuhai.seacurity.work.bean.StudyListResult;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
@@ -139,4 +141,11 @@ public interface WorkDutyApi {
      */
     @POST("/client-api/attendance/uploadTrajectory")
     Observable<Result<String>> uploadTrajectory(@Body UploadTrajectoryVo uploadTrajectoryVo);
+
+
+    /**
+     *
+     */
+    @POST("/client-api/commonScheduling/getPersonSchedulingByEmpId")
+    Observable<ScheduingResult> getPersonSchedulingByEmpId(@Body GetPersonScheduingVo personScheduingVo);
 }
