@@ -9,12 +9,14 @@ import xxk.wuhai.seacurity.work.bean.AplyResult;
 import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.bean.ClueBursList;
+import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
 import xxk.wuhai.seacurity.work.bean.StudyDetail;
 import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
 import xxk.wuhai.seacurity.work.vo.ClueBurstListVo;
+import xxk.wuhai.seacurity.work.vo.GetClueBurstDetailsVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
 import xxk.wuhai.seacurity.work.bean.StudyListResult;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
@@ -93,6 +95,19 @@ public interface WorkDutyApi {
     @POST("/client-api/clueBurstProcess/clueBurstList")
     Observable<Result<ClueBursList>> clueBurstList(@Body ClueBurstListVo clueBurstListVo);
 
+    /**
+     * 添加爆料信息
+     * @param addClueBurstVo
+     * @return
+     */
     @POST("/client-api/clueBurstProcess/addClueBurst")
     Observable<Result<String>> addClueBurst(@Body AddClueBurstVo addClueBurstVo);
+
+    /**
+     * 添加爆料信息
+     * @param  getClueBurstDetailsVo 获取爆料详情
+     * @return
+     */
+    @POST("/client-api/clueBurstProcess/clueBurstDetails")
+    Observable<Result<ClueBurstDetailResult>> clueBurstDetails(@Body GetClueBurstDetailsVo getClueBurstDetailsVo);
 }
