@@ -51,7 +51,7 @@ public class SignDetailHead extends LinearLayout {
         mapView = root.findViewById(R.id.tv_map);
         name = root.findViewById(R.id.name);
         userName = root.findViewById(R.id.user_name);
-        signNumbers = root.findViewById(R.id.user_name);
+        signNumbers = root.findViewById(R.id.sign_num);
         tvDate = root.findViewById(R.id.date);
         tvDate.setText(simpleDateFormat.format(new Date()));
         initMap(mapView);

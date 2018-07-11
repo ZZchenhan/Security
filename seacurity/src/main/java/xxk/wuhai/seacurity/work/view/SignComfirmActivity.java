@@ -245,6 +245,10 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
             toast("请输入签到备注");
             return;
         }
+        if(imagesUrl.size() == 0){
+            toast("请至少拍一张图片");
+            return;
+        }
 
         UserSignVo signVo = new UserSignVo();
         signVo.setPoiName(adrress);
@@ -263,6 +267,7 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
                 e.printStackTrace();
             }
         }
+        signVo.setImageUrls(subImags);
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
                 .userSign(signVo).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

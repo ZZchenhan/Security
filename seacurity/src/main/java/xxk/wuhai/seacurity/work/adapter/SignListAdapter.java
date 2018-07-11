@@ -27,7 +27,7 @@ public class SignListAdapter extends BaseQuickAdapter<UserSignListResult.UserSig
     @Override
     protected void convert(BaseViewHolder helper, UserSignListResult.UserSignInfoVosBean item) {
         helper.setText(R.id.date,item.getSignTime()!=null?item.getSignTime().substring(5,10):"未知时间")
-                .setText(R.id.time,item.getSignTime()!=null?item.getSignTime().substring(11):"未知时间")
+                .setText(R.id.time,item.getSignTime()!=null?item.getSignTime().substring(11,16):"未知时间")
                 .setText(R.id.site,item.getAttendanceLocation()+"")
                 .setText(R.id.remark,item.getRemark()+"")
                 .setText(R.id.locaion,item.getAttendanceLocation()+"");
