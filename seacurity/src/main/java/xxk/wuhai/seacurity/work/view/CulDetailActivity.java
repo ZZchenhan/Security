@@ -44,7 +44,7 @@ public class CulDetailActivity extends BaseActivity {
 
     ActivityCulDetailBinding binding;
     MediaPlayer mediaPlayer;
-    ImageView pic1,pic2,pic3;
+
     @Override
     public int layoutId() {
         return R.layout.activity_cul_detail;
@@ -115,9 +115,6 @@ public class CulDetailActivity extends BaseActivity {
                 }
             }
         });
-        pic1 = findViewById(R.id.iv_pic1);
-        pic2 = findViewById(R.id.iv_pic2);
-        pic3 = findViewById(R.id.iv_pic3);
         initData();
     }
 
@@ -159,13 +156,13 @@ public class CulDetailActivity extends BaseActivity {
                         try{
                             Glide.with(CulDetailActivity.this)
                                     .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(0))
-                                    .into(pic1);
+                                    .into(binding.ivPic1);
                             Glide.with(CulDetailActivity.this)
                                     .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(1))
-                                    .into(pic2);
+                                    .into(binding.ivPic2);
                             Glide.with(CulDetailActivity.this)
                                     .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(2))
-                                    .into(pic3);
+                                    .into(binding.ivPic3);
                         }catch (Exception e){
 
                         }

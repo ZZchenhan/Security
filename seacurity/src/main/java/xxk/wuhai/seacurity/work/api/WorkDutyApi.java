@@ -11,6 +11,7 @@ import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.bean.ClueBursList;
 import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
 import xxk.wuhai.seacurity.work.bean.StudyDetail;
+import xxk.wuhai.seacurity.work.bean.UserSignResult;
 import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
@@ -22,6 +23,7 @@ import xxk.wuhai.seacurity.work.bean.StudyListResult;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeVo;
 import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
+import xxk.wuhai.seacurity.work.vo.UserSignVo;
 
 /**
  * Created by 86936 on 2018/7/4.
@@ -110,4 +112,14 @@ public interface WorkDutyApi {
      */
     @POST("/client-api/clueBurstProcess/clueBurstDetails")
     Observable<Result<ClueBurstDetailResult>> clueBurstDetails(@Body GetClueBurstDetailsVo getClueBurstDetailsVo);
+
+
+    /**
+     * 用户签到页面
+     * @param userSignVo
+     * @return
+     */
+    @POST("/client-api/attendance/userSign")
+    Observable<Result<UserSignResult>> userSign(@Body UserSignVo userSignVo);
+
 }
