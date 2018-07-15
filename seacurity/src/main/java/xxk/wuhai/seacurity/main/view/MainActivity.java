@@ -52,6 +52,7 @@ import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.view.LoginActivity;
 import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.main.view.custorm.MyNormalItem;
+import xxk.wuhai.seacurity.main.view.custorm.UpdateUtils;
 import xxk.wuhai.seacurity.me.view.MeFragment;
 import xxk.wuhai.seacurity.msg.view.MsgFragment;
 import xxk.wuhai.seacurity.utils.ShareUtlts;
@@ -138,6 +139,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     public void initView() {
         initBottom();
         initFragment();
+        new UpdateUtils(this).chekVersion();
     }
 
     @Override

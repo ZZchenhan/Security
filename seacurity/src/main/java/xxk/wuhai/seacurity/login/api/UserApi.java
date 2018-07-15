@@ -1,8 +1,12 @@
 package xxk.wuhai.seacurity.login.api;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.contact.bean.StaffResult;
 import xxk.wuhai.seacurity.login.bean.CodeBean;
@@ -53,4 +57,9 @@ public interface UserApi {
 
     @POST("/client-api/customer/doLabel")
     Observable<Result<String>> doPraise(@Body AddLabelInfoApiVo addLabelInfoApiVo);
+
+
+    @Streaming
+    @GET
+    Observable<ResponseBody> downloadFile(@Url String   fileUrl);
 }
