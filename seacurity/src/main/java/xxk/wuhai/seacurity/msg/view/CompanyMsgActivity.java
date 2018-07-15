@@ -3,6 +3,7 @@ package xxk.wuhai.seacurity.msg.view;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -100,15 +101,15 @@ public class CompanyMsgActivity extends BaseActivity {
         if(result.getMessageDetail() != null){
             tvTile.setText("标题:"+result.getMessageDetail().getMessageTitle());
             tvTimes.setText("发送时间:"+result.getMessageDetail().getMessageCreateTime());
-            tvContext.setText("内容:"+result.getMessageDetail().getMessageContent());
+            tvContext.setText(Html.fromHtml(result.getMessageDetail().getMessageContent()));
             tvFrom.setText("来源:"+result.getMessageDetail().getCompanyName());
             return;
         }
         if(result.getPersonnelDetails() != null){
             tvTile.setText("标题:人事变动提醒");
             tvTimes.setText("发送时间:"+result.getPersonnelDetails().getGmtCreate());
-            tvContext.setText("内容"+result.getPersonnelDetails().getName() +"("+result.getPersonnelDetails().getPost()+")"
-            +"于"+result.getPersonnelDetails().getTime()+"正式"+(result.getPersonnelDetails().getType().equals("0")?"入职":"离职")
+
+            tvContext.setText(Html.fromHtml(result.getPersonnelDetails().getPost())
             );
             tvFrom.setText("来源:人事部");
             return;

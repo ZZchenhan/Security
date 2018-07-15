@@ -102,7 +102,7 @@ public class MsgFragment extends Fragment {
                         ExamineActivity2.openActivity(getContext(),Integer.parseInt(datas.get(position).getAssociatedId()),2);
                         break;
                     case "4":
-                        NotifyMsgActivity.openActivity(getContext(),datas.get(position));
+                        //NotifyMsgActivity.openActivity(getContext(),datas.get(position));
                         break;
                     case "6":
                         CompanyMsgActivity.openActivity(getContext(),datas.get(position).getMessageTypeId(),datas.get(position).getMessageId());
