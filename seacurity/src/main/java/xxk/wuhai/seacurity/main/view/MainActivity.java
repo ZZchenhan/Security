@@ -139,7 +139,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     public void initView() {
         initBottom();
         initFragment();
-        new UpdateUtils(this).chekVersion();
+//        new UpdateUtils(this).chekVersion();
     }
 
     @Override
