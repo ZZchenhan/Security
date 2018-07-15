@@ -84,7 +84,7 @@ public class MeTAgActivity extends BaseActivity {
         tagAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-               if(getIntent().getIntExtra("id",0)!= MyApplication.userDetailInfo.getUserInfo().getUserId()
+               if(getIntent().getIntExtra("id",0)== MyApplication.userDetailInfo.getUserInfo().getUserId()
                        ){
                    return;
                }
