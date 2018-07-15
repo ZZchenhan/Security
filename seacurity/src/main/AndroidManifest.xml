@@ -110,6 +110,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".work.view.SuggestActivity" />
         <activity android:name=".work.view.SystemSettinActivity"></activity>
+        <activity android:name=".msg.view.ExamineActivity2"/>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.msg.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -93,10 +94,12 @@ public class MsgFragment extends Fragment {
                         CompanyMsgActivity.openActivity(getContext(),datas.get(position).getMessageTypeId(),datas.get(position).getMessageId());
                         break;
                     case "2":
+                        startActivity(new Intent(getContext(),DutyMsgActivity.class)
+                        .putExtra("msgId",datas.get(position).getMessageId()).putExtra("msgType",datas.get(position).getMessageTypeId()));
                         DutyMsgActivity.openActivity(getContext(),DutyMsgActivity.class);
                         break;
                     case "3":
-                        ExamineActivity.openActivity(getContext(),ExamineActivity.class);
+                        ExamineActivity2.openActivity(getContext(),Integer.parseInt(datas.get(position).getAssociatedId()),2);
                         break;
                     case "4":
                         NotifyMsgActivity.openActivity(getContext(),datas.get(position));
