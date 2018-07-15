@@ -5,7 +5,7 @@ package xxk.wuhai.seacurity.login.bean;
  *
  * @QQ 869360026
  */
-public class DeptVoBean {
+public class DeptVoBean implements Cloneable{
     /**
      * deptId : 15
      * deptName : 未分组
@@ -48,5 +48,10 @@ public class DeptVoBean {
 
     public void setSortNum(int sortNum) {
         this.sortNum = sortNum;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return (DeptVoBean)super.clone();
     }
 }

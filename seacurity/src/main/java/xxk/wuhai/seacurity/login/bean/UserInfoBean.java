@@ -1,5 +1,9 @@
 package xxk.wuhai.seacurity.login.bean;
 
+import java.util.List;
+
+import xxk.wuhai.seacurity.login.vo.UpdateUsers;
+
 /**
  * Created by 86936 on 2018/7/8.
  *
@@ -108,7 +112,17 @@ public class UserInfoBean implements Cloneable{
     private GuardUserVo guardUserInfo;
     private int orgId;
     private int deptId;
+    private List<UpdateUsers.RelRolesBean> relRoles;
     private RelUserDeptOrgVoBean relUserDeptOrgVo;
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        UserInfoBean userInfoBean = (UserInfoBean) super.clone();
+        if(this.guardUserInfo != null)
+            userInfoBean.guardUserInfo = (GuardUserVo) this.guardUserInfo.clone();
+        userInfoBean.relUserDeptOrgVo = (RelUserDeptOrgVoBean) this.relUserDeptOrgVo.clone();
+        return userInfoBean;
+    }
 
     public int getUserId() {
         return userId;
@@ -508,5 +522,13 @@ public class UserInfoBean implements Cloneable{
 
     public void setRelUserDeptOrgVo(RelUserDeptOrgVoBean relUserDeptOrgVo) {
         this.relUserDeptOrgVo = relUserDeptOrgVo;
+    }
+
+    public List<UpdateUsers.RelRolesBean> getRelRoles() {
+        return relRoles;
+    }
+
+    public void setRelRoles(List<UpdateUsers.RelRolesBean> relRoles) {
+        this.relRoles = relRoles;
     }
 }

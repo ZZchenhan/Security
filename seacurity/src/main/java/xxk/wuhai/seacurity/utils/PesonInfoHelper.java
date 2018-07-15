@@ -100,10 +100,7 @@ public class PesonInfoHelper {
 
     public static String changeTimes(String times){
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            Date date = simpleDateFormat.parse(times);
-            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return simpleDateFormat.format(date);
+            return times;
         }catch (Exception e){
             return "转换出错";
         }

@@ -23,7 +23,7 @@
             android:layout_marginLeft="16dp"
             android:paddingLeft="16dp"
             android:textSize="18sp"
-            android:elevation="3dp"
+            android:elevation="2dp"
             android:singleLine="true"
             android:drawableLeft="@mipmap/icon_search"
             android:textColor="@color/text_color3"
@@ -37,7 +37,7 @@
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:background="@color/text_color3"
-        android:elevation="3dp"
+        android:elevation="2dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

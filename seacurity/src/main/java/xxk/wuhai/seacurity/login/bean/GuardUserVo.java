@@ -6,7 +6,7 @@ package xxk.wuhai.seacurity.login.bean;
  * @QQ 869360026
  */
 
-public class GuardUserVo {
+public class GuardUserVo implements Cloneable{
     private String certificateNo;
     private Integer guardId;
     private Integer qualificationId;
@@ -33,5 +33,11 @@ public class GuardUserVo {
 
     public void setQualificationId(Integer qualificationId) {
         this.qualificationId = qualificationId;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        GuardUserVo o = (GuardUserVo) super.clone();
+        return o;
     }
 }

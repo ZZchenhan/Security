@@ -20,6 +20,7 @@ import xxk.wuhai.seacurity.databinding.FragmentMeInfoUpdateBinding;
 import xxk.wuhai.seacurity.login.api.UserApi;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.bean.UserInfoBean;
+import xxk.wuhai.seacurity.login.vo.UpdateUsers;
 import xxk.wuhai.seacurity.utils.PesonInfoHelper;
 import xxk.wuhai.seacurity.weight.dialog.BottomDialog;
 import xxk.wuhai.seacurity.weight.dialog.TypeHelp;
@@ -47,8 +48,7 @@ public class MeInfoUpdateFragment extends Fragment {
     private String politicalType = "";
     private String bloodType = "";
 
-
-
+    UpdateUsers userInfoBean;
 
     @Nullable
     @Override
@@ -57,6 +57,8 @@ public class MeInfoUpdateFragment extends Fragment {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_me_info_update, container, false);
             root = binding.getRoot();
             setOnclick();
+            userInfoBean = new UpdateUsers();
+            userInfoBean.change(MyApplication.userDetailInfo);
             setData(MyApplication.userDetailInfo);
         }
         return root;
@@ -78,6 +80,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.live.setText(userDetailInfo.getUserInfo().getLivingAddress());
         binding.adress.setText(userDetailInfo.getUserInfo().getLivingAddress());
         binding.marry.setText(PesonInfoHelper.marryStatus(userDetailInfo.getUserInfo().getMaritalStatus()));
+        userInfoBean.setMaritalStatus(userDetailInfo.getUserInfo().getMaritalStatus() == null ?"0":userDetailInfo.getUserInfo().getMaritalStatus());
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
         binding.height.setText(userDetailInfo.getUserInfo().getHeight()+"");
         binding.age.setText(userDetailInfo.getUserInfo().getAge()+"");
@@ -94,7 +97,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                update(MyApplication.userDetailInfo.getUserInfo());
+                update();
             }
         });
     }
@@ -111,6 +114,7 @@ public class MeInfoUpdateFragment extends Fragment {
                         public void onClick(View view) {
                             binding.sex.setText(sexDialog.getSelectValues().getValues());
                             sexCode = sexDialog.getSelectValues().getCode();
+                            userInfoBean.setSex(sexCode);
                             sexDialog.dismiss();
                         }
                     });
@@ -129,6 +133,7 @@ public class MeInfoUpdateFragment extends Fragment {
                         public void onClick(View view) {
                             binding.education.setText(eductaoinDialog.getSelectValues().getValues());
                             eductionType = eductaoinDialog.getSelectValues().getCode();
+                            userInfoBean.setEducation(Integer.parseInt(eductionType));
                             eductaoinDialog.dismiss();
                         }
                     });
@@ -149,6 +154,7 @@ public class MeInfoUpdateFragment extends Fragment {
                         public void onClick(View view) {
                             marriedType = marridDialog.getSelectValues().getCode();
                             binding.marry.setText(marridDialog.getSelectValues().getValues());
+                            userInfoBean.setMaritalStatus(marridDialog.getSelectValues().getCode());
                             marridDialog.dismiss();
                         }
                     });
@@ -168,6 +174,7 @@ public class MeInfoUpdateFragment extends Fragment {
                         public void onClick(View view) {
                             politicalType = politicalDialog.getSelectValues().getCode();
                             binding.political.setText(politicalDialog.getSelectValues().getValues());
+                            userInfoBean.setPoliticsType(politicalDialog.getSelectValues().getCode());
                             politicalDialog.dismiss();
                         }
                     });
@@ -187,6 +194,7 @@ public class MeInfoUpdateFragment extends Fragment {
                         public void onClick(View view) {
                             bloodType = bloodDialog.getSelectValues().getCode();
                             binding.blood.setText(bloodDialog.getSelectValues().getValues());
+                            userInfoBean.setBloodType(bloodDialog.getSelectValues().getCode());
                             bloodDialog.dismiss();
                         }
                     });
@@ -206,6 +214,7 @@ public class MeInfoUpdateFragment extends Fragment {
                     @Override
                     public void onConfimr(String addrss) {
                         binding.nativePlace.setText(addrss);
+                        userInfoBean.setResidenceAddress(addrss);
                     }
                 });
                 siteDialogFragment.show();
@@ -222,6 +231,7 @@ public class MeInfoUpdateFragment extends Fragment {
                     @Override
                     public void onConfimr(String addrss) {
                         binding.live.setText(addrss);
+                        userInfoBean.setLivingAddress(addrss);
                     }
                 });
                 siteDialogFragment.show();
@@ -231,9 +241,11 @@ public class MeInfoUpdateFragment extends Fragment {
 
 
 
-    public void update(UserInfoBean userDetailInfo){
+    public void update(){
+        userInfoBean.setNation( binding.nation.getText().toString());
+        userInfoBean.setLivingAddress(userInfoBean.getLivingAddress()+binding.live.getText().toString());
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
-                .modify(userDetailInfo)
+                .modify(userInfoBean)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result>() {

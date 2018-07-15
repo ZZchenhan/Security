@@ -225,7 +225,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="38dp"
             android:background="@color/colorPrimary"
-            android:elevation="3dp"
+            android:elevation="2dp"
             android:text="确    定"
             android:textColor="@color/white"
             android:textSize="14sp" />

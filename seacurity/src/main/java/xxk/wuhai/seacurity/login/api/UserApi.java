@@ -17,6 +17,7 @@ import xxk.wuhai.seacurity.login.vo.GetCodeVo;
 import xxk.wuhai.seacurity.login.vo.GetPraiseAndLabelVo;
 import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.login.vo.LoginBean;
+import xxk.wuhai.seacurity.login.vo.UpdateUsers;
 
 /**
  * Created by 86936 on 2018/7/1.
@@ -39,7 +40,7 @@ public interface UserApi {
 
 
     @POST("/client-api/user/modify ")
-    Observable<Result> modify(@Body UserInfoBean userInfoBean);
+    Observable<Result> modify(@Body UpdateUsers userInfoBean);
 
 
     @POST("/client-api/customer/getPraiseAndLabel")

@@ -61,7 +61,7 @@ public class LoginPrensenter implements IBasePresenter {
 
     @Override
     public void init() {
-        test();
+//        test();
     }
 
     public void login(Activity activity, AppCompatEditText phone, AppCompatEditText pass) {

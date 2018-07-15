@@ -5,7 +5,7 @@ package xxk.wuhai.seacurity.login.bean;
  *
  * @QQ 869360026
  */
-public class RelUserDeptOrgVoBean {
+public class RelUserDeptOrgVoBean implements Cloneable{
     /**
      * deptId : 15
      * orgId : 19
@@ -88,5 +88,11 @@ public class RelUserDeptOrgVoBean {
 
     public void setRank(Object rank) {
         this.rank = rank;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        RelUserDeptOrgVoBean o = (RelUserDeptOrgVoBean) super.clone();
+        return o;
     }
 }

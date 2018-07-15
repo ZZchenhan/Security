@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.login.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  *
  * @QQ 869360026
  */
-public class OrgVo {
+public class OrgVo implements Cloneable{
     /**
      * 部门对象
      */
@@ -70,5 +71,12 @@ public class OrgVo {
         this.name = name;
         this.orgId = orgId;
         this.type = type;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        OrgVo orgVo = (OrgVo) super.clone();
+        orgVo.deptVoList = (List<DeptVoBean>) ((ArrayList<DeptVoBean>)this.deptVoList).clone();
+        return super.clone();
     }
 }

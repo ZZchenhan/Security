@@ -13,7 +13,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/bg_item_msg"
-        android:elevation="3dp"
+        android:elevation="2dp"
         android:orientation="vertical"
         android:paddingBottom="10dp">
 
