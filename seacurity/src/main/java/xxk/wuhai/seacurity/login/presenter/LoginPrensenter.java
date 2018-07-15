@@ -4,9 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
+import android.util.ArraySet;
 import android.util.Log;
 
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -115,6 +122,11 @@ public class LoginPrensenter implements IBasePresenter {
                 if(result.getCode().equals("200")){
                     ShareUtlts.save(mContext,BaseInterceptor.token,BaseInterceptor.random,BaseInterceptor.name);
                     MyApplication.userDetailInfo = result.getResult();
+                    JPushInterface.setAlias(mContext,1,MyApplication.userDetailInfo.getUserInfo().getPhone()+"");
+                    Set<String> tags = new HashSet<>();
+                    tags.add(MyApplication.userDetailInfo.getDeptVo().getOrgId()+"");
+                    tags.add(MyApplication.userDetailInfo.getDeptVo().getDeptId()+"");
+                    JPushInterface.setTags(mContext,3123,tags);
                     loginView.loginSuccess(result.getResult());
                 }else{
                     if(loginView!=null){
@@ -138,7 +150,7 @@ public class LoginPrensenter implements IBasePresenter {
     }
 
     public void test(){
-        final LoginBean loginBean = new LoginBean("3252096f7ec80aa4367cdea5511e0b8fa371e777", "15557196991","196991");
+        final LoginBean loginBean = new LoginBean("3252096g7ec80aa4367cdea5511e0b8fa371e555", "13903844569","844569");
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .login(loginBean).subscribeOn(Schedulers.newThread())
                 .subscribeOn(Schedulers.newThread())
@@ -170,6 +182,11 @@ public class LoginPrensenter implements IBasePresenter {
                         if(result.getCode().equals("200")){
                             MyApplication.userDetailInfo = result.getResult();
                             loginView.loginSuccess(result.getResult());
+                            JPushInterface.setAlias(mContext,1,MyApplication.userDetailInfo.getUserInfo().getPhone()+"");
+                            Set<String> tags = new HashSet<>();
+                            tags.add(MyApplication.userDetailInfo.getDeptVo().getOrgId()+"");
+                            tags.add(MyApplication.userDetailInfo.getDeptVo().getDeptId()+"");
+                            JPushInterface.setTags(mContext,3123,tags);
                         }else{
                             if(loginView!=null){
                                 loginView.toast(result.getMessage());

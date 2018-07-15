@@ -25,6 +25,7 @@ import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.blankj.utilcode.util.ToastUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,6 +43,8 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftTitleNavagation;
 import xxk.wuhai.seacurity.contact.view.ContactFragment;
+import xxk.wuhai.seacurity.login.api.UserApi;
+import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.view.LoginActivity;
 import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.main.view.custorm.MyNormalItem;
@@ -332,5 +335,40 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
 
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 200 && resultCode == RESULT_OK){
+            MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                    .getUserInfo(new GetUserInfoVo())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<xxk.wuhai.seacurity.bean.Result<UserDetailInfo>>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(xxk.wuhai.seacurity.bean.Result<UserDetailInfo> result) {
+                            if(result.getCode().equals("200")){
+                                MyApplication.userDetailInfo = result.getResult();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ToastUtils.showShort(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+            return;
+        }
     }
 }

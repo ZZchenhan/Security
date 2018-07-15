@@ -207,4 +207,5 @@ public interface WorkDutyApi {
      */
     @POST("/client-api/user/logout")
     Observable<Result<RecordBean>> logout(@Body GetUserInfoVo getUserInfoVo);
+
 }

@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.me.view;
 
+import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.blankj.utilcode.util.ToastUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,6 +28,7 @@ import xxk.wuhai.seacurity.utils.PesonInfoHelper;
 import xxk.wuhai.seacurity.weight.dialog.BottomDialog;
 import xxk.wuhai.seacurity.weight.dialog.TypeHelp;
 import xxk.wuhai.seacurity.weight.site.SiteDialogFragment;
+import xxk.wuhai.seacurity.work.bean.RecordBean;
 
 /**
  * Created by 86936 on 2018/6/30.
@@ -248,20 +252,28 @@ public class MeInfoUpdateFragment extends Fragment {
                 .modify(userInfoBean)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Result>() {
+                .subscribe(new Observer<Result<RecordBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result result) {
-
+                    public void onNext(Result<RecordBean> result) {
+                        if(result.getCode().equals("200")){
+                            if(result.getResult().getStatus().equals("1")) {
+                                ToastUtils.showShort("修改成功");
+                                getActivity().setResult(Activity.RESULT_OK);
+                                getActivity().finish();
+                            }else{
+                                ToastUtils.showLong(result.getMessage());
+                            }
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        ToastUtils.showShort(e.getMessage());
                     }
 
                     @Override

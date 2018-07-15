@@ -96,7 +96,6 @@ public class MsgFragment extends Fragment {
                     case "2":
                         startActivity(new Intent(getContext(),DutyMsgActivity.class)
                         .putExtra("msgId",datas.get(position).getMessageId()).putExtra("msgType",datas.get(position).getMessageTypeId()));
-                        DutyMsgActivity.openActivity(getContext(),DutyMsgActivity.class);
                         break;
                     case "3":
                         ExamineActivity2.openActivity(getContext(),Integer.parseInt(datas.get(position).getAssociatedId()),2);

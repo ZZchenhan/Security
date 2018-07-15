@@ -12,6 +12,12 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
+import xxk.wuhai.seacurity.msg.view.CompanyMsgActivity;
+import xxk.wuhai.seacurity.msg.view.DutyMsgActivity;
+import xxk.wuhai.seacurity.msg.view.ExamineActivity2;
+import xxk.wuhai.seacurity.msg.view.NotifyMsgActivity;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by 86936 on 2018/7/1.
@@ -56,13 +62,25 @@ public class MyReceiver extends BroadcastReceiver {
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
 
+                JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
 
-                //打开自定义的Activity
-                //Intent i = new Intent(context,ContentActivity.class);
-                //i.putExtras(bundle);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                //context.startActivity(i);
-
+                switch (json.getString("messageTypeId")){
+                    case "0":
+                        break;
+                    case "1":
+                        CompanyMsgActivity.openActivity(context,"1",json.getInt("associatedId"));
+                        break;
+                    case "2":
+                        context.startActivity(new Intent(context,DutyMsgActivity.class)
+                                .putExtra("msgId",json.getInt("associatedId")).putExtra("msgType","1"));
+                        break;
+                    case "3":
+                        ExamineActivity2.openActivity(context,json.getInt("associatedId"),2);
+                        break;
+                    case "4":
+//                        NotifyMsgActivity.openActivity(getContext(),datas.get(position));
+                        break;
+                }
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
                 //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..

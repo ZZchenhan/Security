@@ -110,16 +110,30 @@ public class DutyMsgActivity extends BaseActivity {
        if(result == null){
            return;
        }
-        binding.dutyTime.setText(result.getCardPosition().getScheduleTime());
-        binding.changeTime.setText(result.getCardPosition().getWorkTime());
+        binding.dutyTime.setText(result.getCardPosition().getName());
+        binding.changeTime.setText(result.getCardPosition().getScheduleTime());
         binding.workTimes.setText(result.getCardPosition().getScheduleName()
-        +result.getCardPosition().getBeginAttendanceTime()+"-"+result.getCardPosition().getEndAttendanceTime());
+       +" " +result.getCardPosition().getBeginAttendanceTime()+"-"+result.getCardPosition().getEndAttendanceTime());
         try{
-            binding.startLocation.setText(result.getCardPosition().getCardPositionInfoVoList().get(0).getAttendanceLocation());
-            binding.endLoction.setText(result.getCardPosition().getCardPositionInfoVoList().get(1).getAttendanceLocation());
+            binding.startLocation.setText(type(result.getCardPosition().getCardPositionInfoVoList().get(0).getAttendanceType()) +"位置:"+result.getCardPosition().getCardPositionInfoVoList().get(0).getAttendanceLocation());
+           if(result.getCardPosition().getCardPositionInfoVoList().size()-1 == 0){
+               return;
+           }
+            binding.endLoction.setText(type(result.getCardPosition().getCardPositionInfoVoList().get(result.getCardPosition().getCardPositionInfoVoList().size()-1).getAttendanceType()) +"位置:"+result.getCardPosition().getCardPositionInfoVoList().get(1).getAttendanceLocation());
         }catch (Exception e){
 
         }
     }
 
+
+    private String type(String type){
+        switch (type){
+            case "0":
+                return "上班";
+            case "1":
+                return "中途";
+            default:
+                return "下班";
+        }
+    }
 }

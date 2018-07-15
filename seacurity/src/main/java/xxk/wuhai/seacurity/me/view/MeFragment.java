@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.me.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -126,7 +127,7 @@ public class MeFragment extends Fragment {
         tvInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MeInfoActivity.openActivity(getContext(),MeInfoActivity.class);
+                MeInfoActivity.openActivity((Activity) getContext(),MeInfoActivity.class,200);
 //                SiteDialogFragment siteDialogFragment = new SiteDialogFragment(getContext());
 //                siteDialogFragment.show();
             }
