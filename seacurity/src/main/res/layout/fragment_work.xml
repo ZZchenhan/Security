@@ -17,6 +17,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:fitsSystemWindows="true">
+                <include layout="@layout/workd_head"/>
                 <include
                     layout="@layout/layout_work_mennue"
                     />

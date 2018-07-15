@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/bg_work_menue"
         android:orientation="vertical"
         android:layout_height="295dp">
@@ -35,7 +36,7 @@
             <View
                 android:layout_width="1dp"
                 android:layout_weight="0"
-                android:background="@color/text_color7"
+                android:background="#f2f2f2"
                 android:layout_height="110dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -62,7 +63,7 @@
             <View
                 android:layout_width="140dp"
                 android:layout_weight="0"
-                android:background="@color/text_color7"
+                android:background="#f2f2f2"
                 android:layout_height="1dp"/>
             <android.support.v4.widget.Space
                 android:layout_width="match_parent"
@@ -71,7 +72,7 @@
             <View
                 android:layout_width="140dp"
                 android:layout_weight="0"
-                android:background="@color/text_color7"
+                android:background="#f2f2f2"
                 android:layout_height="1dp"/>
         </LinearLayout>
         <LinearLayout
@@ -99,7 +100,7 @@
                 android:layout_width="1dp"
                 android:layout_weight="0"
                 android:layout_gravity="bottom"
-                android:background="@color/text_color7"
+                android:background="#f2f2f2"
                 android:layout_height="110dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -123,7 +124,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="15dp"
         android:layout_height="93dp">
         <TextView
             android:id="@+id/tv_examination"

@@ -1,7 +1,9 @@
 package xxk.wuhai.seacurity.work.view;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -41,13 +44,19 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
+import xxk.wuhai.seacurity.msg.view.ExamineActivity;
 import xxk.wuhai.seacurity.utils.DateUtils;
+import xxk.wuhai.seacurity.work.TrajectoryActivity;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
+import xxk.wuhai.seacurity.work.bean.DayDutyBean;
+import xxk.wuhai.seacurity.work.bean.RecordBean;
 import xxk.wuhai.seacurity.work.bean.ScheduingResult;
 import xxk.wuhai.seacurity.work.view.custorm.DuyteHead;
 import xxk.wuhai.seacurity.work.vo.GetPersonScheduingVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
+import xxk.wuhai.seacurity.work.vo.GetSchedulingVo;
+import xxk.wuhai.seacurity.work.vo.RecordVo;
 
 /**
  *我的值班
@@ -56,7 +65,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
 
     RecyclerView recyclerView;
     RecordAdapter adapter;
-    List<RecoderBean> data = new ArrayList<RecoderBean>();
+    List<DayDutyBean.SchedulingInfoListBean> data = new ArrayList<>();
     private TextView tvDate;
     private TextView tvDay;
     private Button btnTrajectory;
@@ -100,7 +109,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         btnTrajectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toast("查看轨迹");
+                startActivity(new Intent(MyDutyActivity.this, TrajectoryActivity.class).putExtra("time",date));
             }
         });
         adapter.addHeaderView(headrview);
@@ -109,19 +118,37 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             @Override
             public void onDateSelected(Calendar calendar, boolean isClick) {
                 tvDay.setText(calendar.getMonth()+"月" + calendar.getDay()+"日");
+                getOneDayDuty(String.format("%d-%02d-%02d",calendar.getYear(),calendar.getMonth(),calendar.getDay()));
             }
         });
         duyteHead.setMonthChange(new CalendarView.OnMonthChangeListener() {
             @Override
             public void onMonthChange(int year, int month) {
                 page = 1;
+                tvDate.setText(year+"年"+month+"月");
+
                 getOneMoneyDuty(page,year,month);
             }
         });
-       java.util.Calendar calendar =  java.util.Calendar.getInstance();
+       final java.util.Calendar calendar =  java.util.Calendar.getInstance();
         getOneMoneyDuty(page,calendar.get(java.util.Calendar.YEAR),calendar.get(java.util.Calendar.MONTH)+1);
         tvDate.setText(calendar.get(java.util.Calendar.YEAR)+"年"+(calendar.get(java.util.Calendar.MONTH)+1)+"月" );
         startLocaion();
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.btn_record:
+                        record(data.get(position).getAttendanceInfoVoList().get(0).getScheduleId(),
+                                data.get(position).getAttendanceInfoVoList().get(0).getAttendanceSetId());
+                        break;
+                    case R.id.tv_apply:
+                        startActivity(new Intent(MyDutyActivity.this,ExamineActivity.class)
+                        .putExtra("id", data.get(position).getAttendanceInfoVoList().get(0).getAttendanceSetId()));
+                        break;
+                }
+            }
+        });
     }
 
     private int page = 1;
@@ -132,28 +159,6 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void similarData(){
-        List<Calendar> schemes = new ArrayList<>();
-        int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-        int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH)+1;
-        schemes.add(duyteHead.getSchemeCalendar(year, month, 3, "白"));
-        schemes.add(duyteHead.getSchemeCalendar(year, month, 6, "晚"));
-        schemes.add(duyteHead.getSchemeCalendar(year, month, 10,"晚"));
-        schemes.add(duyteHead.getSchemeCalendar(year, month, 11,"白"));
-        schemes.add(duyteHead.getSchemeCalendar(year, month, 14,"白"));
-        schemes.add(duyteHead.getSchemeCalendar(year, month, 15,"休"));
-        schemes.add(duyteHead.getSchemeCalendar(year, month, 18,"休"));
-        duyteHead.setSchemes(schemes);
-
-        data.add(new RecoderBean(0));
-        data.add(new RecoderBean(1));
-        data.add(new RecoderBean(0));
-        data.add(new RecoderBean(0));
-        data.add(new RecoderBean(1));
-    }
-
-    LatLng latLng;
-    String addrrss;
     /***
      * 开始定位
      */
@@ -184,6 +189,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     }
     AMapLocationClient mlocationClient;
     AMapLocationClientOption mLocationOption;
+    private String poi;
     Marker marker;
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
@@ -191,6 +197,8 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
                 RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
+                RecordAdapter.timeLong = System.currentTimeMillis();
+                poi =  aMapLocation.getPoiName();
                 adapter.notifyDataSetChanged();
             }
         }
@@ -202,20 +210,6 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         super.onDestroy();
     }
 
-    /**
-     * 初始化数据
-     */
-    private void initData(){
-        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getClockRateForEmp(new GetSchedulingByUserIdVo(simpleDateFormat.format(new Date()),21))
-                .subscribeOn(Schedulers.newThread())
-                .doOnNext(new Consumer<Result<String>>() {
-                    @Override
-                    public void accept(Result<String> stringResult) throws Exception {
-                        //获得本月拥有班次的信息
-                    }
-                });
-    }
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private void getOneMoneyDuty(int page, final int year, final int month){
@@ -258,8 +252,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                                 List<ScheduingResult.ResultBean.PersonSchedulingListBean.ScheduingDetails> scheduingDetailsList = map.get(key);
                                 if(scheduingDetailsList!=null) {
                                     try {
-                                       Date date =  simpleDateFormat.parse(key);
-                                        schemes.add(duyteHead.getSchemeCalendar(year, month, date.getDay(), "班"));
+                                       Date date =  simpleDateFormat.parse(key);schemes.add(duyteHead.getSchemeCalendar(year, month, date.getDay(), "班"));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
@@ -283,8 +276,87 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                     }
                 });
     }
+    private String date;
+    private void getOneDayDuty(final String date){
+        this.date = date;
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId()))
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer<Result<DayDutyBean>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
-    private void getOneDayDuty(){
+            }
 
+            @Override
+            public void onNext(Result<DayDutyBean> result) {
+                if(!result.getCode().equals("200")){
+                    toast(result.getMessage());
+                    return;
+                }
+                if(result.getResult() == null){
+                    return;
+                }
+
+                data.clear();
+                if(result.getResult().getSchedulingInfoList() !=null)
+                    data.addAll(result.getResult().getSchedulingInfoList());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if(e!=null){
+                    toast(e.getMessage());
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void record(int scheId,int id){
+        RecordVo recordVo = new RecordVo();
+        recordVo.setAttendanceId(id+"");
+        try {
+            recordVo.setAttendanceLat(RecoderBean.currentLatLng.latitude + "");
+            recordVo.setAttendanceLon(RecoderBean.currentLatLng.longitude + "");
+            recordVo.setAttendanceLocation(poi);
+        }catch (Exception e){}
+        recordVo.setSchedulingId(scheId+"");
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .record(recordVo)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<RecordBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<RecordBean> recoderBeanResult) {
+                        if(!recoderBeanResult.getCode().equals("200")){
+                            toast(recoderBeanResult.getMessage());
+                            startActivity(new Intent(MyDutyActivity.this,RecordFaileActivity.class));
+                            return;
+                        }
+                        toast("打卡成功");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        toast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

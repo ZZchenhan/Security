@@ -24,12 +24,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
+import xxk.wuhai.seacurity.work.api.WorkDutyApi;
+import xxk.wuhai.seacurity.work.bean.DayDutyBean;
+import xxk.wuhai.seacurity.work.vo.GetSchedulingVo;
 
 /**
  * 用户打卡页面
@@ -46,7 +55,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
     private RecordAdapter recordAdapter;
 
-    private List<RecoderBean> recoderBeans = new ArrayList<>();
+    private List<DayDutyBean.SchedulingInfoListBean> recoderBeans = new ArrayList<>();
 
     @Override
     public int layoutId() {
@@ -81,13 +90,50 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                 }
             }
         });
-
-        recoderBeans.add(new RecoderBean(0));
-        recoderBeans.add(new RecoderBean(1));
-        recoderBeans.add(new RecoderBean(0));
-        recoderBeans.add(new RecoderBean(0));
-        recoderBeans.add(new RecoderBean(1));
         startLocaion();
+    }
+
+    private String date;
+    private void getOneDayDuty(final String date){
+        this.date = date;
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId()))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<DayDutyBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<DayDutyBean> result) {
+                        if(!result.getCode().equals("200")){
+                            toast(result.getMessage());
+                            return;
+                        }
+                        if(result.getResult() == null){
+                            return;
+                        }
+
+                        recoderBeans.clear();
+                        if(result.getResult().getSchedulingInfoList() !=null)
+                            recoderBeans.addAll(result.getResult().getSchedulingInfoList());
+                        recordAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if(e!=null){
+                            toast(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override
@@ -136,6 +182,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
                RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
+               RecordAdapter.timeLong = System.currentTimeMillis();
                recordAdapter.notifyDataSetChanged();
             }
         }

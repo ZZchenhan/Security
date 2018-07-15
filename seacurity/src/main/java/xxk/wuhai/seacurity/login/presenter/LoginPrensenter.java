@@ -136,9 +136,24 @@ public class LoginPrensenter implements IBasePresenter {
     }
 
     public void test(){
+        final LoginBean loginBean = new LoginBean("3252096f7ec80aa4367cdea5511e0b8fa371e777", "15557196991","196991");
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
-                .getUserInfo(new GetUserInfoVo()).subscribeOn(Schedulers.newThread()).
-                observeOn(AndroidSchedulers.mainThread())
+                .login(loginBean).subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.newThread())
+                .flatMap(new Function<Result<LoginResult>, ObservableSource<Result<UserDetailInfo>>>() {
+                    @Override
+                    public ObservableSource<Result<UserDetailInfo>> apply(Result<LoginResult> loginResultResult) throws Exception {
+                        if(loginResultResult.getCode().equals("200")){
+                            BaseInterceptor.token = loginResultResult.getResult().getAccessToken();
+                            BaseInterceptor.name = loginResultResult.getResult().getUsername();
+                            BaseInterceptor.random = loginResultResult.getResult().getRandom()+"";
+                            return MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                                    .getUserInfo(new GetUserInfoVo());
+                        }else{
+                            throw new RuntimeException(loginResultResult.getMessage());
+                        }
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<UserDetailInfo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {

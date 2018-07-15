@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/text_color4"
+    android:background="#f1f1f1"
     tools:context="xxk.wuhai.seacurity.work.view.MyDutyActivity">
    <android.support.v7.widget.RecyclerView
        android:id="@+id/recyclerView"

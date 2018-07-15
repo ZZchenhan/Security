@@ -144,10 +144,11 @@ public class CustomMonthView extends MonthView {
                     mCurMonthLunarTextPaint);
         }else if(isSelected){
             mCurMonthLunarTextPaint.setColor(0xffffffff);
-            canvas.drawText(calendar.getScheme()==null?"休":calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
-                    mCurMonthLunarTextPaint);
+                canvas.drawText(calendar.getScheme()==null?"休":calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
+                        mCurMonthLunarTextPaint);
         }else{
             mCurMonthLunarTextPaint.setColor(0xffF43530);
+            if(calendar.isCurrentMonth())
             canvas.drawText(calendar.getScheme()==null || calendar.getScheme().equals("")?"休":calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
                     mCurMonthLunarTextPaint);
         }

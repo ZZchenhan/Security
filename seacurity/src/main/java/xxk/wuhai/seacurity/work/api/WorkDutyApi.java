@@ -3,6 +3,7 @@ package xxk.wuhai.seacurity.work.api;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.work.bean.ApDetailResult;
 import xxk.wuhai.seacurity.work.bean.AplyResult;
@@ -10,10 +11,14 @@ import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.bean.ClueBursList;
 import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
+import xxk.wuhai.seacurity.work.bean.DayDutyBean;
+import xxk.wuhai.seacurity.work.bean.PersonSchedulingResult;
+import xxk.wuhai.seacurity.work.bean.RecordBean;
 import xxk.wuhai.seacurity.work.bean.ScheduingResult;
 import xxk.wuhai.seacurity.work.bean.StudyDetail;
 import xxk.wuhai.seacurity.work.bean.UserSignListResult;
 import xxk.wuhai.seacurity.work.bean.UserSignResult;
+import xxk.wuhai.seacurity.work.view.GetTrajectoryResponse;
 import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
@@ -21,11 +26,15 @@ import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
 import xxk.wuhai.seacurity.work.vo.ClueBurstListVo;
 import xxk.wuhai.seacurity.work.vo.GetClueBurstDetailsVo;
 import xxk.wuhai.seacurity.work.vo.GetPersonScheduingVo;
+import xxk.wuhai.seacurity.work.vo.GetSchedulingByTimeVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
 import xxk.wuhai.seacurity.work.bean.StudyListResult;
+import xxk.wuhai.seacurity.work.vo.GetSchedulingVo;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeListVo;
 import xxk.wuhai.seacurity.work.vo.GetStudyNoticeVo;
+import xxk.wuhai.seacurity.work.vo.GetTrajectoryVo;
 import xxk.wuhai.seacurity.work.vo.GetUserSignVo;
+import xxk.wuhai.seacurity.work.vo.RecordVo;
 import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
 import xxk.wuhai.seacurity.work.vo.UploadTrajectoryVo;
 import xxk.wuhai.seacurity.work.vo.UserSignVo;
@@ -144,8 +153,40 @@ public interface WorkDutyApi {
 
 
     /**
-     *
+     *按时间段查询排班
      */
     @POST("/client-api/commonScheduling/getPersonSchedulingByEmpId")
     Observable<ScheduingResult> getPersonSchedulingByEmpId(@Body GetPersonScheduingVo personScheduingVo);
+
+    /**
+     * 查询个人当日排班
+     * @param getSchedulingVo
+     * @return
+     */
+    @POST("/client-api/commonScheduling/getSchedulingByUserId")
+    Observable<Result<DayDutyBean>> getOwnScheduling(@Body GetSchedulingVo getSchedulingVo);
+
+    /**
+     * 打卡
+     * @param recordVo
+     * @return
+     */
+    @POST("/client-api/attendance/userAttendance")
+    Observable<Result<RecordBean>> record(@Body RecordVo recordVo);
+
+    /**
+     *
+     * @param getTrajectoryVo
+     * @return
+     */
+    @POST("/client-api/commonScheduling/getTrajectory")
+    Observable<Result<GetTrajectoryResponse>> getTrajectory(@Body GetTrajectoryVo getTrajectoryVo);
+
+    /**
+     * 获得时间段靠请
+     * @param getSchedulingByTimeVo
+     * @return
+     */
+    @POST("/client-api/commonScheduling/getTimesScheduling")
+    Observable<Result<PersonSchedulingResult>> getTimesScheduling(@Body GetSchedulingByTimeVo getSchedulingByTimeVo);
 }
