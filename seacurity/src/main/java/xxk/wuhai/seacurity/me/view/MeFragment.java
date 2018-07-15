@@ -1,20 +1,40 @@
 package xxk.wuhai.seacurity.me.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.contact.view.AddImpressionActivity;
 import xxk.wuhai.seacurity.contact.view.UserInfoActivity;
+import xxk.wuhai.seacurity.login.api.UserApi;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.bean.UserInfoBean;
+import xxk.wuhai.seacurity.login.result.TagResult;
+import xxk.wuhai.seacurity.login.vo.GetPraiseAndLabelVo;
+import xxk.wuhai.seacurity.main.view.MainActivity;
+import xxk.wuhai.seacurity.me.adapter.GridSpacingItemDecoration;
+import xxk.wuhai.seacurity.me.adapter.TagAdapter;
 import xxk.wuhai.seacurity.weight.site.SiteDialogFragment;
 
 /**
@@ -42,16 +62,15 @@ public class MeFragment extends Fragment {
 
     private TextView tvCai;
 
-    private TextView tag1;
-    private TextView tag2;
-    private TextView tag3;
-    private TextView tag4;
-    private TextView tag5;
-    private TextView see;
 
     private TextView tvInfo;
 
     private TextView idCard;
+
+
+    TagAdapter tagAdapter;
+    RecyclerView recyclerView;
+    List<TagResult.ResultBean.LabelVoListBean> datas = new ArrayList<>();
 
     private void setDada(UserInfoBean userDetailInfo){
         name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(userDetailInfo.getName().length()-2,userDetailInfo.getName().length()));
@@ -62,12 +81,6 @@ public class MeFragment extends Fragment {
         phone.setText(userDetailInfo.getPhone()+"");
         tvZan.setText(String.format("赞：%s","0"));
         tvCai.setText(String.format("踩：%s","0"));
-        tag1.setVisibility(View.GONE);
-        tag2.setVisibility(View.GONE);
-        tag3.setVisibility(View.GONE);
-        tag4.setVisibility(View.GONE);
-        tag5.setVisibility(View.GONE);
-        see.setVisibility(View.GONE);
     }
 
     @Override
@@ -96,14 +109,19 @@ public class MeFragment extends Fragment {
         phone = root.findViewById(R.id.phone);
         tvZan = root.findViewById(R.id.zan);
         tvCai = root.findViewById(R.id.cai);
-        tag1 = root.findViewById(R.id.tag1);
-        tag2 = root.findViewById(R.id.tag2);
-        tag3 = root.findViewById(R.id.tag3);
-        tag4 = root.findViewById(R.id.tag4);
-        tag5 = root.findViewById(R.id.tag5);
-        see = root.findViewById(R.id.tv_see);
         tvInfo = root.findViewById(R.id.userinfo);
         idCard = root.findViewById(R.id.idcard);
+        recyclerView = root.findViewById(R.id.recylview);
+        tagAdapter = new TagAdapter(datas);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,10,getContext().getResources().getDisplayMetrics()),false));
+        recyclerView.setAdapter(tagAdapter);
+        root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).openOrClose();
+            }
+        });
 
         tvInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,10 +139,59 @@ public class MeFragment extends Fragment {
             }
         });
 
-        see.setOnClickListener(new View.OnClickListener() {
+        tagAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onClick(View view) {
-                MeTAgActivity.openActivity(getContext(),MeTAgActivity.class);
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(datas.get(position).getLabelName().equals("查看更多")){
+                    startActivity(new Intent(getContext(),MeTAgActivity.class).putExtra("id",MyApplication.userDetailInfo.getUserInfo().getUserId()));
+                }
+            }
+        });
+
+//        see.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                MeTAgActivity.openActivity(getContext(),MeTAgActivity.class);
+//            }
+//        });
+        getTags(MyApplication.userDetailInfo.getUserInfo().getUserId());
+    }
+
+    public void getTags(int userId){
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .getPraiseAndLabel(new GetPraiseAndLabelVo(userId))
+            .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer<TagResult>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(TagResult s) {
+                if(!s.getCode().equals("200")){
+                    ToastUtils.showShort(s.getMessage());
+                    return;
+                }
+                datas.clear();
+                tvZan.setText("赞："+s.getResult().getPraised());
+                tvCai.setText("踩："+s.getResult().getTrampled());
+                if(s.getResult().getLabelVoList().size()>=9){
+                    datas.addAll(s.getResult().getLabelVoList().subList(0,8));
+                }
+                datas.add(new TagResult.ResultBean.LabelVoListBean(0,"查看更多",1));
+                tagAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

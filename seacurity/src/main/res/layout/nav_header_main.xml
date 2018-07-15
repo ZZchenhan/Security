@@ -1,36 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height">
-
-    <ImageView
-        android:id="@+id/head_bg"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+    <FrameLayout
+        android:elevation="1dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/side_nav_bar" />
+        android:layout_height="@dimen/nav_header_height">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nav_header_height"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin"
-       >
+        <ImageView
+            android:id="@+id/head_bg"
+            android:layout_width="420dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@mipmap/na_bg" />
 
-        <sz.tianhe.baselib.weight.CircleImageView
-            android:id="@+id/person_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@mipmap/ic_launcher_round" />
-
-        <TextView
-            android:id="@+id/person_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingBottom="26dp"
+            >
 
-    </LinearLayout>
-
-</FrameLayout>
+            <TextView
+                android:background="@drawable/bg_white_ring_40"
+                android:id="@+id/person_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="dada"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textColor="@color/white"
+                android:src="@mipmap/ic_launcher_round" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="11dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:text="谎言"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18236281734"
+                    android:textColor="#ffffffff"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+    <TextView
+        android:id="@+id/sugest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:text="意见反馈"
+        android:paddingTop="24dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="19dp"
+        android:drawableLeft="@mipmap/suggest"
+        android:textColor="#ff3f3f3f"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:text="系统设置"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="19dp"
+        android:drawableLeft="@mipmap/setting"
+        android:textColor="#ff3f3f3f"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/login_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:text="退出登陆"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="19dp"
+        android:drawableLeft="@mipmap/suggest"
+        android:textColor="#ff3f3f3f"
+        android:textSize="14sp"
+        />
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="270dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:text="保安通1.0   钧信保安2018"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        android:paddingLeft="19dp"
+        android:paddingBottom="19dp"
+        android:layout_height="match_parent" />
+</LinearLayout>

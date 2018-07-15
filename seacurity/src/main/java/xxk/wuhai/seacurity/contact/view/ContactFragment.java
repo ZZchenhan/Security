@@ -37,6 +37,7 @@ import xxk.wuhai.seacurity.contact.bean.DirDeptVoListBean;
 import xxk.wuhai.seacurity.contact.bean.DirectoryVo;
 import xxk.wuhai.seacurity.contact.utils.PinYin2Abbreviation;
 import xxk.wuhai.seacurity.contact.vo.ApiGetDirectoryVo;
+import xxk.wuhai.seacurity.main.view.MainActivity;
 import xxk.wuhai.seacurity.weight.SideLetterBar;
 
 /**
@@ -84,6 +85,16 @@ public class ContactFragment extends Fragment {
         currentDepartment = root.findViewById(R.id.tv_current_depart);
         sideLetterBar = root.findViewById(R.id.side_letter_bar);
         tvHint = root.findViewById(R.id.tv_letter_overlay);
+        root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).openOrClose();
+            }
+        });
+        if(getArguments() == null) {
+            root.findViewById(R.id.frame_navigation)
+                    .setVisibility(View.VISIBLE);
+        }
         initView();
     }
 

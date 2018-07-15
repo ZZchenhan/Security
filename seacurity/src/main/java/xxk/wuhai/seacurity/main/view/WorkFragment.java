@@ -70,6 +70,13 @@ public class WorkFragment extends Fragment {
         tvDay5 = root.findViewById(R.id.day5);
         tvDay6 = root.findViewById(R.id.day6);
         tvDay7 = root.findViewById(R.id.day7);
+
+        root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).openOrClose();
+            }
+        });
         blue = getContext().getDrawable(R.drawable.work_head_blue);
         blue.setBounds(0,0,blue.getMinimumWidth(),blue.getMinimumHeight());
         red = getContext().getDrawable(R.drawable.work_head_read);

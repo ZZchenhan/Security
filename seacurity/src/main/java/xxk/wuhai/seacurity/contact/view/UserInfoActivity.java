@@ -4,16 +4,36 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.contact.bean.DirectoryVo;
+import xxk.wuhai.seacurity.contact.bean.StaffResult;
+import xxk.wuhai.seacurity.login.api.UserApi;
 import xxk.wuhai.seacurity.login.bean.UserInfoBean;
+import xxk.wuhai.seacurity.login.result.TagResult;
+import xxk.wuhai.seacurity.login.vo.GetPraiseAndLabelVo;
+import xxk.wuhai.seacurity.me.adapter.GridSpacingItemDecoration;
+import xxk.wuhai.seacurity.me.adapter.TagAdapter;
+import xxk.wuhai.seacurity.me.view.MeTAgActivity;
 
 public class UserInfoActivity extends BaseActivity {
 
@@ -33,12 +53,9 @@ public class UserInfoActivity extends BaseActivity {
 
     private TextView tvCai;
 
-    private TextView tag1;
-    private TextView tag2;
-    private TextView tag3;
-    private TextView tag4;
-    private TextView tag5;
-    private TextView see;
+    TagAdapter tagAdapter;
+    RecyclerView recyclerView;
+    List<TagResult.ResultBean.LabelVoListBean> datas = new ArrayList<>();
 
     DirectoryVo directoryVo;
 
@@ -52,17 +69,19 @@ public class UserInfoActivity extends BaseActivity {
         phone = findViewById(R.id.phone);
         tvZan = findViewById(R.id.zan);
         tvCai = findViewById(R.id.cai);
-        tag1 = findViewById(R.id.tag1);
-        tag2 = findViewById(R.id.tag2);
-        tag3 = findViewById(R.id.tag3);
-        tag4 = findViewById(R.id.tag4);
-        tag5 = findViewById(R.id.tag5);
-        see = findViewById(R.id.tv_see);
 
-        see.setOnClickListener(new View.OnClickListener() {
+        recyclerView =findViewById(R.id.recylview);
+        tagAdapter = new TagAdapter(datas);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,10,this.getResources().getDisplayMetrics()),false));
+        recyclerView.setAdapter(tagAdapter);
+
+        tagAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onClick(View view) {
-                AddImpressionActivity.openActivity(UserInfoActivity.this,AddImpressionActivity.class);
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(datas.get(position).getLabelName().equals("查看更多")){
+                    startActivity(new Intent(UserInfoActivity.this,MeTAgActivity.class).putExtra("id",directoryVo.getUserId()));
+                }
             }
         });
     }
@@ -111,17 +130,88 @@ public class UserInfoActivity extends BaseActivity {
         phone.setText(userDetailInfo.getPhone()+"");
         tvZan.setText(String.format("赞：%s","0"));
         tvCai.setText(String.format("踩：%s","0"));
-        tag1.setVisibility(View.GONE);
-        tag2.setVisibility(View.GONE);
-        tag3.setVisibility(View.GONE);
-        tag4.setVisibility(View.GONE);
-        tag5.setVisibility(View.GONE);
-        see .setVisibility(View.GONE);
+        getTags(userDetailInfo.getUserId());
+        getAge(userDetailInfo.getUserId());
     }
 
 
     public static void openActivity(Context context,DirectoryVo directoryVo){
         context.startActivity(new Intent(context,UserInfoActivity.class).putExtra("data",directoryVo));
+    }
+
+
+    public void getTags(int userId){
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .getPraiseAndLabel(new GetPraiseAndLabelVo(userId))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TagResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(TagResult s) {
+                        if(!s.getCode().equals("200")){
+                            ToastUtils.showShort(s.getMessage());
+                            return;
+                        }
+                        datas.clear();
+                        tvZan.setText("赞："+s.getResult().getPraised());
+                        tvCai.setText("踩："+s.getResult().getTrampled());
+                        if(s.getResult().getLabelVoList().size()>=9){
+                            datas.addAll(s.getResult().getLabelVoList().subList(0,8));
+                        }
+                        datas.add(new TagResult.ResultBean.LabelVoListBean(0,"查看更多",1));
+                        tagAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    public void getAge(int userId){
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .getStaffInfo(new GetPraiseAndLabelVo(userId))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<StaffResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(StaffResult s) {
+                        if(!s.getCode().equals("200")){
+                            toast(s.getMessage());
+                            return;
+                        }
+                        try {
+                            age.setText(s.getResult().getStaffInfoVo().getAge() + "");
+                        }catch (Exception e){}
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 

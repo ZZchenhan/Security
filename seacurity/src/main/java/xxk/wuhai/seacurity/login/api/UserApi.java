@@ -4,13 +4,17 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.contact.bean.StaffResult;
 import xxk.wuhai.seacurity.login.bean.CodeBean;
 import xxk.wuhai.seacurity.login.bean.UpdateBean;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.bean.UserInfoBean;
 import xxk.wuhai.seacurity.login.result.LoginResult;
+import xxk.wuhai.seacurity.login.result.TagResult;
+import xxk.wuhai.seacurity.login.vo.AddLabelInfoApiVo;
 import xxk.wuhai.seacurity.login.vo.ForgetPassVo;
 import xxk.wuhai.seacurity.login.vo.GetCodeVo;
+import xxk.wuhai.seacurity.login.vo.GetPraiseAndLabelVo;
 import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.login.vo.LoginBean;
 
@@ -37,4 +41,14 @@ public interface UserApi {
     @POST("/client-api/user/modify ")
     Observable<Result> modify(@Body UserInfoBean userInfoBean);
 
+
+    @POST("/client-api/customer/getPraiseAndLabel")
+    Observable<TagResult> getPraiseAndLabel(@Body GetPraiseAndLabelVo getPraiseAndLabelVo);
+
+
+    @POST("/client-api/staff/getStaffInfo")
+    Observable<StaffResult> getStaffInfo(@Body GetPraiseAndLabelVo getPraiseAndLabelVo);
+
+    @POST("/client-api/customer/doLabel")
+    Observable<Result<String>> doPraise(@Body AddLabelInfoApiVo addLabelInfoApiVo);
 }

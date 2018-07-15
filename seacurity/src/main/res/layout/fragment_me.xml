@@ -7,7 +7,32 @@
     android:background="@color/text_color5"
     android:orientation="vertical"
     tools:context="xxk.wuhai.seacurity.contact.view.UserInfoActivity">
-
+    <FrameLayout
+        android:id="@+id/frame_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true">
+        <ImageView
+            android:id="@+id/left_menu"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_left"
+            android:paddingLeft="19dp"
+            android:paddingRight="19dp"
+            android:layout_height="?android:attr/actionBarSize" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLength="10"
+            android:text="我的"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </FrameLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="145dp">
@@ -152,7 +177,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="15dp"
@@ -182,7 +207,7 @@
                 android:layout_marginLeft="15dp"
                 android:drawableLeft="@mipmap/icon_info_zan"
                 android:drawablePadding="6dp"
-                android:textColor="@color/text_color7" />
+                android:textColor="#888888" />
 
             <TextView
                 android:id="@+id/cai"
@@ -191,93 +216,14 @@
                 android:layout_marginLeft="15dp"
                 android:drawableLeft="@mipmap/icon_info_cai"
                 android:drawablePadding="6dp"
-                android:textColor="@color/text_color7" />
+                android:textColor="#888888" />
         </LinearLayout>
-
-
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recylview"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tag1"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_info_normal"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/text_color7"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tag2"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:background="@drawable/bg_info_normal"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/text_color7"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tag3"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:background="@drawable/bg_info_normal"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:text="劳动模范"
-                android:textColor="@color/text_color7"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tag4"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_info_normal"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/text_color7"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tag5"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:background="@drawable/bg_info_blue"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/white"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_see"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="gone" />
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>

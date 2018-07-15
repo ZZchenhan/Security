@@ -5,9 +5,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.login.view.LoginActivity;
 import xxk.wuhai.seacurity.main.view.MainActivity;
 import xxk.wuhai.seacurity.R;
@@ -75,8 +77,13 @@ public class GuideActivity extends BaseActivity implements IGuideView {
 
     @Override
     public void handover() {
-        LoginActivity.openActivity(this, LoginActivity.class);
-        finish();
+        if(MyApplication.userDetailInfo == null || BaseInterceptor.token == null || BaseInterceptor.token.equals("")) {
+            LoginActivity.openActivity(this, LoginActivity.class);
+            finish();
+        }else{
+            MainActivity.openActivity(this,MainActivity.class);
+            finish();
+        }
     }
 
     @Override

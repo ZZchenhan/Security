@@ -5,6 +5,8 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
+import xxk.wuhai.seacurity.work.bean.AddSuggetResult;
 import xxk.wuhai.seacurity.work.bean.ApDetailResult;
 import xxk.wuhai.seacurity.work.bean.AplyResult;
 import xxk.wuhai.seacurity.work.bean.AplyUserResult;
@@ -20,6 +22,7 @@ import xxk.wuhai.seacurity.work.bean.UserSignListResult;
 import xxk.wuhai.seacurity.work.bean.UserSignResult;
 import xxk.wuhai.seacurity.work.view.GetTrajectoryResponse;
 import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
+import xxk.wuhai.seacurity.work.vo.AddSusgetVO;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
@@ -189,4 +192,19 @@ public interface WorkDutyApi {
      */
     @POST("/client-api/commonScheduling/getTimesScheduling")
     Observable<Result<PersonSchedulingResult>> getTimesScheduling(@Body GetSchedulingByTimeVo getSchedulingByTimeVo);
+
+    /**
+     * 添加评论
+     * @param addSusgetVO
+     * @return
+     */
+    @POST("/client-api/suggestion/addSuggestion ")
+    Observable<AddSuggetResult>  addSuggestion(@Body AddSusgetVO addSusgetVO);
+
+    /***
+     * 登出
+     * @return
+     */
+    @POST("/client-api/user/logout")
+    Observable<Result<RecordBean>> logout(@Body GetUserInfoVo getUserInfoVo);
 }

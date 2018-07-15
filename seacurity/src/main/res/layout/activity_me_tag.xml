@@ -32,21 +32,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="9dp"
-                android:text="我收到24个标签"
+                android:text="映像标签"
+                android:textSize="17sp"
                 android:textColor="@color/text_color1" />
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="最多显示30个标签"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop="7dp"
-            android:textSize="12sp"
-            android:textColor="@color/text_color7"
-            android:layout_height="wrap_content" />
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

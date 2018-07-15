@@ -1,13 +1,20 @@
 package xxk.wuhai.seacurity.main.view;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -19,21 +26,30 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftTitleNavagation;
 import xxk.wuhai.seacurity.contact.view.ContactFragment;
+import xxk.wuhai.seacurity.login.view.LoginActivity;
+import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.main.view.custorm.MyNormalItem;
 import xxk.wuhai.seacurity.me.view.MeFragment;
 import xxk.wuhai.seacurity.msg.view.MsgFragment;
+import xxk.wuhai.seacurity.utils.ShareUtlts;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
+import xxk.wuhai.seacurity.work.bean.RecordBean;
 import xxk.wuhai.seacurity.work.view.ApplyActivity;
 import xxk.wuhai.seacurity.work.view.CulActivity;
 import xxk.wuhai.seacurity.work.view.CulListActivity;
@@ -41,13 +57,21 @@ import xxk.wuhai.seacurity.work.view.MyDutyActivity;
 import xxk.wuhai.seacurity.work.view.RecordActivity;
 import xxk.wuhai.seacurity.work.view.SignActivity;
 import xxk.wuhai.seacurity.work.view.StudyActivity;
+import xxk.wuhai.seacurity.work.view.SuggestActivity;
+import xxk.wuhai.seacurity.work.view.SystemSettinActivity;
 import xxk.wuhai.seacurity.work.vo.UploadTrajectoryVo;
 
 public class MainActivity extends BaseActivity implements OnTabItemSelectedListener,AMapLocationListener {
 
     private String[] tabTitle = new String[]{"工作台","消息","通讯录","我的"};
 
+    private NavigationView nav_view;
 
+    private TextView tvName1;
+    private TextView tvName2;
+    private TextView tvPhone;
+
+    DrawerLayout drawerLayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,15 +121,10 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     public int layoutId() {
         return R.layout.activity_main;
     }
-    LeftTitleNavagation leftIconNavagation;
+
     @Override
     public IBaseNavagation navagation() {
-        return leftIconNavagation = new LeftTitleNavagation(this) {
-            @Override
-            public String title() {
-                return "工作台";
-            }
-        };
+       return null;
     }
 
     @Override
@@ -118,6 +137,38 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     public void findViews() {
         fragmentContainer = findViewById(R.id.fragment_container);
         tab = findViewById(R.id.tab);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        nav_view = findViewById(R.id.nav_view);
+       View headerView =  nav_view.getHeaderView(0);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.weight = 1;
+       headerView.setLayoutParams(params);
+        headerView.findViewById(R.id.sugest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SuggestActivity.class));
+            }
+        });
+        headerView.findViewById(R.id.setting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               startActivity(new Intent(MainActivity.this,SystemSettinActivity.class));
+            }
+        });
+        headerView.findViewById(R.id.login_out).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+        tvName1 = headerView.findViewById(R.id.person_icon);
+        tvName2 = headerView.findViewById(R.id.user_name);
+        tvPhone = headerView.findViewById(R.id.phone);
+        try {
+            tvName1.setText(MyApplication.userDetailInfo.getUserInfo().getName().length() > 2 ? MyApplication.userDetailInfo.getUserInfo().getName().substring(0, 2) : MyApplication.userDetailInfo.getUserInfo().getName());
+            tvName2.setText(MyApplication.userDetailInfo.getUserInfo().getName());
+            tvPhone.setText(MyApplication.userDetailInfo.getUserInfo().getPhone());
+        }catch (Exception e){}
     }
 
     public void onClick(View view) {
@@ -140,6 +191,25 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             case R.id.tv_apply:
                 ApplyActivity.openActivity(this,ApplyActivity.class);
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void openOrClose(){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.openDrawer(GravityCompat.START);
         }
     }
 
@@ -167,7 +237,6 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
 
             transaction.add(R.id.fragment_container, newFragment, tabTitle[index]);
         }
-        leftIconNavagation.setTvTitle(tabTitle[index]);
         transaction.hide(oldFragment).show(newFragment);
         transaction.commit();
     }
@@ -223,5 +292,45 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                 .subscribe();
             }
         }
+    }
+
+    public void logout(){
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .logout(new GetUserInfoVo()).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<RecordBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<RecordBean> recordBeanResult) {
+                        if(!recordBeanResult.getCode().equals("200")){
+                            toast(recordBeanResult.getMessage());
+                            return;
+                        }
+                        if(recordBeanResult.getResult().getStatus().equals("1")){
+                            ShareUtlts.clean(MainActivity.this);
+                            BaseInterceptor.token = "";
+                            BaseInterceptor.name = "";
+                            BaseInterceptor.random = "";
+                            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                            finish();
+                        }else{
+                            toast("注销失败");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        toast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

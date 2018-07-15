@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 
+import com.blankj.utilcode.util.ToastUtils;
+
 import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
@@ -21,15 +23,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 ;
 import io.reactivex.schedulers.Schedulers;
+import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.model.IBaseModel;
 import sz.tianhe.baselib.model.bean.Result;
 import sz.tianhe.baselib.presenter.AbstarctPresenter;
 import sz.tianhe.baselib.utils.VersionUtils;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.guide.model.GuideModel;
 import xxk.wuhai.seacurity.bean.CompanyBean;
 import xxk.wuhai.seacurity.guide.view.itf.IGuideView;
+import xxk.wuhai.seacurity.login.api.UserApi;
+import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
+import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.main.view.MainActivity;
+import xxk.wuhai.seacurity.utils.ShareUtlts;
 
 
 /**
@@ -104,6 +112,7 @@ public class GuidPrensenter extends AbstarctPresenter {
     @Override
     public void init() {
         loadVersion();
+        getUserInfo();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             //6.0以上需要检查权限
             checkPermision();
@@ -118,29 +127,36 @@ public class GuidPrensenter extends AbstarctPresenter {
     }
 
 
-    public void getComcpnyInfo() {
-        ((GuideModel) baseModel).getCompnay().observeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).
-                subscribe(new Observer<Result<CompanyBean>>() {
+    public void getUserInfo() {
+        if(BaseInterceptor.token == null || BaseInterceptor.token.equals("")) {
+            return;
+        }
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .getUserInfo(new GetUserInfoVo())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<xxk.wuhai.seacurity.bean.Result<UserDetailInfo>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result<CompanyBean> guideBeanResult) {
-                        if (guideBeanResult.getCode() == 0) {
-                            if (mBaseView != null) {
-                                iGuideView.loadCompanyView(guideBeanResult.getData());
-                            }
-                        } else {
-                            onError(new RuntimeException());
+                    public void onNext(xxk.wuhai.seacurity.bean.Result<UserDetailInfo> result) {
+                        if(iGuideView==null){
+                            ToastUtils.showShort(result.getMessage());
+                            return;
+                        }
+                        if(result.getCode().equals("200")){
+                            MyApplication.userDetailInfo = result.getResult();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if(iGuideView!=null){
+                            ToastUtils.showShort(e.getMessage());
+                        }
                     }
 
                     @Override
@@ -148,7 +164,6 @@ public class GuidPrensenter extends AbstarctPresenter {
 
                     }
                 });
-
     }
 
 

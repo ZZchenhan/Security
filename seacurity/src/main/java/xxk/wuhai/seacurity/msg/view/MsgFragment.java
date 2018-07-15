@@ -27,6 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.main.view.MainActivity;
 import xxk.wuhai.seacurity.msg.MsgApi;
 import xxk.wuhai.seacurity.msg.adapter.MsgAdapter;
 import xxk.wuhai.seacurity.msg.bean.MessageInfoListBean;
@@ -75,6 +76,12 @@ public class MsgFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView);
         hinit = root.findViewById(R.id.hinit);
         msgAdapter = new MsgAdapter(datas);
+        root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).openOrClose();
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         msgAdapter.bindToRecyclerView(recyclerView);
         msgAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

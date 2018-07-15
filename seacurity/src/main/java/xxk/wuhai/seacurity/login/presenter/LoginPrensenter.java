@@ -29,6 +29,7 @@ import xxk.wuhai.seacurity.login.result.LoginResult;
 import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.login.vo.LoginBean;
 import xxk.wuhai.seacurity.login.view.itf.ILoginView;
+import xxk.wuhai.seacurity.utils.ShareUtlts;
 
 /**
  * 描述
@@ -60,7 +61,7 @@ public class LoginPrensenter implements IBasePresenter {
 
     @Override
     public void init() {
-
+        test();
     }
 
     public void login(Activity activity, AppCompatEditText phone, AppCompatEditText pass) {
@@ -112,6 +113,7 @@ public class LoginPrensenter implements IBasePresenter {
                     return;
                 }
                 if(result.getCode().equals("200")){
+                    ShareUtlts.save(mContext,BaseInterceptor.token,BaseInterceptor.random,BaseInterceptor.name);
                     MyApplication.userDetailInfo = result.getResult();
                     loginView.loginSuccess(result.getResult());
                 }else{

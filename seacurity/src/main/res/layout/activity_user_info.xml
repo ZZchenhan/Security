@@ -113,7 +113,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
@@ -154,83 +154,11 @@
                 android:textColor="@color/text_color7"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
-
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recylview"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tag1"
-                android:layout_width="90dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/text_color7"
-                android:text="劳动模范"
-                android:gravity="center"
-                android:background="@drawable/bg_info_normal"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tag2"
-                android:layout_width="90dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/text_color7"
-                android:text="劳动模范"
-                android:layout_marginLeft="12dp"
-                android:gravity="center"
-                android:background="@drawable/bg_info_normal"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tag3"
-                android:layout_width="90dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:gravity="center"
-                android:textColor="@color/text_color7"
-                android:layout_marginLeft="12dp"
-                android:text="劳动模范"
-                android:background="@drawable/bg_info_normal"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tag4"
-                android:layout_width="90dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/text_color7"
-                android:text="劳动模范"
-                android:gravity="center"
-                android:background="@drawable/bg_info_normal"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tag5"
-                android:layout_width="90dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/white"
-                android:text="劳动模范"
-                android:layout_marginLeft="12dp"
-                android:gravity="center"
-                android:background="@drawable/bg_info_blue"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tv_see"
-                android:layout_width="90dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:gravity="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginLeft="12dp"
-                android:text="查看更多"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>

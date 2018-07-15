@@ -56,7 +56,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.view.LoginActivity"></activity>
+        <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".msg.view.CompanyMsgActivity" />
         <activity android:name=".login.view.ForgetActivity" />
         <activity android:name=".main.view.UpdateUserInfoActivity" />
@@ -103,7 +103,13 @@
         <activity android:name=".work.view.CulDetailActivity" />
         <activity android:name=".work.view.MyAplyListActivity" />
         <activity android:name=".me.view.ElectIDcardActivity" />
-        <activity android:name=".work.TrajectoryActivity"></activity>
+        <activity android:name=".work.TrajectoryActivity" />
+        <activity
+            android:name=".work.view.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".work.view.SuggestActivity" />
+        <activity android:name=".work.view.SystemSettinActivity"></activity>
     </application>
 
 </manifest>

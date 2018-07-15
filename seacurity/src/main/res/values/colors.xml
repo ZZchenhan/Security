@@ -32,4 +32,6 @@
 
     <color name="com_ycuwq_datepicker_selectedTextColor">#33aaff</color>
     <color name="com_ycuwq_datepicker_divider">#cccccc</color>
+
+    <color name="ffe2e2e2">#ffe2e2e2</color>
 </resources>

@@ -12,8 +12,10 @@ import com.blankj.utilcode.util.Utils;
 
 import cn.jpush.android.api.JPushInterface;
 import sz.tianhe.baselib.http.RetrofitClient;
+import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.result.LoginResult;
+import xxk.wuhai.seacurity.utils.ShareUtlts;
 
 
 /**
@@ -44,7 +46,9 @@ public class MyApplication extends Application {
        deviceId = Build.SERIAL;
        Utils.init(this);
        String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
-
+       BaseInterceptor.random = ShareUtlts.getRandom(this);
+       BaseInterceptor.token = ShareUtlts.getToken(this);
+       BaseInterceptor.name = ShareUtlts.getName(this);
        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAIqNxd4rFLe0l6","xZEViV4zH0VaVza8kd4cdNZ8TGvFLS");
         oss = new OSSClient(this, endpoint, credentialProvider);
     }
