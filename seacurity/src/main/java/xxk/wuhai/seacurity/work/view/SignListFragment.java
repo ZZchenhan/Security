@@ -114,7 +114,7 @@ public class SignListFragment extends Fragment {
                     @Override
                     public void onNext(Result<UserSignListResult> userSignListResultResult) {
                         if(!userSignListResultResult.getCode().equals("200")){
-                            ToastUtils.showShort(userSignListResultResult.getMessage());
+                            ToastUtils.showLong(userSignListResultResult.getMessage());
                             return;
                         }
                         signDetailHead.signNumbers.setText(String.format("本月已签到%d次",userSignListResultResult.getResult().getCount()));

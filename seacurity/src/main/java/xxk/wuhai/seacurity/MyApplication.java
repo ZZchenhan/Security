@@ -8,6 +8,7 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 
 import cn.jpush.android.api.JPushInterface;
@@ -49,6 +50,8 @@ public class MyApplication extends Application {
        BaseInterceptor.random = ShareUtlts.getRandom(this);
        BaseInterceptor.token = ShareUtlts.getToken(this);
        BaseInterceptor.name = ShareUtlts.getName(this);
+       ToastUtils.setBgColor(getResources().getColor(R.color.gray));
+        ToastUtils.setMsgColor(getResources().getColor(R.color.white));
        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAIqNxd4rFLe0l6","xZEViV4zH0VaVza8kd4cdNZ8TGvFLS");
         oss = new OSSClient(this, endpoint, credentialProvider);
     }

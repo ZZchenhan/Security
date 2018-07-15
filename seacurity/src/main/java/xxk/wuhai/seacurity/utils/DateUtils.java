@@ -58,7 +58,6 @@ public class DateUtils {
         }else{
             d = 2-calendar.get(Calendar.DAY_OF_WEEK);
         }
-        calendar.add(Calendar.DAY_OF_WEEK, 6);
         return calendar;
     }
 }

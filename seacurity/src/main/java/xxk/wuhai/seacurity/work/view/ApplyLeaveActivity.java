@@ -53,6 +53,7 @@ import xxk.wuhai.seacurity.work.bean.AplyUser;
 import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
+import xxk.wuhai.seacurity.work.vo.GetApproverVo;
 
 public class ApplyLeaveActivity extends BaseActivity {
     /**
@@ -279,7 +280,7 @@ public class ApplyLeaveActivity extends BaseActivity {
                         }
                         aplyUserList.addAll(aplyUserResultResult.getResult().getLerverInfoList());
 
-                        return  MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover();
+                        return  MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover(new GetApproverVo(MyApplication.userDetailInfo.getUserInfo().getUserId()));
                     }
                 })
          .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Result<ApproverUser>>() {
@@ -343,7 +344,7 @@ public class ApplyLeaveActivity extends BaseActivity {
     }
 
     private void getAppro(){
-        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover().subscribeOn(Schedulers.newThread())
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover(new GetApproverVo(MyApplication.userDetailInfo.getUserInfo().getUserId())).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<ApproverUser>>() {
                     @Override

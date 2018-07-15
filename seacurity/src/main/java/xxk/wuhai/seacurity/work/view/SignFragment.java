@@ -214,6 +214,6 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
 
     @Override
     public void toast(String msg) {
-        Toast.makeText(this.getContext(),msg,Toast.LENGTH_LONG);
+        Toast.makeText(this.getContext(),msg,Toast.LENGTH_LONG).show();
     }
 }

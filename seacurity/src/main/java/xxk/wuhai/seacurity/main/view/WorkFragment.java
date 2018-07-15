@@ -140,9 +140,9 @@ public class WorkFragment extends Fragment {
                         for (Iterator<Map.Entry<String, TextView>> it = datesViews.entrySet().iterator(); it.hasNext(); ) {
                             Map.Entry<String, TextView> entity = it.next();
                             if(personSchedulingResultResult.getResult().getPersonSchedulingMap().containsKey(entity.getKey())){
-                                entity.getValue().setCompoundDrawables(null,null,null,blue);
-                            }else{
-                                entity.getValue().setCompoundDrawables(null,null,null,red);
+                                if(personSchedulingResultResult.getResult().getPersonSchedulingMap().get(entity.getKey())!=null) {
+                                     entity.getValue().setCompoundDrawables(null, null, null, blue);
+                                }
                             }
                         }
                     }

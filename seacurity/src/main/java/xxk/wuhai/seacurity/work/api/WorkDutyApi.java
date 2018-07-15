@@ -27,6 +27,7 @@ import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
 import xxk.wuhai.seacurity.work.vo.ClueBurstListVo;
+import xxk.wuhai.seacurity.work.vo.GetApproverVo;
 import xxk.wuhai.seacurity.work.vo.GetClueBurstDetailsVo;
 import xxk.wuhai.seacurity.work.vo.GetPersonScheduingVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByTimeVo;
@@ -58,7 +59,7 @@ public interface WorkDutyApi {
     Observable<Result<AplyUserResult>> getLeaverList();
 
     @POST("/client-api/approvalProcess/getApprover")
-    Observable<Result<ApproverUser>> getApprover();
+    Observable<Result<ApproverUser>> getApprover(@Body GetApproverVo getApproverVo);
 
     /**
      * 请假

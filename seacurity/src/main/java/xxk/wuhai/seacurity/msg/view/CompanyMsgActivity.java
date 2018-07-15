@@ -99,14 +99,14 @@ public class CompanyMsgActivity extends BaseActivity {
 
     private void setData(GetMessageDetailResult result){
         if(result.getMessageDetail() != null){
-            tvTile.setText("标题:"+result.getMessageDetail().getMessageTitle());
+            tvTile.setText(result.getMessageDetail().getMessageTitle());
             tvTimes.setText("发送时间:"+result.getMessageDetail().getMessageCreateTime());
             tvContext.setText(Html.fromHtml(result.getMessageDetail().getMessageContent()));
             tvFrom.setText("来源:"+result.getMessageDetail().getCompanyName());
             return;
         }
         if(result.getPersonnelDetails() != null){
-            tvTile.setText("标题:人事变动提醒");
+            tvTile.setText("人事变动提醒");
             tvTimes.setText("发送时间:"+result.getPersonnelDetails().getGmtCreate());
 
             tvContext.setText(Html.fromHtml(result.getPersonnelDetails().getPost())

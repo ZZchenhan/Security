@@ -41,6 +41,7 @@ import xxk.wuhai.seacurity.oss.PutObjectSamples;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
+import xxk.wuhai.seacurity.work.vo.GetApproverVo;
 import xxk.wuhai.seacurity.work.vo.SupplementApplyVo;
 
 /**
@@ -266,7 +267,7 @@ public class SupplementSignActivity extends BaseActivity{
 
     ApproverUser approverUser;
     private void getAppro(){
-        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover().subscribeOn(Schedulers.newThread())
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover(new GetApproverVo(MyApplication.userDetailInfo.getUserInfo().getUserId())).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<ApproverUser>>() {
                     @Override

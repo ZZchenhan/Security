@@ -27,6 +27,10 @@ import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.blankj.utilcode.util.ToastUtils;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -318,6 +322,11 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                             BaseInterceptor.token = "";
                             BaseInterceptor.name = "";
                             BaseInterceptor.random = "";
+                            JPushInterface.deleteAlias(getApplicationContext(),1);
+                            Set<String> tags = new HashSet<>();
+                            tags.add(MyApplication.userDetailInfo.getDeptVo().getOrgId()+"");
+                            tags.add(MyApplication.userDetailInfo.getDeptVo().getDeptId()+"");
+                            JPushInterface.deleteTags(getApplicationContext(),1,tags);
                             startActivity(new Intent(MainActivity.this,LoginActivity.class));
                             finish();
                         }else{
