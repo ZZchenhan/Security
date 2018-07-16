@@ -117,6 +117,8 @@ public class GuidPrensenter extends AbstarctPresenter {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             //6.0以上需要检查权限
             checkPermision();
+        }else{
+            handOver();
         }
 
     }
