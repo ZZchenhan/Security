@@ -55,5 +55,4 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     //RecyclerView Adapter
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
-
 }
