@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\layout-v21\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\layout-v21\\notification_template_icon_group.xml"
+    }
+]

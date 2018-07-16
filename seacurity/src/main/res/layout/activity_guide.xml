@@ -11,7 +11,7 @@
         android:layout_height="90dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="116dp"
-        android:src="@mipmap/logo"
+        android:src="@mipmap/ic_launcher"
         android:contentDescription="@string/app_name" />
 
     <TextView

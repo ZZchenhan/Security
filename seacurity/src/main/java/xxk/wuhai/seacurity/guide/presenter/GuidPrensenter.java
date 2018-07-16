@@ -114,7 +114,7 @@ public class GuidPrensenter extends AbstarctPresenter {
     public void init() {
         loadVersion();
         getUserInfo();
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //6.0以上需要检查权限
             checkPermision();
         }else{

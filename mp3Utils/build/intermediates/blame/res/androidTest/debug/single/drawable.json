@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg_low.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_bg.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_icon_background.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\drawable\\notification_tile_bg.xml"
+    }
+]

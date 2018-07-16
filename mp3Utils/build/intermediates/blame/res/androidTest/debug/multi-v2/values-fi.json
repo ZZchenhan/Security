@@ -1,0 +1,49 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-fi\\values-fi.xml",
+            "map": [
+                {
+                    "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\values-fi\\values-fi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\Project\\DateBubble\\mp3Utils\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-fi\\values-fi.xml",
+            "map": [
+                {
+                    "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\82c3825f7df80d210edcf5e6c28d0f74\\res\\values-fi\\values-fi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "D:\\Project\\Security\\mp3Utils\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-fi\\values-fi.xml",
+            "map": [
+                {
+                    "source": "E:\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\f49dacd4b9ff63e35a5977cb91b5c706\\res\\values-fi\\values-fi.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}
