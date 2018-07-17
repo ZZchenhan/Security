@@ -58,6 +58,7 @@ import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityCulBinding;
 import xxk.wuhai.seacurity.oss.PutObjectSamples;
@@ -121,7 +122,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
 
     @Override
     public IBaseNavagation navagation() {
-        LeftIconNavagation leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
+        CommonNavagation leftIconNavagation = (CommonNavagation) new CommonNavagation(this) {
             @Override
             public String title() {
                 return "线索爆料";
@@ -131,6 +132,13 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        leftIconNavagation.setRight("历史");
+        leftIconNavagation.setRightOnclickListner(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CulListActivity.openActivity(CulActivity.this,CulListActivity.class);
             }
         });
         leftIconNavagation.setTitleColor(R.color.white);
@@ -154,7 +162,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 openCamera(CulActivity.this);
             }
         });
-        mediaPlayer = new MediaPlayer();
+
         binding.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,51 +173,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 }
             }
         });
-        binding.recordVoice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
-        binding.recordVoice.setAudioRecord(new AudioRecorder());
-        binding.recordVoice.setRecordStatusListener(new RecordButton.RecordStatusListener() {
-            @Override
-            public void status(int status) {
-                switch (status) {
-                    case RecordButton.RECORD_OFF:  //RECORD_OFF:0
-                        setVoiceShow(true, false, false);
-                        break;
-                    case RecordButton.RECORD_ON: // RECORD_ON:1
-                        setVoiceShow(false, true, false);
-                        break;
-                    case RecordButton.RECORD_Done:  //RECORD_Done:2
-                        binding.recordVoice.setVisibility(View.GONE);
-                        binding.loseVoice.setVisibility(View.GONE);
-                        binding.seconds.setVisibility(View.GONE);
-                        String filePath = binding.recordVoice.getFilePath();
-
-                        //写入sd卡后刷新显示
-                        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                        intent.setData(Uri.fromFile(new File(filePath)));
-                        sendBroadcast(intent);
-                        try {
-                            mediaPlayer.reset();
-                            mediaPlayer.setDataSource( binding.recordVoice.getFilePath());
-                            mediaPlayer.prepare();
-                            if (mediaPlayer.getDuration() / 1000 > 0) {
-                                  voiceUrl = binding.recordVoice.getFilePath();
-                                  refreRidioView();
-                            } else {
-                                setVoiceShow(true, false, false);
-                            }
-                        } catch (IOException e) {
-                            setVoiceShow(true, false, false);
-                            e.printStackTrace();
-                        }
-                        break;
-                }
-            }
-        });
     }
 
     private void submit() throws Exception{
@@ -417,43 +381,4 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     private List<String> imagesUrl = new ArrayList<>();
 
 
-    private MediaPlayer mediaPlayer;
-    private void refreRidioView(){
-        if (!TextUtils.isEmpty(voiceUrl)) {
-            binding.recordVoice.setVisibility(View.GONE);
-            binding.loseVoice.setVisibility(View.GONE);
-            try {
-                mediaPlayer.reset();
-                mediaPlayer.setDataSource(voiceUrl);
-                mediaPlayer.setVolume(100f, 100f);
-                mediaPlayer.prepare();
-                binding.recordVoice.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
-                binding.seconds.setVisibility(View.VISIBLE);
-                binding.seconds.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    private void setVoiceShow(boolean off, boolean on, boolean done) {
-        if (off) {
-            binding.recordVoice.setVisibility(View.VISIBLE);
-        } else {
-            binding.recordVoice.setVisibility(View.GONE);
-        }
-
-        if (on) {
-            binding.loseVoice.setVisibility(View.VISIBLE);
-        } else {
-            binding.loseVoice.setVisibility(View.GONE);
-        }
-
-        if (done) {
-            binding.seconds.setVisibility(View.VISIBLE);
-        } else {
-            binding.seconds.setVisibility(View.GONE);
-        }
-    }
 }

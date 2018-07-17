@@ -156,12 +156,14 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, SuggestActivity.class));
+                openOrClose();
             }
         });
         headerView.findViewById(R.id.setting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                startActivity(new Intent(MainActivity.this,SystemSettinActivity.class));
+                openOrClose();
             }
         });
         headerView.findViewById(R.id.login_out).setOnClickListener(new View.OnClickListener() {
@@ -192,7 +194,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                 MyDutyActivity.openActivity(this,MyDutyActivity.class);
                 break;
             case R.id.tv_clue:
-                CulListActivity.openActivity(this,CulListActivity.class);
+                CulActivity.openActivity(this,CulActivity.class);
                 break;
             case R.id.tv_study:
                 StudyActivity.openActivity(this,StudyActivity.class);

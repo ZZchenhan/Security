@@ -46,17 +46,33 @@
             android:background="@drawable/bg_item_white"
             android:gravity="center"
             android:imeOptions="actionSearch"
-            android:hint="在全部人中搜索"
-            android:textSize="12sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="13sp"
             android:textColor="@color/text_color6"
             android:layout_height="28dp" />
-        <ImageView
-            android:id="@+id/iv_search"
+        <LinearLayout
+            android:id="@+id/ll_tint"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:src="@mipmap/icon_contac_search"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="103dp"
-            android:layout_height="wrap_content" />
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="13dp"
+                android:src="@mipmap/icon_contac_search"
+                android:layout_gravity="center"
+                android:layout_height="13dp" />
+            <TextView
+                android:id="@+id/tvHint"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="在全部127人中搜索"
+                android:textColor="#B2B2B2"
+                android:textSize="13sp"
+                android:drawablePadding="5dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </RelativeLayout>
 <TextView
     android:id="@+id/tv_current_depart"
@@ -93,7 +109,8 @@
 
     <xxk.wuhai.seacurity.weight.SideLetterBar
         android:id="@+id/side_letter_bar"
-        android:layout_width="30dp"
+        android:layout_width="15dp"
+        android:layout_marginRight="15dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         />

@@ -19,13 +19,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="补  签  人"
+                    android:text="补签人"
                     android:textColor="@color/text_color1"
                     android:textSize="17sp" />
 
@@ -36,7 +36,7 @@
                     android:layout_marginLeft="30dp"
                     android:background="@null"
                     android:hint=""
-                    android:textColor="@color/text_color4"
+                    android:textColor="#B2B2B2"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -50,8 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="15dp"
                     android:text="2018-08-07 19:00:20"
-                    android:textColor="@color/text_color4"
+                    android:textColor="@color/text_color1"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -80,8 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
                     android:layout_marginLeft="30dp"
                     android:background="@null"
                     android:hint="补签"
-                    android:textColor="@color/text_color4"
+                    android:textColor="#B2B2B2"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -109,8 +109,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -126,7 +126,8 @@
                     android:layout_marginLeft="30dp"
                     android:background="@null"
                     android:hint="原因"
-                    android:textColor="@color/text_color2" />
+                    android:textColorHint="@color/text_color1"
+                    android:textColor="@color/text_color1" />
             </LinearLayout>
 
             <View
@@ -137,15 +138,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="图        片"
+                android:layout_marginTop="14dp"
+                android:text="图片"
                 android:textColor="@color/text_color1"
                 android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="9dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -190,13 +191,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
+                android:paddingBottom="14dp"
+                android:paddingTop="14dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="审  批  人"
+                    android:text="审批人"
                     android:textColor="@color/text_color1"
                     android:textSize="17sp" />
 
@@ -208,7 +209,7 @@
                     android:background="@null"
                     android:drawableRight="@mipmap/icon_leave_down_arrow"
                     android:hint="用户名"
-                    android:textColor="@color/text_color4"
+                    android:textColor="#B2B2B2"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -224,7 +225,7 @@
             android:layout_height="44dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="38dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/bg_colorp_r_4"
             android:elevation="2dp"
             android:text="确    定"
             android:textColor="@color/white"

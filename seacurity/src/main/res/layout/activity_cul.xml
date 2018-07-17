@@ -56,18 +56,14 @@
             android:layout_marginLeft="15dp"
             >
 
-            <xxk.wuhai.seacurity.weight.record.RecordButton
+            <ImageView
                 android:id="@+id/record_voice"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:background="@drawable/bg_record_button"
-                android:paddingBottom="2dp"
-                android:paddingLeft="35dp"
-                android:paddingRight="35dp"
-                android:paddingTop="2dp"
-                android:text="按住说话"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="14sp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="center"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_camore"
+                android:src="@mipmap/ic_mic"
                 android:visibility="visible" />
 
             <TextView
@@ -183,13 +179,21 @@
                     android:scaleType="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:background="@color/black"
+                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginRight="1dp"
+                android:elevation="2dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content">
             <com.amap.api.maps2d.MapView
                 android:id="@+id/mapview"
                 android:layout_width="match_parent"
                 android:layout_height="165dp"
-                android:layout_marginTop="20dp"
                 android:elevation="2dp" />
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
     <android.support.v4.widget.Space
@@ -207,7 +211,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         android:layout_weight="0"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/bg_colorp_r_4"
         android:layout_height="45dp" />
 </LinearLayout>
 </layout>

@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
+            android:textSize="17sp"
             android:text="公司签到考勤说明"
             android:textColor="@color/text_color1" />
 
@@ -31,7 +32,7 @@
             android:layout_width="272dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:lines="2"
             android:maxHeight="32dp"
@@ -44,7 +45,7 @@
             android:layout_height="53dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="8dp">
 
             <ImageView
                 android:id="@+id/pic1"
@@ -86,12 +87,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2018-06-14 17:00"
+                android:textColor="#B2B2B2"
                 android:textSize="11sp" />
 
             <TextView

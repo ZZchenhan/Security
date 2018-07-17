@@ -1,17 +1,24 @@
 package xxk.wuhai.seacurity.contact.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +65,7 @@ public class ContactFragment extends Fragment {
 
     private EditText etSearch;
 
-    private ImageView ivSearch;
+
 
     private TextView currentDepartment;
 
@@ -67,6 +74,10 @@ public class ContactFragment extends Fragment {
     private ContactAdapter adapter;
 
     private TextView tvHint;
+
+    private LinearLayout llHint;
+
+    private TextView tvNumber;
 
     @Nullable
     @Override
@@ -81,9 +92,10 @@ public class ContactFragment extends Fragment {
     private void fidViews(){
         recyclerView = root.findViewById(R.id.recyclerView);
         etSearch = root.findViewById(R.id.et_action);
-        ivSearch = root.findViewById(R.id.iv_search);
+        llHint = root.findViewById(R.id.ll_tint);
         currentDepartment = root.findViewById(R.id.tv_current_depart);
         sideLetterBar = root.findViewById(R.id.side_letter_bar);
+        tvNumber = root.findViewById(R.id.tvHint);
         tvHint = root.findViewById(R.id.tv_letter_overlay);
         root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +108,37 @@ public class ContactFragment extends Fragment {
                     .setVisibility(View.VISIBLE);
         }
         initView();
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(etSearch.getText().length() == 0){
+                    llHint.setVisibility(View.VISIBLE);
+                }else{
+                    llHint.setVisibility(View.GONE);
+                }
+            }
+        });
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_SEARCH){
+                    getData();
+                    closeBroad();
+                    return true;
+                }
+                    return false;
+            }
+        });
     }
 
     private void initView(){
@@ -134,14 +177,17 @@ public class ContactFragment extends Fragment {
 
 
     private void getData(){
+
         MyApplication.retrofitClient.getRetrofit().create(ContactApi.class)
-                .getDirectory(new ApiGetDirectoryVo(getArguments() != null?getArguments().getInt("depId",0):0,""))
+                .getDirectory(new ApiGetDirectoryVo(getArguments() != null?getArguments().getInt("depId",0):0,etSearch.getText().toString()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<ContanctResult>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                            etSearch.setText("");
+                            datas.clear();
+                            adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -169,6 +215,7 @@ public class ContactFragment extends Fragment {
         setHead(contanctResult.getDirDeptVoList());
         setList(contanctResult.getDirectoryVoList());
         adapter.notifyDataSetChanged();
+        tvNumber.setText("在全部" + contanctResult.getDirectoryVoList()==null?"0": contanctResult.getDirectoryVoList().size() + "个人中搜索");
     }
 
     private void setList(List<DirectoryVo> directoryVos){
@@ -183,7 +230,7 @@ public class ContactFragment extends Fragment {
         for(int i=0; i<directoryVos.size();i++){
             DirectoryVo contactBean =directoryVos.get(i);
             if(contactBean.getName() != null && contactBean.getName().length() !=0) {
-                String curent = PinYin2Abbreviation.cn2py(contactBean.getName().substring(0,1));
+                String curent = PinYin2Abbreviation.cn2py(contactBean.getName().substring(0,1)).toUpperCase();
                 if(curent.equals(lastPinying)){
                     datas.add(new ContactGroup(contactBean));
                 }else{
@@ -228,5 +275,10 @@ public class ContactFragment extends Fragment {
         });
     }
 
+
+    public void closeBroad(){
+        ((InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE)).
+                hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 
 }

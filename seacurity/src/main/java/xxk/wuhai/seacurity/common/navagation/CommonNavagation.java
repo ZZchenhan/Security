@@ -82,4 +82,9 @@ public abstract class CommonNavagation extends AbstarctNavagation {
         this.tvRight.setTextColor(mContext.getResources().getColor(colors));
         return this;
     }
+
+    public CommonNavagation setRightOnclickListner(View.OnClickListener onclickListner){
+        this.tvRight.setOnClickListener(onclickListner);
+        return this;
+    }
 }

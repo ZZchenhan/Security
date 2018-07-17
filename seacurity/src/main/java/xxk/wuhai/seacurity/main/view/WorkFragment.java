@@ -77,9 +77,9 @@ public class WorkFragment extends Fragment {
                 ((MainActivity)getActivity()).openOrClose();
             }
         });
-        blue = getContext().getDrawable(R.drawable.work_head_blue);
+        blue = getContext().getResources().getDrawable(R.drawable.work_head_blue);
         blue.setBounds(0,0,blue.getMinimumWidth(),blue.getMinimumHeight());
-        red = getContext().getDrawable(R.drawable.work_head_read);
+        red = getContext().getResources().getDrawable(R.drawable.work_head_read);
         red.setBounds(0,0,red.getMinimumWidth(),red.getMinimumHeight());
         setDate();
     }

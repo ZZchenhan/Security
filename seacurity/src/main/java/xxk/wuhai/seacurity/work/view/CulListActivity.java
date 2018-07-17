@@ -52,17 +52,7 @@ public class CulListActivity extends BaseActivity {
             }
         });
         leftIconNavagation.setTitleColor(R.color.white);
-        leftIconNavagation.setRight("添加");
-        leftIconNavagation.setRight(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(DeviceUtils.gpsIsOpen(CulListActivity.this)) {
-                    startActivity(new Intent(CulListActivity.this, CulActivity.class));
-                }else{
-                    toast("请打开GPRS（定位）");
-                }
-            }
-        });
+
         return leftIconNavagation;
     }
 

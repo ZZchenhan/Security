@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "xxk.wuhai.seacurity"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 22000
-        versionName "V2.2.0"
+        versionName "V1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

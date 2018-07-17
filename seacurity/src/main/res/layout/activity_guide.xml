@@ -21,7 +21,7 @@
         android:layout_below="@id/company_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
-        android:text="浙江钧信宝安服务有限公司"
+        android:text="浙江钧信保安服务有限公司"
         android:textColor="@color/text_color1"
         android:textSize="16sp" />
 

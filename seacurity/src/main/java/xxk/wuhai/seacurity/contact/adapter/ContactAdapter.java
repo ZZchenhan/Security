@@ -32,11 +32,13 @@ public class ContactAdapter extends BaseSectionQuickAdapter<ContactGroup, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, ContactGroup item) {
         DirectoryVo contactBean = item.t;
-        if (contactBean.getName() != null && contactBean.getName().length() > 0) {
-            helper.setText(R.id.tv_name, contactBean.getName().substring(contactBean.getName().length() - 1, contactBean.getName().length()));
+        if (contactBean.getName() != null && contactBean.getName().length() > 2) {
+            helper.setText(R.id.tv_name, contactBean.getName().substring(contactBean.getName().length() - 2, contactBean.getName().length()));
+        }else{
+            helper.setText(R.id.tv_name, contactBean.getName());
         }
         helper.setText(R.id.name, contactBean.getName());
-        helper.setText(R.id.zhiwei, contactBean.getName());
+        helper.setText(R.id.zhiwei, contactBean.getRank());
     }
 
 }
