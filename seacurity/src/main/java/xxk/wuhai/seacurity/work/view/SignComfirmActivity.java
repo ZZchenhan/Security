@@ -41,6 +41,7 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.oss.PutObjectSamples;
+import xxk.wuhai.seacurity.utils.SignUtils;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.UserSignResult;
 import xxk.wuhai.seacurity.work.vo.UserSignVo;
@@ -290,6 +291,7 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
                                 finish();
                             }else{
                                 toast("签到成功");
+                                SignUtils.add(System.currentTimeMillis(),SignComfirmActivity.this);
                                 finish();
                             }
                     }

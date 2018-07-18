@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/head_bg"
-            android:layout_width="420dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:src="@mipmap/na_bg" />
@@ -98,7 +98,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:paddingLeft="19dp"
-        android:drawableLeft="@mipmap/suggest"
+        android:drawableLeft="@mipmap/logout"
         android:textColor="#ff3f3f3f"
         android:textSize="14sp"
         />

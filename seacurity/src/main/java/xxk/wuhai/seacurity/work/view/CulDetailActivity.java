@@ -99,23 +99,14 @@ public class CulDetailActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-        binding.ivRecode.setOnClickListener(new View.OnClickListener() {
+        binding.lvPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    if(mediaPlayer == null){
-                        return;
-                    }
-                    mediaPlayer.prepare();
-                    mediaPlayer.reset();
-                    mediaPlayer.setVolume(100f, 100f);
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                mediaPlayer.start();
             }
         });
         initData();
+        binding.mapview.getMap().getUiSettings().setZoomControlsEnabled(false);
     }
 
     public static void openActivity(Context context,int id){
@@ -145,7 +136,9 @@ public class CulDetailActivity extends BaseActivity {
                            try {
                                mediaPlayer.reset();
                                mediaPlayer.setDataSource(clueBurstDetailResultResult.getResult().getClueBurstDetail().getTapeUrl());
+                               mediaPlayer.setVolume(100f, 100f);
                                mediaPlayer.prepare();
+                               mediaPlayer.getDuration();
                                binding.ivRecode.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
                            }catch (IOException e){}
                         }else{

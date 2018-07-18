@@ -7,24 +7,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
-import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.ServiceException;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -34,12 +28,8 @@ import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.blankj.utilcode.util.ImageUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.mylhyl.acp.Acp;
-import com.mylhyl.acp.AcpListener;
-import com.mylhyl.acp.AcpOptions;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +46,6 @@ import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
-import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
@@ -64,7 +53,6 @@ import xxk.wuhai.seacurity.databinding.ActivityCulBinding;
 import xxk.wuhai.seacurity.oss.PutObjectSamples;
 import xxk.wuhai.seacurity.weight.record.AudioRecorder;
 import xxk.wuhai.seacurity.weight.record.RecordButton;
-import xxk.wuhai.seacurity.work.adapter.CulAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
 
@@ -93,6 +81,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
         super.onCreate(savedInstanceState);
         binding.mapview.onCreate(savedInstanceState);
         startLocaion();
+        binding.mapview.getMap().getUiSettings().setZoomControlsEnabled(false);
     }
 
     @Override
@@ -134,6 +123,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 finish();
             }
         });
+        leftIconNavagation.setTitleColor(R.color.white);
         leftIconNavagation.setRight("历史");
         leftIconNavagation.setRightOnclickListner(new View.OnClickListener() {
             @Override
@@ -141,7 +131,6 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 CulListActivity.openActivity(CulActivity.this,CulListActivity.class);
             }
         });
-        leftIconNavagation.setTitleColor(R.color.white);
         return leftIconNavagation;
     }
 
@@ -162,7 +151,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 openCamera(CulActivity.this);
             }
         });
-
+        mediaPlayer = new MediaPlayer();
         binding.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,7 +162,49 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 }
             }
         });
+        binding.recordVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+        binding.recordVoice.setAudioRecord(new AudioRecorder());
+        binding.recordVoice.setRecordStatusListener(new RecordButton.RecordStatusListener() {
+            @Override
+            public void status(int status) {
+                switch (status) {
+                    case RecordButton.RECORD_OFF:  //RECORD_OFF:0
+                        setVoiceShow(true, false, false);
+                        break;
+                    case RecordButton.RECORD_ON: // RECORD_ON:1
+                        setVoiceShow(false, true, false);
+                        break;
+                    case RecordButton.RECORD_Done:  //RECORD_Done:2
+                        binding.loseVoice.setVisibility(View.GONE);
+                        String filePath = binding.recordVoice.getFilePath();
+
+                        //写入sd卡后刷新显示
+                        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        intent.setData(Uri.fromFile(new File(filePath)));
+                        sendBroadcast(intent);
+                        try {
+                            mediaPlayer.reset();
+                            mediaPlayer.setDataSource( binding.recordVoice.getFilePath());
+                            mediaPlayer.prepare();
+                            if (mediaPlayer.getDuration() / 1000 > 0) {
+                                  voiceUrl = binding.recordVoice.getFilePath();
+                                  refreRidioView();
+                            } else {
+                                setVoiceShow(true, false, false);
+                            }
+                        } catch (IOException e) {
+                            setVoiceShow(true, false, false);
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            }
+        });
     }
 
     private void submit() throws Exception{
@@ -381,4 +412,27 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     private List<String> imagesUrl = new ArrayList<>();
 
 
+    private MediaPlayer mediaPlayer;
+    private void refreRidioView(){
+        if (!TextUtils.isEmpty(voiceUrl)) {
+            try {
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(voiceUrl);
+                mediaPlayer.setVolume(100f, 100f);
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private void setVoiceShow(boolean off, boolean on, boolean done) {
+        if (on) {
+            binding.loseVoice.setVisibility(View.VISIBLE);
+        } else {
+            binding.loseVoice.setVisibility(View.GONE);
+        }
+
+    }
 }

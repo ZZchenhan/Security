@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 
@@ -497,5 +498,9 @@ public class DatePicker extends LinearLayout implements YearPicker.OnYearSelecte
 		 * @param day   the day
 		 */
 		void onDateSelected(int year, int month, int day);
+	}
+
+	public void dismissDay(){
+		mDayPicker.setVisibility(View.GONE);
 	}
 }

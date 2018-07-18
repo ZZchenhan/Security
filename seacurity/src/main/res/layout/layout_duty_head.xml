@@ -23,7 +23,7 @@
         app:scheme_theme_color="#128c4b"
         app:selected_lunar_text_color="#fff"
         app:selected_text_color="#fff"
-        app:selected_theme_color="#046cea"
+        app:selected_theme_color="#49B1FA"
         app:week_background="#fff"
         app:week_text_color="#e1e1e1"
         app:week_start_with="sun"

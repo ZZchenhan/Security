@@ -109,6 +109,7 @@
         <activity android:name=".me.view.ElectIDcardActivity"></activity>
         <activity android:name=".work.view.SuggestActivity"/>
         <activity android:name=".work.view.SystemSettinActivity"/>
+        <activity android:name=".work.TrajectoryActivity"/>
     </application>
 
 </manifest>

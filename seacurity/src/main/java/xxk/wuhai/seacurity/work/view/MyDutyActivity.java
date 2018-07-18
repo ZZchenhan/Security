@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -68,9 +70,9 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     List<DayDutyBean.SchedulingInfoListBean> data = new ArrayList<>();
     private TextView tvDate;
     private TextView tvDay;
-    private Button btnTrajectory;
+    private RelativeLayout btnTrajectory;
     private DuyteHead duyteHead;
-
+    private  View empty;
     @Override
     public int layoutId() {
         return R.layout.activity_my_duty;
@@ -149,6 +151,8 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                 }
             }
         });
+        empty = LayoutInflater.from(this).inflate(R.layout.empty_view,null,false);
+        empty.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     private int page = 1;
@@ -260,6 +264,11 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                             }
                         }
                         duyteHead.setSchemes(schemes);
+                        if(data.size() ==0){
+                            adapter.addHeaderView(empty);
+                        }else{
+                            adapter.removeHeaderView(empty);
+                        }
                     }
 
                     @Override

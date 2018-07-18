@@ -54,6 +54,12 @@ public class SignDetailHead extends LinearLayout {
         signNumbers = root.findViewById(R.id.sign_num);
         tvDate = root.findViewById(R.id.date);
         tvDate.setText(simpleDateFormat.format(new Date()));
+        tvDate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         initMap(mapView);
     }
 

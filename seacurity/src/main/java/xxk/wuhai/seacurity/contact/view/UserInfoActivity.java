@@ -162,7 +162,7 @@ public class UserInfoActivity extends BaseActivity {
                     @Override
                     public void onNext(TagResult s) {
                         if(!s.getCode().equals("200")){
-                            ToastUtils.showShort(s.getMessage());
+                            //ToastUtils.showShort(s.getMessage());
                             return;
                         }
                         datas.clear();

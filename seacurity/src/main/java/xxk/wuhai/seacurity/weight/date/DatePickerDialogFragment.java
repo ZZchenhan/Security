@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.weight.date;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,7 +28,14 @@ public class DatePickerDialogFragment extends DialogFragment {
 	private OnDateChooseListener mOnDateChooseListener;
 	private boolean mIsShowAnimation = true;
 	protected Button mCancelButton, mDecideButton;
+	protected boolean isShow = false;
+	public DatePickerDialogFragment(){
 
+	}
+	@SuppressLint("ValidFragment")
+	public DatePickerDialogFragment(boolean isShow){
+		this.isShow = isShow;
+	}
 	public void setOnDateChooseListener(OnDateChooseListener onDateChooseListener) {
 		mOnDateChooseListener = onDateChooseListener;
 	}
@@ -65,7 +73,9 @@ public class DatePickerDialogFragment extends DialogFragment {
 		if (mSelectedYear > 0) {
 			setSelectedDate();
 		}
-
+		if(isShow) {
+			mDatePicker.dismissDay();
+		}
 		initChild();
 		return view;
 	}

@@ -32,6 +32,7 @@ public class CulListActivity extends BaseActivity {
     CulAdapter culAdapter;
 
     RecyclerView recyclerView;
+
     @Override
     public int layoutId() {
         return R.layout.activity_cul_list;
@@ -52,6 +53,7 @@ public class CulListActivity extends BaseActivity {
             }
         });
         leftIconNavagation.setTitleColor(R.color.white);
+        leftIconNavagation.setRight("");
 
         return leftIconNavagation;
     }

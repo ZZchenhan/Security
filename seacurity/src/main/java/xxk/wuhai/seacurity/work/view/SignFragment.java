@@ -21,6 +21,7 @@ import java.util.Date;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.utils.DeviceUtils;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.utils.SignUtils;
 import xxk.wuhai.seacurity.work.presenter.ISignPresenter;
 import xxk.wuhai.seacurity.work.view.itf.ISignView;
 
@@ -136,6 +137,11 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
         tvAdjust.setOnClickListener(this);
         btnTime.setOnClickListener(this);
         tvDate = root.findViewById(R.id.date);
+        getNumbers();
+    }
+
+    private void getNumbers(){
+        tvSignNumbers.setText("今天你已签到"+ SignUtils.getNumbers(this.getContext())+"次");
     }
 
     @Override

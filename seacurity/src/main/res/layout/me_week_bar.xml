@@ -43,6 +43,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="#333333"
         android:text="W"
         android:textSize="15sp" />
 

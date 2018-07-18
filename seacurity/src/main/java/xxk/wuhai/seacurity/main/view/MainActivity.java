@@ -41,6 +41,7 @@ import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
+import sz.tianhe.baselib.utils.DeviceUtils;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
@@ -183,6 +184,10 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     }
 
     public void onClick(View view) {
+        if(!DeviceUtils.gpsIsOpen(this)){
+            toast("请打开GPS(定位)");
+            return;
+        }
         switch (view.getId()){
             case R.id.tv_sign:
                 SignActivity.openActivity(this,SignActivity.class);

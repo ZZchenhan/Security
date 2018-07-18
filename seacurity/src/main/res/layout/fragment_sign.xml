@@ -35,7 +35,7 @@
             android:textColor="@color/text_color1"
             android:drawablePadding="6dp"
             android:layout_width="240dp"
-            android:drawableLeft="@mipmap/icn_locaion"
+            android:drawableLeft="@mipmap/ic_sign_locaion"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/tv_adjustment"

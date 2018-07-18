@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.weight.date.DatePickerDialogFragment;
 import xxk.wuhai.seacurity.work.adapter.SignListAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.UserSignListResult;
@@ -53,6 +55,12 @@ public class SignListFragment extends Fragment {
                 getSignList(page,signDetailHead.tvDate.getText().toString());
             }
         },recyclerView);
+        signDetailHead.tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open();
+            }
+        });
     }
     private int page = 1;
     @Override
@@ -81,6 +89,10 @@ public class SignListFragment extends Fragment {
     @Override
     public void onDestroy() {
         signDetailHead.onDestroy();
+        if(datePickerDialogFragment!=null){
+            datePickerDialogFragment.dismiss();
+            isShow = false;
+        }
         super.onDestroy();
     }
 
@@ -147,4 +159,25 @@ public class SignListFragment extends Fragment {
                     }
                 });
     }
+
+    DatePickerDialogFragment datePickerDialogFragment = null;
+    private void open(){
+        if(datePickerDialogFragment == null){
+            isShow = true;
+            datePickerDialogFragment = new DatePickerDialogFragment(true);
+            datePickerDialogFragment.setOnDateChooseListener(new DatePickerDialogFragment.OnDateChooseListener() {
+                @Override
+                public void onDateChoose(int year, int month, int day) {
+                    signDetailHead.tvDate.setText(year+"年"+month+"月");
+                    getSignList(1,year+"-"+month);
+                }
+            });
+        }
+        FragmentManager fm = getFragmentManager();
+        datePickerDialogFragment.show(fm, "dialog");
+    }
+
+
+
+    public static boolean isShow = false;
 }

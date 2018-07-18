@@ -27,7 +27,7 @@ import java.util.List;
 
 import xxk.wuhai.seacurity.R;
 
-public class RecordButton extends android.support.v7.widget.AppCompatButton {
+public class RecordButton extends android.support.v7.widget.AppCompatImageView {
 
     private static final int MIN_RECORD_TIME = 1; // 最短录音时间，单位秒
     public static final int RECORD_OFF = 0; // 不在录音
@@ -71,7 +71,6 @@ public class RecordButton extends android.support.v7.widget.AppCompatButton {
 
     private void init(Context context) {
         mContext = context;
-        this.setText("按住 说话");
     }
 
     public void setAudioRecord(RecordStrategy record) {
@@ -104,12 +103,10 @@ public class RecordButton extends android.support.v7.widget.AppCompatButton {
             case 0:
                 dialogImg.setImageResource(R.drawable.record_animate_01);
                 dialogTextView.setText("向上滑动可取消录音");
-                this.setText("松开手指 完成录音");
                 break;
             case 1:
                 dialogImg.setImageResource(R.drawable.record_cancel);
                 dialogTextView.setText("松开手指可取消录音");
-                this.setText("松开手指 取消录音");
                 break;
         }
         dialogTextView.setTextSize(14);
@@ -259,7 +256,6 @@ public class RecordButton extends android.support.v7.widget.AppCompatButton {
                                         }
                                     }
                                     isCanceled = false;
-                                    RecordButton.this.setText("按住 说话");
                                     recordStatusListener.status(RECORD_Done);
                                 }
                                 break;

@@ -56,7 +56,7 @@
             android:layout_marginLeft="15dp"
             >
 
-            <ImageView
+            <xxk.wuhai.seacurity.weight.record.RecordButton
                 android:id="@+id/record_voice"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -79,19 +79,6 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:visibility="gone" />
-            <TextView
-                android:id="@+id/seconds"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:background="@drawable/bg_record_button"
-                android:paddingBottom="2dp"
-                android:paddingLeft="35dp"
-                android:paddingRight="35dp"
-                android:paddingTop="2dp"
-                android:text="3''"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="14sp"
-                android:visibility="gone"  />
         </FrameLayout>
     </LinearLayout>
     <LinearLayout
