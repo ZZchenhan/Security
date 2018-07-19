@@ -104,10 +104,9 @@
         <Button
             android:id="@+id/btn_record"
             android:layout_width="120dp"
-            android:background="@color/red"
             android:textColor="@color/white"
             android:text="4小时36分20秒"
-            android:elevation="2dp"
+            android:layout_marginLeft="-3dp"
             android:textSize="14sp"
             android:layout_height="44dp" />
         <TextView
@@ -159,7 +158,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="100dp"
-                android:text="位置要求："
+                android:text="打卡位置："
                 android:textColor="@color/text_color1"
                 android:textSize="14sp"
                 android:drawableLeft="@mipmap/icn_locaion"

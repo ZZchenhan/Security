@@ -289,23 +289,22 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/line_color" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="258dp"
+                android:layout_height="44dp"
+                android:layout_weight="0"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_colorp_r_4"
+                android:elevation="2dp"
+                android:text="提交"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
-        <android.support.v4.widget.Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="258dp"
-            android:layout_height="44dp"
-            android:layout_weight="0"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_colorp_r_4"
-            android:elevation="2dp"
-            android:text="提交"
-            android:layout_marginBottom="5dp"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
     </LinearLayout>
 </layout>

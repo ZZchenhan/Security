@@ -141,7 +141,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                                 data.get(position).getAttendanceSetId());
                         break;
                     case R.id.tv_apply:
-                        startActivity(new Intent(MyDutyActivity.this,ExamineActivity.class)
+                        startActivity(new Intent(MyDutyActivity.this,SupplementSignActivity.class)
                         .putExtra("id", data.get(position).getAttendanceSetId()));
                         break;
                 }
