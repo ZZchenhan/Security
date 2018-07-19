@@ -207,10 +207,6 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                     fillColor(Color.parseColor("#20197ABD")).
                     strokeColor(Color.parseColor("#197ABD")).
                     strokeWidth(1));
-
-
-
-
             //   //这里0 做倒计时 5做未打卡
             if(item.getStatus().equals("0") || item.getStatus().equals("5")){
                 helper.setGone(R.id.ll_can_apply,true);
