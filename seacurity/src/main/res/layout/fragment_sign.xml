@@ -50,7 +50,7 @@
         android:id="@+id/date"
         android:text="-年-月-日"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="14sp"
         android:textColor="@color/text_color1"
         android:drawablePadding="6dp"

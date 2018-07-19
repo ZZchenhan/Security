@@ -45,7 +45,6 @@ public class SignListFragment extends Fragment {
         signListAdapter.addHeaderView(signDetailHead);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         signListAdapter.bindToRecyclerView(recyclerView);
-        getSignList(page,signDetailHead.tvDate.getText().toString());
         signDetailHead.name.setText(MyApplication.userDetailInfo.getUserInfo().getName().length()<2?MyApplication.userDetailInfo.getUserInfo().getName():
                 MyApplication.userDetailInfo.getUserInfo().getName().substring(MyApplication.userDetailInfo.getUserInfo().getName().length()-2,MyApplication.userDetailInfo.getUserInfo().getName().length()));
         signDetailHead.userName.setText(MyApplication.userDetailInfo.getUserInfo().getName());
@@ -84,6 +83,7 @@ public class SignListFragment extends Fragment {
     public void onResume() {
         signDetailHead.onResume();
         super.onResume();
+        getSignList(page,signDetailHead.tvDate.getText().toString());
     }
 
     @Override

@@ -105,6 +105,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
     public void onResume() {
         mapView.onResume();
         super.onResume();
+        getNumbers();
     }
 
     @Override
