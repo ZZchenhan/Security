@@ -301,11 +301,11 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
                 currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
-                MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                        .uploadTrajectory(new UploadTrajectoryVo(currentLatLng.latitude+"",
-                                currentLatLng.longitude+""))
-                .subscribeOn(Schedulers.newThread())
-                .subscribe();
+//                MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+//                        .uploadTrajectory(new UploadTrajectoryVo(currentLatLng.latitude+"",
+//                                currentLatLng.longitude+""))
+//                .subscribeOn(Schedulers.newThread())
+//                .subscribe();
             }
         }
     }

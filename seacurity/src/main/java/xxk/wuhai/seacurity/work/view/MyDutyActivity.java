@@ -3,12 +3,9 @@ package xxk.wuhai.seacurity.work.view;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,26 +15,18 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
-import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
@@ -51,12 +40,14 @@ import xxk.wuhai.seacurity.utils.DateUtils;
 import xxk.wuhai.seacurity.work.TrajectoryActivity;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
-import xxk.wuhai.seacurity.work.bean.DayDutyBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.AttendanceInfoVoListBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
+import xxk.wuhai.seacurity.work.bean.PersonSchedulingResult;
 import xxk.wuhai.seacurity.work.bean.RecordBean;
-import xxk.wuhai.seacurity.work.bean.ScheduingResult;
+import xxk.wuhai.seacurity.work.bean.scheduling.SchedulingInfoAttVoBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.SchedulingWithAttVo;
 import xxk.wuhai.seacurity.work.view.custorm.DuyteHead;
-import xxk.wuhai.seacurity.work.vo.GetPersonScheduingVo;
-import xxk.wuhai.seacurity.work.vo.GetSchedulingByUserIdVo;
+import xxk.wuhai.seacurity.work.vo.GetSchedulingByTimeVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingVo;
 import xxk.wuhai.seacurity.work.vo.RecordVo;
 
@@ -67,7 +58,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
 
     RecyclerView recyclerView;
     RecordAdapter adapter;
-    List<DayDutyBean.SchedulingInfoListBean> data = new ArrayList<>();
+    List<AttendanceInfoVoListBean> data = new ArrayList<>();
     private TextView tvDate;
     private TextView tvDay;
     private RelativeLayout btnTrajectory;
@@ -120,6 +111,11 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             @Override
             public void onDateSelected(Calendar calendar, boolean isClick) {
                 tvDay.setText(calendar.getMonth()+"月" + calendar.getDay()+"日");
+                java.util.Calendar calendar1 = java.util.Calendar.getInstance();
+                calendar1.set(java.util.Calendar.YEAR,calendar.getYear());
+                calendar1.set(java.util.Calendar.MONTH,calendar.getMonth()-1);
+                calendar1.set(java.util.Calendar.DAY_OF_MONTH,calendar.getDay());
+                adapter.setChooseDay(calendar1.getTime().getTime());
                 getOneDayDuty(String.format("%d-%02d-%02d",calendar.getYear(),calendar.getMonth(),calendar.getDay()));
             }
         });
@@ -129,11 +125,11 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                 page = 1;
                 tvDate.setText(year+"年"+month+"月");
 
-                getOneMoneyDuty(page,year,month);
+                getData(year,month);
             }
         });
        final java.util.Calendar calendar =  java.util.Calendar.getInstance();
-        getOneMoneyDuty(page,calendar.get(java.util.Calendar.YEAR),calendar.get(java.util.Calendar.MONTH)+1);
+        getData(calendar.get(java.util.Calendar.YEAR),calendar.get(java.util.Calendar.MONTH)+1);
         tvDate.setText(calendar.get(java.util.Calendar.YEAR)+"年"+(calendar.get(java.util.Calendar.MONTH)+1)+"月" );
         startLocaion();
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -141,12 +137,12 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.btn_record:
-                        record(data.get(position).getAttendanceInfoVoList().get(0).getScheduleId(),
-                                data.get(position).getAttendanceInfoVoList().get(0).getAttendanceSetId());
+                        record(data.get(position).getSchedulingId(),
+                                data.get(position).getAttendanceSetId());
                         break;
                     case R.id.tv_apply:
                         startActivity(new Intent(MyDutyActivity.this,ExamineActivity.class)
-                        .putExtra("id", data.get(position).getAttendanceInfoVoList().get(0).getAttendanceSetId()));
+                        .putExtra("id", data.get(position).getAttendanceSetId()));
                         break;
                 }
             }
@@ -215,68 +211,37 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     }
 
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private void getOneMoneyDuty(int page, final int year, final int month){
-        GetPersonScheduingVo getPersonScheduingVo = new GetPersonScheduingVo();
-        getPersonScheduingVo.setPageNum(page);
-        getPersonScheduingVo.setStartDay(DateUtils.getMonthFistDay(year,month-1));
-        getPersonScheduingVo.setEndDay(DateUtils.getMonthLastDay(year,month-1));
-        getPersonScheduingVo.setPageSize(20);
-        getPersonScheduingVo.setEmpId(MyApplication.userDetailInfo.getUserInfo().getDeptId());
-        getPersonScheduingVo.setStaffId(MyApplication.userDetailInfo.getUserInfo().getUserId());
-
-        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getPersonSchedulingByEmpId(getPersonScheduingVo)
-                .subscribeOn(Schedulers.newThread())
+    private void getData(final int year, final int month){
+        MyApplication.retrofitClient.getRetrofit()
+                .create(WorkDutyApi.class)
+                .getTimesScheduling(new GetSchedulingByTimeVo(
+                        DateUtils.getMonthLastDay(year,month-1),
+                        DateUtils.getMonthFistDay(year,month-1),
+                        41
+                )).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ScheduingResult>() {
+                .subscribe(new Observer<Result<PersonSchedulingResult>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ScheduingResult scheduingResultResult) {
-                        if(!scheduingResultResult.getCode().equals("200")){
-                            toast(scheduingResultResult.getMessage());
+                    public void onNext(Result<PersonSchedulingResult> personSchedulingResultResult) {
+                        if(!personSchedulingResultResult.getCode().equals("200")){
+                            ToastUtils.showShort(personSchedulingResultResult.getMessage());
                             return;
                         }
-
-                        if(scheduingResultResult.getResult().getPersonSchedulingList() == null
-                                ||scheduingResultResult.getResult().getPersonSchedulingList().size() == 0
-                                ){
-                           toast("没有更多数据了");
+                        if(personSchedulingResultResult.getResult().getPersonSchedulingMap() == null && personSchedulingResultResult.getResult().getPersonSchedulingMap().size() == 0){
+                            ToastUtils.showShort("没有更多数据");
                             return;
                         }
-                        List<Calendar> schemes = new ArrayList<>();
-                        for(ScheduingResult.ResultBean.PersonSchedulingListBean personSchedulingListBean :scheduingResultResult.getResult().getPersonSchedulingList()){
-                            Map<String,List<ScheduingResult.ResultBean.PersonSchedulingListBean.ScheduingDetails>>  map =    personSchedulingListBean.getSchedulingList();
-                            Set<String> keys = map.keySet();
-                            for (String key : keys){
-                                List<ScheduingResult.ResultBean.PersonSchedulingListBean.ScheduingDetails> scheduingDetailsList = map.get(key);
-                                if(scheduingDetailsList!=null) {
-                                    try {
-                                       Date date =  simpleDateFormat.parse(key);schemes.add(duyteHead.getSchemeCalendar(year, month, date.getDay(), "班"));
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-                        duyteHead.setSchemes(schemes);
-                        if(data.size() ==0){
-                            adapter.addHeaderView(empty);
-                        }else{
-                            adapter.removeHeaderView(empty);
-                        }
+                        duyteHead.setSchemes(personSchedulingResultResult.getResult().getPersonSchedulingMap());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if(e != null){
-                            toast(e.getMessage());
-                            return;
-                        }
+
                     }
 
                     @Override
@@ -285,39 +250,52 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                     }
                 });
     }
+
+
     private String date;
     private void getOneDayDuty(final String date){
         this.date = date;
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId()))
+                .getOwnScheduling(new GetSchedulingVo(date,41))
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Observer<Result<DayDutyBean>>() {
+        .subscribe(new Observer<Result<GetPersonSchedulingByDateResponse>>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(Result<DayDutyBean> result) {
+            public void onNext(Result<GetPersonSchedulingByDateResponse> result) {
+                adapter.removeHeaderView(empty);
                 if(!result.getCode().equals("200")){
                     toast(result.getMessage());
                     return;
                 }
                 if(result.getResult() == null){
+                    if(data.size() == 0){
+                        adapter.addHeaderView(empty);
+                    }
                     return;
                 }
 
                 data.clear();
-                if(result.getResult().getSchedulingInfoList() !=null)
-                    data.addAll(result.getResult().getSchedulingInfoList());
+                if(result.getResult().getSchedulingInfoAttVo()!=null)
+                    data.addAll(mergeData(result.getResult().getSchedulingInfoAttVo()));
                 adapter.notifyDataSetChanged();
+                if(data.size() == 0){
+                    adapter.addHeaderView(empty);
+                }
             }
 
             @Override
             public void onError(Throwable e) {
                 if(e!=null){
                     toast(e.getMessage());
+                }
+                if(data.size() == 0){
+                    adapter.removeHeaderView(empty);
+                    adapter.addHeaderView(empty);
                 }
             }
 
@@ -328,7 +306,47 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         });
     }
 
-    public void record(int scheId,int id){
+    private  List<AttendanceInfoVoListBean> mergeData(SchedulingInfoAttVoBean schedulingInfoAttVoBean){
+        List<AttendanceInfoVoListBean> attendanceInfoVoListBeans = new ArrayList<>();
+        attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getDailySchedulingInfoVoList()));
+        attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getOvertimeSchedulingInfoVoList()));
+        attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getTemporarySchedulingInfoVoList()));
+        return attendanceInfoVoListBeans;
+    }
+
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+    private List<AttendanceInfoVoListBean>  mergeData(List<SchedulingWithAttVo> withAttVos){
+        List<AttendanceInfoVoListBean> attendanceInfoVoListBeans = new ArrayList<>();
+        if(withAttVos == null){return attendanceInfoVoListBeans;}
+        for(SchedulingWithAttVo schedulingWithAttVo:withAttVos){
+            if(schedulingWithAttVo.getAttendanceInfoVoList() != null){
+                String isLastPostime = null;
+                boolean postionAfterIsCross = false;
+                for(AttendanceInfoVoListBean attendanceInfoVoListBean:schedulingWithAttVo.getAttendanceInfoVoList() ){
+                    attendanceInfoVoListBean.setScheduleName(schedulingWithAttVo.getScheduleName());
+                    attendanceInfoVoListBeans.add(attendanceInfoVoListBean);
+                    if(postionAfterIsCross!=true && isLastPostime != null && compareProssIsCross(isLastPostime,attendanceInfoVoListBean.getAttendanceTimeExpect())){
+                        attendanceInfoVoListBean.setLastDay(true);
+                        postionAfterIsCross = true;
+                    }else if(postionAfterIsCross){
+                        attendanceInfoVoListBean.setLastDay(true);
+                    }
+                    isLastPostime = attendanceInfoVoListBean.getAttendanceTimeExpect();
+                }
+            }
+        }
+        return attendanceInfoVoListBeans;
+    }
+
+    private boolean compareProssIsCross(String last,String current){
+        if(last.compareTo(current)>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void record(String scheId,int id){
         RecordVo recordVo = new RecordVo();
         recordVo.setAttendanceId(id+"");
         try {
@@ -336,7 +354,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             recordVo.setAttendanceLon(RecoderBean.currentLatLng.longitude + "");
             recordVo.setAttendanceLocation(poi);
         }catch (Exception e){}
-        recordVo.setSchedulingId(scheId+"");
+        recordVo.setSchedulingId(scheId);
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
                 .record(recordVo)
                 .subscribeOn(Schedulers.newThread())

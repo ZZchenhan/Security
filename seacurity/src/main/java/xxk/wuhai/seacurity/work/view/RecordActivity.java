@@ -1,22 +1,18 @@
 package xxk.wuhai.seacurity.work.view;
 
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.MarkerOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.text.SimpleDateFormat;
@@ -35,10 +31,16 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
+import xxk.wuhai.seacurity.msg.view.ExamineActivity;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
-import xxk.wuhai.seacurity.work.bean.DayDutyBean;
+import xxk.wuhai.seacurity.work.bean.RecordBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.AttendanceInfoVoListBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
+import xxk.wuhai.seacurity.work.bean.scheduling.SchedulingInfoAttVoBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.SchedulingWithAttVo;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingVo;
+import xxk.wuhai.seacurity.work.vo.RecordVo;
 
 /**
  * 用户打卡页面
@@ -53,9 +55,10 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     private RecyclerView recyclerView;
 
 
-    private RecordAdapter recordAdapter;
+    private RecordAdapter adapter;
 
-    private List<DayDutyBean.SchedulingInfoListBean> recoderBeans = new ArrayList<>();
+    private  View empty;
+    private List<AttendanceInfoVoListBean> data = new ArrayList<>();
 
     @Override
     public int layoutId() {
@@ -77,37 +80,47 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
     @Override
     public void initView() {
-        recordAdapter = new RecordAdapter(recoderBeans);
+        adapter = new RecordAdapter(data);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recordAdapter.bindToRecyclerView(recyclerView);
-        recordAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        adapter.bindToRecyclerView(recyclerView);
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.btn_record:
-                        SupplementSignActivity.openActivity(RecordActivity.this,SupplementSignActivity.class);
+                        record(data.get(position).getSchedulingId(),
+                                data.get(position).getAttendanceSetId());
+                        break;
+                    case R.id.tv_apply:
+                        startActivity(new Intent(RecordActivity.this,ExamineActivity.class)
+                                .putExtra("id", data.get(position).getAttendanceSetId()));
                         break;
                 }
             }
         });
+        empty = LayoutInflater.from(this).inflate(R.layout.empty_view,null,false);
+        empty.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        adapter.setEmptyView(empty);
         startLocaion();
+        adapter.setChooseDay(new Date().getTime());
+        getOneDayDuty(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }
 
     private String date;
     private void getOneDayDuty(final String date){
         this.date = date;
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId()))
+                .getOwnScheduling(new GetSchedulingVo(date,41))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Result<DayDutyBean>>() {
+                .subscribe(new Observer<Result<GetPersonSchedulingByDateResponse>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Result<DayDutyBean> result) {
+                    public void onNext(Result<GetPersonSchedulingByDateResponse> result) {
                         if(!result.getCode().equals("200")){
                             toast(result.getMessage());
                             return;
@@ -116,10 +129,10 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                             return;
                         }
 
-                        recoderBeans.clear();
-                        if(result.getResult().getSchedulingInfoList() !=null)
-                            recoderBeans.addAll(result.getResult().getSchedulingInfoList());
-                        recordAdapter.notifyDataSetChanged();
+                        data.clear();
+                        if(result.getResult().getSchedulingInfoAttVo()!=null)
+                            data.addAll(mergeData(result.getResult().getSchedulingInfoAttVo()));
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -136,6 +149,15 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                 });
     }
 
+
+
+    private boolean compareProssIsCross(String last,String current){
+        if(last.compareTo(current)>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     @Override
     protected void onDestroy() {
         mlocationClient.onDestroy();
@@ -176,6 +198,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     AMapLocationClient mlocationClient;
     AMapLocationClientOption mLocationOption;
     Marker marker;
+    String poi="";
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null) {
@@ -183,7 +206,8 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                     && aMapLocation.getErrorCode() == 0) {
                RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
                RecordAdapter.timeLong = System.currentTimeMillis();
-               recordAdapter.notifyDataSetChanged();
+                poi =  aMapLocation.getPoiName();
+               adapter.notifyDataSetChanged();
             }
         }
     }
@@ -193,4 +217,76 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
         recyclerView = findViewById(R.id.recyclerView);
     }
 
+
+    public void record(String scheId,int id){
+        RecordVo recordVo = new RecordVo();
+        recordVo.setAttendanceId(id+"");
+        try {
+            recordVo.setAttendanceLat(RecoderBean.currentLatLng.latitude + "");
+            recordVo.setAttendanceLon(RecoderBean.currentLatLng.longitude + "");
+            recordVo.setAttendanceLocation(poi);
+        }catch (Exception e){}
+        recordVo.setSchedulingId(scheId);
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .record(recordVo)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<RecordBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<RecordBean> recoderBeanResult) {
+                        if(!recoderBeanResult.getCode().equals("200")){
+                            toast(recoderBeanResult.getMessage());
+                            startActivity(new Intent(RecordActivity.this,RecordFaileActivity.class));
+                            return;
+                        }
+                        toast("打卡成功");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        toast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private  List<AttendanceInfoVoListBean> mergeData(SchedulingInfoAttVoBean schedulingInfoAttVoBean){
+        List<AttendanceInfoVoListBean> attendanceInfoVoListBeans = new ArrayList<>();
+        attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getDailySchedulingInfoVoList()));
+        attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getOvertimeSchedulingInfoVoList()));
+        attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getTemporarySchedulingInfoVoList()));
+        return attendanceInfoVoListBeans;
+    }
+
+    private List<AttendanceInfoVoListBean>  mergeData(List<SchedulingWithAttVo> withAttVos){
+        List<AttendanceInfoVoListBean> attendanceInfoVoListBeans = new ArrayList<>();
+        if(withAttVos == null){return attendanceInfoVoListBeans;}
+        for(SchedulingWithAttVo schedulingWithAttVo:withAttVos){
+            if(schedulingWithAttVo.getAttendanceInfoVoList() != null){
+                String isLastPostime = null;
+                boolean postionAfterIsCross = false;
+                for(AttendanceInfoVoListBean attendanceInfoVoListBean:schedulingWithAttVo.getAttendanceInfoVoList() ){
+                    attendanceInfoVoListBean.setScheduleName(schedulingWithAttVo.getScheduleName());
+                    attendanceInfoVoListBeans.add(attendanceInfoVoListBean);
+                    if(postionAfterIsCross!=true && isLastPostime != null && compareProssIsCross(isLastPostime,attendanceInfoVoListBean.getAttendanceTimeExpect())){
+                        attendanceInfoVoListBean.setLastDay(true);
+                        postionAfterIsCross = true;
+                    }else if(postionAfterIsCross){
+                        attendanceInfoVoListBean.setLastDay(true);
+                    }
+                    isLastPostime = attendanceInfoVoListBean.getAttendanceTimeExpect();
+                }
+            }
+        }
+        return attendanceInfoVoListBeans;
+    }
 }

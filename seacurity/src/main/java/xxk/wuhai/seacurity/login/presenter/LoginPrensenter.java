@@ -130,7 +130,7 @@ public class LoginPrensenter implements IBasePresenter {
                     loginView.loginSuccess(result.getResult());
                 }else{
                     if(loginView!=null){
-                        loginView.toast(result.getMessage());
+                        loginView.toast(result.getMessage() == null || result.getMessage().equals("")?"系统错误码:"+result.getCode():result.getMessage());
                     }
                 }
             }

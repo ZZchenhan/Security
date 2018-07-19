@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginTop="15dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="7dp"
     android:elevation="2dp"
     android:layout_marginRight="16dp"
     android:layout_marginLeft="16dp"
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:textColor="@color/text_color1"
             android:textSize="16sp"
-            android:text="上班打卡"
+            android:text=""
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/cls_name"
@@ -30,14 +31,14 @@
             android:layout_width="wrap_content"
             android:textColor="@color/text_color1"
             android:textSize="16sp"
-            android:text="班次:白班"
+            android:text="班次:"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/red"
-            android:text="未打卡"
+            android:text=""
             android:layout_marginLeft="14dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -64,7 +65,7 @@
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
-            android:text="9:00"
+            android:text=""
             android:textColor="@color/text_color1"
             android:textSize="14sp"
             android:layout_height="wrap_content" />
@@ -74,27 +75,29 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/adress"
             android:layout_width="100dp"
             android:text="位置要求："
             android:textColor="@color/text_color1"
             android:textSize="14sp"
-            android:drawablePadding="4dp"
             android:drawableLeft="@mipmap/icn_locaion"
             android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/adress"
             android:layout_width="wrap_content"
-            android:text="浙江省嘉兴市南湖区某某路某某某路交叉口"
+            android:text=""
             android:textColor="@color/text_color1"
             android:textSize="14sp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/ll_can_apply"
+        android:visibility="visible"
+        android:paddingRight="16dp"
+        android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_marginTop="17dp"
         android:layout_height="wrap_content">
@@ -104,6 +107,7 @@
             android:background="@color/red"
             android:textColor="@color/white"
             android:text="4小时36分20秒"
+            android:elevation="2dp"
             android:textSize="14sp"
             android:layout_height="44dp" />
         <TextView
@@ -116,5 +120,57 @@
             android:textSize="14sp"
             android:layout_gravity="center"
             android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_over"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="100dp"
+                android:text="打卡时间："
+                android:textColor="@color/text_color1"
+                android:textSize="14sp"
+                android:drawablePadding="4dp"
+                android:drawableLeft="@mipmap/icon_times"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/attention_times"
+                android:layout_width="wrap_content"
+                android:text=""
+                android:textColor="#49B1FA"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="100dp"
+                android:text="位置要求："
+                android:textColor="@color/text_color1"
+                android:textSize="14sp"
+                android:drawableLeft="@mipmap/icn_locaion"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/attention_addreess"
+                android:layout_width="wrap_content"
+                android:text=""
+                android:textColor="#49B1FA"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -118,7 +118,7 @@ public class WorkFragment extends Fragment {
                 .getTimesScheduling(new GetSchedulingByTimeVo(
                         simpleDateFormat.format(DateUtils.getWekLastDay().getTime()),
                         simpleDateFormat.format(DateUtils.getWekFisrstDay().getTime()),
-                        MyApplication.userDetailInfo.getUserInfo().getUserId()
+                        41
                 )).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<PersonSchedulingResult>>() {
@@ -140,9 +140,16 @@ public class WorkFragment extends Fragment {
                         for (Iterator<Map.Entry<String, TextView>> it = datesViews.entrySet().iterator(); it.hasNext(); ) {
                             Map.Entry<String, TextView> entity = it.next();
                             if(personSchedulingResultResult.getResult().getPersonSchedulingMap().containsKey(entity.getKey())){
-                                if(personSchedulingResultResult.getResult().getPersonSchedulingMap().get(entity.getKey())!=null) {
-                                     entity.getValue().setCompoundDrawables(null, null, null, blue);
-                                }
+                                    PersonSchedulingResult.Recode recode = personSchedulingResultResult.getResult().getPersonSchedulingMap().get(entity.getKey());
+                                    if(recode != null) {
+                                        if (recode.getStatus() == 999) {
+                                            //999 的话 不显示点
+                                        } else if (recode.getStatus() == 1 || recode.getStatus() == 3) {
+                                            entity.getValue().setCompoundDrawables(null, null, null, blue);
+                                        } else {
+                                            entity.getValue().setCompoundDrawables(null, null, null, red);
+                                        }
+                                    }
                             }
                         }
                     }

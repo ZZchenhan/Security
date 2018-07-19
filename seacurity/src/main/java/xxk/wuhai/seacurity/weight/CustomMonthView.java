@@ -131,7 +131,20 @@ public class CustomMonthView extends MonthView {
 //
 //        canvas.drawCircle(x + mItemWidth / 2, y + mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
     }
-
+    private String getKey(String str){
+        switch (str){
+            case "4":
+                return "白++";
+            case "1":
+                return "休";
+            case "2":
+                return "白";
+            case "3":
+                return "白+";
+            default:
+                return "";
+        }
+    }
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected) {
         int cx = x + mItemWidth / 2;
@@ -139,18 +152,25 @@ public class CustomMonthView extends MonthView {
         int top = y - mItemHeight / 6;
 
         if (hasScheme) {
-            mCurMonthLunarTextPaint.setColor(isSelected?0xffffffff:0xff49B1FA);
-            canvas.drawText(calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
+            /**
+             * //0 ：未排班
+             //1；修
+             //2 白
+             //3 白+
+             //4 白++
+             */
+            if(calendar.getScheme().equals("1")){
+                mCurMonthLunarTextPaint.setColor(0xffF43530);
+            }else{
+                mCurMonthLunarTextPaint.setColor(0xff49B1FA);
+            }
+            canvas.drawText(getKey(calendar.getScheme()), cx, mTextBaseLine + y + mItemHeight / 10,
                     mCurMonthLunarTextPaint);
+
         }else if(isSelected){
             mCurMonthLunarTextPaint.setColor(0xffffffff);
-                canvas.drawText(calendar.getScheme()==null?"休":calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
-                        mCurMonthLunarTextPaint);
         }else{
             mCurMonthLunarTextPaint.setColor(0xffF43530);
-            if(calendar.isCurrentMonth())
-            canvas.drawText(calendar.getScheme()==null || calendar.getScheme().equals("")?"休":calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
-                    mCurMonthLunarTextPaint);
         }
         //当然可以换成其它对应的画笔就不麻烦，
         if (calendar.isWeekend() && calendar.isCurrentMonth()) {
@@ -173,8 +193,10 @@ public class CustomMonthView extends MonthView {
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     mSelectTextPaint);
             mCurMonthLunarTextPaint.setColor(0xFFffffff);
-            canvas.drawText(calendar.getScheme()==null || calendar.getScheme().equals("")?"休":calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
-                    mCurMonthLunarTextPaint);
+            if(hasScheme) {
+                canvas.drawText(getKey(calendar.getScheme()), cx, mTextBaseLine + y + mItemHeight / 10,
+                        mCurMonthLunarTextPaint);
+            }
         } else {
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     calendar.isCurrentDay() ? mCurMonthTextPaint :

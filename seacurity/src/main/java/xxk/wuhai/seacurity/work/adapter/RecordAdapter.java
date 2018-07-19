@@ -2,28 +2,29 @@ package xxk.wuhai.seacurity.work.adapter;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.location.Location;
-import android.view.View;
 
-import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.maps2d.model.MyLocationStyle;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
-import xxk.wuhai.seacurity.work.bean.DayDutyBean;
+import xxk.wuhai.seacurity.weight.mapwindows.MapWindows;
+import xxk.wuhai.seacurity.work.bean.scheduling.AttendanceInfoVoListBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
 
 /**
  * Created by 86936 on 2018/6/29.
@@ -31,19 +32,20 @@ import xxk.wuhai.seacurity.work.bean.DayDutyBean;
  * @QQ 869360026
  */
 
-public class RecordAdapter extends BaseMultiItemQuickAdapter<DayDutyBean.SchedulingInfoListBean,BaseViewHolder> {
+public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoListBean,BaseViewHolder> {
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    public RecordAdapter(List<DayDutyBean.SchedulingInfoListBean> data) {
+    public RecordAdapter(List<AttendanceInfoVoListBean> data) {
         super(data);
         addItemType(0, R.layout.item_record_no_locion_issu);
         addItemType(1, R.layout.item_record_locatopm);
     }
 
+    // 打卡类型 0：上班 1：中途 2：下班 ,
     private String revodeType(String type){
         if(null == type) return "错误";
         switch (type){
@@ -57,12 +59,24 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<DayDutyBean.Schedul
         return "错误";
     }
 
-    private  String status(int status ){
+    //，0 初始 1.补卡 2.迟到 3.早退 4.正常 5.缺卡
+    private  String status(String status ){
+        if(status == null){
+            return "未打卡";
+        }
         switch (status){
-            case 0:
+            case "0":
                 return "未打卡";
-            case 1:
+            case "1":
+                return "已补卡";
+            case "2":
+                return "迟到";
+            case "3":
+                return "早退";
+            case "4":
                 return "已打卡";
+            case "5":
+                return "未打卡";
         }
         return "未打卡";
     }
@@ -93,45 +107,186 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<DayDutyBean.Schedul
 
 
     @Override
-    protected void convert(BaseViewHolder helper, DayDutyBean.SchedulingInfoListBean item) {
+    protected void convert(BaseViewHolder helper, AttendanceInfoVoListBean item) {
         helper.addOnClickListener(R.id.btn_record);
         helper.addOnClickListener(R.id.tv_apply);
         try{
-            helper.setText(R.id.record_type,revodeType(item.getAttendanceInfoVoList().get(0).getAttendanceType()));
+            helper.setText(R.id.record_type,revodeType(item.getAttendanceType()));
         }catch (Exception e){
-            helper.setText(R.id.record_type,"无类型");
+            helper.setText(R.id.record_type,"错误");
         }
-        helper.setText(R.id.cls_name,"班次："+item.getScheduleShortName());
+        helper.setText(R.id.cls_name,"班次："+item.getScheduleName());
         helper.setText(R.id.status,status(item.getStatus()));
-        helper.setTextColor(R.id.status,item.getStatus() == 0?Color.RED:mContext.getResources().getColor(R.color.colorPrimary));
-        helper.setText(R.id.time,"要求时间："+item.getBeginTime());
-        helper.setText(R.id.btn_record,getTime(item.getBeginTime()));
-        if(getTime(item.getBeginTime()).equals("未打卡")){
-            helper.setGone(R.id.tv_apply, true);
-        }else{
-            helper.setGone(R.id.tv_apply, false);
-        }
-        if(item.getItemType() == 0){
-            //无打卡位置
-            helper.setText(R.id.adress,"要求时间："+item.getBeginTime());
+        helper.setTextColor(R.id.status,item.getStatus()!=null && item.getStatus().equals("0")?Color.RED:mContext.getResources().getColor(R.color.colorPrimary));
+        helper.setText(R.id.time,"要求时间："+item.getAttendanceTimeExpect()==null?"":item.getAttendanceTimeExpect());
+        if(item.getAttendanceLocationExpect() == null
+                ||
+                item.getAttendanceLocationExpect().equals("")){
+//   //这里0 做倒计时 5做未打卡
+            if(item.getStatus().equals("0") || item.getStatus().equals("5")){
+                helper.setGone(R.id.ll_can_apply,true);
+                helper.setGone(R.id.ll_over,false);
+                long currentTime = System.currentTimeMillis();
+                //显示申请
+                if(item.getStatus().equals("5")){
+                    helper.setText(R.id.btn_record,"打卡");
+                    helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
+                    helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
+                    helper.getView(R.id.btn_record).setEnabled(false);
+                    helper.setGone(R.id.tv_apply,true);
+                }else {
+                    helper.setGone(R.id.tv_apply,false);
+                    helper.getView(R.id.btn_record).setEnabled(true);
+                    //1、判断不能打卡逻辑。 太早，不在范围之类。台完
+                    long realTime = getRecodeTime(item.getAttendanceTimeExpect());
+                    if(item.isLastDay()){
+                        //这个跨天，选择日期+1
+                        realTime = realTime+24 *60 *60 *1000;
+                    }
+                    if(currentTime<realTime-item.getPreLimit() *60*1000){
+                        //太早
+                        helper.setText(R.id.btn_record,new SimpleDateFormat("HH小时mm分ss秒").format(new Date(realTime-item.getPreLimit()-currentTime)));
+                        helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
+                        helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
+                        helper.getView(R.id.btn_record).setEnabled(false);
+                        helper.setGone(R.id.tv_apply,true);
+                    }else if(currentTime>realTime+item.getPostLimit() *60*1000){
+                        //太晚，让他补卡
+                        helper.setText(R.id.btn_record,"打卡");
+                        helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
+                        helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
+                        helper.getView(R.id.btn_record).setEnabled(false);
+                        helper.setGone(R.id.tv_apply,true);
+                    }else{
+                        helper.setText(R.id.btn_record, "打卡");
+                        helper.setTextColor(R.id.btn_record, Color.parseColor("#F4F4F4"));
+                        helper.setBackgroundRes(R.id.btn_record, R.drawable.bg_record_click);
+                        helper.getView(R.id.btn_record).setEnabled(true);
+                        helper.setGone(R.id.tv_apply, false);
+                    }
+
+                }
+            }else{
+                helper.setGone(R.id.ll_can_apply,false);
+                helper.setGone(R.id.ll_over,true);
+                helper.setText(R.id.attention_addreess,item.getAttendanceLocation());
+                helper.setText(R.id.attention_times,item.getAttendanceTime());
+            }
         }else{
             //有打卡位置
-            helper.setText(R.id.adress,"位置要求："+item.getBeginTime());
+            helper.setText(R.id.adress,item.getAttendanceLocationExpect());
             MapView mapView = helper.getView(R.id.map_view);
             if(mapView.getTag() ==null) {
                 initMap(mapView);
                 mapView.setTag(item);
                 mapView.onCreate(null);
             }
-            if(RecoderBean.currentLatLng != null)
-                mapView.getMap().clear();
-                mapView.getMap().addMarker(new MarkerOptions().position(RecoderBean.currentLatLng).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                    .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
-                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng ,18));
+            if(item.getRange() == null || item.getRange().equals("")){
+                ToastUtils.showShort("后台传递范围为："+item.getRange());
+                return;
+            }
+            if(item.getAttendanceLatExpect() == null || item.getAttendanceLatExpect().equals("")){
+                ToastUtils.showShort("后台传递维度为："+item.getAttendanceLatExpect());
+                return;
+            }
+            if(item.getAttendanceLonExpect() == null || item.getAttendanceLonExpect().equals("")){
+                ToastUtils.showShort("后台传递精度为："+item.getAttendanceLatExpect());
+                return;
+            }
+            mapView.getMap().clear();
+            Marker marker = null;
+            if(RecoderBean.currentLatLng != null) {
+                marker = mapView.getMap().addMarker(new MarkerOptions().position(RecoderBean.currentLatLng).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
+                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng, 14));
+            }
+            LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()),Float.parseFloat(item.getAttendanceLonExpect()));
+            mapView.getMap().addCircle(new CircleOptions().
+                    center(latLng).
+                    radius(Double.parseDouble(item.getRange())).
+                    fillColor(Color.parseColor("#20197ABD")).
+                    strokeColor(Color.parseColor("#197ABD")).
+                    strokeWidth(1));
+
+
+
+
+            //   //这里0 做倒计时 5做未打卡
+            if(item.getStatus().equals("0") || item.getStatus().equals("5")){
+                helper.setGone(R.id.ll_can_apply,true);
+                helper.setGone(R.id.ll_over,false);
+                long currentTime = System.currentTimeMillis();
+                //显示申请
+                if(item.getStatus().equals("5")){
+                    helper.setText(R.id.btn_record,"打卡");
+                    helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
+                    helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
+                    helper.getView(R.id.btn_record).setEnabled(false);
+                    helper.setGone(R.id.tv_apply,true);
+                }else {
+                    helper.setGone(R.id.tv_apply,false);
+                    helper.getView(R.id.btn_record).setEnabled(true);
+                    //1、判断不能打卡逻辑。 太早，不在范围之类。台完
+                    long realTime = getRecodeTime(item.getAttendanceTimeExpect());
+                    if(item.isLastDay()){
+                        //这个跨天，选择日期+1
+                        realTime = realTime+24 *60 *60 *1000;
+                    }
+                    if(currentTime<realTime-item.getPreLimit() *60*1000){
+                        //太早
+                        helper.setText(R.id.btn_record,new SimpleDateFormat("HH小时mm分ss秒").format(new Date(realTime-item.getPreLimit()-currentTime)));
+                        helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
+                        helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
+                        helper.getView(R.id.btn_record).setEnabled(false);
+                        helper.setGone(R.id.tv_apply,true);
+                    }else if(currentTime>realTime+item.getPostLimit() *60*1000){
+                        //太晚，让他补卡
+                        helper.setText(R.id.btn_record,"打卡");
+                        helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
+                        helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
+                        helper.getView(R.id.btn_record).setEnabled(false);
+                        helper.setGone(R.id.tv_apply,true);
+                    }else if(marker!=null && AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)>Double.parseDouble(item.getRange())) {
+                        //不在距离
+                        helper.setText(R.id.btn_record, "不在打卡区域");
+                        helper.setTextColor(R.id.btn_record, Color.parseColor("#F4F4F4"));
+                        helper.setBackgroundRes(R.id.btn_record, R.drawable.bg_record_no_click);
+                        helper.getView(R.id.btn_record).setEnabled(false);
+                        helper.setGone(R.id.tv_apply, true);
+                        mapView.getMap().setInfoWindowAdapter(new MapWindows(mContext));
+                        marker.showInfoWindow();
+                    }else{
+                        helper.setText(R.id.btn_record, "打卡");
+                        helper.setTextColor(R.id.btn_record, Color.parseColor("#F4F4F4"));
+                        helper.setBackgroundRes(R.id.btn_record, R.drawable.bg_record_click);
+                        helper.getView(R.id.btn_record).setEnabled(true);
+                        helper.setGone(R.id.tv_apply, false);
+                    }
+
+                }
+            }else{
+                helper.setGone(R.id.ll_can_apply,false);
+                helper.setGone(R.id.ll_over,true);
+                helper.setText(R.id.attention_addreess,item.getAttendanceLocation());
+                helper.setText(R.id.attention_times,item.getAttendanceTime());
+            }
+
         }
+
+
+
     }
 
 
+
+
+    private long getRecodeTime(String time){
+        try {
+            return new SimpleDateFormat("HH:mm:ss").parse(time).getTime();
+        } catch (ParseException e) {
+            return 0;
+        }
+    }
 
     /**
      * 初始化道德地图
@@ -143,5 +298,13 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<DayDutyBean.Schedul
         mapView.getMap().getUiSettings().setCompassEnabled(false);//指南针
         mapView.getMap().getUiSettings().setMyLocationButtonEnabled(false); //显示默认的定位按钮
         mapView.getMap().getUiSettings().setScaleControlsEnabled(false); //控制比例尺控件是否显示
+    }
+
+    public long time = 0;
+    /**
+     * 设置选中日期 以及当前班次是否跨天
+     */
+    public void setChooseDay(long time){
+        this.time = time;
     }
 }

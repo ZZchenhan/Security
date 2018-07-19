@@ -12,10 +12,17 @@ import android.widget.Toast;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.work.bean.PersonSchedulingResult;
 
 /**
  * Created by 86936 on 2018/7/1.
@@ -72,4 +79,54 @@ public class DuyteHead extends LinearLayout{
     public void setSchemes( List<Calendar> schemes){
         calendarView.setSchemeDate(schemes);
     }
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public void setSchemes(Map<String,PersonSchedulingResult.Recode> data){
+        List<Calendar> calendars = new ArrayList<>();
+        Set<Map.Entry<String,PersonSchedulingResult.Recode>> entrys = data.entrySet();
+        Iterator<Map.Entry<String,PersonSchedulingResult.Recode>> iterator = entrys.iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String,PersonSchedulingResult.Recode> entry =iterator.next();
+            Calendar calendar = new Calendar();
+            try {
+                String date = entry.getKey();
+                String times[] = date.split("-");
+                calendar.setYear(Integer.parseInt(times[0]));
+                calendar.setMonth(Integer.parseInt(times[1]));
+                calendar.setDay(Integer.parseInt(times[2]));
+                calendar.setScheme(getSchName(entry.getValue())+"");
+                calendars.add(calendar);
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+        calendarView.setSchemeDate(calendars);
+    }
+
+    ////0 ：未排班
+    //1；修
+    //2 白
+    //3 白+
+    //4 白++
+    public int getSchName(PersonSchedulingResult.Recode recode){
+        if (recode!=null) {
+            if (recode.getHasDaily()!=null && recode.getHasDaily().equals("0")
+                    &&recode.getHasOvertime()!=null && recode.getHasOvertime().equals("0")
+                    && recode.getHasTemporary() !=null&&recode.getHasTemporary().equals("0")){
+                return 1;
+            }else if (recode.getHasDaily()!=null && recode.getHasDaily().equals("1")
+                    &&recode.getHasOvertime()!=null && recode.getHasOvertime().equals("0")
+                    && recode.getHasTemporary() !=null&&recode.getHasTemporary().equals("0")){
+                return 2;
+            }else if (recode.getHasDaily()!=null && recode.getHasDaily().equals("1")
+                    &&recode.getHasOvertime()!=null && recode.getHasOvertime().equals("1")
+                    && recode.getHasTemporary() !=null&&recode.getHasTemporary().equals("1")){
+                return 4;
+            }else{
+                return 3;
+            }
+        }else{
+            return 0;
+        }
+    }
+
 }

@@ -3,7 +3,6 @@ package xxk.wuhai.seacurity.work.api;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.work.bean.AddSuggetResult;
@@ -13,7 +12,7 @@ import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.bean.ClueBursList;
 import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
-import xxk.wuhai.seacurity.work.bean.DayDutyBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
 import xxk.wuhai.seacurity.work.bean.PersonSchedulingResult;
 import xxk.wuhai.seacurity.work.bean.RecordBean;
 import xxk.wuhai.seacurity.work.bean.ScheduingResult;
@@ -167,8 +166,8 @@ public interface WorkDutyApi {
      * @param getSchedulingVo
      * @return
      */
-    @POST("/client-api/commonScheduling/getSchedulingByUserId")
-    Observable<Result<DayDutyBean>> getOwnScheduling(@Body GetSchedulingVo getSchedulingVo);
+    @POST("/client-api//commonScheduling/getUserScheduling")
+    Observable<Result<GetPersonSchedulingByDateResponse>> getOwnScheduling(@Body GetSchedulingVo getSchedulingVo);
 
     /**
      * 打卡

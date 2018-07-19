@@ -13,20 +13,20 @@ public class GetSchedulingVo {
      * userId : 0
      */
 
-    private String date;
+    private String dayStr;
     private int userId;
 
     public GetSchedulingVo(String date, int userId) {
-        this.date = date;
+        this.dayStr = date;
         this.userId = userId;
     }
 
-    public String getDate() {
-        return date;
+    public String getDayStr() {
+        return dayStr;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDayStr(String dayStr) {
+        this.dayStr = dayStr;
     }
 
     public int getUserId() {
