@@ -70,17 +70,17 @@ public class ElectIDcardActivity extends BaseActivity {
         binding.liveaddress.setText(userDetailInfo.getUserInfo().getLivingAddress());
         binding.tvName.setText(userDetailInfo.getUserInfo().getName()==null?"":userDetailInfo.getUserInfo().getName().length()<2?userDetailInfo.getUserInfo().getName()
                 :userDetailInfo.getUserInfo().getName().substring(userDetailInfo.getUserInfo().getName().length()-2,userDetailInfo.getUserInfo().getName().length()));
-
+        String url = MyApplication.baseUrl +
+                "/client-api/user/getQRCodeImg" +
+                "?x-terminal-type=2" +
+                "&x-access-token=" +
+                BaseInterceptor.token +
+                "&x-username=" +
+                BaseInterceptor.name +
+                "&x-random=" +
+                BaseInterceptor.random;
         Glide.with(this)
-                .load(MyApplication.baseUrl +
-                        "/client-api/user/getQRCodeImg" +
-                        "?x-terminal-type=2" +
-                        "&x-access-token=" +
-                        BaseInterceptor.token +
-                        "&x-username=" +
-                        BaseInterceptor.name +
-                        "&x-random=" +
-                        BaseInterceptor.random)
+                .load(url)
                 .into(binding.qrcode);
 
         binding.qrcode.setOnClickListener(new View.OnClickListener() {

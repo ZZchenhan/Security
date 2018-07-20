@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:background="@drawable/bg_elect"
+            android:background="@mipmap/ic_head_bg"
             android:elevation="2dp"
             android:paddingLeft="15dp"
             android:paddingTop="15dp">
@@ -120,16 +120,16 @@
                 android:text="户籍地址"
                 android:textColor="#D3D2D2" />
 
-            <TextView
+            <xxk.wuhai.seacurity.weight.PasswordUnderLineEditText
                 android:id="@+id/idcard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_below="@+id/native_place"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="562890"
                 android:textColor="@color/white"
-                android:textSize="23sp" />
+               />
 
             <TextView
                 android:id="@+id/tv_name"
