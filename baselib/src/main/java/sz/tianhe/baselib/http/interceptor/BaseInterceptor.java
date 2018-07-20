@@ -26,6 +26,7 @@ public class BaseInterceptor implements Interceptor{
     public  static String name = "";
     public static String token="";
     public static String random = "";
+    public  static String type = "5";
     private Map<String,String> mHeaders;
 
     public BaseInterceptor(Map<String,String> headers){
@@ -43,7 +44,7 @@ public class BaseInterceptor implements Interceptor{
             }
         }
         requestBuilder.addHeader("x-random",random);
-        requestBuilder.addHeader("x-terminal-type","2");
+        requestBuilder.addHeader("x-terminal-type",type);
         requestBuilder.addHeader("x-username",name);
         requestBuilder.addHeader("x-access-token",token);
         requestBuilder.addHeader("Accept","application/json;charset=UTF-8");

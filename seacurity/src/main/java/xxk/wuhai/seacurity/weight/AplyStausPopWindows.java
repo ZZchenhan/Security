@@ -78,7 +78,7 @@ public class AplyStausPopWindows extends PopupWindow implements View.OnClickList
         root.findViewById(R.id.tag2).setOnClickListener(this);
 
         root.findViewById(R.id.tag3).setOnClickListener(this);
-     
+        root.findViewById(R.id.tag4).setOnClickListener(this);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

@@ -49,13 +49,24 @@
                 android:text="录音"
                 android:textColor="@color/text_color1"
                 android:textSize="17sp" />
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/lv_player"
-                android:layout_width="94dp"
+                android:layout_width="80dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
                 android:background="@drawable/bg_white"
+                android:scaleType="center"
                 android:elevation="2dp"
                 android:layout_marginLeft="15dp"
-                android:layout_height="25dp" />
+                android:layout_height="25dp" >
+                <ImageView
+                    android:id="@+id/voice_img"
+                    android:layout_width="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/voice_animation"
+                    android:layout_height="15dp" />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/iv_recode"
                 android:textSize="12sp"
@@ -152,13 +163,22 @@
                         android:textColor="@color/text_color1"
                         android:textSize="14sp" />
                 </LinearLayout>
-
-                <com.amap.api.maps2d.MapView
-                    android:id="@+id/mapview"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="165dp"
                     android:layout_marginTop="20dp"
-                    android:elevation="2dp" />
+                    android:elevation="2dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginRight="@dimen/normal_10dp"
+                    android:background="@color/gray"
+                    android:layout_height="163dp">
+                    <com.amap.api.maps2d.MapView
+                        android:id="@+id/mapview"
+                        android:layout_width="match_parent"
+                        android:layout_height="164dp"
+                        android:elevation="2dp" />
+                </FrameLayout>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

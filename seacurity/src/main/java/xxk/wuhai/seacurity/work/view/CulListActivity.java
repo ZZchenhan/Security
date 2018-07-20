@@ -111,18 +111,18 @@ public class CulListActivity extends BaseActivity {
                             toast(clueBursListResult.getMessage());
                             return;
                         }
-                        culAdapter.loadMoreComplete();
-                        if(!clueBursListResult.getResult().isHaveNext()){
-                            culAdapter.loadMoreEnd();
-                        }
                         CulListActivity.this.page = page+1;
                         if(clueBursListResult.getResult().getClueBurstList() == null){
                             toast("没有更多数据");
-                            culAdapter.loadMoreEnd();
                             return;
                         }
                         data.addAll(clueBursListResult.getResult().getClueBurstList());
                         culAdapter.notifyDataSetChanged();
+                        if(!clueBursListResult.getResult().isHaveNext()){
+                            culAdapter.loadMoreEnd();
+                        }else{
+                            culAdapter.loadMoreComplete();
+                        }
                     }
 
                     @Override

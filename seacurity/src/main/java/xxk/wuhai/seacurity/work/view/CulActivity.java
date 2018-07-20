@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -124,7 +125,8 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             }
         });
         leftIconNavagation.setTitleColor(R.color.white);
-        leftIconNavagation.setRight("历史");
+        leftIconNavagation.setRightImageResouce(R.mipmap.ic_cul_history);
+        leftIconNavagation.setRight("");
         leftIconNavagation.setRightOnclickListner(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,7 +182,6 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                         setVoiceShow(false, true, false);
                         break;
                     case RecordButton.RECORD_Done:  //RECORD_Done:2
-                        binding.loseVoice.setVisibility(View.GONE);
                         String filePath = binding.recordVoice.getFilePath();
 
                         //写入sd卡后刷新显示
@@ -210,6 +211,10 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     private void submit() throws Exception{
         if(binding.content.getText().toString().length() == 0){
             toast("请输入爆料类容");
+            return;
+        }
+        if(binding.content.getText().length()>60){
+            toast("爆料内容长度超过限制");
             return;
         }
         AddClueBurstVo addClueBurstVo = new AddClueBurstVo();
@@ -411,7 +416,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
      */
     private List<String> imagesUrl = new ArrayList<>();
 
-
+    private AnimationDrawable animator;
     private MediaPlayer mediaPlayer;
     private void refreRidioView(){
         if (!TextUtils.isEmpty(voiceUrl)) {
@@ -420,6 +425,23 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 mediaPlayer.setDataSource(voiceUrl);
                 mediaPlayer.setVolume(100f, 100f);
                 mediaPlayer.prepare();
+                binding.lvPlayer.setVisibility(View.VISIBLE);
+                binding.recordVoice.setVisibility(View.GONE);
+                binding.lvPlayer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        animator = (AnimationDrawable) binding.voiceImg.getBackground();
+                        animator.start();
+                        mediaPlayer.start();
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        animator.stop();
+                        binding.voiceImg.setBackgroundResource(R.drawable.voice_animation);
+                    }
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -428,11 +450,6 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
 
 
     private void setVoiceShow(boolean off, boolean on, boolean done) {
-        if (on) {
-            binding.loseVoice.setVisibility(View.VISIBLE);
-        } else {
-            binding.loseVoice.setVisibility(View.GONE);
-        }
 
     }
 }

@@ -1,6 +1,7 @@
 package xxk.wuhai.seacurity.work.view.custorm;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -94,6 +95,7 @@ public class DuyteHead extends LinearLayout{
                 calendar.setMonth(Integer.parseInt(times[1]));
                 calendar.setDay(Integer.parseInt(times[2]));
                 calendar.setScheme(getSchName(entry.getValue())+"");
+                calendar.setSchemeColor(getScheColor(entry.getValue()));
                 calendars.add(calendar);
             } catch (RuntimeException e) {
                 e.printStackTrace();
@@ -102,31 +104,77 @@ public class DuyteHead extends LinearLayout{
         calendarView.setSchemeDate(calendars);
     }
 
+
+
     ////0 ：未排班
     //1；修
     //2 白
     //3 白+
     //4 白++
-    public int getSchName(PersonSchedulingResult.Recode recode){
-        if (recode!=null) {
-            if (recode.getHasDaily()!=null && recode.getHasDaily().equals("0")
-                    &&recode.getHasOvertime()!=null && recode.getHasOvertime().equals("0")
-                    && recode.getHasTemporary() !=null&&recode.getHasTemporary().equals("0")){
-                return 1;
-            }else if (recode.getHasDaily()!=null && recode.getHasDaily().equals("1")
-                    &&recode.getHasOvertime()!=null && recode.getHasOvertime().equals("0")
-                    && recode.getHasTemporary() !=null&&recode.getHasTemporary().equals("0")){
-                return 2;
-            }else if (recode.getHasDaily()!=null && recode.getHasDaily().equals("1")
-                    &&recode.getHasOvertime()!=null && recode.getHasOvertime().equals("1")
-                    && recode.getHasTemporary() !=null&&recode.getHasTemporary().equals("1")){
-                return 4;
-            }else{
-                return 3;
-            }
-        }else{
-            return 0;
-        }
+    //5 夜班
+    // 夜+
+    // 夜色
+    public String getSchName(PersonSchedulingResult.Recode recode){
+           if(recode !=null) {
+               StringBuffer sb = new StringBuffer("");
+               if (recode.getHasDaily() != null && recode.getHasDaily().equals("0")
+                       && recode.getHasOvertime() != null && recode.getHasOvertime().equals("0")
+                       && recode.getHasTemporary() != null && recode.getHasTemporary().equals("0")) {
+                   sb = sb.append("休");
+               }
+
+               if (recode.getHasDaily() != null && recode.getHasDaily().equals("1")) {
+                   sb =sb.append(recode.getScheduleShortName());
+               }
+
+               if (recode.getHasOvertime() != null
+                       && recode.getHasOvertime().equals("1")) {
+                   if(sb.length() == 0){
+                       sb = sb.append("跨天");
+                   }else {
+                       sb = sb.append("+");
+                   }
+               }
+
+               if (recode.getHasTemporary() != null && recode.getHasTemporary().equals("1")) {
+                   if(sb.length() == 0){
+                       sb = sb.append("临时");
+                   }else {
+                       sb = sb.append("+");
+                   }
+               }
+               return sb.toString();
+           } else {
+               return " ";
+           }
     }
 
+    /**
+     * /0未排
+     //1 休
+     //2 考勤失败
+     //3 正常
+     * @param recode
+     * @return
+     */
+    public int getScheColor(PersonSchedulingResult.Recode recode){
+        if (recode != null) {
+            if (recode.getHasDaily()!=null && recode.getHasDaily().equals("0")
+                 && recode.getHasOvertime()!=null && recode.getHasOvertime().equals("0")
+                 && recode.getHasTemporary()!=null && recode.getHasTemporary().equals("0")) {
+                //休息
+                  return Color.LTGRAY;
+            }
+            if (recode.getStatus() == 2
+                || recode.getStatus() == 3
+                || recode.getStatus() == 5) {
+                //考勤失败
+                return Color.parseColor("#F43530");
+            }
+            return Color.parseColor("#49B1FA");
+        }else{
+
+            return Color.parseColor("#49B1FA");
+        }
+    }
 }

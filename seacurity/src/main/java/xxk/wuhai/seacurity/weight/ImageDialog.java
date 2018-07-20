@@ -31,16 +31,11 @@ public class ImageDialog extends Dialog {
         super(context, themeResId);
         setContentView(LayoutInflater.from(context).inflate(R.layout.dialog_qr_code,null,false));
         ImageView ivCode = findViewById(R.id.qrcode);
+        String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
+                ,MyApplication.baseUrl,BaseInterceptor.type,BaseInterceptor.random,BaseInterceptor.token,BaseInterceptor.name
+        );
         Glide.with(getContext())
-                .load(MyApplication.baseUrl +
-                        "/client-api/user/getQRCodeImg" +
-                        "?x-terminal-type=2" +
-                        "&x-access-token=" +
-                        BaseInterceptor.token +
-                        "&x-username=" +
-                        BaseInterceptor.name +
-                        "&x-random=" +
-                        BaseInterceptor.random)
+                .load(url)
                 .into(ivCode);
         Window window = getWindow();
         window.setGravity(Gravity.CENTER);

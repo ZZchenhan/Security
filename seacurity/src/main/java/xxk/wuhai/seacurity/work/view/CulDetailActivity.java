@@ -44,7 +44,7 @@ public class CulDetailActivity extends BaseActivity {
 
     ActivityCulDetailBinding binding;
     MediaPlayer mediaPlayer;
-
+    private AnimationDrawable animator;
     @Override
     public int layoutId() {
         return R.layout.activity_cul_detail;
@@ -102,6 +102,8 @@ public class CulDetailActivity extends BaseActivity {
         binding.lvPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                animator = (AnimationDrawable) binding.voiceImg.getBackground();
+                animator.start();
                 mediaPlayer.start();
             }
         });
@@ -131,6 +133,13 @@ public class CulDetailActivity extends BaseActivity {
                             }
                         binding.summary.setText(clueBurstDetailResultResult.getResult().getClueBurstDetail().getClueBurstContent());
                         mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                animator.stop();
+                                binding.voiceImg.setBackgroundResource(R.drawable.voice_animation);
+                            }
+                        });
                         if(clueBurstDetailResultResult.getResult().getClueBurstDetail().getTapeUrl()
                                 != null && clueBurstDetailResultResult.getResult().getClueBurstDetail().getTapeUrl().length()>0) {
                            try {
@@ -144,7 +153,8 @@ public class CulDetailActivity extends BaseActivity {
                         }else{
                             binding.ivRecode.setText("无录音");
                         }
-                        binding.location.setText("地址");
+                        binding.location.setText(clueBurstDetailResultResult.getResult().getClueBurstDetail().getAddress()
+                                ==null?"":clueBurstDetailResultResult.getResult().getClueBurstDetail().getAddress());
 
                         try{
                             Glide.with(CulDetailActivity.this)
@@ -184,5 +194,14 @@ public class CulDetailActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mediaPlayer!=null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
     }
 }

@@ -161,10 +161,15 @@ public class MsgFragment extends Fragment {
             }
         });
 
-        getMsg(page);
-
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        datas.clear();
+        page = 1;
+        getMsg(page);
+    }
 
     private String type = "";
     private int page = 1;
@@ -192,11 +197,7 @@ public class MsgFragment extends Fragment {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         if(stringResult.getCode().equals("200")) {
-                            if(stringResult.getResult().isHaveNext()) {
-                                msgAdapter.loadMoreComplete();
-                            }else{
-                                msgAdapter.loadMoreEnd();
-                            }
+
 
                             if(stringResult.getResult().getUnreadNum()>0){
                                 hinit.setText("最近有"+stringResult.getResult().getUnreadNum()+"消息");
@@ -216,6 +217,11 @@ public class MsgFragment extends Fragment {
                                 msgAdapter.loadMoreEnd();
                             }
                             msgAdapter.notifyDataSetChanged();
+                            if(stringResult.getResult().isHaveNext()) {
+                                msgAdapter.loadMoreComplete();
+                            }else{
+                                msgAdapter.loadMoreEnd();
+                            }
                         }else{
                             msgAdapter.loadMoreFail();
                             Toast.makeText(getContext(),stringResult.getMessage(),Toast.LENGTH_LONG).show();

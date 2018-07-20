@@ -1,6 +1,7 @@
 package xxk.wuhai.seacurity.common.navagation;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.view.View;
 import android.widget.ImageView;
@@ -65,6 +66,14 @@ public abstract class CommonNavagation extends AbstarctNavagation {
 
     public CommonNavagation setRight(String title){
         this.tvRight.setText(title);
+        return this;
+    }
+
+
+    public CommonNavagation setRightImageResouce(int resouce){
+        Drawable drawable = mContext.getResources().getDrawable(resouce);
+        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+        this.tvRight.setCompoundDrawables(null,null,drawable,null);
         return this;
     }
 

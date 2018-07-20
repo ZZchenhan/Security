@@ -32,7 +32,7 @@ public class MyApplyAdapter extends BaseQuickAdapter<ApprovalRecordListBean,Base
                             item.getPatchTime().replace("-","."):
                             "请假时间:"+item.getLrBeginTime().replace("-",".")+
                                     "-"+item.getLrEndTime().replace("-","."))
-                    .setText(R.id.reson,"事由："+item.getSupplement());
+                    .setText(R.id.reson,"事由："+(item.getSupplement() == null?"":item.getSupplement()));
             if(!PesonInfoHelper.aplyStatus(item.getStatus()).equals("已驳回")){
                 helper.setTextColor(R.id.status, Color.parseColor("#49B1FA"));
             }else{

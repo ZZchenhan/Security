@@ -61,7 +61,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     List<AttendanceInfoVoListBean> data = new ArrayList<>();
     private TextView tvDate;
     private TextView tvDay;
-    private RelativeLayout btnTrajectory;
+//    private RelativeLayout btnTrajectory;
     private DuyteHead duyteHead;
     private  View empty;
     @Override
@@ -98,13 +98,13 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         View headrview = LayoutInflater.from(this).inflate(R.layout.layout_duty_head2,null);
         headrview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tvDay = headrview.findViewById(R.id.time);
-        btnTrajectory = headrview.findViewById(R.id.btn_trajectory);
-        btnTrajectory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MyDutyActivity.this, TrajectoryActivity.class).putExtra("time",date));
-            }
-        });
+//        btnTrajectory = headrview.findViewById(R.id.btn_trajectory);
+//        btnTrajectory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(MyDutyActivity.this, TrajectoryActivity.class).putExtra("time",date));
+//            }
+//        });
         adapter.addHeaderView(headrview);
         adapter.bindToRecyclerView(recyclerView);
         duyteHead.setDataSelect(new CalendarView.OnDateSelectedListener() {

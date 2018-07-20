@@ -6,19 +6,14 @@
     <!-- android:oneshot的值为 false代表播放多次，true代表只播放一次 -->
     <!-- duration代表每张图片的播放时间 ,定义一个持续时间为50毫秒的动画帧 -->
     <item
-        android:drawable="@drawable/daren_voice_3"
-        android:duration="100"/>
+        android:drawable="@drawable/ic_play3"
+        android:duration="200"/>
 
     <item
-        android:drawable="@drawable/daren_voice_1"
-        android:duration="100"/>
+        android:drawable="@drawable/ic_play2"
+        android:duration="200"/>
     <item
-        android:drawable="@drawable/daren_voice_2"
-        android:duration="100"/>
-
-    <item
-        android:drawable="@drawable/daren_voice_3"
-        android:duration="100"/>
-
+        android:drawable="@drawable/ic_play1"
+        android:duration="200"/>
 
 </animation-list>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingRight="10dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -29,8 +30,8 @@
                 android:paddingBottom="9dp"
                 android:paddingTop="9dp"
                 android:gravity="center"
-                android:text="审批中"
-                android:tag="1"
+                android:text="全部"
+                android:tag="0"
                 android:textColor="#3F3F3F"
                 android:textSize="13sp" />
 
@@ -45,8 +46,8 @@
                 android:paddingBottom="9dp"
                 android:paddingTop="9dp"
                 android:gravity="center"
-                android:text="已通过"
-                android:tag="3"
+                android:text="审批中"
+                android:tag="1"
                 android:textColor="#3F3F3F"
                 android:textSize="13sp" />
 
@@ -66,20 +67,20 @@
                 android:tag="3"
                 android:textColor="#3F3F3F"
                 android:textSize="13sp" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/line_color" />
 
             <TextView
-                android:id="@+id/remind_record"
+                android:id="@+id/tag4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="9dp"
                 android:paddingTop="9dp"
                 android:gravity="center"
-                android:text="提醒打卡"
+                android:text="已驳回"
+                android:tag="2"
                 android:textColor="#3F3F3F"
                 android:textSize="13sp" />
         </LinearLayout>

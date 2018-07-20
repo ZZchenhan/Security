@@ -20,10 +20,8 @@ public class ShareUtlts {
     }
 
     public static void clean(Context context){
-        context.getSharedPreferences(PERSON_INFO,0).edit()
-                .putString("name","").putString("random","")
-                .putString("userToken","")
-                .commit();
+        context.getSharedPreferences(PERSON_INFO,0).edit().clear().commit();
+
     }
 
     public static String getToken(Context context){
