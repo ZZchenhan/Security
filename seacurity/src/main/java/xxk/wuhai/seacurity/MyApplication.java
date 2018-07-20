@@ -62,7 +62,7 @@ public class MyApplication extends Application {
           CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         // 初始化Bugly
-       CrashReport.initCrashReport(getApplicationContext(), "9800fce075", false,strategy);
+       CrashReport.initCrashReport(getApplicationContext(), "9800fce075", true,strategy);
        String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
        BaseInterceptor.random = ShareUtlts.getRandom(this);
        BaseInterceptor.token = ShareUtlts.getToken(this);

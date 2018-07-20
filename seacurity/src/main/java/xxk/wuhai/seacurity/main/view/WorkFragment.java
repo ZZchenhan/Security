@@ -109,7 +109,7 @@ public class WorkFragment extends Fragment {
         calendar.set(calendar.DAY_OF_MONTH,calendar.get(Calendar.DAY_OF_MONTH)+1);
        tvDay7.setText(""+calendar.get(Calendar.DAY_OF_MONTH));
         datesViews.put(  simpleDateFormat.format(calendar.getTime()),tvDay7);
-//        getData();
+        getData();
     }
 
     private void getData(){
@@ -118,7 +118,7 @@ public class WorkFragment extends Fragment {
                 .getTimesScheduling(new GetSchedulingByTimeVo(
                         simpleDateFormat.format(DateUtils.getWekLastDay().getTime()),
                         simpleDateFormat.format(DateUtils.getWekFisrstDay().getTime()),
-                        41
+                        MyApplication.userDetailInfo.getUserInfo().getUserId()
                 )).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<PersonSchedulingResult>>() {
