@@ -3,6 +3,8 @@ package xxk.wuhai.seacurity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 import com.alibaba.sdk.android.oss.OSS;
@@ -32,7 +34,7 @@ import xxk.wuhai.seacurity.utils.ShareUtlts;
  * @QQ 869360026
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
     public static RetrofitClient retrofitClient;
 
     public static String deviceId;
@@ -45,7 +47,13 @@ public class MyApplication extends Application {
 
     public static OSS oss = null;
 
-   @Override
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
        JPushInterface.setDebugMode(true);
