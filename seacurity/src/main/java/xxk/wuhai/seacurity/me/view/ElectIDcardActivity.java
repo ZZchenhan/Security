@@ -1,11 +1,14 @@
 package xxk.wuhai.seacurity.me.view;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -25,11 +28,14 @@ import xxk.wuhai.seacurity.weight.ImageDialog;
 
 public class ElectIDcardActivity extends BaseActivity {
     ImageDialog imageDialog;
+
     @Override
     public int layoutId() {
         return R.layout.activity_elect_idcard;
     }
+
     LeftIconNavagation leftIconNavagation;
+
     @Override
     public IBaseNavagation navagation() {
         leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
@@ -59,22 +65,23 @@ public class ElectIDcardActivity extends BaseActivity {
     }
 
     boolean isMin = true;
-    private void setData(UserDetailInfo userDetailInfo){
+
+    private void setData(UserDetailInfo userDetailInfo) {
         binding.name.setText(userDetailInfo.getUserInfo().getName());
-        binding.sex.setText(userDetailInfo.getUserInfo().getSex().equals("0")?"女":"男");
+        binding.sex.setText(userDetailInfo.getUserInfo().getSex().equals("0") ? "女" : "男");
         binding.birthday.setText(PesonInfoHelper.changeTimes(userDetailInfo.getUserInfo().getBirthday()));
-        binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceAddress()+"");
-        binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard()+"");
-        binding.company.setText(userDetailInfo.getOrgVo() == null?"":userDetailInfo.getOrgVo().getName()+"");
+        binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceAddress() + "");
+        binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard() + "");
+        binding.company.setText(userDetailInfo.getOrgVo() == null ? "" : userDetailInfo.getOrgVo().getName() + "");
         binding.phone.setText(userDetailInfo.getUserInfo().getPhone());
         binding.liveaddress.setText(userDetailInfo.getUserInfo().getLivingAddress());
-        binding.tvName.setText(userDetailInfo.getUserInfo().getName()==null?"":userDetailInfo.getUserInfo().getName().length()<2?userDetailInfo.getUserInfo().getName()
-                :userDetailInfo.getUserInfo().getName().substring(userDetailInfo.getUserInfo().getName().length()-2,userDetailInfo.getUserInfo().getName().length()));
+        binding.tvName.setText(userDetailInfo.getUserInfo().getName() == null ? "" : userDetailInfo.getUserInfo().getName().length() < 2 ? userDetailInfo.getUserInfo().getName()
+                : userDetailInfo.getUserInfo().getName().substring(userDetailInfo.getUserInfo().getName().length() - 2, userDetailInfo.getUserInfo().getName().length()));
         //http://47.98.241.211//client-api/user/getQRCodeImg?x-terminal-type=5&x-access-token=837Yx8wSU6xYLXa16Q/+J0PlGlNo/E8GfbnoX7yfk7nGyPoceFa60NUORwLusyQj&x-username=CE5D55AE79D4F853B3F5EFFF1A1F0EAF&x-random=1532092291005
         //NSString *common = @"http://47.98.241.211/client-api/user/getQRCodeImg";
 
         String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
-        ,MyApplication.baseUrl,BaseInterceptor.type,BaseInterceptor.random,BaseInterceptor.token,BaseInterceptor.name
+                , MyApplication.baseUrl, BaseInterceptor.type, BaseInterceptor.random, BaseInterceptor.token, BaseInterceptor.name
         );
         Glide.with(this)
                 .load(url)
@@ -83,7 +90,7 @@ public class ElectIDcardActivity extends BaseActivity {
         binding.qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imageDialog == null){
+                if (imageDialog == null) {
                     imageDialog = new ImageDialog(ElectIDcardActivity.this);
                 }
                 imageDialog.show();
@@ -93,8 +100,10 @@ public class ElectIDcardActivity extends BaseActivity {
     }
 
     ActivityElectIdcardBinding binding;
-    public View databindViews(){
-        binding =  DataBindingUtil.inflate(LayoutInflater.from(this),layoutId(),null,false);
+
+    public View databindViews() {
+        binding = DataBindingUtil.inflate(LayoutInflater.from(this), layoutId(), null, false);
         return binding.getRoot();
     }
+
 }

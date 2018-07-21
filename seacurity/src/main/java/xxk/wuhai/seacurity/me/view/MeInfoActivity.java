@@ -1,13 +1,14 @@
 package xxk.wuhai.seacurity.me.view;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.content.Context;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
+import xxk.wuhai.seacurity.work.view.MyAplyListActivity;
 
 public class MeInfoActivity extends BaseActivity {
 
@@ -51,7 +52,28 @@ public class MeInfoActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        hideKeyboard();
+    }
+
     public void change(){
         getSupportFragmentManager().beginTransaction().hide(meInfoFragment).show(meInfoUpdateFragment).commit();
+    }
+    private void hideKeyboard() {
+        try {
+            InputMethodManager inputMethod = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethod.isActive()) {
+                if (this.getCurrentFocus().getWindowToken() != null) {
+                    inputMethod.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        }catch (Exception e){}
     }
 }

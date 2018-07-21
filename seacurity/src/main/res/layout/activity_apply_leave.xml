@@ -60,15 +60,11 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="事假"
+                android:layout_marginRight="15dp"
+                android:drawableRight="@mipmap/icon_leave_down_arrow"
                 android:textColor="@color/text_b2b2b2"
                 android:textSize="17sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:layout_weight="0"
-                android:src="@mipmap/icon_leave_down_arrow" />
         </LinearLayout>
 
         <View
@@ -92,20 +88,15 @@
             <TextView
                 android:id="@+id/start_time"
                 android:layout_width="match_parent"
+                android:layout_marginRight="15dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
+                android:drawableRight="@mipmap/icon_leave_down_arrow"
                 android:text=""
                 android:textColor="@color/text_b2b2b2"
                 android:textSize="17sp" />
 
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:layout_weight="0"
-                android:src="@mipmap/icon_leave_down_arrow" />
         </LinearLayout>
 
         <View
@@ -131,18 +122,12 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
                 android:gravity="center_vertical"
                 android:text=""
+                android:drawableRight="@mipmap/icon_leave_down_arrow"
                 android:textColor="@color/text_b2b2b2"
                 android:textSize="17sp" />
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:layout_weight="0"
-                android:src="@mipmap/icon_leave_down_arrow" />
         </LinearLayout>
 
         <View

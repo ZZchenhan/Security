@@ -120,11 +120,12 @@
                 android:text="户籍地址"
                 android:textColor="#D3D2D2" />
 
-            <xxk.wuhai.seacurity.weight.PasswordUnderLineEditText
+            <TextView
                 android:id="@+id/idcard"
-                android:layout_marginRight="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:textSize="23sp"
+                android:letterSpacing="0.1"
                 android:layout_below="@+id/native_place"
                 android:layout_marginTop="10dp"
                 android:text="562890"

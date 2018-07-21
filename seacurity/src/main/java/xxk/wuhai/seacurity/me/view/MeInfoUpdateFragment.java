@@ -1,6 +1,7 @@
 package xxk.wuhai.seacurity.me.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -69,31 +70,57 @@ public class MeInfoUpdateFragment extends Fragment {
     }
 
 
-
     public void setData(UserDetailInfo userDetailInfo) {
         binding.name.setText(userDetailInfo.getUserInfo().getName());
         binding.phone.setText(userDetailInfo.getUserInfo().getPhone());
         binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard());
-        binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceAddress());
+        if (userDetailInfo.getUserInfo().getResidenceProvinceName()
+                == null
+                || userDetailInfo.getUserInfo().getResidenceCityName() == null
+                || userDetailInfo.getUserInfo().getResidenceAddress() == null) {
+            binding.nativePlace.setText(
+                    userDetailInfo.getUserInfo().getResidenceAddress() == null ?
+                            "未设置" : userDetailInfo.getUserInfo().getResidenceAddress());
+        } else {
+            binding.nativePlace.setText(
+                    userDetailInfo.getUserInfo().getResidenceProvinceName()
+                            + userDetailInfo.getUserInfo().getResidenceCityName()
+                            + userDetailInfo.getUserInfo().getResidenceDistrictName()
+            );
+        }
         binding.nation.setText(userDetailInfo.getUserInfo().getNation());
         binding.sex.setText(userDetailInfo.getUserInfo().getSex().equals("0") ? "女" : "男");
         binding.department.setText(userDetailInfo.getDeptVo().getDeptName());
         binding.joinTime.setText(PesonInfoHelper.changeTimes(userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getJoinTime()));
         binding.brithday.setText(PesonInfoHelper.changeTimes(userDetailInfo.getUserInfo().getBirthday()));
         binding.education.setText(PesonInfoHelper.edction(userDetailInfo.getUserInfo().getEducation()));
-        binding.live.setText(userDetailInfo.getUserInfo().getLivingAddress());
-        binding.adress.setText(userDetailInfo.getUserInfo().getLivingAddress());
+        if (userDetailInfo.getUserInfo().getLivingProvinceName()
+                == null
+                || userDetailInfo.getUserInfo().getLivingCityName() == null
+                || userDetailInfo.getUserInfo().getLivingAddress() == null) {
+            binding.live.setText("未设置");
+        } else {
+            binding.live.setText(
+                    userDetailInfo.getUserInfo().getLivingProvinceName()
+                            + userDetailInfo.getUserInfo().getLivingCityName()
+                            + userDetailInfo.getUserInfo().getLivingDistrictName()
+            );
+        }
+        if (userDetailInfo.getUserInfo().getLivingAddress() != null) {
+            binding.adress.setText(userDetailInfo.getUserInfo().getLivingAddress());
+        } else {
+            binding.adress.setText("未设置");
+        }
         binding.marry.setText(PesonInfoHelper.marryStatus(userDetailInfo.getUserInfo().getMaritalStatus()));
-        userInfoBean.setMaritalStatus(userDetailInfo.getUserInfo().getMaritalStatus() == null ?"0":userDetailInfo.getUserInfo().getMaritalStatus());
+        userInfoBean.setMaritalStatus(userDetailInfo.getUserInfo().getMaritalStatus() == null ? "0" : userDetailInfo.getUserInfo().getMaritalStatus());
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
-        binding.height.setText(userDetailInfo.getUserInfo().getHeight()+"");
-        binding.age.setText(userDetailInfo.getUserInfo().getAge()+"");
+        binding.height.setText(userDetailInfo.getUserInfo().getHeight() + "");
         binding.workAge.setText(userDetailInfo.getUserInfo().getWorkYear());
-        binding.weight.setText(userDetailInfo.getUserInfo().getWeight()+"");
+        binding.weight.setText(userDetailInfo.getUserInfo().getWeight() + "");
         binding.blood.setText(PesonInfoHelper.bloodType(userDetailInfo.getUserInfo().getBloodType()));
 
         sexCode = userDetailInfo.getUserInfo().getSex();
-        eductionType = userDetailInfo.getUserInfo().getEducation()+"";
+        eductionType = userDetailInfo.getUserInfo().getEducation() + "";
         marriedType = userDetailInfo.getUserInfo().getMaritalStatus();
         politicalType = userDetailInfo.getUserInfo().getPoliticsType();
         bloodType = userDetailInfo.getUserInfo().getBloodType();
@@ -106,11 +133,11 @@ public class MeInfoUpdateFragment extends Fragment {
         });
     }
 
-    private void setOnclick(){
+    private void setOnclick() {
         binding.sex.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(sexDialog == null){
+                if (sexDialog == null) {
                     sexDialog = new BottomDialog(getContext());
                     sexDialog.setType(TypeHelp.Type.SEX);
                     sexDialog.setConfirmClick(new View.OnClickListener() {
@@ -129,7 +156,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.education.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(eductaoinDialog == null){
+                if (eductaoinDialog == null) {
                     eductaoinDialog = new BottomDialog(getContext());
                     eductaoinDialog.setType(TypeHelp.Type.EDUCATION);
                     eductaoinDialog.setConfirmClick(new View.OnClickListener() {
@@ -150,7 +177,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.marry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(marridDialog == null){
+                if (marridDialog == null) {
                     marridDialog = new BottomDialog(getContext());
                     marridDialog.setType(TypeHelp.Type.MARRIES);
                     marridDialog.setConfirmClick(new View.OnClickListener() {
@@ -170,7 +197,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.political.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(politicalDialog == null){
+                if (politicalDialog == null) {
                     politicalDialog = new BottomDialog(getContext());
                     politicalDialog.setType(TypeHelp.Type.POLITICS);
                     politicalDialog.setConfirmClick(new View.OnClickListener() {
@@ -190,7 +217,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.blood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(bloodDialog == null){
+                if (bloodDialog == null) {
                     bloodDialog = new BottomDialog(getContext());
                     bloodDialog.setType(TypeHelp.Type.BLOOD);
                     bloodDialog.setConfirmClick(new View.OnClickListener() {
@@ -211,14 +238,16 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.nativePlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(siteDialogFragment == null){
+                if (siteDialogFragment == null) {
                     siteDialogFragment = new SiteDialogFragment(getContext());
                 }
                 siteDialogFragment.setOnSiteComfirmListener(new SiteDialogFragment.OnSiteComfirmListener() {
                     @Override
-                    public void onConfimr(String addrss) {
+                    public void onConfimr(String addrss,int provice,int city,int dis) {
                         binding.nativePlace.setText(addrss);
-                        userInfoBean.setResidenceAddress(addrss);
+                        userInfoBean.setResidenceProvinceId(provice);
+                        userInfoBean.setResidenceCityId(city);
+                        userInfoBean.setResidenceDistrictId(dis);
                     }
                 });
                 siteDialogFragment.show();
@@ -228,14 +257,16 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.live.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(siteDialogFragment == null){
+                if (siteDialogFragment == null) {
                     siteDialogFragment = new SiteDialogFragment(getContext());
                 }
                 siteDialogFragment.setOnSiteComfirmListener(new SiteDialogFragment.OnSiteComfirmListener() {
                     @Override
-                    public void onConfimr(String addrss) {
+                    public void onConfimr(String addrss,int provice,int city,int dis) {
                         binding.live.setText(addrss);
-                        userInfoBean.setLivingAddress(addrss);
+                        userInfoBean.setLivingProvinceId(provice);
+                        userInfoBean.setLivingCityId(city);
+                        userInfoBean.setLivingDistrictId(dis);
                     }
                 });
                 siteDialogFragment.show();
@@ -244,10 +275,12 @@ public class MeInfoUpdateFragment extends Fragment {
     }
 
 
-
-    public void update(){
-        userInfoBean.setNation( binding.nation.getText().toString());
-        userInfoBean.setLivingAddress(userInfoBean.getLivingAddress()+binding.live.getText().toString());
+    public void update() {
+        userInfoBean.setNation(binding.nation.getText().toString());
+        userInfoBean.setLivingAddress(binding.adress.getText().toString());
+        userInfoBean.setHeight(Integer.parseInt(binding.height.getText().toString()));
+//        userInfoBean.setAge(Integer.parseInt(binding.age.getText().toString()));
+        userInfoBean.setWeight(Integer.parseInt(binding.weight.getText().toString()));
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .modify(userInfoBean)
                 .subscribeOn(Schedulers.newThread())
@@ -260,12 +293,12 @@ public class MeInfoUpdateFragment extends Fragment {
 
                     @Override
                     public void onNext(Result<RecordBean> result) {
-                        if(result.getCode().equals("200")){
-                            if(result.getResult().getStatus().equals("1")) {
+                        if (result.getCode().equals("200")) {
+                            if (result.getResult().getStatus().equals("1")) {
                                 ToastUtils.showShort("修改成功");
                                 getActivity().setResult(Activity.RESULT_OK);
                                 getActivity().finish();
-                            }else{
+                            } else {
                                 ToastUtils.showLong(result.getMessage());
                             }
                         }

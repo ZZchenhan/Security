@@ -18,6 +18,12 @@ public class UpdateUsers {
         this.birthday = userDetailInfo.getUserInfo().getBirthday();
         this.bloodType = userDetailInfo.getUserInfo().getBloodType();
         this.clientId = userDetailInfo.getUserInfo().getClientId();
+        this.residenceProvinceId = userDetailInfo.getUserInfo().getResidenceProvinceId();
+        this.residenceCityId = userDetailInfo.getUserInfo().getResidenceCityId();
+        this.residenceDistrictId = userDetailInfo.getUserInfo().getResidenceDistrictId();
+        this.livingProvinceId = userDetailInfo.getUserInfo().getLivingProvinceId();
+        this.livingCityId = userDetailInfo.getUserInfo().getLivingCityId();
+        this.livingDistrictId = userDetailInfo.getUserInfo().getLivingDistrictId();
         this.deviceNumber = userDetailInfo.getUserInfo().getDeviceNumber();
         this.education = userDetailInfo.getUserInfo().getEducation();
         this.email = userDetailInfo.getUserInfo().getEmail();

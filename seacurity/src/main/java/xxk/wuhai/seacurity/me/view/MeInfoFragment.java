@@ -51,15 +51,43 @@ public class MeInfoFragment extends Fragment {
         binding.name.setText(userDetailInfo.getUserInfo().getName());
         binding.phone.setText(userDetailInfo.getUserInfo().getPhone());
         binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard());
-        binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceAddress());
+        if(userDetailInfo.getUserInfo().getResidenceProvinceName()
+                == null
+                ||userDetailInfo.getUserInfo().getResidenceCityName() == null
+                || userDetailInfo.getUserInfo().getResidenceAddress() == null){
+            binding.nativePlace.setText(
+                    userDetailInfo.getUserInfo().getResidenceAddress() == null?
+                            "未设置":userDetailInfo.getUserInfo().getResidenceAddress());
+        }else{
+            binding.nativePlace.setText(
+                    userDetailInfo.getUserInfo().getResidenceProvinceName()
+                    +userDetailInfo.getUserInfo().getResidenceCityName()
+                    +userDetailInfo.getUserInfo().getResidenceDistrictName()
+            );
+        }
         binding.nation.setText(userDetailInfo.getUserInfo().getNation());
         binding.sex.setText(userDetailInfo.getUserInfo().getSex().equals("0") ? "女" : "男");
         binding.department.setText(userDetailInfo.getDeptVo().getDeptName());
         binding.joinTime.setText(PesonInfoHelper.changeTimes(userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getJoinTime()));
         binding.brithday.setText(PesonInfoHelper.changeTimes(userDetailInfo.getUserInfo().getBirthday()));
         binding.education.setText(PesonInfoHelper.edction(userDetailInfo.getUserInfo().getEducation()));
-        binding.live.setText(userDetailInfo.getUserInfo().getLivingAddress());
-        binding.adress.setText(userDetailInfo.getUserInfo().getLivingAddress());
+        if(userDetailInfo.getUserInfo().getLivingProvinceName()
+                == null
+                ||userDetailInfo.getUserInfo().getLivingCityName() == null
+                || userDetailInfo.getUserInfo().getLivingAddress() == null){
+            binding.live.setText("未设置");
+        }else{
+            binding.live.setText(
+                    userDetailInfo.getUserInfo().getLivingProvinceName()
+                            +userDetailInfo.getUserInfo().getLivingCityName()
+                            +userDetailInfo.getUserInfo().getLivingDistrictName()
+            );
+        }
+        if(userDetailInfo.getUserInfo().getLivingAddress() != null) {
+            binding.adress.setText(userDetailInfo.getUserInfo().getLivingAddress());
+        }else{
+            binding.adress.setText("未设置");
+        }
         binding.marry.setText(PesonInfoHelper.marryStatus(userDetailInfo.getUserInfo().getMaritalStatus()));
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
         binding.height.setText(userDetailInfo.getUserInfo().getHeight()+"");

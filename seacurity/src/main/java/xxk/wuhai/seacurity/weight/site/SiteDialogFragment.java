@@ -73,10 +73,25 @@ public class SiteDialogFragment extends Dialog {
             @Override
             public void onClick(View view) {
                 if(onSiteComfirmListener!=null){
-                    onSiteComfirmListener.onConfimr(province == null ?"获取失败":
-                            (province.getProvinceName()
-                            + (city == null ? cities.get(0):city.getCityName())
-                            +(district == null ? districts.get(0).getDistrictName():district.getDistrictName())));
+                    if(province == null){
+                        return;
+                    }
+                    if(city == null){
+                        city = cities.size()>0?cities.get(0):null;
+                        if(city == null){
+                            return;
+                        }
+                    }
+                    if(district == null){
+                        district = districts.size()>0?districts.get(0):null;
+                        if(district == null){
+                            return;
+                        }
+                    }
+                    onSiteComfirmListener.onConfimr(
+                            province.getProvinceName()+city.getCityName()+district.getDistrictName()
+                            ,province.getProvinceId(),city.getCityId(),district.getDistrictId()
+                    );
                 }
                 dismiss();
             }
@@ -90,7 +105,6 @@ public class SiteDialogFragment extends Dialog {
         p.width = d.getWidth(); //宽度设置为屏幕
         getWindow().setAttributes(p); //设置生效
 
-        initData();
 
         provinceWheel.setOnWheelChangeListener(new WheelPicker.OnWheelChangeListener<Province>() {
             @Override
@@ -112,6 +126,7 @@ public class SiteDialogFragment extends Dialog {
                 district = item;
             }
         });
+        initData();
     }
 
     Observable<Result<List<Province>>> provincesOberable;
@@ -149,6 +164,9 @@ public class SiteDialogFragment extends Dialog {
 
                 }
             });
+        }else{
+            provinceWheel.setDataList(provinces);
+            provinceChange(provinces.get(0).getProvinceId());
         }
     }
 
@@ -249,6 +267,6 @@ public class SiteDialogFragment extends Dialog {
     }
 
     public interface OnSiteComfirmListener{
-        void onConfimr(String addrss);
+        void onConfimr(String addrss,int provinceCode,int cityCode,int disCode);
     }
 }

@@ -10,9 +10,18 @@ package xxk.wuhai.seacurity.work.vo;
  */
 public class ApDetailVo {
     private int approvalRecordId;
+    private String messageId;
 
     public ApDetailVo(int approvalRecordId) {
         this.approvalRecordId = approvalRecordId;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public int getApprovalRecordId() {
@@ -21,5 +30,10 @@ public class ApDetailVo {
 
     public void setApprovalRecordId(int approvalRecordId) {
         this.approvalRecordId = approvalRecordId;
+    }
+
+    public ApDetailVo(int approvalRecordId, String messageId) {
+        this.approvalRecordId = approvalRecordId;
+        this.messageId = messageId;
     }
 }

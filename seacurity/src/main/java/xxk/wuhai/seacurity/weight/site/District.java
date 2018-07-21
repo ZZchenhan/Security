@@ -7,17 +7,17 @@ package xxk.wuhai.seacurity.weight.site;
  */
 
 public class District extends Area{
-    private String districtId;
+    private int districtId;
     private String districtName;
 
     public District() {
     }
 
-    public String getDistrictId() {
+    public int getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(String districtId) {
+    public void setDistrictId(int districtId) {
         this.districtId = districtId;
     }
 

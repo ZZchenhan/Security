@@ -75,7 +75,7 @@ public class MyReceiver extends BroadcastReceiver {
                                 .putExtra("msgId",json.getInt("associatedId")).putExtra("msgType","1"));
                         break;
                     case "3":
-                        ExamineActivity2.openActivity(context,json.getInt("associatedId"),2);
+                        ExamineActivity2.openActivity(context,json.getInt("associatedId"),json.getInt("messageId"));
                         break;
                     case "4":
 //                        NotifyMsgActivity.openActivity(getContext(),datas.get(position));

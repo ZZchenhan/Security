@@ -71,19 +71,19 @@ public class ExamineActivity2 extends BaseActivity {
      *
      * @param context
      * @param id
-     * @param type 是否能够审核
+     * @param 消息id
      */
-    public static void openActivity(Context context,int id,int type){
+    public static void openActivity(Context context,int id,int msgId){
         context.startActivity(new Intent(context,ExamineActivity2.class)
         .putExtra("id",id)
-                .putExtra("type",type)
+                .putExtra("msgId",msgId+"")
         );
     }
 
     public void initData(){
         MyApplication.retrofitClient
                 .getRetrofit().create(WorkDutyApi.class)
-                .apDetail(new ApDetailVo(getIntent().getIntExtra("id",0)))
+                .apDetail(new ApDetailVo(getIntent().getIntExtra("id",0),getIntent().getStringExtra("msgId")))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<ApDetailResult>>() {
@@ -135,7 +135,7 @@ public class ExamineActivity2 extends BaseActivity {
         binding.name.setText(apDetailBean.getName());
         binding.time.setText(apDetailBean.getPatchTime());
         binding.type.setText("补签");
-        binding.result.setText(apDetailBean.getSupplement()+"");
+        binding.result.setText(apDetailBean.getSupplement() == null?"未填写":apDetailBean.getSupplement());
         try {
             Glide.with(ExamineActivity2.this)
                     .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
@@ -162,7 +162,7 @@ public class ExamineActivity2 extends BaseActivity {
         binding.endTime.setText(apDetailBean.getLrEndTime());
         binding.days.setText(apDetailBean.getLraDays());
         binding.type.setText(PesonInfoHelper.leaveType(apDetailBean.getTypeId()));
-        binding.result.setText(apDetailBean.getSupplement()+"");
+        binding.result.setText(apDetailBean.getSupplement() == null?"未填写":apDetailBean.getSupplement());
         binding.name1.setText(apDetailBean.getApproverName());
         binding.resul1.setText(PesonInfoHelper.detailStatus(apDetailBean.getStatus()));
         try {
