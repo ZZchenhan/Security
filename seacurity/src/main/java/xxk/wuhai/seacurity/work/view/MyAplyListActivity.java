@@ -40,7 +40,7 @@ import xxk.wuhai.seacurity.work.bean.AplyResult;
 import xxk.wuhai.seacurity.work.bean.ApprovalRecordListBean;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
 
-public class MyAplyListActivity extends BaseActivity implements TextView.OnEditorActionListener{
+public class MyAplyListActivity extends BaseActivity implements TextView.OnEditorActionListener {
 
     RecyclerView recyclerView;
     MyApplyAdapter adapter;
@@ -48,6 +48,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
     private List<ApprovalRecordListBean> datas = new ArrayList<>();
     private EditText editText;
     AplyStausPopWindows stausPopWindows;
+
     @Override
     public int layoutId() {
         return R.layout.activity_my_aply_list;
@@ -91,7 +92,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(stausPopWindows == null){
+                if (stausPopWindows == null) {
                     stausPopWindows = new AplyStausPopWindows(MyAplyListActivity.this);
                     stausPopWindows.setOnItemClickListener(new AplyStausPopWindows.OnItemClickListener() {
                         @Override
@@ -124,13 +125,13 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(datas.get(position).getPatchTime() != null){
+                if (datas.get(position).getPatchTime() != null) {
                     //补签
                     ExamineActivity.openActivity(MyAplyListActivity.this,
-                            datas.get(position).getApprovalRecordId(),type);
-                }else{
+                            datas.get(position).getApprovalRecordId(), type);
+                } else {
                     LeaveActivity.openActivity(MyAplyListActivity.this,
-                            datas.get(position).getApprovalRecordId(),type);
+                            datas.get(position).getApprovalRecordId(), type);
                 }
             }
         });
@@ -140,6 +141,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
     private static int type;
     private String contenxt;
     private String hand = "0";
+
     public static void openActivity(Context context, int type) {
         MyAplyListActivity.type = type;
         context.startActivity(new Intent(context, MyAplyListActivity.class));
@@ -148,7 +150,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
     private int page = 1;
 
     public void intData(final int page) {
-        if(page == 1 && datas.size()>0){
+        if (page == 1 && datas.size() > 0) {
             datas.clear();
             adapter.notifyDataSetChanged();
         }
@@ -179,13 +181,14 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                         MyAplyListActivity.this.page = page + 1;
                         editText.setText("");
                         contenxt = null;
-                        datas.addAll(stringResult.getResult().getApprovalRecordList());
-                        adapter.notifyDataSetChanged();
-                        if (stringResult.getResult().getApprovalRecordList() == null) {
+                        if (stringResult.getResult() == null || stringResult.getResult().getApprovalRecordList() == null) {
                             toast("没有更多数据了");
                             adapter.loadMoreEnd();
                             return;
                         }
+                        datas.addAll(stringResult.getResult().getApprovalRecordList());
+                        adapter.notifyDataSetChanged();
+
                         if (!stringResult.getResult().isHaveNext()) {
                             adapter.loadMoreEnd();
                         }
@@ -216,7 +219,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                     MyAplyListActivity.this.getCurrentFocus().getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
             contenxt = editText.getText().toString();
-            if(contenxt.length() == 0){
+            if (contenxt.length() == 0) {
                 contenxt = null;
             }
             page = 1;
@@ -227,8 +230,8 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
     }
 
 
-    private void darkenBackground(Float bgcolor){
-        WindowManager.LayoutParams lp =getWindow().getAttributes();
+    private void darkenBackground(Float bgcolor) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgcolor;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getWindow().setAttributes(lp);

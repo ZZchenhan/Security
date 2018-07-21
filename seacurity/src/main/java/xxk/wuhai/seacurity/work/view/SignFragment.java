@@ -179,7 +179,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
             getActivity().finish();
         }else if(requestCode == 2 && resultCode == Activity.RESULT_OK){
             currentLatLng = data.getParcelableExtra("latlng");
-            location = data.getStringExtra("address");
+            location = data.getStringExtra("address") == null ?"":data.getStringExtra("address");
             ((ISignPresenter)presenter).refresh(currentLatLng);
             locaionSuccess(city,location,currentLatLng);
         }
@@ -192,7 +192,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
     /**
      * 当前地址
      */
-    private String location;
+    private String location = "";
     private String city;
     @Override
     public void locaionSuccess(String city,String adrss, LatLng latLng) {

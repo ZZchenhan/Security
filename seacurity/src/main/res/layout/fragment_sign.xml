@@ -29,7 +29,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/location"
-            android:text="杭州广播大厦"
+            android:text=""
             android:maxLines="1"
             android:textSize="14sp"
             android:textColor="@color/text_color1"
@@ -73,7 +73,7 @@
         android:id="@+id/tv_sign_numbers"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:text="今天你已签到1次"
+        android:text="今天你已签到0次"
         android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
         android:textSize="16sp"

@@ -20,6 +20,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
@@ -273,7 +274,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
             //设置未签到模式
-            mLocationOption.setInterval(1000*30);
+            mLocationOption.setInterval(1000*120);
             //指定位一次
 //            mLocationOption.setOnceLocation(true);
             //设置定位回调监听
@@ -287,7 +288,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             // 在定位结束后，在合适的生命周期调用onDestroy()方法
             // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
             mlocationClient.stopLocation();
-//            mlocationClient.startLocation();//启动定位
+            mlocationClient.startLocation();//启动定位
         }
     }
 
@@ -300,12 +301,18 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
         if (aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
+                LatLng latLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+                if(latLng!=null && currentLatLng!=null){
+                    float distance = AMapUtils.calculateLineDistance(latLng,currentLatLng);
+                    if(distance>50){
+                        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                                .uploadTrajectory(new UploadTrajectoryVo(currentLatLng.latitude+"",
+                                        currentLatLng.longitude+""))
+                                .subscribeOn(Schedulers.newThread())
+                                .subscribe();
+                    }
+                }
                 currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
-//                MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-//                        .uploadTrajectory(new UploadTrajectoryVo(currentLatLng.latitude+"",
-//                                currentLatLng.longitude+""))
-//                .subscribeOn(Schedulers.newThread())
-//                .subscribe();
             }
         }
     }

@@ -232,6 +232,9 @@ public class WheelPicker<T> extends View {
                     if (mOnWheelChangeListener == null) {
                         return;
                     }
+                    if(mDataList.size() == 0){
+                    	return;
+					}
                     mOnWheelChangeListener.onWheelSelected(mDataList.get(position),
                             position);
 				}

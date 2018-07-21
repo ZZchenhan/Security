@@ -115,7 +115,7 @@ public class SignListFragment extends Fragment {
     }
 
     private void  getSignList(final int page, String month){
-        if(page == 1 && datas.size()>10){
+        if(page == 1 && datas.size()>0){
             datas.clear();
             signListAdapter.notifyDataSetChanged();
         }
