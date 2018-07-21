@@ -395,7 +395,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
         if (aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
-                currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
+                currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

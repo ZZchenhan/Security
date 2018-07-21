@@ -116,7 +116,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                 calendar1.set(java.util.Calendar.YEAR,calendar.getYear());
                 calendar1.set(java.util.Calendar.MONTH,calendar.getMonth()-1);
                 calendar1.set(java.util.Calendar.DAY_OF_MONTH,calendar.getDay());
-                adapter.setChooseDay(calendar1.getTime().getTime());
+                adapter.setChooseDay(String.format("%d-%02d-%02d",calendar.getYear(),calendar.getMonth(),calendar.getDay()));
                 getOneDayDuty(String.format("%d-%02d-%02d",calendar.getYear(),calendar.getMonth(),calendar.getDay()));
             }
         });
@@ -399,6 +399,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                             }
                             return;
                         }
+                        getOneDayDuty(date);
                         toast("打卡成功");
                     }
 

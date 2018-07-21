@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.work.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +140,10 @@ public class SignListFragment extends Fragment {
                             return;
                         }
                         signDetailHead.signNumbers.setText(String.format("本月已签到%d次",userSignListResultResult.getResult().getCount()));
+                        SpannableStringBuilder builder = new SpannableStringBuilder(signDetailHead.signNumbers.getText().toString());
+                        ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
+                        builder.setSpan(redSpan, 5, signDetailHead.signNumbers.getText().toString().length()-1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                        signDetailHead.signNumbers.setText(builder);
                         if(userSignListResultResult.getResult().getUserSignInfoVos()
                                 ==null || userSignListResultResult.getResult().getUserSignInfoVos().size() == 0){
                             signListAdapter.loadMoreEnd();

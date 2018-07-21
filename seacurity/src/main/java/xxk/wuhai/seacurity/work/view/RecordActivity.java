@@ -114,7 +114,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
         empty.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         adapter.setEmptyView(empty);
         startLocaion();
-        adapter.setChooseDay(new Date().getTime());
+        adapter.setChooseDay(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }
 
     @Override
@@ -127,7 +127,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     private void getOneDayDuty(final String date){
         this.date = date;
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getOwnScheduling(new GetSchedulingVo(date,41))
+                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<GetPersonSchedulingByDateResponse>>() {

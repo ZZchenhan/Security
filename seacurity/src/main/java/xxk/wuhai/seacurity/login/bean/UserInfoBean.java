@@ -5,11 +5,14 @@ import java.util.List;
 import xxk.wuhai.seacurity.login.vo.UpdateUsers;
 
 /**
- * Created by 86936 on 2018/7/8.
+ * 项目名称:Security
+ * 类描述
  *
- * @QQ 869360026
+ * @author ch
+ * @email 869360026@qq.com
+ * 创建时间:2018/7/21 15:11
  */
-public class UserInfoBean implements Cloneable{
+public class UserInfoBean {
     /**
      * userId : 21
      * userType : 4
@@ -21,46 +24,48 @@ public class UserInfoBean implements Cloneable{
      * phone : 18129851846
      * email : 13750876192@qq.com
      * nation : 汉族
-     * maritalStatus : null
-     * birthday : 2018-06-30T00:00:00.000+0000
+     * maritalStatus : 1
+     * birthday : 2018-06-30
      * politicsType : 01
-     * residenceStreetId : null
+     * residenceStreetId : 0
      * residenceStreetName : null
-     * residenceDistrictId : null
-     * residenceDistrictName : null
-     * residenceCityId : null
-     * residenceCityName : null
-     * residenceProvinceId : null
-     * residenceProvinceName : null
-     * residenceAddress : 杭州
-     * livingStreetId : null
+     * residenceDistrictId : 2848
+     * residenceDistrictName : 三环以内
+     * residenceCityId : 51035
+     * residenceCityName : 东丽区
+     * residenceProvinceId : 3
+     * residenceProvinceName : 天津
+     * residenceAddress : 天津东丽区全境
+     * livingStreetId : 0
      * livingStreetName : null
-     * livingDistrictId : null
-     * livingDistrictName : null
-     * livingCityId : null
-     * livingCityName : null
-     * livingProvinceId : null
-     * livingProvinceName : null
-     * livingAddress : 浙江杭州
+     * livingDistrictId : 699
+     * livingDistrictName : 阿城区
+     * livingCityId : 698
+     * livingCityName : 哈尔滨市
+     * livingProvinceId : 10
+     * livingProvinceName : 黑龙江
+     * livingAddress : 天津东丽区全境天津东丽区全境
      * photoUrl : http://www.baidu.com/
-     * education : 0
+     * education : 3
      * height : 175
      * weight : 150
      * age : 18
-     * bloodType : 0
+     * bloodType : 2
      * workYear : 1
      * remark :
      * status : 0
-     * namePinyin : guanliyuan
-     * gmtCreate : 2018-07-07T13:59:52.000+0000
+     * namePinyin : guanliyuaner
+     * gmtCreate : 2018-07-17 12:14:47
      * deviceNumber : RJCDU17616001737
-     * deviceType : 2
+     * deviceType : 5
      * clientId :
-     * activeTime : 2018-07-07T13:59:53.000+0000
+     * activeTime : 2018-07-17 12:14:47
      * guardUserInfo : null
      * orgId : 19
-     * deptId : 15
-     * relUserDeptOrgVo : {"deptId":15,"orgId":19,"level":"0","status":"0","joinTime":"2018-07-04T13:37:56.000+0000","quitTime":"2018-07-04T13:37:56.000+0000","beOfficialTime":"2018-07-04T13:37:56.000+0000","rank":null}
+     * deptId : 19
+     * relUserDeptOrgVo : {"deptId":19,"orgId":19,"level":"1","status":"0","joinTime":"2018-07-10 00:00:00","quitTime":"2018-07-10 17:49:35","beOfficialTime":"2018-07-10 17:49:35","rank":"经理","rankLevel":"0"}
+     * relRoles : [{"roleId":15}]
+     * deptVo : {"deptId":19,"deptName":"测试科技保安一部二大队","parentId":16,"orgId":19,"sortNum":2,"completeName":null,"deptVoList":null}
      */
 
     private int userId;
@@ -76,22 +81,22 @@ public class UserInfoBean implements Cloneable{
     private String maritalStatus;
     private String birthday;
     private String politicsType;
-    private Integer residenceStreetId;
-    private String residenceStreetName;
-    private Integer residenceDistrictId;
+    private int residenceStreetId;
+    private Object residenceStreetName;
+    private int residenceDistrictId;
     private String residenceDistrictName;
-    private Integer residenceCityId;
+    private int residenceCityId;
     private String residenceCityName;
-    private Integer residenceProvinceId;
+    private int residenceProvinceId;
     private String residenceProvinceName;
     private String residenceAddress;
-    private Integer livingStreetId;
-    private String livingStreetName;
-    private Integer livingDistrictId;
+    private int livingStreetId;
+    private Object livingStreetName;
+    private int livingDistrictId;
     private String livingDistrictName;
-    private Integer livingCityId;
+    private int livingCityId;
     private String livingCityName;
-    private Integer livingProvinceId;
+    private int livingProvinceId;
     private String livingProvinceName;
     private String livingAddress;
     private String photoUrl;
@@ -109,20 +114,12 @@ public class UserInfoBean implements Cloneable{
     private String deviceType;
     private String clientId;
     private String activeTime;
-    private GuardUserVo guardUserInfo;
+    private Object guardUserInfo;
     private int orgId;
     private int deptId;
-    private List<UpdateUsers.RelRolesBean> relRoles;
     private RelUserDeptOrgVoBean relUserDeptOrgVo;
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        UserInfoBean userInfoBean = (UserInfoBean) super.clone();
-        if(this.guardUserInfo != null)
-            userInfoBean.guardUserInfo = (GuardUserVo) this.guardUserInfo.clone();
-        userInfoBean.relUserDeptOrgVo = (RelUserDeptOrgVoBean) this.relUserDeptOrgVo.clone();
-        return userInfoBean;
-    }
+    private DeptVoBean deptVo;
+    private List<UpdateUsers.RelRolesBean> relRoles;
 
     public int getUserId() {
         return userId;
@@ -228,27 +225,27 @@ public class UserInfoBean implements Cloneable{
         this.politicsType = politicsType;
     }
 
-    public Integer getResidenceStreetId() {
+    public int getResidenceStreetId() {
         return residenceStreetId;
     }
 
-    public void setResidenceStreetId(Integer residenceStreetId) {
+    public void setResidenceStreetId(int residenceStreetId) {
         this.residenceStreetId = residenceStreetId;
     }
 
-    public String getResidenceStreetName() {
+    public Object getResidenceStreetName() {
         return residenceStreetName;
     }
 
-    public void setResidenceStreetName(String residenceStreetName) {
+    public void setResidenceStreetName(Object residenceStreetName) {
         this.residenceStreetName = residenceStreetName;
     }
 
-    public Integer getResidenceDistrictId() {
+    public int getResidenceDistrictId() {
         return residenceDistrictId;
     }
 
-    public void setResidenceDistrictId(Integer residenceDistrictId) {
+    public void setResidenceDistrictId(int residenceDistrictId) {
         this.residenceDistrictId = residenceDistrictId;
     }
 
@@ -260,11 +257,11 @@ public class UserInfoBean implements Cloneable{
         this.residenceDistrictName = residenceDistrictName;
     }
 
-    public Integer getResidenceCityId() {
+    public int getResidenceCityId() {
         return residenceCityId;
     }
 
-    public void setResidenceCityId(Integer residenceCityId) {
+    public void setResidenceCityId(int residenceCityId) {
         this.residenceCityId = residenceCityId;
     }
 
@@ -276,11 +273,11 @@ public class UserInfoBean implements Cloneable{
         this.residenceCityName = residenceCityName;
     }
 
-    public Integer getResidenceProvinceId() {
+    public int getResidenceProvinceId() {
         return residenceProvinceId;
     }
 
-    public void setResidenceProvinceId(Integer residenceProvinceId) {
+    public void setResidenceProvinceId(int residenceProvinceId) {
         this.residenceProvinceId = residenceProvinceId;
     }
 
@@ -300,27 +297,27 @@ public class UserInfoBean implements Cloneable{
         this.residenceAddress = residenceAddress;
     }
 
-    public Integer getLivingStreetId() {
+    public int getLivingStreetId() {
         return livingStreetId;
     }
 
-    public void setLivingStreetId(Integer livingStreetId) {
+    public void setLivingStreetId(int livingStreetId) {
         this.livingStreetId = livingStreetId;
     }
 
-    public String getLivingStreetName() {
+    public Object getLivingStreetName() {
         return livingStreetName;
     }
 
-    public void setLivingStreetName(String livingStreetName) {
+    public void setLivingStreetName(Object livingStreetName) {
         this.livingStreetName = livingStreetName;
     }
 
-    public Integer getLivingDistrictId() {
+    public int getLivingDistrictId() {
         return livingDistrictId;
     }
 
-    public void setLivingDistrictId(Integer livingDistrictId) {
+    public void setLivingDistrictId(int livingDistrictId) {
         this.livingDistrictId = livingDistrictId;
     }
 
@@ -332,11 +329,11 @@ public class UserInfoBean implements Cloneable{
         this.livingDistrictName = livingDistrictName;
     }
 
-    public Integer getLivingCityId() {
+    public int getLivingCityId() {
         return livingCityId;
     }
 
-    public void setLivingCityId(Integer livingCityId) {
+    public void setLivingCityId(int livingCityId) {
         this.livingCityId = livingCityId;
     }
 
@@ -348,11 +345,11 @@ public class UserInfoBean implements Cloneable{
         this.livingCityName = livingCityName;
     }
 
-    public Integer getLivingProvinceId() {
+    public int getLivingProvinceId() {
         return livingProvinceId;
     }
 
-    public void setLivingProvinceId(Integer livingProvinceId) {
+    public void setLivingProvinceId(int livingProvinceId) {
         this.livingProvinceId = livingProvinceId;
     }
 
@@ -492,11 +489,11 @@ public class UserInfoBean implements Cloneable{
         this.activeTime = activeTime;
     }
 
-    public GuardUserVo getGuardUserInfo() {
+    public Object getGuardUserInfo() {
         return guardUserInfo;
     }
 
-    public void setGuardUserInfo(GuardUserVo guardUserInfo) {
+    public void setGuardUserInfo(Object guardUserInfo) {
         this.guardUserInfo = guardUserInfo;
     }
 
@@ -524,6 +521,14 @@ public class UserInfoBean implements Cloneable{
         this.relUserDeptOrgVo = relUserDeptOrgVo;
     }
 
+    public DeptVoBean getDeptVo() {
+        return deptVo;
+    }
+
+    public void setDeptVo(DeptVoBean deptVo) {
+        this.deptVo = deptVo;
+    }
+
     public List<UpdateUsers.RelRolesBean> getRelRoles() {
         return relRoles;
     }
@@ -531,4 +536,177 @@ public class UserInfoBean implements Cloneable{
     public void setRelRoles(List<UpdateUsers.RelRolesBean> relRoles) {
         this.relRoles = relRoles;
     }
+
+    public static class RelUserDeptOrgVoBean {
+        /**
+         * deptId : 19
+         * orgId : 19
+         * level : 1
+         * status : 0
+         * joinTime : 2018-07-10 00:00:00
+         * quitTime : 2018-07-10 17:49:35
+         * beOfficialTime : 2018-07-10 17:49:35
+         * rank : 经理
+         * rankLevel : 0
+         */
+
+        private int deptId;
+        private int orgId;
+        private String level;
+        private String status;
+        private String joinTime;
+        private String quitTime;
+        private String beOfficialTime;
+        private String rank;
+        private String rankLevel;
+
+        public int getDeptId() {
+            return deptId;
+        }
+
+        public void setDeptId(int deptId) {
+            this.deptId = deptId;
+        }
+
+        public int getOrgId() {
+            return orgId;
+        }
+
+        public void setOrgId(int orgId) {
+            this.orgId = orgId;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public void setLevel(String level) {
+            this.level = level;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getJoinTime() {
+            return joinTime;
+        }
+
+        public void setJoinTime(String joinTime) {
+            this.joinTime = joinTime;
+        }
+
+        public String getQuitTime() {
+            return quitTime;
+        }
+
+        public void setQuitTime(String quitTime) {
+            this.quitTime = quitTime;
+        }
+
+        public String getBeOfficialTime() {
+            return beOfficialTime;
+        }
+
+        public void setBeOfficialTime(String beOfficialTime) {
+            this.beOfficialTime = beOfficialTime;
+        }
+
+        public String getRank() {
+            return rank;
+        }
+
+        public void setRank(String rank) {
+            this.rank = rank;
+        }
+
+        public String getRankLevel() {
+            return rankLevel;
+        }
+
+        public void setRankLevel(String rankLevel) {
+            this.rankLevel = rankLevel;
+        }
+    }
+
+    public static class DeptVoBean {
+        /**
+         * deptId : 19
+         * deptName : 测试科技保安一部二大队
+         * parentId : 16
+         * orgId : 19
+         * sortNum : 2
+         * completeName : null
+         * deptVoList : null
+         */
+
+        private int deptId;
+        private String deptName;
+        private int parentId;
+        private int orgId;
+        private int sortNum;
+        private Object completeName;
+        private Object deptVoList;
+
+        public int getDeptId() {
+            return deptId;
+        }
+
+        public void setDeptId(int deptId) {
+            this.deptId = deptId;
+        }
+
+        public String getDeptName() {
+            return deptName;
+        }
+
+        public void setDeptName(String deptName) {
+            this.deptName = deptName;
+        }
+
+        public int getParentId() {
+            return parentId;
+        }
+
+        public void setParentId(int parentId) {
+            this.parentId = parentId;
+        }
+
+        public int getOrgId() {
+            return orgId;
+        }
+
+        public void setOrgId(int orgId) {
+            this.orgId = orgId;
+        }
+
+        public int getSortNum() {
+            return sortNum;
+        }
+
+        public void setSortNum(int sortNum) {
+            this.sortNum = sortNum;
+        }
+
+        public Object getCompleteName() {
+            return completeName;
+        }
+
+        public void setCompleteName(Object completeName) {
+            this.completeName = completeName;
+        }
+
+        public Object getDeptVoList() {
+            return deptVoList;
+        }
+
+        public void setDeptVoList(Object deptVoList) {
+            this.deptVoList = deptVoList;
+        }
+    }
+
 }

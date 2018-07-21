@@ -2,10 +2,14 @@ package xxk.wuhai.seacurity.work.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,6 +147,10 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
 
     private void getNumbers(){
         tvSignNumbers.setText("今天你已签到"+ SignUtils.getNumbers(this.getContext())+"次");
+        SpannableStringBuilder builder = new SpannableStringBuilder(tvSignNumbers.getText().toString());
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
+        builder.setSpan(redSpan, 6, tvSignNumbers.getText().toString().length()-1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        tvSignNumbers.setText(builder);
     }
 
     @Override

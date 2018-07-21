@@ -43,7 +43,7 @@ public class CulListActivity extends BaseActivity {
         CommonNavagation leftIconNavagation = (CommonNavagation) new CommonNavagation(this) {
             @Override
             public String title() {
-                return "我提交的爆料";
+                return "我提交的信息";
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
         leftIconNavagation.setIconClick(new View.OnClickListener() {

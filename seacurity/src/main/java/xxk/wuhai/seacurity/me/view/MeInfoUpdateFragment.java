@@ -74,6 +74,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.name.setText(userDetailInfo.getUserInfo().getName());
         binding.phone.setText(userDetailInfo.getUserInfo().getPhone());
         binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard());
+        binding.age.setText(userDetailInfo.getUserInfo().getAge()+"");
         if (userDetailInfo.getUserInfo().getResidenceProvinceName()
                 == null
                 || userDetailInfo.getUserInfo().getResidenceCityName() == null

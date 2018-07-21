@@ -123,9 +123,9 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                 || item.getStatus().equals("5")
                 ?Color.parseColor("#F43530"):mContext.getResources().getColor(R.color.colorPrimary));
         helper.setText(R.id.time,"要求时间："+item.getAttendanceTimeExpect()==null?"":item.getAttendanceTimeExpect());
-        if(item.getAttendanceLocationExpect() == null
-                ||
-                item.getAttendanceLocationExpect().equals("")){
+        if((item.getAttendanceLatExpect() == null
+                || item.getAttendanceLatExpect().equals("")) ||
+                (item.getAttendanceLonExpect() == null || item.getAttendanceLonExpect().equals(""))){
             ////这里0 做倒计时 5做未打卡 6请假
             if(item.getStatus().equals("0") || item.getStatus().equals("5") || item.getStatus().equals("6")){
                 helper.setGone(R.id.ll_can_apply,true);
@@ -150,32 +150,33 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                     helper.getView(R.id.btn_record).setEnabled(true);
                     //1、判断不能打卡逻辑。 太早，不在范围之类。台完
                     long realTime = getRecodeTime(item.getAttendanceTimeExpect());
+
                     if(item.isLastDay()){
                         //这个跨天，选择日期+1
                         realTime = realTime+24 *60 *60 *1000;
                     }
-                    if(currentTime<realTime-item.getPreLimit() *30*1000){
-                        //太早
+                    if(currentTime<realTime-(item.getPreLimit()*1000*60) -(60*1000*60)){
+                        //太早realTIme 1532194955924 currnet 1532162608449
                         helper.setText(R.id.btn_record,"未开始");
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    }else if(currentTime<realTime-item.getPreLimit()){
+                    }else if(currentTime<realTime-item.getPreLimit()*60*1000){
                         //显示倒计时
-                        helper.setText(R.id.btn_record,new SimpleDateFormat("HH小时mm分ss秒").format(new Date(realTime-item.getPreLimit()-currentTime)));
+                        helper.setText(R.id.btn_record,getOverTimes(realTime-currentTime-item.getPreLimit()*60*1000));
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    } else if(currentTime>realTime+item.getPostLimit()){
+                    } else if(currentTime>realTime+item.getPostLimit()*1000*60){
                         //太晚，让他补卡
                         helper.setText(R.id.btn_record,"未打卡");
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    } else{
+                    }else{
                         helper.setText(R.id.btn_record, "打卡");
                         helper.setTextColor(R.id.btn_record, Color.parseColor("#FFFFFF"));
                         helper.setBackgroundRes(R.id.btn_record, R.drawable.bg_record_click);
@@ -204,7 +205,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                 ToastUtils.showShort("后台传递范围为："+item.getRange());
                 return;
             }
-            if(item.getAttendanceLatExpect() == null || item.getAttendanceLatExpect().equals("")){
+            if(item.getAttendanceLatExpect() != null && item.getAttendanceLonExpect() == null){
                 ToastUtils.showShort("后台传递维度为："+item.getAttendanceLatExpect());
                 return;
             }
@@ -218,12 +219,23 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
             if(RecoderBean.currentLatLng != null) {
                 marker = mapView.getMap().addMarker(new MarkerOptions().position(RecoderBean.currentLatLng).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
-                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng, 14));
+                float range = Float.parseFloat(item.getRange());
+                if(range<50){
+                    mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng, 17));
+                }else if(range <200){
+                    mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng, 16));
+                }else if(range <500){
+                    mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng, 15));
+                }else if(range<1000){
+                    mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng, 14));
+                }else if(range<5000){
+                    mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(RecoderBean.currentLatLng, 13));
+                }
             }
             LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()),Float.parseFloat(item.getAttendanceLonExpect()));
             mapView.getMap().addCircle(new CircleOptions().
                     center(latLng).
-                    radius(Double.parseDouble(item.getRange())).
+                    radius(3*Double.parseDouble(item.getRange())).
                     fillColor(Color.parseColor("#20197ABD")).
                     strokeColor(Color.parseColor("#197ABD")).
                     strokeWidth(1));
@@ -259,28 +271,28 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                         //这个跨天，选择日期+1
                         realTime = realTime+24 *60 *60 *1000;
                     }
-                    if(currentTime<realTime-item.getPreLimit() *30*1000){
-                        //太早
+                    if(currentTime<realTime-(item.getPreLimit()*1000*60) -(60*1000*60)){
+                        //太早realTIme 1532194955924 currnet 1532162608449
                         helper.setText(R.id.btn_record,"未开始");
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    }else if(currentTime<realTime-item.getPreLimit()){
+                    }else if(currentTime<realTime-item.getPreLimit()*60*1000){
                         //显示倒计时
-                        helper.setText(R.id.btn_record,new SimpleDateFormat("HH小时mm分ss秒").format(new Date(realTime-item.getPreLimit()-currentTime)));
+                        helper.setText(R.id.btn_record,getOverTimes(realTime-currentTime-item.getPreLimit()*60*1000));
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    } else if(currentTime>realTime+item.getPostLimit()){
+                    } else if(currentTime>realTime+item.getPostLimit()*1000*60){
                         //太晚，让他补卡
                         helper.setText(R.id.btn_record,"未打卡");
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    }else if(marker!=null && AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)>Double.parseDouble(item.getRange())) {
+                    }else if(marker!=null && AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)>3*Double.parseDouble(item.getRange())) {
                         //不在距离
                         helper.setText(R.id.btn_record, "不在打卡区域");
                         helper.setTextColor(R.id.btn_record, Color.parseColor("#F4F4F4"));
@@ -317,7 +329,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
 
     private long getRecodeTime(String time){
         try {
-            return new SimpleDateFormat("HH:mm:ss").parse(time).getTime() +this.time;
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(this.date+" "+time).getTime();
         } catch (ParseException e) {
             return 0;
         }
@@ -335,15 +347,23 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
         mapView.getMap().getUiSettings().setScaleControlsEnabled(false); //控制比例尺控件是否显示
     }
 
-    public long time = 0;
+    public String date = "";
     /**
      * 设置选中日期 以及当前班次是否跨天
      */
-    public void setChooseDay(long time){
-        this.time = time;
+    public void setChooseDay(String time){
+        this.date = time;
     }
 
-    public long getTime() {
-        return time;
+    public String getTime() {
+        return date;
+    }
+
+
+    private String getOverTimes(long times){
+        int hour = (int) (times/60/60/1000);
+        int minute = (int) (times%(60*60*1000))/60/1000;
+        int second = (int) ((times%(60*60*1000))%(60*1000)/1000);
+        return String.format("%d小时%d分%d秒",hour,minute,second);
     }
 }

@@ -76,7 +76,8 @@ public class MeFragment extends Fragment {
     private void setDada(UserInfoBean userDetailInfo){
         name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(userDetailInfo.getName().length()-2,userDetailInfo.getName().length()));
         userName.setText(userDetailInfo.getName()+"");
-        tvZhiwei.setText(MyApplication.userDetailInfo.getDeptVo()==null?"":MyApplication.userDetailInfo.getDeptVo().getDeptName()+"");
+        tvZhiwei.setText(MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo()==null?"":
+                MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getRank()+"");
         sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
         age.setText(userDetailInfo.getAge()+"");
         phone.setText(userDetailInfo.getPhone()+"");

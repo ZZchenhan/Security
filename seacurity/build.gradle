@@ -2,12 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'security'
-            keyPassword '147258'
-            storeFile file('D:/Security/seacurity/key.jks')
-            storePassword '147258'
-        }
     }
     compileSdkVersion 28
     defaultConfig {
@@ -28,7 +22,6 @@ android {
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
         multiDexEnabled true
-        signingConfig signingConfigs.config
     }
     sourceSets {
         main {
