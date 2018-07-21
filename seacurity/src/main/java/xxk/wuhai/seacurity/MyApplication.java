@@ -21,9 +21,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.OkHttpClient;
 import sz.tianhe.baselib.http.RetrofitClient;
 import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
+import xxk.wuhai.seacurity.login.interceptor.LoginInterceptor;
 import xxk.wuhai.seacurity.login.result.LoginResult;
 import xxk.wuhai.seacurity.utils.ShareUtlts;
 
@@ -58,7 +60,13 @@ public class MyApplication extends MultiDexApplication {
         super.onCreate();
        JPushInterface.setDebugMode(true);
        JPushInterface.init(this);
-       retrofitClient = new RetrofitClient(this,baseUrl);
+       retrofitClient = new RetrofitClient(this,baseUrl){
+           @Override
+           public void addInterceptor(OkHttpClient.Builder builder) {
+               super.addInterceptor(builder);
+               builder.addInterceptor(new LoginInterceptor(MyApplication.this));
+           }
+       };
        deviceId = Build.SERIAL;
        Utils.init(this);
        Context context = getApplicationContext();

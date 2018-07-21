@@ -18,7 +18,9 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -55,7 +57,7 @@ public class SignListFragment extends Fragment {
         signListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                getSignList(page,signDetailHead.tvDate.getText().toString());
+                getSignList(page,month);
             }
         },recyclerView);
         signDetailHead.tvDate.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +90,9 @@ public class SignListFragment extends Fragment {
         signDetailHead.onResume();
         super.onResume();
         page=1;
+        if(month == null || month.equals("")){
+            month = new SimpleDateFormat("yyyy-MM").format(new Date());
+        }
         getSignList(page,month);
     }
 

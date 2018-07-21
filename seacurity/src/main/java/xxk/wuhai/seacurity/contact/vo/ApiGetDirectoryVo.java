@@ -7,19 +7,19 @@ package xxk.wuhai.seacurity.contact.vo;
  */
 
 public class ApiGetDirectoryVo {
-    private int deptId;
+    private String deptId;
     private String name;
 
-    public ApiGetDirectoryVo(int deptId, String name) {
+    public ApiGetDirectoryVo(String deptId, String name) {
         this.deptId = deptId;
         this.name = name;
     }
 
-    public int getDeptId() {
+    public String getDeptId() {
         return deptId;
     }
 
-    public void setDeptId(int deptId) {
+    public void setDeptId(String deptId) {
         this.deptId = deptId;
     }
 

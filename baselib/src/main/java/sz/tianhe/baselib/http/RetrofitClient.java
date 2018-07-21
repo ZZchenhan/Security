@@ -110,16 +110,17 @@ public class RetrofitClient {
         //2 Cookie管理
         //3 缓存管理
         //4 网络状态访问
-        this.okHttpClient = new OkHttpClient().newBuilder()
+        OkHttpClient.Builder builder =  new OkHttpClient().newBuilder()
                 .addInterceptor(new BaseInterceptor(this.headers))
                 .cookieJar(new CookieManagerInterceptor(this.mContext))
                 .addNetworkInterceptor(logInterceptor)
                 .connectionPool(new ConnectionPool(8, 10, TimeUnit.SECONDS))
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .writeTimeout(15, TimeUnit.SECONDS)
-                .build();
-
-        retrofit = new Retrofit.Builder()
+                ;
+        addInterceptor(builder);
+        this.okHttpClient = builder.build();
+                retrofit = new Retrofit.Builder()
                 .baseUrl(this.serverUrl).client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new Gson())).
@@ -145,5 +146,8 @@ public class RetrofitClient {
         }
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),jsonObject.toString());
         return requestBody;
+    }
+    public void addInterceptor(OkHttpClient.Builder builder){
+
     }
 }

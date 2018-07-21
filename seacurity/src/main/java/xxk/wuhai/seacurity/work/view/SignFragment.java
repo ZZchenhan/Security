@@ -22,12 +22,21 @@ import com.amap.api.maps2d.model.LatLng;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.utils.DeviceUtils;
+import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.utils.SignUtils;
+import xxk.wuhai.seacurity.work.api.WorkDutyApi;
+import xxk.wuhai.seacurity.work.bean.SignResult;
 import xxk.wuhai.seacurity.work.presenter.ISignPresenter;
 import xxk.wuhai.seacurity.work.view.itf.ISignView;
+import xxk.wuhai.seacurity.work.vo.ApiGetUserSignByDayVO;
 
 /**
  * @author 86936
@@ -109,7 +118,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
     public void onResume() {
         mapView.onResume();
         super.onResume();
-        getNumbers();
+        getData();
     }
 
     @Override
@@ -142,11 +151,11 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
         tvAdjust.setOnClickListener(this);
         btnTime.setOnClickListener(this);
         tvDate = root.findViewById(R.id.date);
-        getNumbers();
+        getNumbers(0);
     }
 
-    private void getNumbers(){
-        tvSignNumbers.setText("今天你已签到"+ SignUtils.getNumbers(this.getContext())+"次");
+    private void getNumbers(int posion){
+        tvSignNumbers.setText("今天你已签到"+ posion+"次");
         SpannableStringBuilder builder = new SpannableStringBuilder(tvSignNumbers.getText().toString());
         ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
         builder.setSpan(redSpan, 6, tvSignNumbers.getText().toString().length()-1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -230,5 +239,37 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
     @Override
     public void toast(String msg) {
         Toast.makeText(this.getContext(),msg,Toast.LENGTH_LONG).show();
+    }
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public void getData(){
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .getTodaySingList(new ApiGetUserSignByDayVO(simpleDateFormat.format(new Date())))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<SignResult>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<SignResult> result) {
+                        if(!result.getCode().equals("200")){
+                            toast(result.getMessage());
+                            return;
+                        }
+                        getNumbers(result.getResult().getCount());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

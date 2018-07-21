@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.lang.ref.WeakReference;
 
-import sz.tianhe.baselib.model.AbstarctModel;
 import sz.tianhe.baselib.model.IBaseModel;
 import sz.tianhe.baselib.view.IBaseView;
 

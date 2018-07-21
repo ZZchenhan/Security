@@ -140,7 +140,7 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
     public static void openActivity(Activity activity, String adrress, String time, LatLng latLng) {
         SignComfirmActivity.adrress = adrress;
         SignComfirmActivity.time = time;
-        SignComfirmActivity.latlng = latlng;
+        SignComfirmActivity.latlng = latLng;
         openActivity(activity, SignComfirmActivity.class, 1);
     }
 

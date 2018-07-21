@@ -177,9 +177,14 @@ public class ContactFragment extends Fragment {
 
 
     private void getData(){
+        String depId = "";
+        if(getArguments() == null || getArguments().getInt("depId",0) == 0){
 
+        }else{
+            depId = getArguments().getInt("depId",0)+"";
+        }
         MyApplication.retrofitClient.getRetrofit().create(ContactApi.class)
-                .getDirectory(new ApiGetDirectoryVo(getArguments() != null?getArguments().getInt("depId",0):0,etSearch.getText().toString()))
+                .getDirectory(new ApiGetDirectoryVo(depId,etSearch.getText().toString()))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<ContanctResult>>() {

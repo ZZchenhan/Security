@@ -122,7 +122,7 @@ public class SignDetailHead extends LinearLayout {
                             .decodeResource(getContext().getResources(), R.mipmap.icon_poi_select))));
             if(zoom){
                 zoom = false;
-                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,20));
+                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
             }
         }
     }

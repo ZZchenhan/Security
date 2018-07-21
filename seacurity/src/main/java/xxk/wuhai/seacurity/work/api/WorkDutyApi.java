@@ -12,6 +12,7 @@ import xxk.wuhai.seacurity.work.bean.AplyUserResult;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
 import xxk.wuhai.seacurity.work.bean.ClueBursList;
 import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
+import xxk.wuhai.seacurity.work.bean.SignResult;
 import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
 import xxk.wuhai.seacurity.work.bean.PersonSchedulingResult;
 import xxk.wuhai.seacurity.work.bean.RecordBean;
@@ -24,6 +25,7 @@ import xxk.wuhai.seacurity.work.vo.AddClueBurstVo;
 import xxk.wuhai.seacurity.work.vo.AddSusgetVO;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
 import xxk.wuhai.seacurity.work.vo.ApListVo;
+import xxk.wuhai.seacurity.work.vo.ApiGetUserSignByDayVO;
 import xxk.wuhai.seacurity.work.vo.ApplyLeaveVo;
 import xxk.wuhai.seacurity.work.vo.ClueBurstListVo;
 import xxk.wuhai.seacurity.work.vo.GetApproverVo;
@@ -146,6 +148,9 @@ public interface WorkDutyApi {
      */
     @POST("/client-api/attendance/getUserSignList")
     Observable<Result<UserSignListResult>> userSignList(@Body GetUserSignVo getUserSignVo);
+
+    @POST("/client-api/attendance/getUserSignByDay")
+    Observable<Result<SignResult>> getTodaySingList(@Body  ApiGetUserSignByDayVO getUserSignByDayVO);
 
     /**
      * 1分钟上传一次轨迹
