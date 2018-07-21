@@ -72,25 +72,27 @@ public class SiteDialogFragment extends Dialog {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(onSiteComfirmListener!=null){
-                    if(province == null){
-                        return;
+                if (onSiteComfirmListener != null) {
+                    if (province == null) {
+                        province = provinces.size() > 0 ? provinces.get(0) : null;
+                        if (province == null)
+                            return;
                     }
-                    if(city == null){
-                        city = cities.size()>0?cities.get(0):null;
-                        if(city == null){
+                    if (city == null) {
+                        city = cities.size() > 0 ? cities.get(0) : null;
+                        if (city == null) {
                             return;
                         }
                     }
-                    if(district == null){
-                        district = districts.size()>0?districts.get(0):null;
-                        if(district == null){
+                    if (district == null) {
+                        district = districts.size() > 0 ? districts.get(0) : null;
+                        if (district == null) {
                             return;
                         }
                     }
                     onSiteComfirmListener.onConfimr(
-                            province.getProvinceName()+city.getCityName()+district.getDistrictName()
-                            ,province.getProvinceId(),city.getCityId(),district.getDistrictId()
+                            province.getProvinceName() + city.getCityName() + district.getDistrictName()
+                            , province.getProvinceId(), city.getCityId(), district.getDistrictId()
                     );
                 }
                 dismiss();
@@ -164,7 +166,7 @@ public class SiteDialogFragment extends Dialog {
 
                 }
             });
-        }else{
+        } else {
             provinceWheel.setDataList(provinces);
             provinceChange(provinces.get(0).getProvinceId());
         }
@@ -266,7 +268,7 @@ public class SiteDialogFragment extends Dialog {
         this.onSiteComfirmListener = onSiteComfirmListener;
     }
 
-    public interface OnSiteComfirmListener{
-        void onConfimr(String addrss,int provinceCode,int cityCode,int disCode);
+    public interface OnSiteComfirmListener {
+        void onConfimr(String addrss, int provinceCode, int cityCode, int disCode);
     }
 }
