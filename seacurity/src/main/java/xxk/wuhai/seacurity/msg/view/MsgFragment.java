@@ -16,6 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -31,8 +32,10 @@ import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.main.view.MainActivity;
 import xxk.wuhai.seacurity.msg.MsgApi;
 import xxk.wuhai.seacurity.msg.adapter.MsgAdapter;
+import xxk.wuhai.seacurity.msg.bean.GetMessageDetailResult;
 import xxk.wuhai.seacurity.msg.bean.MessageInfoListBean;
 import xxk.wuhai.seacurity.msg.bean.MsgResult;
+import xxk.wuhai.seacurity.msg.vo.GetMessageDetailVO;
 import xxk.wuhai.seacurity.msg.vo.GetMessageListVo;
 import xxk.wuhai.seacurity.weight.MyPopWindows;
 
@@ -64,15 +67,16 @@ public class MsgFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       if(root ==null){
-           root = inflater.inflate(R.layout.fragment_msg,null);
-           findViews();
-       }
+        if (root == null) {
+            root = inflater.inflate(R.layout.fragment_msg, null);
+            findViews();
+        }
         return root;
     }
 
     MyPopWindows popWindows;
-    private void findViews(){
+
+    private void findViews() {
         tvSelect = root.findViewById(R.id.select_text);
         recyclerView = root.findViewById(R.id.recyclerView);
         hinit = root.findViewById(R.id.hinit);
@@ -80,7 +84,7 @@ public class MsgFragment extends Fragment {
         root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).openOrClose();
+                ((MainActivity) getActivity()).openOrClose();
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -88,23 +92,24 @@ public class MsgFragment extends Fragment {
         msgAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (datas.get(position).getMessageTypeId()){
+                switch (datas.get(position).getMessageTypeId()) {
                     // 2：排班变动 3：审批提醒消息 4：提醒打卡消息
                     case "1":
-                        CompanyMsgActivity.openActivity(getContext(),datas.get(position).getMessageTypeId(),datas.get(position).getMessageId());
+                        CompanyMsgActivity.openActivity(getContext(), datas.get(position).getMessageTypeId(), datas.get(position).getMessageId());
                         break;
                     case "2":
-                        startActivity(new Intent(getContext(),DutyMsgActivity.class)
-                        .putExtra("msgId",datas.get(position).getMessageId()).putExtra("msgType",datas.get(position).getMessageTypeId()));
+                        startActivity(new Intent(getContext(), DutyMsgActivity.class)
+                                .putExtra("msgId", datas.get(position).getMessageId()).putExtra("msgType", datas.get(position).getMessageTypeId()));
                         break;
                     case "3":
-                        ExamineActivity2.openActivity(getContext(),Integer.parseInt(datas.get(position).getAssociatedId()),datas.get(position).getMessageId());
+                        ExamineActivity2.openActivity(getContext(), Integer.parseInt(datas.get(position).getAssociatedId()), datas.get(position).getMessageId());
                         break;
                     case "4":
                         //NotifyMsgActivity.openActivity(getContext(),datas.get(position));
+                        getNotifyMsg(datas.get(position).getMessageId(),datas.get(position).getMessageTypeId());
                         break;
                     case "6":
-                        CompanyMsgActivity.openActivity(getContext(),datas.get(position).getMessageTypeId(),datas.get(position).getMessageId());
+                        CompanyMsgActivity.openActivity(getContext(), datas.get(position).getMessageTypeId(), datas.get(position).getMessageId());
                         break;
                 }
 //                if(datas.get(position).getMessageTypeId() == 0){
@@ -123,7 +128,7 @@ public class MsgFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page =1;
+                page = 1;
                 getMsg(page);
             }
         });
@@ -133,11 +138,11 @@ public class MsgFragment extends Fragment {
             public void onLoadMoreRequested() {
                 getMsg(page);
             }
-        },recyclerView);
+        }, recyclerView);
         tvSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(popWindows == null){
+                if (popWindows == null) {
                     popWindows = new MyPopWindows(getContext());
                     popWindows.setOnDismissListener(new PopupWindow.OnDismissListener() {
                         @Override
@@ -147,7 +152,7 @@ public class MsgFragment extends Fragment {
                     });
                     popWindows.setOnItemClickListener(new MyPopWindows.OnItemClickListener() {
                         @Override
-                        public void onItemnClick(String string,String type) {
+                        public void onItemnClick(String string, String type) {
                             tvSelect.setText(string);
                             popWindows.dismiss();
                             MsgFragment.this.type = type;
@@ -174,13 +179,13 @@ public class MsgFragment extends Fragment {
     private String type = "";
     private int page = 1;
 
-    public void getMsg(int page){
-        if(page == 1){
+    public void getMsg(int page) {
+        if (page == 1) {
             datas.clear();
         }
         msgAdapter.notifyDataSetChanged();
         MyApplication.retrofitClient.getRetrofit().create(MsgApi.class)
-                .getMsgList(new GetMessageListVo(type,page,20,"")).subscribeOn(Schedulers.newThread())
+                .getMsgList(new GetMessageListVo(type, page, 20, "")).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<MsgResult>>() {
                     @Override
@@ -190,54 +195,54 @@ public class MsgFragment extends Fragment {
 
                     @Override
                     public void onNext(Result<MsgResult> stringResult) {
-                        if(getActivity().isFinishing()){
+                        if (getActivity().isFinishing()) {
                             return;
                         }
-                        if(swipeRefreshLayout.isRefreshing()){
+                        if (swipeRefreshLayout.isRefreshing()) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
-                        if(stringResult.getCode().equals("200")) {
+                        if (stringResult.getCode().equals("200")) {
 
 
-                            if(stringResult.getResult().getUnreadNum()>0){
-                                hinit.setText("最近有"+stringResult.getResult().getUnreadNum()+"消息");
+                            if (stringResult.getResult().getUnreadNum() > 0) {
+                                hinit.setText("最近有" + stringResult.getResult().getUnreadNum() + "消息");
                                 hinit.setVisibility(View.VISIBLE);
                                 hinit.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         hinit.setVisibility(View.GONE);
                                     }
-                                },3000);
+                                }, 3000);
                             }
 
-                            if(stringResult.getResult().getMessageInfoList() != null && stringResult.getResult().getMessageInfoList().size()!=0) {
+                            if (stringResult.getResult().getMessageInfoList() != null && stringResult.getResult().getMessageInfoList().size() != 0) {
                                 datas.addAll(stringResult.getResult().getMessageInfoList());
-                                MsgFragment.this.page =  MsgFragment.this.page +1;
-                            }else{
+                                MsgFragment.this.page = MsgFragment.this.page + 1;
+                            } else {
                                 msgAdapter.loadMoreEnd();
                             }
                             msgAdapter.notifyDataSetChanged();
-                            if(stringResult.getResult().isHaveNext()) {
+                            if (stringResult.getResult().isHaveNext()) {
                                 msgAdapter.loadMoreComplete();
-                            }else{
+                            } else {
                                 msgAdapter.loadMoreEnd();
                             }
-                        }else{
+                        } else {
                             msgAdapter.loadMoreFail();
-                            Toast.makeText(getContext(),stringResult.getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), stringResult.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if(getActivity().isFinishing()){
+                        if (getActivity().isFinishing()) {
                             return;
                         }
-                        if(swipeRefreshLayout.isRefreshing()){
+                        if (swipeRefreshLayout.isRefreshing()) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         msgAdapter.loadMoreFail();
-                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -248,10 +253,48 @@ public class MsgFragment extends Fragment {
     }
 
 
-    private void darkenBackground(Float bgcolor){
+    private void darkenBackground(Float bgcolor) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgcolor;
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getActivity().getWindow().setAttributes(lp);
+    }
+
+
+    private void getNotifyMsg(int msgId, String msgType) {
+        MyApplication.retrofitClient.getRetrofit().create(MsgApi.class)
+                .getMsgDetails(
+                        new GetMessageDetailVO(msgId,
+                                msgType))
+
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<GetMessageDetailResult>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<GetMessageDetailResult> getMessageDetailResultResult) {
+                        if (!getMessageDetailResultResult.getCode().equals("200")) {
+                            ToastUtils.showShort(getMessageDetailResultResult.getMessage());
+                            return;
+                        }
+                        datas.clear();
+                        page = 1;
+                        getMsg(page);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShort(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

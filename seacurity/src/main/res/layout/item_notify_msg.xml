@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="17dp"
+        android:text="大家书画报"
         android:textColor="@color/text_color1"
         android:textSize="16sp" />
     <LinearLayout
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="15dp"
+            android:text="这哭谁打开的还是科技"
             android:layout_marginTop="18dp"
             android:textColor="@color/text_color1"
             android:textSize="16sp" />
@@ -39,7 +41,7 @@
             android:drawableLeft="@mipmap/icon_notify_lock"
             android:drawablePadding="10dp"
             android:textColor="@color/text_color1"
-
+            android:text="打卡时间"
             android:textSize="16sp" />
     </LinearLayout>
     <View
