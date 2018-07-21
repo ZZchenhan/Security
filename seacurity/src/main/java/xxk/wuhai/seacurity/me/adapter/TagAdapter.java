@@ -1,5 +1,7 @@
 package xxk.wuhai.seacurity.me.adapter;
 
+import android.graphics.Color;
+
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.haibin.calendarview.BaseView;
@@ -15,7 +17,7 @@ import xxk.wuhai.seacurity.login.result.TagResult;
  * @QQ 869360026
  */
 
-public class TagAdapter extends BaseMultiItemQuickAdapter<TagResult.ResultBean.LabelVoListBean,BaseViewHolder> {
+public class TagAdapter extends BaseMultiItemQuickAdapter<TagResult.ResultBean.LabelVoListBean, BaseViewHolder> {
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -24,15 +26,23 @@ public class TagAdapter extends BaseMultiItemQuickAdapter<TagResult.ResultBean.L
      */
     public TagAdapter(List<TagResult.ResultBean.LabelVoListBean> data) {
         super(data);
-        addItemType(0,R.layout.layout_tag);
-        addItemType(1,R.layout.layout_tag_see);
+        addItemType(0, R.layout.layout_tag);
+        addItemType(1, R.layout.layout_tag_see);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, TagResult.ResultBean.LabelVoListBean item) {
         helper.addOnClickListener(R.id.tag);
-        if(item.getItemType() == 0){
-            helper.setText(R.id.tag,item.getLabelName() +" "+item.getLabelNum());
+        if (item.getItemType() == 0) {
+            helper.setText(R.id.tag, item.getLabelName() + " " + item.getLabelNum());
+            if (item.getIsLightUp().equals("1")) {
+                //电量
+                helper.setBackgroundRes(R.id.tag, R.drawable.bg_info_blue);
+                helper.setTextColor(R.id.tag, Color.WHITE);
+            } else {
+                helper.setBackgroundRes(R.id.tag, R.drawable.bg_info_normal);
+                helper.setTextColor(R.id.tag, Color.parseColor("#888888"));
+            }
         }
     }
 }

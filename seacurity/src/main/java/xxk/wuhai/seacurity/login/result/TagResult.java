@@ -16,7 +16,7 @@ public class TagResult {
      * code : 200
      * message : success
      * errorType : null
-     * result : {"praised":0,"trampled":0,"labelVoList":[{"labelId":1,"labelName":"劳动模范","labelNum":1},{"labelId":2,"labelName":"真诚待人","labelNum":1},{"labelId":3,"labelName":"诚实守信","labelNum":1},{"labelId":4,"labelName":"频繁旷工","labelNum":1},{"labelId":5,"labelName":"见义勇为","labelNum":1},{"labelId":6,"labelName":"迟到早退","labelNum":0},{"labelId":7,"labelName":"助人为乐","labelNum":1},{"labelId":8,"labelName":"常忘打卡","labelNum":0},{"labelId":9,"labelName":"平易近人","labelNum":1},{"labelId":10,"labelName":"严于律己","labelNum":0},{"labelId":11,"labelName":"知错必改","labelNum":0}]}
+     * result : {"praised":0,"trampled":0,"labelVoList":[{"labelId":1,"labelName":"劳动模范","labelNum":3,"isLightUp":"1"},{"labelId":2,"labelName":"真诚待人","labelNum":2,"isLightUp":"1"},{"labelId":3,"labelName":"诚实守信","labelNum":2,"isLightUp":"1"},{"labelId":4,"labelName":"频繁旷工","labelNum":2,"isLightUp":"1"},{"labelId":5,"labelName":"见义勇为","labelNum":2,"isLightUp":"1"},{"labelId":6,"labelName":"迟到早退","labelNum":1,"isLightUp":"1"},{"labelId":7,"labelName":"助人为乐","labelNum":2,"isLightUp":"1"},{"labelId":8,"labelName":"常忘打卡","labelNum":1,"isLightUp":"1"},{"labelId":9,"labelName":"平易近人","labelNum":2,"isLightUp":"1"},{"labelId":10,"labelName":"严于律己","labelNum":1,"isLightUp":"1"},{"labelId":11,"labelName":"知错必改","labelNum":1,"isLightUp":"1"}],"isPraised":null,"isTrampled":null}
      */
 
     private String code;
@@ -60,11 +60,15 @@ public class TagResult {
         /**
          * praised : 0
          * trampled : 0
-         * labelVoList : [{"labelId":1,"labelName":"劳动模范","labelNum":1},{"labelId":2,"labelName":"真诚待人","labelNum":1},{"labelId":3,"labelName":"诚实守信","labelNum":1},{"labelId":4,"labelName":"频繁旷工","labelNum":1},{"labelId":5,"labelName":"见义勇为","labelNum":1},{"labelId":6,"labelName":"迟到早退","labelNum":0},{"labelId":7,"labelName":"助人为乐","labelNum":1},{"labelId":8,"labelName":"常忘打卡","labelNum":0},{"labelId":9,"labelName":"平易近人","labelNum":1},{"labelId":10,"labelName":"严于律己","labelNum":0},{"labelId":11,"labelName":"知错必改","labelNum":0}]
+         * labelVoList : [{"labelId":1,"labelName":"劳动模范","labelNum":3,"isLightUp":"1"},{"labelId":2,"labelName":"真诚待人","labelNum":2,"isLightUp":"1"},{"labelId":3,"labelName":"诚实守信","labelNum":2,"isLightUp":"1"},{"labelId":4,"labelName":"频繁旷工","labelNum":2,"isLightUp":"1"},{"labelId":5,"labelName":"见义勇为","labelNum":2,"isLightUp":"1"},{"labelId":6,"labelName":"迟到早退","labelNum":1,"isLightUp":"1"},{"labelId":7,"labelName":"助人为乐","labelNum":2,"isLightUp":"1"},{"labelId":8,"labelName":"常忘打卡","labelNum":1,"isLightUp":"1"},{"labelId":9,"labelName":"平易近人","labelNum":2,"isLightUp":"1"},{"labelId":10,"labelName":"严于律己","labelNum":1,"isLightUp":"1"},{"labelId":11,"labelName":"知错必改","labelNum":1,"isLightUp":"1"}]
+         * isPraised : null
+         * isTrampled : null
          */
 
         private int praised;
         private int trampled;
+        private String isPraised;
+        private String isTrampled;
         private List<LabelVoListBean> labelVoList;
 
         public int getPraised() {
@@ -83,15 +87,28 @@ public class TagResult {
             this.trampled = trampled;
         }
 
+        public Object getIsPraised() {
+            return isPraised;
+        }
+
+        public void setIsPraised(String isPraised) {
+            this.isPraised = isPraised;
+        }
+
+        public String getIsTrampled() {
+            return isTrampled;
+        }
+
+        public void setIsTrampled(String isTrampled) {
+            this.isTrampled = isTrampled;
+        }
+
         public List<LabelVoListBean> getLabelVoList() {
             return labelVoList;
         }
 
         public void setLabelVoList(List<LabelVoListBean> labelVoList) {
             this.labelVoList = labelVoList;
-        }
-
-        public ResultBean() {
         }
 
         public static class LabelVoListBean implements MultiItemEntity{
@@ -104,13 +121,16 @@ public class TagResult {
             /**
              * labelId : 1
              * labelName : 劳动模范
-             * labelNum : 1
+             * labelNum : 3
+             * isLightUp : 1
              */
+
 
 
             private int labelId;
             private String labelName;
             private int labelNum;
+            private String isLightUp;
 
             public int getLabelId() {
                 return labelId;
@@ -136,9 +156,17 @@ public class TagResult {
                 this.labelNum = labelNum;
             }
 
+            public String getIsLightUp() {
+                return isLightUp;
+            }
+
+            public void setIsLightUp(String isLightUp) {
+                this.isLightUp = isLightUp;
+            }
+
             @Override
             public int getItemType() {
-                return labelName.equals("查看更多")?1:0;
+                return "查看更多".equals(this.labelName)?1:0;
             }
         }
     }

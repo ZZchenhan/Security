@@ -119,15 +119,18 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         directoryVo = (DirectoryVo) getIntent().getSerializableExtra("data");
         if(directoryVo == null){
             return;
         }
-
         setDada(directoryVo);
     }
-
-
 
     private void setDada(DirectoryVo userDetailInfo){
         name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(userDetailInfo.getName().length()-2,userDetailInfo.getName().length()));

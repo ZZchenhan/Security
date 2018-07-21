@@ -75,27 +75,31 @@ public class MeTAgActivity extends BaseActivity {
     @Override
     public void initView() {
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         tagAdapter = new TagAdapter(datas);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,10,this.getResources().getDisplayMetrics()),false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, this.getResources().getDisplayMetrics()), false));
         recyclerView.setAdapter(tagAdapter);
 
         tagAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-               if(getIntent().getIntExtra("id",0)== MyApplication.userDetailInfo.getUserInfo().getUserId()
-                       ){
-                   return;
-               }
-               TextView textView =  (TextView)view;
-                textView.setBackground(getDrawable(R.drawable.bg_info_blue));
+                if (getIntent().getIntExtra("id", 0) == MyApplication.userDetailInfo.getUserInfo().getUserId()
+                        ) {
+                    return;
+                }
+                if (datas.get(position).getIsLightUp().equals("1")) {
+                    toast("已经点过，不能再点了哦");
+                    return;
+                }
+                TextView textView = (TextView) view;
+                textView.setBackground(getResources().getDrawable(R.drawable.bg_info_blue));
                 textView.setTextColor(Color.WHITE);
-                textView.setText(datas.get(position).getLabelName()+" "+(datas.get(position).getLabelNum()+1));
-                addTags(datas.get(position).getLabelId(),getIntent().getIntExtra("id",0));
+                textView.setText(datas.get(position).getLabelName() + " " + (datas.get(position).getLabelNum() + 1));
+                addTags(datas.get(position).getLabelId(), getIntent().getIntExtra("id", 0));
             }
         });
-        getTags(getIntent().getIntExtra("id",0));
+        getTags(getIntent().getIntExtra("id", 0));
     }
 
     @Override
@@ -103,7 +107,7 @@ public class MeTAgActivity extends BaseActivity {
         tvNumbers = findViewById(R.id.numbers);
     }
 
-    public void getTags(int userId){
+    public void getTags(int userId) {
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .getPraiseAndLabel(new GetPraiseAndLabelVo(userId))
                 .subscribeOn(Schedulers.newThread())
@@ -116,7 +120,7 @@ public class MeTAgActivity extends BaseActivity {
 
                     @Override
                     public void onNext(TagResult s) {
-                        if(!s.getCode().equals("200")){
+                        if (!s.getCode().equals("200")) {
                             ToastUtils.showShort(s.getMessage());
                             return;
                         }
@@ -138,37 +142,37 @@ public class MeTAgActivity extends BaseActivity {
     }
 
 
-    public void addTags(int labelid,int usrId){
+    public void addTags(int labelid, int usrId) {
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
-                .doPraise(new AddLabelInfoApiVo(labelid,usrId))
-        .subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Observer<Result<String>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+                .doPraise(new AddLabelInfoApiVo(labelid, usrId))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(Result<String> stringResult) {
-                if(!stringResult.getCode().equals("200")){
-                    toast(stringResult.getMessage());
-                    return;
-                }
-            }
+                    @Override
+                    public void onNext(Result<String> stringResult) {
+                        if (!stringResult.getCode().equals("200")) {
+                            toast(stringResult.getMessage());
+                            return;
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                if(e != null){
-                    toast(e.getMessage());
-                }
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e != null) {
+                            toast(e.getMessage());
+                        }
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
         ;
     }
 }
