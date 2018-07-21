@@ -78,7 +78,7 @@ public class MeFragment extends Fragment {
         userName.setText(userDetailInfo.getName()+"");
         tvZhiwei.setText(MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo()==null?"":
                 MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getRank()+"");
-        sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
+        sex.setText(userDetailInfo.getSex().equals("0")?"男":"女");
         age.setText(userDetailInfo.getAge()+"");
         phone.setText(userDetailInfo.getPhone()+"");
         tvZan.setText(String.format("赞：%s","0"));
