@@ -131,20 +131,7 @@ public class CustomMonthView extends MonthView {
 //
 //        canvas.drawCircle(x + mItemWidth / 2, y + mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
     }
-    private String getKey(String str){
-        switch (str){
-            case "4":
-                return "白++";
-            case "1":
-                return "休";
-            case "2":
-                return "白";
-            case "3":
-                return "白+";
-            default:
-                return "";
-        }
-    }
+
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected) {
         int cx = x + mItemWidth / 2;
@@ -159,12 +146,8 @@ public class CustomMonthView extends MonthView {
              //3 白+
              //4 白++
              */
-            if(calendar.getScheme().equals("1")){
-                mCurMonthLunarTextPaint.setColor(0xffF43530);
-            }else{
-                mCurMonthLunarTextPaint.setColor(0xff49B1FA);
-            }
-            canvas.drawText(getKey(calendar.getScheme()), cx, mTextBaseLine + y + mItemHeight / 10,
+            mCurMonthLunarTextPaint.setColor(calendar.getSchemeColor());
+            canvas.drawText(calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
                     mCurMonthLunarTextPaint);
 
         }else if(isSelected){
@@ -194,7 +177,7 @@ public class CustomMonthView extends MonthView {
                     mSelectTextPaint);
             mCurMonthLunarTextPaint.setColor(0xFFffffff);
             if(hasScheme) {
-                canvas.drawText(getKey(calendar.getScheme()), cx, mTextBaseLine + y + mItemHeight / 10,
+                canvas.drawText(calendar.getScheme(), cx, mTextBaseLine + y + mItemHeight / 10,
                         mCurMonthLunarTextPaint);
             }
         } else {

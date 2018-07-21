@@ -153,7 +153,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
             adapter.notifyDataSetChanged();
         }
         ApListVo apListVo = new ApListVo();
-        apListVo.setHandle("0");
+        apListVo.setHandle(hand);
         apListVo.setPageNum(page + "");
         apListVo.setPageSize("20");
         apListVo.setType(type + "");
@@ -176,6 +176,11 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                             return;
                         }
                         adapter.loadMoreComplete();
+                        MyAplyListActivity.this.page = page + 1;
+                        editText.setText("");
+                        contenxt = null;
+                        datas.addAll(stringResult.getResult().getApprovalRecordList());
+                        adapter.notifyDataSetChanged();
                         if (stringResult.getResult().getApprovalRecordList() == null) {
                             toast("没有更多数据了");
                             adapter.loadMoreEnd();
@@ -184,11 +189,6 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
                         if (!stringResult.getResult().isHaveNext()) {
                             adapter.loadMoreEnd();
                         }
-                        MyAplyListActivity.this.page = page + 1;
-                        editText.setText("");
-                        contenxt = null;
-                        datas.addAll(stringResult.getResult().getApprovalRecordList());
-                        adapter.notifyDataSetChanged();
                     }
 
                     @Override

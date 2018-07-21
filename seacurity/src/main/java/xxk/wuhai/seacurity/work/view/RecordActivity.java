@@ -11,6 +11,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -88,11 +89,22 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.btn_record:
+                        AttendanceInfoVoListBean item =   data.get(position);
+                        String distance = "未设置";
+                        if(item.getAttendanceLatExpect() != null|| item.getAttendanceLonExpect() != null){
+                            LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()),Float.parseFloat(item.getAttendanceLonExpect()));
+                            if(RecoderBean.currentLatLng == null){
+                                distance = "未知";
+                            }else{
+                                distance = AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)+"米";
+                            }
+
+                        }
                         record(data.get(position).getSchedulingId(),
-                                data.get(position).getAttendanceSetId());
+                                data.get(position).getId(),distance,item.getAttendanceLocationExpect());
                         break;
                     case R.id.tv_apply:
-                        startActivity(new Intent(RecordActivity.this,ExamineActivity.class)
+                        startActivity(new Intent(RecordActivity.this,SupplementSignActivity.class)
                                 .putExtra("id", data.get(position).getAttendanceSetId()));
                         break;
                 }
@@ -103,6 +115,11 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
         adapter.setEmptyView(empty);
         startLocaion();
         adapter.setChooseDay(new Date().getTime());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getOneDayDuty(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }
 
@@ -218,7 +235,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     }
 
 
-    public void record(String scheId,int id){
+    public void record(String scheId, String id, final String distance, final String location){
         RecordVo recordVo = new RecordVo();
         recordVo.setAttendanceId(id+"");
         try {
@@ -241,7 +258,13 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                     public void onNext(Result<RecordBean> recoderBeanResult) {
                         if(!recoderBeanResult.getCode().equals("200")){
                             toast(recoderBeanResult.getMessage());
-                            startActivity(new Intent(RecordActivity.this,RecordFaileActivity.class));
+                            if(!recoderBeanResult.getMessage().equals("不在打卡范围")){
+                                Intent intent = new Intent(RecordActivity.this,RecordFaileActivity.class);
+                                intent.putExtra("distance",distance);
+                                intent.putExtra("location",location);
+                                intent.putExtra("current",poi);
+                                startActivity(intent);
+                            }
                             return;
                         }
                         toast("打卡成功");

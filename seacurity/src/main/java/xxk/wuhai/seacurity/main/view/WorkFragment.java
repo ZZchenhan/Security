@@ -109,7 +109,7 @@ public class WorkFragment extends Fragment {
         calendar.set(calendar.DAY_OF_MONTH,calendar.get(Calendar.DAY_OF_MONTH)+1);
        tvDay7.setText(""+calendar.get(Calendar.DAY_OF_MONTH));
         datesViews.put(  simpleDateFormat.format(calendar.getTime()),tvDay7);
-//        getData();
+        getData();
     }
 
     private void getData(){
@@ -118,7 +118,7 @@ public class WorkFragment extends Fragment {
                 .getTimesScheduling(new GetSchedulingByTimeVo(
                         simpleDateFormat.format(DateUtils.getWekLastDay().getTime()),
                         simpleDateFormat.format(DateUtils.getWekFisrstDay().getTime()),
-                        41
+                        MyApplication.userDetailInfo.getUserInfo().getUserId()
                 )).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<PersonSchedulingResult>>() {
@@ -142,12 +142,12 @@ public class WorkFragment extends Fragment {
                             if(personSchedulingResultResult.getResult().getPersonSchedulingMap().containsKey(entity.getKey())){
                                     PersonSchedulingResult.Recode recode = personSchedulingResultResult.getResult().getPersonSchedulingMap().get(entity.getKey());
                                     if(recode != null) {
-                                        if (recode.getStatus() == 999) {
+                                        if (recode.getStatus() == 0) {
                                             //999 的话 不显示点
-                                        } else if (recode.getStatus() == 1 || recode.getStatus() == 3) {
-                                            entity.getValue().setCompoundDrawables(null, null, null, blue);
-                                        } else {
+                                        } else if (recode.getStatus() == 2 || recode.getStatus() == 3 || recode.getStatus() == 5) {
                                             entity.getValue().setCompoundDrawables(null, null, null, red);
+                                        } else {
+                                            entity.getValue().setCompoundDrawables(null, null, null, blue);
                                         }
                                     }
                             }

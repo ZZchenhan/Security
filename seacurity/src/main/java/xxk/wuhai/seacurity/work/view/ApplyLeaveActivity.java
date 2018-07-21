@@ -295,7 +295,7 @@ public class ApplyLeaveActivity extends BaseActivity {
                     toast(aplyUserResult.getMessage());
                     return;
                 }
-                Drawable drawable = ApplyLeaveActivity.this.getDrawable(R.mipmap.icon_leave_down_arrow);
+                Drawable drawable = ApplyLeaveActivity.this.getResources().getDrawable(R.mipmap.icon_leave_down_arrow);
                 drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
                 binding.name.setCompoundDrawables(null,null,drawable,null);
 

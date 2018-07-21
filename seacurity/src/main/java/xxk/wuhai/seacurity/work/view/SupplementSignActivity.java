@@ -205,7 +205,7 @@ public class SupplementSignActivity extends BaseActivity{
         supplementApplyVo.setApproverID(approverUser != null && approverUser.getApproverId() !=0
                 ?approverUser.getApproverId():
                 MyApplication.userDetailInfo.getUserInfo().getUserId());
-        supplementApplyVo.setAttendanceId("1");
+        supplementApplyVo.setAttendanceId(getIntent().getIntExtra("id",0)+"");
         supplementApplyVo.setPatchTime(binding.tvTime.getText().toString());
         supplementApplyVo.setSupplement(binding.result.getText().toString());
         List<String> subImags = new ArrayList<>();

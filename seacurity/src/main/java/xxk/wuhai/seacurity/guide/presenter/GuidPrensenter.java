@@ -63,7 +63,7 @@ public class GuidPrensenter extends AbstarctPresenter {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CALL_PHONE,
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.REQUEST_INSTALL_PACKAGES
+            Manifest.permission.REQUEST_INSTALL_PACKAGES,
     };
 
     //用户需要申请的权限

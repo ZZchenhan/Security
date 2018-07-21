@@ -70,15 +70,12 @@ public class ElectIDcardActivity extends BaseActivity {
         binding.liveaddress.setText(userDetailInfo.getUserInfo().getLivingAddress());
         binding.tvName.setText(userDetailInfo.getUserInfo().getName()==null?"":userDetailInfo.getUserInfo().getName().length()<2?userDetailInfo.getUserInfo().getName()
                 :userDetailInfo.getUserInfo().getName().substring(userDetailInfo.getUserInfo().getName().length()-2,userDetailInfo.getUserInfo().getName().length()));
-        String url = MyApplication.baseUrl +
-                "/client-api/user/getQRCodeImg" +
-                "?x-terminal-type=2" +
-                "&x-access-token=" +
-                BaseInterceptor.token +
-                "&x-username=" +
-                BaseInterceptor.name +
-                "&x-random=" +
-                BaseInterceptor.random;
+        //http://47.98.241.211//client-api/user/getQRCodeImg?x-terminal-type=5&x-access-token=837Yx8wSU6xYLXa16Q/+J0PlGlNo/E8GfbnoX7yfk7nGyPoceFa60NUORwLusyQj&x-username=CE5D55AE79D4F853B3F5EFFF1A1F0EAF&x-random=1532092291005
+        //NSString *common = @"http://47.98.241.211/client-api/user/getQRCodeImg";
+
+        String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
+        ,MyApplication.baseUrl,BaseInterceptor.type,BaseInterceptor.random,BaseInterceptor.token,BaseInterceptor.name
+        );
         Glide.with(this)
                 .load(url)
                 .into(binding.qrcode);

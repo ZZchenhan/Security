@@ -13,6 +13,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.blankj.utilcode.util.ToastUtils;
@@ -61,7 +62,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     List<AttendanceInfoVoListBean> data = new ArrayList<>();
     private TextView tvDate;
     private TextView tvDay;
-    private RelativeLayout btnTrajectory;
+//    private RelativeLayout btnTrajectory;
     private DuyteHead duyteHead;
     private  View empty;
     @Override
@@ -98,13 +99,13 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         View headrview = LayoutInflater.from(this).inflate(R.layout.layout_duty_head2,null);
         headrview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tvDay = headrview.findViewById(R.id.time);
-        btnTrajectory = headrview.findViewById(R.id.btn_trajectory);
-        btnTrajectory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MyDutyActivity.this, TrajectoryActivity.class).putExtra("time",date));
-            }
-        });
+//        btnTrajectory = headrview.findViewById(R.id.btn_trajectory);
+//        btnTrajectory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(MyDutyActivity.this, TrajectoryActivity.class).putExtra("time",date));
+//            }
+//        });
         adapter.addHeaderView(headrview);
         adapter.bindToRecyclerView(recyclerView);
         duyteHead.setDataSelect(new CalendarView.OnDateSelectedListener() {
@@ -137,11 +138,22 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.btn_record:
+                        AttendanceInfoVoListBean item =   data.get(position);
+                        String distance = "未设置";
+                        if(item.getAttendanceLatExpect() != null|| item.getAttendanceLonExpect() != null){
+                            LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()),Float.parseFloat(item.getAttendanceLonExpect()));
+                            if(RecoderBean.currentLatLng == null){
+                                distance = "未知";
+                            }else{
+                                distance = AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)+"米";
+                            }
+
+                        }
                         record(data.get(position).getSchedulingId(),
-                                data.get(position).getAttendanceSetId());
+                                data.get(position).getId(),distance,item.getAttendanceLocationExpect());
                         break;
                     case R.id.tv_apply:
-                        startActivity(new Intent(MyDutyActivity.this,ExamineActivity.class)
+                        startActivity(new Intent(MyDutyActivity.this,SupplementSignActivity.class)
                         .putExtra("id", data.get(position).getAttendanceSetId()));
                         break;
                 }
@@ -157,6 +169,15 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     public void findViews() {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(date != null) {
+            getOneDayDuty(date);
+        }
     }
 
     /***
@@ -217,7 +238,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                 .getTimesScheduling(new GetSchedulingByTimeVo(
                         DateUtils.getMonthLastDay(year,month-1),
                         DateUtils.getMonthFistDay(year,month-1),
-                        41
+                        MyApplication.userDetailInfo.getUserInfo().getUserId()
                 )).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<PersonSchedulingResult>>() {
@@ -256,7 +277,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     private void getOneDayDuty(final String date){
         this.date = date;
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getOwnScheduling(new GetSchedulingVo(date,41))
+                .getOwnScheduling(new GetSchedulingVo(date,  MyApplication.userDetailInfo.getUserInfo().getUserId()))
         .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Observer<Result<GetPersonSchedulingByDateResponse>>() {
@@ -346,7 +367,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         }
     }
 
-    public void record(String scheId,int id){
+    public void record(String scheId, String id, final String distance, final String location){
         RecordVo recordVo = new RecordVo();
         recordVo.setAttendanceId(id+"");
         try {
@@ -369,7 +390,13 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                     public void onNext(Result<RecordBean> recoderBeanResult) {
                         if(!recoderBeanResult.getCode().equals("200")){
                             toast(recoderBeanResult.getMessage());
-                            startActivity(new Intent(MyDutyActivity.this,RecordFaileActivity.class));
+                            if(!recoderBeanResult.getMessage().equals("不在打卡范围")){
+                                Intent intent = new Intent(MyDutyActivity.this,RecordFaileActivity.class);
+                                intent.putExtra("distance",distance);
+                                intent.putExtra("location",location);
+                                intent.putExtra("current",poi);
+                                startActivity(intent);
+                            }
                             return;
                         }
                         toast("打卡成功");

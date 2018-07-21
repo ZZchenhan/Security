@@ -63,7 +63,7 @@ public class AttendanceInfoVoListBean implements MultiItemEntity{
     private String scheduleName;
 
     /**
-     * 打卡状态，0 初始 1.补卡 2.迟到 3.早退 4.正常 5.缺卡
+     * 打卡状态，0 初始 1.补卡 2.迟到 3.早退 4.正常 5.缺卡 6请假
      */
     private String status;
     private List<String> imageUrls;

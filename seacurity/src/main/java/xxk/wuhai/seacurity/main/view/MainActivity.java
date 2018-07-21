@@ -287,7 +287,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             // 在定位结束后，在合适的生命周期调用onDestroy()方法
             // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
             mlocationClient.stopLocation();
-            mlocationClient.startLocation();//启动定位
+//            mlocationClient.startLocation();//启动定位
         }
     }
 

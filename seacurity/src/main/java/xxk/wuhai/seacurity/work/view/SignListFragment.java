@@ -83,7 +83,13 @@ public class SignListFragment extends Fragment {
     public void onResume() {
         signDetailHead.onResume();
         super.onResume();
+        page=1;
         getSignList(page,signDetailHead.tvDate.getText().toString());
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     @Override

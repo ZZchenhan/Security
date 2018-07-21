@@ -66,7 +66,6 @@ public class StudyActivity extends BaseActivity {
                 initData(page);
             }
         },recyclerView);
-        initData(page);
     }
 
     @Override
@@ -82,6 +81,15 @@ public class StudyActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        datas.clear();
+        page = 1;
+        initData(page);
+    }
+
     private int page = 1;
     private void initData(final int page){
         GetStudyNoticeListVo getStudyNoticeListVo = new GetStudyNoticeListVo();
@@ -104,17 +112,18 @@ public class StudyActivity extends BaseActivity {
                                 return;
                             }
                             studyAdapter.loadMoreComplete();
-                            if(studyListResultResult.getResult().getStudyNoticeInfoList() == null){
-                                studyAdapter.loadMoreEnd();
-                                toast("当前没有更多数据了");
-                                return;
-                            }
+
                             StudyActivity.this.page = page +1;
                             if(!studyListResultResult.getResult().isHaveNext()){
                                 studyAdapter.loadMoreEnd();
                             }
                             datas.addAll(studyListResultResult.getResult().getStudyNoticeInfoList());
                             studyAdapter.notifyDataSetChanged();
+                        if(studyListResultResult.getResult().getStudyNoticeInfoList() == null){
+                            studyAdapter.loadMoreEnd();
+                            toast("当前没有更多数据了");
+                            return;
+                        }
                     }
 
                     @Override
