@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -62,9 +63,15 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     List<AttendanceInfoVoListBean> data = new ArrayList<>();
     private TextView tvDate;
     private TextView tvDay;
-//    private RelativeLayout btnTrajectory;
+    private RelativeLayout btnTrajectory;
     private DuyteHead duyteHead;
     private  View empty;
+
+
+    private ImageView ivPre;
+
+    private ImageView ivNext;
+
     @Override
     public int layoutId() {
         return R.layout.activity_my_duty;
@@ -94,18 +101,33 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         duyteHead = new DuyteHead(this);
         View head1 = LayoutInflater.from(this).inflate(R.layout.layout_duty_head3,null);
         tvDate = head1.findViewById(R.id.tv_month);
+        ivPre = head1.findViewById(R.id.pre);
+        ivNext = head1.findViewById(R.id.next);
+        ivPre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                duyteHead.scrollToPre();
+            }
+        });
+        ivNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                duyteHead.scrollNext();
+            }
+        });
+
         adapter.addHeaderView(head1);
         adapter.addHeaderView(duyteHead);
         View headrview = LayoutInflater.from(this).inflate(R.layout.layout_duty_head2,null);
         headrview.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tvDay = headrview.findViewById(R.id.time);
-//        btnTrajectory = headrview.findViewById(R.id.btn_trajectory);
-//        btnTrajectory.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MyDutyActivity.this, TrajectoryActivity.class).putExtra("time",date));
-//            }
-//        });
+        btnTrajectory = headrview.findViewById(R.id.btn_trajectory);
+        btnTrajectory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MyDutyActivity.this, TrajectoryActivity.class).putExtra("time",date));
+            }
+        });
         adapter.addHeaderView(headrview);
         adapter.bindToRecyclerView(recyclerView);
         duyteHead.setDataSelect(new CalendarView.OnDateSelectedListener() {
@@ -125,7 +147,6 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             public void onMonthChange(int year, int month) {
                 page = 1;
                 tvDate.setText(year+"年"+month+"月");
-
                 getData(year,month);
             }
         });

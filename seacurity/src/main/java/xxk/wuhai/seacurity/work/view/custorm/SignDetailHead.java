@@ -110,7 +110,10 @@ public class SignDetailHead extends LinearLayout {
         mapView.getMap().clear();
         boolean zoom = true;
         for(UserSignListResult.UserSignInfoVosBean info:datas){
-            if(info.getAttendanceLocation() == null || info.getAttendanceLocation().equals("")){
+            if(info.getAttendanceLat() == null || info.getAttendanceLat().equals("")){
+                continue;
+            }
+            if(info.getAttendanceLon() == null || info.getAttendanceLon().equals("")){
                 continue;
             }
             LatLng latLng = new LatLng(Double.parseDouble(info.getAttendanceLat()),Double.parseDouble(info.getAttendanceLon()));
@@ -119,7 +122,7 @@ public class SignDetailHead extends LinearLayout {
                             .decodeResource(getContext().getResources(), R.mipmap.icon_poi_select))));
             if(zoom){
                 zoom = false;
-                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
+                mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,20));
             }
         }
     }

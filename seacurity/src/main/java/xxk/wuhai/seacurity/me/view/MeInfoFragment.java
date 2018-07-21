@@ -92,7 +92,7 @@ public class MeInfoFragment extends Fragment {
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
         binding.height.setText(userDetailInfo.getUserInfo().getHeight()+"");
         binding.age.setText(userDetailInfo.getUserInfo().getAge()+"");
-        binding.workAge.setText(userDetailInfo.getUserInfo().getWorkYear());
+        binding.workAge.setText(PesonInfoHelper.getWorkAge(userDetailInfo.getUserInfo().getWorkYear()));
         binding.weight.setText(userDetailInfo.getUserInfo().getWeight()+"");
         binding.blood.setText(PesonInfoHelper.bloodType(userDetailInfo.getUserInfo().getBloodType()));
     }

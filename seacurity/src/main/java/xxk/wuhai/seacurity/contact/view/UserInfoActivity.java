@@ -135,7 +135,7 @@ public class UserInfoActivity extends BaseActivity {
     private void setDada(DirectoryVo userDetailInfo){
         name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(userDetailInfo.getName().length()-2,userDetailInfo.getName().length()));
         userName.setText(userDetailInfo.getName()+"");
-        tvZhiwei.setText(MyApplication.userDetailInfo.getDeptVo()==null?"":MyApplication.userDetailInfo.getDeptVo().getDeptName()+"");
+        tvZhiwei.setText(userDetailInfo.getRank()== null?"":userDetailInfo.getRank());
         sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
         age.setText(userDetailInfo.getSex()+"");
         phone.setText(userDetailInfo.getPhone()+"");

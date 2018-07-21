@@ -18,6 +18,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.MyLocationStyle;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -25,6 +26,7 @@ import com.amap.api.services.poisearch.PoiSearch;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.view.IBaseView;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.work.view.LocationUpdateActivity;
 import xxk.wuhai.seacurity.work.view.itf.IUpdateLocationView;
 
 /**
@@ -89,6 +91,11 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
             public void onMyLocationChange(Location location) {
                 latLng = new LatLng(location.getLatitude(),location.getLongitude());
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18));
+                //增加当前位置的 market
+               Marker  marker = aMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
+
+                search(null, LocationUpdateActivity.city);
             }
         });
     }
@@ -102,21 +109,17 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
      * @param city
      */
     public void search(EditText editText,String city){
-        if(editText.getText().toString().equals("")){
-            iUpdateLocationView.toast("请输入搜索关键字");
-            return;
-        }
         currentPage = 1;
-        query = new PoiSearch.Query(editText.getText().toString(), "", city);
-        query.setPageSize(10);
+        query = new PoiSearch.Query(editText == null?"":editText.getText().toString(),"120000", city);
+        query.setPageSize(8);
         query.setPageNum(currentPage);
         search(query);
     }
 
     public void loadMore(){
-        currentPage++;
-        query.setPageNum(currentPage);
-        search(query);
+//        currentPage++;
+//        query.setPageNum(currentPage);
+//        search(query);
     }
 
 
@@ -125,17 +128,18 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
         LatLng poi = new LatLng(poiItem.getLatLonPoint().getLatitude(),poiItem.getLatLonPoint().getLongitude());
         mapView.getMap().moveCamera(CameraUpdateFactory.newLatLng(poi));
         mapView.getMap().moveCamera(CameraUpdateFactory.zoomTo(18));
-        Marker marker = mapView.getMap().addMarker(new MarkerOptions().position(poi).title(poiItem.getTitle()).snippet("DefaultMarker").icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
-        if(lastMarket != null){
-            lastMarket.remove();
-        }
-        lastMarket = marker;
+//        Marker marker = mapView.getMap().addMarker(new MarkerOptions().position(poi).title(poiItem.getTitle()).snippet("DefaultMarker").icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+//                .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
+//        if(lastMarket != null){
+//            lastMarket.remove();
+//        }
+//        lastMarket = marker;
     }
 
 
     private void search(PoiSearch.Query query){
         PoiSearch poiSearch = new PoiSearch(mContext,query);
+        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude,latLng.longitude),3000));
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
     }

@@ -24,7 +24,7 @@ import xxk.wuhai.seacurity.R;
 
 public class ImageDialog extends Dialog {
     public ImageDialog(@NonNull Context context) {
-        this(context,0);
+        this(context,R.style.bootomDialog);
     }
 
     public ImageDialog(@NonNull Context context, int themeResId) {

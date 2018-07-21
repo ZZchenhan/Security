@@ -21,7 +21,7 @@ import xxk.wuhai.seacurity.R;
 public class HinitDialog extends Dialog {
 
     public HinitDialog(@NonNull Context context) {
-        this(context,0);
+        this(context,R.style.bootomDialog);
     }
 
     public HinitDialog(@NonNull Context context, int themeResId) {

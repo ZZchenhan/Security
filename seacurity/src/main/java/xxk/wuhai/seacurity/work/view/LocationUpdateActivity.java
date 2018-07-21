@@ -157,13 +157,13 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
         poiAdapter = new PoiAdapter(R.layout.item_poi,datas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         poiAdapter.bindToRecyclerView(recyclerView);
-        poiAdapter.setEnableLoadMore(true);
-        poiAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                updateLocaionPresenter.loadMore();
-            }
-        },recyclerView);
+        //poiAdapter.setEnableLoadMore(true);
+//        poiAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+//                updateLocaionPresenter.loadMore();
+//            }
+//        },recyclerView);
         poiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -173,6 +173,8 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
                     updateLocaionPresenter.onItemClick(datas.get(position), mapView);
                     selectLatLng =  latlng;
                     selectAddress =item.getProvinceName()+item.getCityName()+item.getBusinessArea()+item.getTitle();
+                    poiAdapter.setChckPostion(position);
+                    poiAdapter.notifyDataSetChanged();
                 }else{
                     toast("不在打卡范围之类");
                     selectLatLng =null;
@@ -200,16 +202,16 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
     @Override
     public void poiResult(List<PoiItem> poiItems) {
         poiAdapter.loadMoreComplete();
+        datas.clear();
+        poiAdapter.setChckPostion(-1);
         if(poiItems != null && poiItems.size() !=0){
             datas.addAll(poiItems);
-            poiAdapter.notifyDataSetChanged();
-        }else{
-            poiAdapter.loadMoreEnd();
         }
+        poiAdapter.notifyDataSetChanged();
     }
 
 
-    private static String city;
+    public static String city;
     private static LatLng locionLatlng;
     private LatLng selectLatLng;
     private String selectAddress;

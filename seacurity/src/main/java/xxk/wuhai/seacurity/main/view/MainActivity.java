@@ -381,6 +381,11 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                             if(result.getCode().equals("200")){
                                 MyApplication.userDetailInfo = result.getResult();
                             }
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            MeFragment meF = (MeFragment) fragmentManager.findFragmentByTag(tabTitle[3]);
+                            if(meF!=null){
+                                meF.setDada(MyApplication.userDetailInfo.getUserInfo());
+                            }
                         }
 
                         @Override

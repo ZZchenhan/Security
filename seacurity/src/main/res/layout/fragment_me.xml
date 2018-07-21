@@ -148,7 +148,7 @@
             android:layout_width="wrap_content"
             android:text="个人资料"
             android:layout_weight="0"
-            android:drawableLeft="@mipmap/icon_info_user"
+            android:drawableLeft="@mipmap/ic_me_info"
             android:drawablePadding="6dp"
             android:gravity="center"
             android:textColor="@color/text_color1"

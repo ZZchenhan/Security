@@ -88,7 +88,7 @@ public class SignListFragment extends Fragment {
         signDetailHead.onResume();
         super.onResume();
         page=1;
-        getSignList(page,signDetailHead.tvDate.getText().toString());
+        getSignList(page,month);
     }
 
     @Override
@@ -149,15 +149,15 @@ public class SignListFragment extends Fragment {
                             signListAdapter.loadMoreEnd();
                             return;
                         }
+                        SignListFragment.this.page++;
+                        datas.addAll(userSignListResultResult.getResult().getUserSignInfoVos());
+                        signDetailHead.setMarkes(datas);
+                        signListAdapter.notifyDataSetChanged();
                         if(userSignListResultResult.getResult().getUserSignInfoVos().size()>20) {
                             signListAdapter.loadMoreComplete();
                         }else{
                             signListAdapter.loadMoreEnd();
                         }
-                        SignListFragment.this.page++;
-                        datas.addAll(userSignListResultResult.getResult().getUserSignInfoVos());
-                        signDetailHead.setMarkes(datas);
-                        signListAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -174,6 +174,7 @@ public class SignListFragment extends Fragment {
                 });
     }
 
+    private String month = "";
     DatePickerDialogFragment datePickerDialogFragment = null;
     private void open(){
         if(datePickerDialogFragment == null){
@@ -184,6 +185,7 @@ public class SignListFragment extends Fragment {
                 public void onDateChoose(int year, int month, int day) {
                     signDetailHead.tvDate.setText(year+"年"+month+"月");
                     getSignList(1,year+"-"+month);
+                   SignListFragment.this.month = year+"-"+month;
                 }
             });
         }

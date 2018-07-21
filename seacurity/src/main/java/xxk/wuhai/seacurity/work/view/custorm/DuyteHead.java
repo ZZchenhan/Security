@@ -42,6 +42,14 @@ public class DuyteHead extends LinearLayout{
         this(context, attrs,0);
     }
 
+    public void scrollNext(){
+        calendarView.scrollToNext(true);
+    }
+
+    public void scrollToPre(){
+        calendarView.scrollToPre(true);
+    }
+
     public DuyteHead(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View view  = LayoutInflater.from(context).inflate(R.layout.layout_duty_head,null);
@@ -80,7 +88,6 @@ public class DuyteHead extends LinearLayout{
     public void setSchemes( List<Calendar> schemes){
         calendarView.setSchemeDate(schemes);
     }
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public void setSchemes(Map<String,PersonSchedulingResult.Recode> data){
         List<Calendar> calendars = new ArrayList<>();
         Set<Map.Entry<String,PersonSchedulingResult.Recode>> entrys = data.entrySet();
@@ -129,19 +136,11 @@ public class DuyteHead extends LinearLayout{
 
                if (recode.getHasOvertime() != null
                        && recode.getHasOvertime().equals("1")) {
-                   if(sb.length() == 0){
-                       sb = sb.append("跨天");
-                   }else {
-                       sb = sb.append("+");
-                   }
+                   sb = sb.append("+");
                }
 
                if (recode.getHasTemporary() != null && recode.getHasTemporary().equals("1")) {
-                   if(sb.length() == 0){
-                       sb = sb.append("临时");
-                   }else {
-                       sb = sb.append("+");
-                   }
+                   sb = sb.append("+");
                }
                return sb.toString();
            } else {

@@ -2,6 +2,7 @@ package xxk.wuhai.seacurity.weight.dialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
 
 /**
  * Created by 86936 on 2018/7/8.
@@ -16,7 +17,7 @@ public class TypeHelp {
     private static List<Values> marries = new ArrayList<>();
     private static List<Values> politics = new ArrayList<>();
     private static List<Values> blood = new ArrayList<>();
-
+    private static List<Values> workAges = new ArrayList<>();
 
     public static List<Values> getString(Type type){
         switch (type){
@@ -78,6 +79,15 @@ public class TypeHelp {
                     blood.add(new Values("99","其他"));
                 }
                 return blood;
+            case WORK_AGE:
+                if(workAges.size() == 0){
+                    workAges.add(new Values("0","0-1年以内"));
+                    workAges.add(new Values("1","1-3年"));
+                    workAges.add(new Values("2","3-5年"));
+                    workAges.add(new Values("3","5-10年"));
+                    workAges.add(new Values("4","10年以上"));
+                }
+                return workAges;
         }
         return nation;
     }
@@ -117,7 +127,7 @@ public class TypeHelp {
     }
 
     public enum Type{
-        NATION,SEX,EDUCATION,MARRIES,POLITICS,BLOOD;
+        NATION,SEX,EDUCATION,MARRIES,POLITICS,BLOOD,WORK_AGE;
     }
 
     private static void initNation(){

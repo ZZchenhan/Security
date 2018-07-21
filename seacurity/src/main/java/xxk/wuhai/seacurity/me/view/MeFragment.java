@@ -73,12 +73,12 @@ public class MeFragment extends Fragment {
     RecyclerView recyclerView;
     List<TagResult.ResultBean.LabelVoListBean> datas = new ArrayList<>();
 
-    private void setDada(UserInfoBean userDetailInfo){
+    public void setDada(UserInfoBean userDetailInfo){
         name.setText(userDetailInfo.getName()==null?"":userDetailInfo.getName().length()<2?userDetailInfo.getName():userDetailInfo.getName().substring(userDetailInfo.getName().length()-2,userDetailInfo.getName().length()));
         userName.setText(userDetailInfo.getName()+"");
         tvZhiwei.setText(MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo()==null?"":
                 MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getRank()+"");
-        sex.setText(userDetailInfo.getSex().equals("0")?"男":"女");
+        sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
         age.setText(userDetailInfo.getAge()+"");
         phone.setText(userDetailInfo.getPhone()+"");
         tvZan.setText(String.format("赞：%s","0"));
@@ -158,6 +158,8 @@ public class MeFragment extends Fragment {
 //        });
         getTags(MyApplication.userDetailInfo.getUserInfo().getUserId());
     }
+
+
 
     public void getTags(int userId){
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)

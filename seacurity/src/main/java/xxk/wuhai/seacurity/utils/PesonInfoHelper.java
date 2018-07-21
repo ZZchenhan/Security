@@ -3,6 +3,8 @@ package xxk.wuhai.seacurity.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import xxk.wuhai.seacurity.MyApplication;
+
 /**
  * Created by 86936 on 2018/7/7.
  *
@@ -148,6 +150,19 @@ public class PesonInfoHelper {
         return "全部";
     }
 
+    // 0-未处理1-通过2-驳回 ,
+    public static String aplyStatus2(String status){
+        if(status == null){
+            return "全部";
+        }
+        switch (status){
+            case "1":
+                return "已审批";
+            case "2":
+                return "已审批";
+        }
+        return "待审批";
+    }
 
     //0-未处理1-通过2-驳回 ,
     public static String detailStatus(String stauts){
@@ -163,5 +178,22 @@ public class PesonInfoHelper {
                 return "驳回";
         }
         return "未处理";
+    }
+
+    public static  String getWorkAge(String workAge){
+        if(workAge == null){
+            return "0-1年以内";
+        }
+        switch (workAge){
+            case "1":
+                return "1-3年";
+            case "2":
+                return "3-5年";
+            case "3":
+                return "5-10年";
+            case "4":
+                return "10年以上";
+        }
+        return "异常枚举";
     }
 }

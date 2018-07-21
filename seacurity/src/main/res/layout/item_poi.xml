@@ -37,9 +37,10 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <ImageView
+        android:id="@+id/iv_select"
         android:layout_width="wrap_content"
         android:layout_weight="0"
         android:layout_gravity="center"
-        android:src="@mipmap/icon_poi_select"
+        android:src="@mipmap/ic_check"
         android:layout_height="wrap_content" />
 </LinearLayout>

@@ -3,12 +3,20 @@ package xxk.wuhai.seacurity.work;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.amap.api.maps2d.CameraUpdate;
+import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.PolylineOptions;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +114,7 @@ public class TrajectoryActivity extends BaseActivity {
 
                     @Override
                     public void onNext(Result<GetTrajectoryResponse> getTrajectoryResponseResult) {
-                            if(!getTrajectoryResponseResult.getResult().equals("200")){
+                            if(!getTrajectoryResponseResult.getCode().equals("200")){
                                 toast(getTrajectoryResponseResult.getMessage());
                                 return;
                             }
@@ -118,14 +126,19 @@ public class TrajectoryActivity extends BaseActivity {
 
 
                         List<LatLng> latLngs = new ArrayList<LatLng>();
-                            for(GetTrajectoryResponse.TrajectoryVoListBean item:getTrajectoryResponseResult.getResult().getTrajectoryVoList()){
-                                try {
-                                    latLngs.add(new LatLng(Long.parseLong(item.getAttendanceLat()), Long.parseLong(item.getAttendanceLon())));
-                                }catch (Exception e){}
-                            }
-                            mapView.getMap().clear();
+                         for(GetTrajectoryResponse.TrajectoryVoListBean item:getTrajectoryResponseResult.getResult().getTrajectoryVoList()){
+                             try {
+                                 latLngs.add(new LatLng(Float.parseFloat(item.getAttendanceLat()), Float.parseFloat(item.getAttendanceLon())));
+                             }catch (Exception e){}
+                         }
+                         mapView.getMap().clear();
                         mapView.getMap().addPolyline(new PolylineOptions().
                                 addAll(latLngs).width(10).color(TrajectoryActivity.this.getResources().getColor(R.color.colorPrimary)));
+                        try {
+                            mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get(0), 15));
+                            getStart(new LatLonPoint(latLngs.get(0).latitude,latLngs.get(0).longitude));
+                            getEnd(new LatLonPoint(latLngs.get(latLngs.size()-1).latitude,latLngs.get(latLngs.size()-1).longitude));
+                        }catch (RuntimeException e){}
                     }
 
                     @Override
@@ -138,5 +151,48 @@ public class TrajectoryActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    private void getStart(LatLonPoint latLonPoint){
+        GeocodeSearch geocodeSearch = new GeocodeSearch(this);
+        geocodeSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
+            @Override
+            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+                if(regeocodeResult.getRegeocodeAddress().getPois().size()>0){
+                    tvStart.setText("起点：" + regeocodeResult.getRegeocodeAddress().getPois().get(0).getTitle());
+                }else {
+                    tvStart.setText("起点：" + regeocodeResult.getRegeocodeAddress().getTownship());
+                }
+            }
+
+            @Override
+            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
+            }
+        });
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,GeocodeSearch.AMAP);
+        geocodeSearch.getFromLocationAsyn(query);
+    }
+
+    private void getEnd(LatLonPoint latLonPoint){
+        GeocodeSearch geocodeSearch = new GeocodeSearch(this);
+        geocodeSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
+            @Override
+            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+                if(regeocodeResult.getRegeocodeAddress().getPois().size()>0){
+                    tvEnd.setText("终点：" + regeocodeResult.getRegeocodeAddress().getPois().get(0).getTitle());
+                }else {
+                    tvEnd.setText("终点：" + regeocodeResult.getRegeocodeAddress().getTownship());
+                }
+            }
+
+            @Override
+            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
+            }
+        });
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,GeocodeSearch.AMAP);
+        geocodeSearch.getFromLocationAsyn(query);
     }
 }

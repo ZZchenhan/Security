@@ -209,7 +209,9 @@ public class SiteDialogFragment extends Dialog {
                             return;
                         }
                         districts.addAll(listResult.getResult());
+                        district = districts.get(0);
                         cityWhel.setDataList(cities);
+                        city = cities.get(0);
                         coutryWhell.setDataList(districts);
                     }
 
@@ -247,6 +249,7 @@ public class SiteDialogFragment extends Dialog {
                     return;
                 }
                 districts.addAll(listResult.getResult());
+                district = districts.get(0);
                 coutryWhell.setDataList(districts);
             }
 

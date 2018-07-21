@@ -88,7 +88,7 @@ public class WorkFragment extends Fragment {
     private SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd");
     private void setDate(){
        Calendar calendar =  DateUtils.getWekFisrstDay();
-        tvDate.setText(simpleDateFormat.format(calendar.getTime()));
+        tvDate.setText(simpleDateFormat.format(calendar.getTime()).substring(0,7));
        tvDay1.setText(""+calendar.get(Calendar.DAY_OF_MONTH));
        datesViews.put( simpleDateFormat.format(calendar.getTime()),tvDay1);
        calendar.set(calendar.DAY_OF_MONTH,calendar.get(Calendar.DAY_OF_MONTH)+1);

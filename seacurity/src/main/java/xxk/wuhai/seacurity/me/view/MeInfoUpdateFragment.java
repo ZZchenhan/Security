@@ -45,6 +45,7 @@ public class MeInfoUpdateFragment extends Fragment {
     private BottomDialog eductaoinDialog;
     private BottomDialog marridDialog;
     private BottomDialog bloodDialog;
+    private BottomDialog wokeAgeDialog;
     private BottomDialog politicalDialog;
     private SiteDialogFragment siteDialogFragment;
     private String sexCode = "";
@@ -116,7 +117,7 @@ public class MeInfoUpdateFragment extends Fragment {
         userInfoBean.setMaritalStatus(userDetailInfo.getUserInfo().getMaritalStatus() == null ? "0" : userDetailInfo.getUserInfo().getMaritalStatus());
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
         binding.height.setText(userDetailInfo.getUserInfo().getHeight() + "");
-        binding.workAge.setText(userDetailInfo.getUserInfo().getWorkYear());
+        binding.workAge.setText(PesonInfoHelper.getWorkAge(userDetailInfo.getUserInfo().getWorkYear()));
         binding.weight.setText(userDetailInfo.getUserInfo().getWeight() + "");
         binding.blood.setText(PesonInfoHelper.bloodType(userDetailInfo.getUserInfo().getBloodType()));
 
@@ -192,6 +193,25 @@ public class MeInfoUpdateFragment extends Fragment {
                     });
                 }
                 marridDialog.show();
+            }
+        });
+
+        binding.workAge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(wokeAgeDialog == null){
+                    wokeAgeDialog = new BottomDialog(getContext());
+                    wokeAgeDialog.setType(TypeHelp.Type.WORK_AGE);
+                    wokeAgeDialog.setConfirmClick(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            binding.workAge.setText(wokeAgeDialog.getSelectValues().getValues());
+                            userInfoBean.setWorkYear(wokeAgeDialog.getSelectValues().getCode());
+                            wokeAgeDialog.dismiss();
+                        }
+                    });
+                }
+                wokeAgeDialog.show();
             }
         });
 
