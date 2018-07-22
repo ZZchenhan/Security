@@ -89,11 +89,12 @@ public class SupplementSignActivity extends BaseActivity{
 
         return leftIconNavagation;
     }
-
+    private String date = "";
     @Override
     public void initView() {
         getAppro();
-        binding.tvTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        binding.tvTime.setText(getIntent().getStringExtra("time"));
+        date = getIntent().getStringExtra("time");
         binding.etName.setText(MyApplication.userDetailInfo.getUserInfo().getName());
         binding.ivCamero.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,8 +206,8 @@ public class SupplementSignActivity extends BaseActivity{
         supplementApplyVo.setApproverID(approverUser != null && approverUser.getApproverId() !=0
                 ?approverUser.getApproverId():
                 MyApplication.userDetailInfo.getUserInfo().getUserId());
-        supplementApplyVo.setAttendanceId(getIntent().getIntExtra("id",0)+"");
-        supplementApplyVo.setPatchTime(binding.tvTime.getText().toString());
+        supplementApplyVo.setAttendanceId(getIntent().getStringExtra("id"));
+        supplementApplyVo.setPatchTime(date);
         supplementApplyVo.setSupplement(binding.result.getText().toString());
         List<String> subImags = new ArrayList<>();
         for(int i=0;i<imagesUrl.size();i++){

@@ -24,61 +24,87 @@
         android:layout_marginTop="65dp"
         android:layout_marginLeft="55dp"
         android:layout_height="wrap_content">
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/phone"
-            android:drawableLeft="@mipmap/icon_idf"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:hint="手机/身份证"
-            android:paddingLeft="2dp"
-            android:inputType="phone"
-            android:background="@null"
-            android:textColor="@color/text_color1"
-            android:textColorHint="@color/text_color7"
-            android:textSize="13sp" />
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_card"
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_idf"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/phone"
+                android:layout_toRightOf="@id/iv_card"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:paddingTop="2dp"
+                android:layout_height="wrap_content"
+                android:hint="请输入手机号/身份证号"
+                android:gravity="bottom"
+                android:inputType="phone"
+                android:background="@null"
+                android:textColor="@color/text_color7"
+                android:textColorHint="@color/text_color7"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:background="@color/line_color"
-            android:layout_height="0.3dp"/>
-
-        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_height="1dp"/>
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/icon_lock"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/icon_lock"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_toRightOf="@+id/icon_lock"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="12dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/pass"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:layout_weight="1"
-                android:drawableLeft="@mipmap/icon_lock"
+                android:paddingTop="5dp"
                 android:gravity="center_vertical"
                 android:hint="密码"
-                android:textColor="@color/text_color1"
+                android:textColor="@color/text_color7"
                 android:textColorHint="@color/text_color7"
                 android:drawablePadding="10dp"
-                android:paddingLeft="5dp"
                 android:inputType="textPassword"
                 android:textSize="13sp" />
             <ImageView
                 android:id="@+id/see"
                 android:layout_width="wrap_content"
+                android:scaleType="center"
                 android:layout_gravity="center"
                 android:layout_weight="0"
                 android:src="@mipmap/icon_see"
                 android:padding="5dp"
                 android:layout_height="match_parent" />
         </LinearLayout>
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:background="@color/line_color"
-            android:layout_height="0.3dp"/>
+            android:layout_marginTop="5dp"
+            android:layout_height="1dp"/>
     </LinearLayout>
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="258dp"
+        android:layout_width="250dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_colorp_r_4"
         android:layout_marginTop="40dp"
@@ -88,7 +114,7 @@
         android:textSize="14sp"
         android:layout_height="44dp" />
     <LinearLayout
-        android:layout_width="258dp"
+        android:layout_width="250dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="40dp"
         android:orientation="horizontal"
@@ -98,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:background="@color/line_color"
             android:layout_height="1dp"/>
         <TextView
@@ -106,13 +132,13 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:text="忘记密码?"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/colorPrimary"
             android:layout_height="match_parent" />
         <View
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:background="@color/line_color"
             android:layout_height="0.3dp"/>

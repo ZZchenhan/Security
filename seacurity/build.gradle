@@ -8,7 +8,7 @@ android {
         applicationId "xxk.wuhai.seacurity"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 22000
+        versionCode 22001
         versionName "V1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {

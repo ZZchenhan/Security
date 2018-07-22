@@ -10,6 +10,7 @@ import retrofit2.http.Url;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.contact.bean.StaffResult;
 import xxk.wuhai.seacurity.login.bean.CodeBean;
+import xxk.wuhai.seacurity.login.bean.Elec;
 import xxk.wuhai.seacurity.login.bean.UpdateBean;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.bean.UserInfoBean;
@@ -18,6 +19,7 @@ import xxk.wuhai.seacurity.login.result.TagResult;
 import xxk.wuhai.seacurity.login.vo.AddLabelInfoApiVo;
 import xxk.wuhai.seacurity.login.vo.ForgetPassVo;
 import xxk.wuhai.seacurity.login.vo.GetCodeVo;
+import xxk.wuhai.seacurity.login.vo.GetElecCard;
 import xxk.wuhai.seacurity.login.vo.GetPraiseAndLabelVo;
 import xxk.wuhai.seacurity.login.vo.GetUserInfoVo;
 import xxk.wuhai.seacurity.login.vo.LoginBean;
@@ -62,4 +64,7 @@ public interface UserApi {
     @Streaming
     @GET
     Observable<ResponseBody> downloadFile(@Url String   fileUrl);
+
+    @POST("/client-api/user/getCertificateInfo ")
+    Observable<Elec> getElectCard(@Body GetElecCard getElecCard);
 }

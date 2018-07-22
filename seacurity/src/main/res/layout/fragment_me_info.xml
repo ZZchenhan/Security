@@ -282,7 +282,7 @@
                         android:textSize="17sp" />
 
                     <TextView
-                        android:id="@+id/brithday"
+                        android:id="@+id/join_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -313,7 +313,7 @@
                         android:textSize="17sp" />
 
                     <TextView
-                        android:id="@+id/join_time"
+                        android:id="@+id/brithday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 

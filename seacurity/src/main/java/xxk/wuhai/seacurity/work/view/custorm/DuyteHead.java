@@ -172,7 +172,6 @@ public class DuyteHead extends LinearLayout{
             }
             return Color.parseColor("#49B1FA");
         }else{
-
             return Color.parseColor("#49B1FA");
         }
     }

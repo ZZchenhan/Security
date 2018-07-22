@@ -136,13 +136,13 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                     helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                     helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                     helper.getView(R.id.btn_record).setEnabled(false);
-                    helper.setGone(R.id.tv_apply,true);
+                    helper.setGone(R.id.tv_apply,false);
                 } else if(item.getStatus().equals("5")){
                     //前去补卡
                     helper.setText(R.id.btn_record,"未打卡");
                     helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                     helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
-                    helper.getView(R.id.btn_record).setEnabled(true);
+                    helper.getView(R.id.btn_record).setEnabled(false);
                     helper.setGone(R.id.tv_apply,true);
                 }else {
                     //开始做倒计时
@@ -235,7 +235,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
             LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()),Float.parseFloat(item.getAttendanceLonExpect()));
             mapView.getMap().addCircle(new CircleOptions().
                     center(latLng).
-                    radius(3*Double.parseDouble(item.getRange())).
+                    radius(Double.parseDouble(item.getRange())).
                     fillColor(Color.parseColor("#20197ABD")).
                     strokeColor(Color.parseColor("#197ABD")).
                     strokeWidth(1));
@@ -253,14 +253,14 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                     helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                     helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                     helper.getView(R.id.btn_record).setEnabled(false);
-                    helper.setGone(R.id.tv_apply,true);
+                    helper.setGone(R.id.tv_apply,false);
                 } else if(item.getStatus().equals("5")){
                     //前去补卡
                     helper.setText(R.id.btn_record,"未打卡");
                     helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                     helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                     helper.getView(R.id.btn_record).setEnabled(true);
-                    helper.setGone(R.id.tv_apply,true);
+                    helper.setGone(R.id.tv_apply,false);
                 }else {
                     //开始做倒计时
                     helper.setGone(R.id.tv_apply,false);
@@ -292,7 +292,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    }else if(marker!=null && AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)>3*Double.parseDouble(item.getRange())) {
+                    }else if(marker!=null && AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)>Double.parseDouble(item.getRange())) {
                         //不在距离
                         helper.setText(R.id.btn_record, "不在打卡区域");
                         helper.setTextColor(R.id.btn_record, Color.parseColor("#F4F4F4"));

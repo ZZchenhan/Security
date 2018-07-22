@@ -105,7 +105,8 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                         break;
                     case R.id.tv_apply:
                         startActivity(new Intent(RecordActivity.this,SupplementSignActivity.class)
-                                .putExtra("id", data.get(position).getAttendanceSetId()));
+                                .putExtra("id", data.get(position).getId())
+                                .putExtra("time", date + " " + data.get(position).getAttendanceTimeExpect()));
                         break;
                 }
             }

@@ -13,6 +13,12 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 
+import java.net.URLEncoder;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.http.RetrofitClient;
 import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
@@ -22,7 +28,10 @@ import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityElectIdcardBinding;
+import xxk.wuhai.seacurity.login.api.UserApi;
+import xxk.wuhai.seacurity.login.bean.Elec;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
+import xxk.wuhai.seacurity.login.vo.GetElecCard;
 import xxk.wuhai.seacurity.utils.PesonInfoHelper;
 import xxk.wuhai.seacurity.weight.ImageDialog;
 
@@ -61,7 +70,7 @@ public class ElectIDcardActivity extends BaseActivity {
 
     @Override
     public void findViews() {
-
+        getElect();
     }
 
     boolean isMin = true;
@@ -70,8 +79,15 @@ public class ElectIDcardActivity extends BaseActivity {
         binding.name.setText(userDetailInfo.getUserInfo().getName());
         binding.sex.setText(userDetailInfo.getUserInfo().getSex().equals("0") ? "女" : "男");
         binding.birthday.setText(PesonInfoHelper.changeTimes(userDetailInfo.getUserInfo().getBirthday()));
-        binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceAddress() + "");
-        binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard() + "");
+        if(userDetailInfo.getUserInfo().getResidenceProvinceName() !=null
+            &&userDetailInfo.getUserInfo().getResidenceCityName() !=null
+                &&userDetailInfo.getUserInfo().getResidenceDistrictName() !=null
+                ) {
+            binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceProvinceName() + "" + userDetailInfo.getUserInfo().getResidenceCityName()+userDetailInfo.getUserInfo().getResidenceDistrictName());
+        }else{
+            binding.nativePlace.setText("");
+        }
+        //binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard() + "");
         binding.company.setText(userDetailInfo.getOrgVo() == null ? "" : userDetailInfo.getOrgVo().getName() + "");
         binding.phone.setText(userDetailInfo.getUserInfo().getPhone());
         binding.liveaddress.setText(userDetailInfo.getUserInfo().getLivingAddress());
@@ -81,7 +97,8 @@ public class ElectIDcardActivity extends BaseActivity {
         //NSString *common = @"http://47.98.241.211/client-api/user/getQRCodeImg";
 
         String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
-                , MyApplication.baseUrl, BaseInterceptor.type, BaseInterceptor.random, BaseInterceptor.token, BaseInterceptor.name
+                ,MyApplication.baseUrl,
+                URLEncoder.encode(BaseInterceptor.type), BaseInterceptor.random, URLEncoder.encode(BaseInterceptor.token), URLEncoder.encode(BaseInterceptor.name)
         );
         Glide.with(this)
                 .load(url)
@@ -106,4 +123,54 @@ public class ElectIDcardActivity extends BaseActivity {
         return binding.getRoot();
     }
 
+
+    public void getElect(){
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .getElectCard(new GetElecCard(MyApplication.userDetailInfo.getUserInfo().getAccountName()))
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer<Elec>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Elec string) {
+                if(!string.getCode().equals("200")){
+                    toast(string.getMessage());
+                    return;
+                }
+                if( string.getResult().getUserCertificateInfoVo() == null){
+                    toast("电子保安证为空");
+                    return;
+                }
+                setView(string.getResult().getUserCertificateInfoVo());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void setView(Elec.ResultBean.UserCertificateInfoVoBean userCertificateInfoVoBean){
+        binding.birthday.setText(PesonInfoHelper.changeTimes(userCertificateInfoVoBean.getBirthday()));
+        binding.birthday.setText(PesonInfoHelper.changeTimes(userCertificateInfoVoBean.getBirthday()));
+        if(userCertificateInfoVoBean.getResidenceProvinceName() !=null
+                &&userCertificateInfoVoBean.getResidenceCityName() !=null
+                &&userCertificateInfoVoBean.getResidenceDistrictName() !=null
+                ) {
+            binding.nativePlace.setText(userCertificateInfoVoBean.getResidenceProvinceName() + "" + userCertificateInfoVoBean.getResidenceCityName()+userCertificateInfoVoBean.getResidenceDistrictName());
+        }else{
+            binding.nativePlace.setText("");
+        }
+        binding.idcard.setText(userCertificateInfoVoBean.getCertificateNo() == null?"":userCertificateInfoVoBean.getCertificateNo());
+    }
 }

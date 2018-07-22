@@ -174,8 +174,10 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                                 data.get(position).getId(),distance,item.getAttendanceLocationExpect());
                         break;
                     case R.id.tv_apply:
-                        startActivity(new Intent(MyDutyActivity.this,SupplementSignActivity.class)
-                        .putExtra("id", data.get(position).getAttendanceSetId()));
+                            startActivity(new Intent(MyDutyActivity.this, SupplementSignActivity.class)
+                                    .putExtra("id", data.get(position).getId())
+                                    .putExtra("time", date + " " + data.get(position).getAttendanceTimeExpect()));
+
                         break;
                 }
             }
@@ -285,7 +287,6 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                     public void onError(Throwable e) {
 
                     }
-
                     @Override
                     public void onComplete() {
 

@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.net.URLEncoder;
+
 import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
@@ -32,7 +34,8 @@ public class ImageDialog extends Dialog {
         setContentView(LayoutInflater.from(context).inflate(R.layout.dialog_qr_code,null,false));
         ImageView ivCode = findViewById(R.id.qrcode);
         String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
-                ,MyApplication.baseUrl,BaseInterceptor.type,BaseInterceptor.random,BaseInterceptor.token,BaseInterceptor.name
+                ,MyApplication.baseUrl,
+                URLEncoder.encode(BaseInterceptor.type), BaseInterceptor.random, URLEncoder.encode(BaseInterceptor.token), URLEncoder.encode(BaseInterceptor.name)
         );
         Glide.with(getContext())
                 .load(url)

@@ -66,16 +66,16 @@ public class ApplyActivity extends BaseActivity {
                 MyAplyListActivity.openActivity(this,0);
                 break;
             case R.id.tv_recive:
-                if(dialog == null){
-                    dialog = new HinitDialog(this);
-                }
-                dialog.show();
-//                Toast toast =  new Toast(Utils.getApp());
-//                toast.setView(LayoutInflater.from(ApplyActivity.this).inflate(R.layout.layout_no_permision,null,false));
-//                toast.setDuration(Toast.LENGTH_LONG);
-//                toast.setGravity(Gravity.CENTER,0,0);
-//                toast.show();
-                //MyAplyListActivity.openActivity(this,1);
+//                if(dialog == null){
+//                    dialog = new HinitDialog(this);
+//                }
+//                dialog.show();
+////                Toast toast =  new Toast(Utils.getApp());
+////                toast.setView(LayoutInflater.from(ApplyActivity.this).inflate(R.layout.layout_no_permision,null,false));
+////                toast.setDuration(Toast.LENGTH_LONG);
+////                toast.setGravity(Gravity.CENTER,0,0);
+////                toast.show();
+                MyAplyListActivity.openActivity(this,1);
                 break;
         }
     }

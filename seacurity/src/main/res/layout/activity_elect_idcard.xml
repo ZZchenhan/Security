@@ -54,7 +54,7 @@
                 android:layout_alignTop="@+id/name_title"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/name_title"
-                android:text="张默"
+                android:text=""
                 android:textColor="#D3D2D2"
                 android:textSize="14sp" />
 
@@ -77,7 +77,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/sex_title"
                 android:textColor="#D3D2D2"
-                android:text="男" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/birthday_title"
@@ -96,7 +96,7 @@
                 android:layout_alignTop="@+id/birthday_title"
                 android:layout_marginLeft="9dp"
                 android:layout_toRightOf="@+id/birthday_title"
-                android:text="2019-01-99"
+                android:text=""
                 android:textColor="#D3D2D2"
                 android:textSize="14sp" />
 
@@ -117,20 +117,20 @@
                 android:layout_alignTop="@+id/native_title"
                 android:layout_marginLeft="9dp"
                 android:layout_toRightOf="@+id/native_title"
-                android:text="户籍地址"
+                android:text=""
                 android:textColor="#D3D2D2" />
 
             <TextView
                 android:id="@+id/idcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:letterSpacing="0.1"
-                android:layout_below="@+id/native_place"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/native_title"
                 android:layout_marginTop="10dp"
-                android:text="562890"
+                android:letterSpacing="0.1"
+                android:text=""
                 android:textColor="@color/white"
-               />
+                android:textSize="23sp" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -138,7 +138,7 @@
                 android:layout_height="70dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/bg_ring_40"
+                android:background="@drawable/bg_ring_40_2"
                 android:gravity="center"
                 android:text="黄"
                 android:textColor="@color/white"
@@ -225,7 +225,7 @@
                 android:id="@+id/liveaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="未设置"
+                android:text=""
                 android:textColor="#888888"
                 android:textSize="17sp" />
         </LinearLayout>
