@@ -43,7 +43,7 @@ public class MyApplication extends MultiDexApplication {
 
     public static UserDetailInfo userDetailInfo;
 
-    public static String baseUrl = "http://47.98.241.211/";
+    public static String baseUrl = "http://101.37.136.249:9001";
 
     public static String aluyun = "http://tongyongbucket.oss-cn-hangzhou.aliyuncs.com/";
 
