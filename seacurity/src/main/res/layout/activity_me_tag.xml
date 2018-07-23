@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="9dp"
-                android:text="映像标签"
+                android:text="印象标签"
                 android:textSize="17sp"
                 android:textColor="@color/text_color1" />
         </LinearLayout>

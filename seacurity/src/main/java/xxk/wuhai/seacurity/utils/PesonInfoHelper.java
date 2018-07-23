@@ -24,7 +24,7 @@ public class PesonInfoHelper {
             case 4:
                 return "大专";
             case 5:
-                return "大本";
+                return "本科";
             case 6:
                 return "研究生";
             case 7:
@@ -101,7 +101,13 @@ public class PesonInfoHelper {
     }
 
     public static String changeTimes(String times){
+        if(times == null){
+            return "";
+        }
         try {
+            if(times.length()>10){
+                return times.substring(0,10);
+            }
             return times;
         }catch (Exception e){
             return "转换出错";
@@ -194,6 +200,6 @@ public class PesonInfoHelper {
             case "4":
                 return "10年以上";
         }
-        return "异常枚举";
+        return ""+workAge;
     }
 }

@@ -108,12 +108,16 @@ public class ExamineActivity extends BaseActivity {
                         binding.type.setText("补签");
                         binding.result.setText(apDetailBean.getSupplement()+"");
                         try {
-                            Glide.with(ExamineActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
-                            Glide.with(ExamineActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
-                            Glide.with(ExamineActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                            if(apDetailBean.getPictureUrls() == null || apDetailBean.getPictureUrls().size() == 0){
+                                binding.llPic.setVisibility(View.GONE);
+                            }else {
+                                Glide.with(ExamineActivity.this)
+                                        .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
+                                Glide.with(ExamineActivity.this)
+                                        .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
+                                Glide.with(ExamineActivity.this)
+                                        .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                            }
                         }catch (Exception e){
 
                         }

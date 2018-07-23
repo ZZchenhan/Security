@@ -54,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
             >
 
             <xxk.wuhai.seacurity.weight.record.RecordButton
@@ -62,6 +61,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="center"
+                android:layout_marginLeft="15dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_camore"
                 android:src="@mipmap/ic_mic"
@@ -87,6 +87,13 @@
                     android:layout_height="15dp" />
             </RelativeLayout>
         </FrameLayout>
+        <TextView
+            android:id="@+id/iv_recode"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#888888"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

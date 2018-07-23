@@ -82,7 +82,7 @@ public class ApplyLeaveActivity extends BaseActivity {
         LeftIconNavagation leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
             @Override
             public String title() {
-                return "请假审批";
+                return "请假申请";
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
         leftIconNavagation.setIconClick(new View.OnClickListener() {

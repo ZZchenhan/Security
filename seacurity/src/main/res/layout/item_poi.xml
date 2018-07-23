@@ -31,7 +31,7 @@
             android:maxLines="1"
             android:layout_width="wrap_content"
             android:textColor="@color/text_color3"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:text="杭州电视台"
             android:textSize="12sp"
             android:layout_height="wrap_content" />

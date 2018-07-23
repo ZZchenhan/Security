@@ -137,7 +137,7 @@ public class UserInfoActivity extends BaseActivity {
         userName.setText(userDetailInfo.getName()+"");
         tvZhiwei.setText(userDetailInfo.getRank()== null?"":userDetailInfo.getRank());
         sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
-        age.setText(userDetailInfo.getSex()+"");
+        age.setText(userDetailInfo.getSex()+"岁");
         phone.setText(userDetailInfo.getPhone()+"");
         tvZan.setText(String.format("赞：%s","0"));
         tvCai.setText(String.format("踩：%s","0"));

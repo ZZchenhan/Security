@@ -26,7 +26,7 @@ public class MeInfoActivity extends BaseActivity {
         LeftIconNavagation leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
             @Override
             public String title() {
-                return "个人信息";
+                return "个人资料";
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
         leftIconNavagation.setIconClick(new View.OnClickListener() {

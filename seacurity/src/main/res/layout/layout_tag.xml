@@ -10,8 +10,6 @@
         android:textColor="#888888"
         android:gravity="center"
         android:text="标签"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
         android:background="@drawable/bg_info_normal"
-        android:layout_height="wrap_content" />
+        android:layout_height="20dp" />
 </RelativeLayout>

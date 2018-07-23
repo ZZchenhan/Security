@@ -110,7 +110,11 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
      */
     public void search(EditText editText,String city){
         currentPage = 1;
-        query = new PoiSearch.Query(editText == null?"":editText.getText().toString(),"120000", city);
+        if(editText == null) {
+            query = new PoiSearch.Query(editText == null ? "" : editText.getText().toString(), "120000", city);
+        }else{
+            query = new PoiSearch.Query(editText.getText().toString(), city);
+        }
         query.setPageSize(8);
         query.setPageNum(currentPage);
         search(query);

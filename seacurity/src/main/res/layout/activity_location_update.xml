@@ -11,31 +11,41 @@
     tools:context="xxk.wuhai.seacurity.work.view.LocationUpdateActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="340dp">
+        android:layout_height="365dp">
         <com.amap.api.maps2d.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="365dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
-        <EditText
-            android:id="@+id/et_input"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="16dp"
-            android:paddingLeft="16dp"
-            android:textSize="18sp"
-            android:elevation="2dp"
-            android:singleLine="true"
-            android:drawableLeft="@mipmap/icon_search"
-            android:textColor="@color/text_color3"
-            android:imeOptions="actionSearch"
-            android:hint="搜索位置"
-            android:drawablePadding="35dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_item"
             android:layout_marginRight="16dp"
-            android:maxLines="1"
-            android:layout_height="40dp" />
+            android:paddingLeft="16dp">
+            <EditText
+                android:id="@+id/et_input"
+                android:layout_width="match_parent"
+                android:textSize="20sp"
+                android:elevation="2dp"
+                android:paddingLeft="50dp"
+                android:singleLine="true"
+                android:textColor="@color/text_color3"
+                android:imeOptions="actionSearch"
+                android:hint="搜索位置"
+                android:background="@null"
+                android:maxLines="1"
+                android:layout_height="48dp" />
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_search" />
+        </FrameLayout>
+
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:background="@color/text_color3"

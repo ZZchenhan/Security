@@ -70,7 +70,7 @@
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/tv_apply"
-                android:drawableTop="@mipmap/icon_aply_leave"
+                android:drawableTop="@mipmap/icon_aply_me2"
                 android:drawablePadding="4dp"
                 android:textColor="@color/text_color1"
                 android:textSize="14sp"

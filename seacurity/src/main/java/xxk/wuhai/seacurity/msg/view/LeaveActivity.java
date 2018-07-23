@@ -118,12 +118,16 @@ public class LeaveActivity extends BaseActivity {
                         binding.name1.setText(apDetailBean.getApproverName());
                         binding.resul1.setText(PesonInfoHelper.detailStatus(apDetailBean.getStatus()));
                         try {
-                            Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
-                            Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
-                            Glide.with(LeaveActivity.this)
-                                    .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                            if(apDetailBean.getPictureUrls() == null || apDetailBean.getPictureUrls().size() == 0){
+                                binding.llPic.setVisibility(View.GONE);
+                            }else {
+                                Glide.with(LeaveActivity.this)
+                                        .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
+                                Glide.with(LeaveActivity.this)
+                                        .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
+                                Glide.with(LeaveActivity.this)
+                                        .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                            }
                         }catch (Exception e){
                             e.getMessage();
                         }

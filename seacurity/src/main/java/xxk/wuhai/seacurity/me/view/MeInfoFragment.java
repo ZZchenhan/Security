@@ -93,7 +93,7 @@ public class MeInfoFragment extends Fragment {
         binding.height.setText(userDetailInfo.getUserInfo().getHeight()+"");
         binding.age.setText(userDetailInfo.getUserInfo().getAge()+"");
         binding.workAge.setText(PesonInfoHelper.getWorkAge(userDetailInfo.getUserInfo().getWorkYear()));
-        binding.weight.setText(userDetailInfo.getUserInfo().getWeight()+"");
+        binding.weight.setText(userDetailInfo.getUserInfo().getWeight()+"斤");
         binding.blood.setText(PesonInfoHelper.bloodType(userDetailInfo.getUserInfo().getBloodType()));
     }
 

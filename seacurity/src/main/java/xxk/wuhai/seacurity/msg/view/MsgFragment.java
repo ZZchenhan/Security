@@ -38,6 +38,7 @@ import xxk.wuhai.seacurity.msg.bean.MsgResult;
 import xxk.wuhai.seacurity.msg.vo.GetMessageDetailVO;
 import xxk.wuhai.seacurity.msg.vo.GetMessageListVo;
 import xxk.wuhai.seacurity.weight.MyPopWindows;
+import xxk.wuhai.seacurity.work.view.RecordActivity;
 
 /**
  * 描述 消息fragment
@@ -106,7 +107,8 @@ public class MsgFragment extends Fragment {
                         break;
                     case "4":
                         //NotifyMsgActivity.openActivity(getContext(),datas.get(position));
-                        getNotifyMsg(datas.get(position).getMessageId(),datas.get(position).getMessageTypeId());
+//                        getNotifyMsg(datas.get(position).getMessageId(),datas.get(position).getMessageTypeId());
+                        RecordActivity.openActivity(getContext(),RecordActivity.class);
                         break;
                     case "6":
                         CompanyMsgActivity.openActivity(getContext(), datas.get(position).getMessageTypeId(), datas.get(position).getMessageId());

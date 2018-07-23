@@ -39,7 +39,7 @@ public class TypeHelp {
                     eductions.add(new Values("2","初中"));
                     eductions.add(new Values("3","高中"));
                     eductions.add(new Values("4","大专"));
-                    eductions.add(new Values("5","大本"));
+                    eductions.add(new Values("5","本科"));
                     eductions.add(new Values("6","研究生"));
                     eductions.add(new Values("7","硕士"));
                     eductions.add(new Values("8","博士"));

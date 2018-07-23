@@ -118,7 +118,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
         binding.height.setText(userDetailInfo.getUserInfo().getHeight() + "");
         binding.workAge.setText(PesonInfoHelper.getWorkAge(userDetailInfo.getUserInfo().getWorkYear()));
-        binding.weight.setText(userDetailInfo.getUserInfo().getWeight() + "");
+        binding.weight.setText(userDetailInfo.getUserInfo().getWeight() + "斤");
         binding.blood.setText(PesonInfoHelper.bloodType(userDetailInfo.getUserInfo().getBloodType()));
 
         sexCode = userDetailInfo.getUserInfo().getSex();
@@ -301,7 +301,7 @@ public class MeInfoUpdateFragment extends Fragment {
         userInfoBean.setLivingAddress(binding.adress.getText().toString());
         userInfoBean.setHeight(Integer.parseInt(binding.height.getText().toString()));
 //        userInfoBean.setAge(Integer.parseInt(binding.age.getText().toString()));
-        userInfoBean.setWeight(Integer.parseInt(binding.weight.getText().toString()));
+        userInfoBean.setWeight(Integer.parseInt(binding.weight.getText().toString().replace("斤","")));
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .modify(userInfoBean)
                 .subscribeOn(Schedulers.newThread())

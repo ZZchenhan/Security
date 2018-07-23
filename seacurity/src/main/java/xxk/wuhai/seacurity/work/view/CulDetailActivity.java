@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
@@ -45,6 +47,8 @@ public class CulDetailActivity extends BaseActivity {
     ActivityCulDetailBinding binding;
     MediaPlayer mediaPlayer;
     private AnimationDrawable animator;
+
+
     @Override
     public int layoutId() {
         return R.layout.activity_cul_detail;
@@ -152,20 +156,26 @@ public class CulDetailActivity extends BaseActivity {
                            }catch (IOException e){}
                         }else{
                             binding.ivRecode.setText("无录音");
+                            binding.lvPlayer.setVisibility(View.GONE);
                         }
                         binding.location.setText(clueBurstDetailResultResult.getResult().getClueBurstDetail().getAddress()
                                 ==null?"":clueBurstDetailResultResult.getResult().getClueBurstDetail().getAddress());
 
                         try{
-                            Glide.with(CulDetailActivity.this)
-                                    .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(0))
-                                    .into(binding.ivPic1);
-                            Glide.with(CulDetailActivity.this)
-                                    .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(1))
-                                    .into(binding.ivPic2);
-                            Glide.with(CulDetailActivity.this)
-                                    .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(2))
-                                    .into(binding.ivPic3);
+                            if(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls() == null || clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().size() == 0){
+                                binding.noPic.setVisibility(View.VISIBLE);
+                                binding.llPicc.setVisibility(View.GONE);
+                            }else {
+                                Glide.with(CulDetailActivity.this)
+                                        .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(0))
+                                        .into(binding.ivPic1);
+                                Glide.with(CulDetailActivity.this)
+                                        .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(1))
+                                        .into(binding.ivPic2);
+                                Glide.with(CulDetailActivity.this)
+                                        .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(2))
+                                        .into(binding.ivPic3);
+                            }
                         }catch (Exception e){
 
                         }

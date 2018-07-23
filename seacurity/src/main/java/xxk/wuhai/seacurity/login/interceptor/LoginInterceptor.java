@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
@@ -32,7 +33,8 @@ public class LoginInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Response response = chain.proceed(chain.request());
+        Request request = chain.request();
+        Response response = chain.proceed(request);
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(readResponseStr(response));

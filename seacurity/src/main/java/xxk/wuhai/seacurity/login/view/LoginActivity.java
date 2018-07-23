@@ -102,8 +102,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 isShow = !isShow;
                 if(isShow){
                     etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivSee.setImageResource(R.mipmap.icon_see);
                 }else{
                     etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivSee.setImageResource(R.mipmap.ic_no_see);
                 }
                 break;
         }

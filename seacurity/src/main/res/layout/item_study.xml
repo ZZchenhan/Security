@@ -12,7 +12,7 @@
         android:shadowColor="@color/black"
         android:layout_marginRight="15dp"
         android:background="@drawable/bg_item_white"
-        android:paddingBottom="20dp"
+        android:paddingBottom="10dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="7dp"
         android:layout_height="wrap_content">
@@ -34,9 +34,9 @@
                 <TextView
                     android:id="@+id/time"
                     android:textColor="@color/white"
-                    android:text=""
+                    android:text="dada"
                     android:textSize="11sp"
-                    android:layout_marginBottom="11dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_marginRight="10dp"
                     android:layout_height="wrap_content" />
@@ -44,21 +44,25 @@
                     android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_alignTop="@id/time"
-                    android:text=""
+                    android:text="dasd"
                     android:layout_marginRight="10dp"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     android:layout_toRightOf="@id/time"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:background="#20000000"
+                android:layout_alignParentBottom="true"
+                android:layout_height="30dp"/>
         </RelativeLayout>
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:text=""
+            android:text="dasda"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:textSize="17sp"
             android:textColor="@color/text_color1"
             android:layout_height="wrap_content" />
@@ -66,9 +70,9 @@
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:textColor="#88888888"
-            android:text=""
+            android:text="dad"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

@@ -425,6 +425,9 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 mediaPlayer.setDataSource(voiceUrl);
                 mediaPlayer.setVolume(100f, 100f);
                 mediaPlayer.prepare();
+                mediaPlayer.getDuration();
+                binding.ivRecode.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
+                binding.ivRecode.setVisibility(View.VISIBLE);
                 binding.lvPlayer.setVisibility(View.VISIBLE);
                 binding.recordVoice.setVisibility(View.GONE);
                 binding.lvPlayer.setOnClickListener(new View.OnClickListener() {
