@@ -220,7 +220,7 @@ public class ContactFragment extends Fragment {
         setHead(contanctResult.getDirDeptVoList());
         setList(contanctResult.getDirectoryVoList());
         adapter.notifyDataSetChanged();
-        tvNumber.setText("在全部" + contanctResult.getDirectoryVoList()==null?"0": contanctResult.getDirectoryVoList().size() + "个人中搜索");
+        tvNumber.setText("搜索");
     }
 
     private void setList(List<DirectoryVo> directoryVos){

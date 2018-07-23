@@ -2,8 +2,6 @@ package xxk.wuhai.seacurity.work.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -30,7 +28,6 @@ import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
-import xxk.wuhai.seacurity.main.view.MainActivity;
 import xxk.wuhai.seacurity.msg.view.ExamineActivity;
 import xxk.wuhai.seacurity.msg.view.LeaveActivity;
 import xxk.wuhai.seacurity.weight.AplyStausPopWindows;
@@ -83,6 +80,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
     public void findViews() {
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new MyApplyAdapter(datas);
+        adapter.setType(type);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.bindToRecyclerView(recyclerView);
         adapter.loadMoreEnd(true);
@@ -93,7 +91,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
             @Override
             public void onClick(View view) {
                 if (stausPopWindows == null) {
-                    stausPopWindows = new AplyStausPopWindows(MyAplyListActivity.this);
+                    stausPopWindows = new AplyStausPopWindows(MyAplyListActivity.this,type);
                     stausPopWindows.setOnItemClickListener(new AplyStausPopWindows.OnItemClickListener() {
                         @Override
                         public void onItemnClick(String string, String type) {

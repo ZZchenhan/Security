@@ -18,14 +18,15 @@ import xxk.wuhai.seacurity.R;
  *
  * @QQ 869360026
  */
-public class AplyStausPopWindows extends PopupWindow implements View.OnClickListener{
+public class AplyStausPopWindows extends PopupWindow implements View.OnClickListener {
     View root;
+    int type = 0;//我提交的
 
-    public AplyStausPopWindows(Context context) {
-        this(context, null);
+    public AplyStausPopWindows(Context context, int type) {
+        this(context, null,type);
     }
 
-    public AplyStausPopWindows(Context context, AttributeSet attrs) {
+    public AplyStausPopWindows(Context context, AttributeSet attrs,int type) {
         super(context, attrs);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         root = layoutInflater.inflate(R.layout.popwindows_aply_status, null);
@@ -75,10 +76,19 @@ public class AplyStausPopWindows extends PopupWindow implements View.OnClickList
         });
         root.findViewById(R.id.tag1).setOnClickListener(this);
 
-        root.findViewById(R.id.tag2).setOnClickListener(this);
-
-        root.findViewById(R.id.tag3).setOnClickListener(this);
-        root.findViewById(R.id.tag4).setOnClickListener(this);
+        if (type == 0) {
+            root.findViewById(R.id.tag2).setOnClickListener(this);
+            root.findViewById(R.id.tag3).setOnClickListener(this);
+            root.findViewById(R.id.tag4).setOnClickListener(this);
+            root.findViewById(R.id.tag5).setVisibility(View.GONE);
+            root.findViewById(R.id.tag6).setVisibility(View.GONE);
+        } else {
+            root.findViewById(R.id.tag2).setVisibility(View.GONE);
+            root.findViewById(R.id.tag3).setVisibility(View.GONE);
+            root.findViewById(R.id.tag4).setVisibility(View.GONE);
+            root.findViewById(R.id.tag5).setOnClickListener(this);
+            root.findViewById(R.id.tag6).setOnClickListener(this);
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -90,7 +100,7 @@ public class AplyStausPopWindows extends PopupWindow implements View.OnClickList
     @Override
     public void onClick(View view) {
         TextView textView = (TextView) view;
-        if(onItemClickListener!=null){
+        if (onItemClickListener != null) {
             onItemClickListener.onItemnClick(textView.getText().toString(), (String) textView.getTag());
         }
     }
