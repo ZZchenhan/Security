@@ -51,7 +51,7 @@ public class MyApplyAdapter extends BaseQuickAdapter<ApprovalRecordListBean,Base
             }
         }else{
             helper.setText(R.id.type, item.getPatchTime() != null ? "补签申请" : "请假申请")
-                    .setText(R.id.status, PesonInfoHelper.aplyStatus(item.getStatus()))
+                    .setText(R.id.status, PesonInfoHelper.aplyStatus2(item.getStatus()))
                     .setText(R.id.name, "姓名:" + item.getApName())
                     .setText(R.id.time, item.getPatchTime() != null ? "补签时间：" +
                             item.getPatchTime().replace("-", ".") :
@@ -59,7 +59,7 @@ public class MyApplyAdapter extends BaseQuickAdapter<ApprovalRecordListBean,Base
                                     "-" + item.getLrEndTime().replace("-", "."))
                     .setText(R.id.times, item.getCreateTime())
                     .setText(R.id.reson, "事由：" + (item.getSupplement() == null ? "" : item.getSupplement()));
-            if (PesonInfoHelper.aplyStatus(item.getStatus()).equals("待审核")) {
+            if (PesonInfoHelper.aplyStatus2(item.getStatus()).equals("待审批")) {
                 helper.setTextColor(R.id.status, Color.parseColor("#F43530"));
             } else {
                 helper.setTextColor(R.id.status, Color.parseColor("#49B1FA"));
