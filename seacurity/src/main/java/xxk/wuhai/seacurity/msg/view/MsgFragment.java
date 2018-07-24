@@ -107,8 +107,8 @@ public class MsgFragment extends Fragment {
                         break;
                     case "4":
                         //NotifyMsgActivity.openActivity(getContext(),datas.get(position));
-//                        getNotifyMsg(datas.get(position).getMessageId(),datas.get(position).getMessageTypeId());
                         RecordActivity.openActivity(getContext(),RecordActivity.class);
+                        getNotifyMsg(datas.get(position).getMessageId(),datas.get(position).getMessageTypeId());
                         break;
                     case "6":
                         CompanyMsgActivity.openActivity(getContext(), datas.get(position).getMessageTypeId(), datas.get(position).getMessageId());
