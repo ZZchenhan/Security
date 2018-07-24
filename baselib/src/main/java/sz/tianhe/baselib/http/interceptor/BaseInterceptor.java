@@ -26,7 +26,7 @@ public class BaseInterceptor implements Interceptor{
     public  static String name = "";
     public static String token="";
     public static String random = "";
-    public  static String type = "5";
+    public  static String type = "2";
     private Map<String,String> mHeaders;
 
     public BaseInterceptor(Map<String,String> headers){
