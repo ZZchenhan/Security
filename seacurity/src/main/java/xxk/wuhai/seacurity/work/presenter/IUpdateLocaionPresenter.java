@@ -95,7 +95,7 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
                Marker  marker = aMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
 
-                search(null, LocationUpdateActivity.city);
+                search("公园", LocationUpdateActivity.city);
             }
         });
     }
@@ -108,12 +108,12 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
      * @param editText
      * @param city
      */
-    public void search(EditText editText,String city){
+    public void search(String s,String city){
         currentPage = 1;
-        if(editText == null) {
-            query = new PoiSearch.Query(editText == null ? "" : editText.getText().toString(), "120000", city);
+        if(s == null) {
+            query = new PoiSearch.Query(s == null ? "" : s.toString(), "120000", city);
         }else{
-            query = new PoiSearch.Query(editText.getText().toString(), city);
+            query = new PoiSearch.Query(s, city);
         }
         query.setPageSize(8);
         query.setPageNum(currentPage);
@@ -143,7 +143,7 @@ public class IUpdateLocaionPresenter implements IBasePresenter,PoiSearch.OnPoiSe
 
     private void search(PoiSearch.Query query){
         PoiSearch poiSearch = new PoiSearch(mContext,query);
-        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude,latLng.longitude),3000));
+//        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude,latLng.longitude),3000));
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
     }

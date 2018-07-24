@@ -133,21 +133,11 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 return "线索爆料";
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
-        leftIconNavagation.setIconClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        leftIconNavagation.setIconClick(view -> finish());
         leftIconNavagation.setTitleColor(R.color.white);
         leftIconNavagation.setRightImageResouce(R.mipmap.ic_cul_history);
         leftIconNavagation.setRight("");
-        leftIconNavagation.setRightOnclickListner(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CulListActivity.openActivity(CulActivity.this,CulListActivity.class);
-            }
-        });
+        leftIconNavagation.setRightOnclickListner(view -> CulListActivity.openActivity(CulActivity.this,CulListActivity.class));
         return leftIconNavagation;
     }
 
@@ -159,15 +149,12 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     ActionSheetDialog actionSheetDialog;
     @Override
     public void findViews() {
-        binding.ivCamero.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(imagesUrl.size()>=3){
-                    toast("最多只能选择三张图片");
-                    return;
-                }
-                choosePic();
+        binding.ivCamero.setOnClickListener(view -> {
+            if(imagesUrl.size()>=3){
+                toast("最多只能选择三张图片");
+                return;
             }
+            choosePic();
         });
         mediaPlayer = new MediaPlayer();
         binding.submit.setOnClickListener(new View.OnClickListener() {
@@ -506,7 +493,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
                         animator.stop();
-                        binding.voiceImg.setBackgroundResource(R.drawable.voice_animation);
+                        animator.selectDrawable(0);
                     }
                 });
             } catch (IOException e) {

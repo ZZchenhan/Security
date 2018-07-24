@@ -11,5 +11,5 @@
         android:gravity="center"
         android:text="标签"
         android:background="@drawable/bg_info_normal"
-        android:layout_height="20dp" />
+        android:layout_height="24dp" />
 </RelativeLayout>

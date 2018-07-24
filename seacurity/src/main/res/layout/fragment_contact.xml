@@ -67,7 +67,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="在全部127人中搜索"
+                android:text="搜索"
                 android:textColor="#B2B2B2"
                 android:textSize="13sp"
                 android:drawablePadding="5dp"

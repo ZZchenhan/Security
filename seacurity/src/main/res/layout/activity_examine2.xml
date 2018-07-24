@@ -247,7 +247,7 @@
                 android:id="@+id/pic2"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:scaleType="fitXY"
                 />
 
@@ -255,7 +255,7 @@
                 android:id="@+id/pic3"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:scaleType="fitXY"
               />
         </LinearLayout>

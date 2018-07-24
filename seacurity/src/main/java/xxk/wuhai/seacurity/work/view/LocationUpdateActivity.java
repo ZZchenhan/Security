@@ -112,7 +112,7 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
         CommonNavagation leftIconNavagation = new CommonNavagation(this) {
             @Override
             public String title() {
-                return "地址微调";
+                return "地点微调";
             }
         }.setRight("确定").setRight(R.drawable.bg_item).setRight(new View.OnClickListener() {
             @Override
@@ -147,7 +147,7 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
                     InputMethodManager imm = (InputMethodManager) LocationUpdateActivity.this
                             .getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                    updateLocaionPresenter.search(editText,city);
+                    updateLocaionPresenter.search(editText.getText().toString(),city);
                     return true;
                 }
                 return false;
@@ -188,7 +188,7 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
         empty.setGravity(Gravity.CENTER);
         empty.setBackgroundColor(Color.WHITE);
         empty.setLayoutParams(params);
-        empty.setText("请输入搜索地址");
+        empty.setText("暂无数据");
         poiAdapter.setEmptyView(empty);
     }
 

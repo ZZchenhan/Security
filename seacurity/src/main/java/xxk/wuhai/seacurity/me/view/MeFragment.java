@@ -79,7 +79,7 @@ public class MeFragment extends Fragment {
         tvZhiwei.setText(MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo()==null?"":
                 MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getRank()+"");
         sex.setText(userDetailInfo.getSex().equals("0")?"女":"男");
-        age.setText(userDetailInfo.getAge()+"");
+        age.setText(userDetailInfo.getAge()+"岁");
         phone.setText(userDetailInfo.getPhone()+"");
         tvZan.setText(String.format("赞：%s","0"));
         tvCai.setText(String.format("踩：%s","0"));
@@ -156,7 +156,7 @@ public class MeFragment extends Fragment {
 //                MeTAgActivity.openActivity(getContext(),MeTAgActivity.class);
 //            }
 //        });
-//        getTags(MyApplication.userDetailInfo.getUserInfo().getUserId());
+        getTags(MyApplication.userDetailInfo.getUserInfo().getUserId());
     }
 
 

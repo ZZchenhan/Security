@@ -141,7 +141,7 @@ public class CulDetailActivity extends BaseActivity {
                             @Override
                             public void onCompletion(MediaPlayer mp) {
                                 animator.stop();
-                                binding.voiceImg.setBackgroundResource(R.drawable.voice_animation);
+                                animator.selectDrawable(0);
                             }
                         });
                         if(clueBurstDetailResultResult.getResult().getClueBurstDetail().getTapeUrl()

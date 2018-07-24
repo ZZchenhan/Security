@@ -36,6 +36,7 @@ import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.msg.view.ExamineActivity;
 import xxk.wuhai.seacurity.utils.DateUtils;
@@ -79,17 +80,16 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
 
     @Override
     public IBaseNavagation navagation() {
-        LeftIconNavagation leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
+        CommonNavagation leftIconNavagation = (CommonNavagation) new CommonNavagation(this) {
             @Override
             public String title() {
                 return "我的排班";
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
-        leftIconNavagation.setIconClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        leftIconNavagation.setIconClick(view -> finish());
+        leftIconNavagation.setRight("切换");
+        leftIconNavagation.setRightOnclickListner(view -> {
+
         });
         leftIconNavagation.setTitleColor(R.color.white);
         return leftIconNavagation;
