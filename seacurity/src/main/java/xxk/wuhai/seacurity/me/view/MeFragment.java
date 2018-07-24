@@ -156,7 +156,7 @@ public class MeFragment extends Fragment {
 //                MeTAgActivity.openActivity(getContext(),MeTAgActivity.class);
 //            }
 //        });
-        getTags(MyApplication.userDetailInfo.getUserInfo().getUserId());
+//        getTags(MyApplication.userDetailInfo.getUserInfo().getUserId());
     }
 
 

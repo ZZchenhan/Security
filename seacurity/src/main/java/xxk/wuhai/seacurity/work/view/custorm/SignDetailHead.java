@@ -61,6 +61,10 @@ public class SignDetailHead extends LinearLayout {
             }
         });
         initMap(mapView);
+        mapView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            ViewGroup child = (ViewGroup)  mapView.getChildAt(0);//地图框架
+            child.getChildAt(2).setVisibility(View.GONE);//logo
+        });
     }
 
     public void onCreate(Bundle bundle){

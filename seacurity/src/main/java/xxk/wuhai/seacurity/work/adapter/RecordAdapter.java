@@ -2,6 +2,8 @@ package xxk.wuhai.seacurity.work.adapter;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.CameraUpdateFactory;
@@ -198,6 +200,10 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
             MapView mapView = helper.getView(R.id.map_view);
             if(mapView.getTag() ==null) {
                 initMap(mapView);
+                mapView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                    ViewGroup child = (ViewGroup)  mapView.getChildAt(0);//地图框架
+                    child.getChildAt(2).setVisibility(View.GONE);//logo
+                });
                 mapView.setTag(item);
                 mapView.onCreate(null);
             }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
@@ -18,6 +19,9 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -31,6 +35,10 @@ import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,13 +53,16 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import sz.tianhe.baselib.weight.ProgrossDialog;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityCulBinding;
+import xxk.wuhai.seacurity.me.view.MeInfoActivity;
 import xxk.wuhai.seacurity.oss.PutObjectSamples;
+import xxk.wuhai.seacurity.weight.dialog.ActionSheetDialog;
 import xxk.wuhai.seacurity.weight.record.AudioRecorder;
 import xxk.wuhai.seacurity.weight.record.RecordButton;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
@@ -83,6 +94,10 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
         binding.mapview.onCreate(savedInstanceState);
         startLocaion();
         binding.mapview.getMap().getUiSettings().setZoomControlsEnabled(false);
+        binding.mapview.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            ViewGroup child = (ViewGroup)  binding.mapview.getChildAt(0);//地图框架
+            child.getChildAt(2).setVisibility(View.GONE);//logo
+        });
     }
 
     @Override
@@ -141,16 +156,17 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
 
     }
 
+    ActionSheetDialog actionSheetDialog;
     @Override
     public void findViews() {
         binding.ivCamero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(imagesUrl.size()>=3){
-                    toast("最多只能拍三张招片");
+                    toast("最多只能选择三张图片");
                     return;
                 }
-                openCamera(CulActivity.this);
+                choosePic();
             }
         });
         mediaPlayer = new MediaPlayer();
@@ -158,9 +174,16 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             @Override
             public void onClick(View view) {
                 try {
+                    if(progrossDialog == null){
+                        progrossDialog = new ProgrossDialog(CulActivity.this);
+                    }
+                    progrossDialog.show();
                     submit();
                 } catch (Exception e) {
                     toast(e.getMessage());
+                    if(progrossDialog!=null){
+                        progrossDialog.dismiss();
+                    }
                 }
             }
         });
@@ -208,13 +231,37 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
         });
     }
 
+    private void choosePic() {
+        ActionSheetDialog dialog = new ActionSheetDialog(this).builder()
+                .addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue, which -> PictureSelector.create(CulActivity.this)
+                        .openGallery(PictureMimeType.ofImage())
+                        .maxSelectNum(3-imagesUrl.size())
+                        .enableCrop(false)
+                        .withAspectRatio(1, 1)
+                        .isCamera(false)
+                        .forResult(PictureConfig.CHOOSE_REQUEST))
+                .addSheetItem("拍照", ActionSheetDialog.SheetItemColor.Blue, which -> PictureSelector.create(CulActivity.this)
+                        .openCamera(PictureMimeType.ofImage())
+                        .enableCrop(true)
+                        .withAspectRatio(1, 1)
+                        .forResult(PictureConfig.CHOOSE_REQUEST))
+                .setCancelable(true);
+        dialog.show();
+    }
+    ProgrossDialog progrossDialog;
     private void submit() throws Exception{
         if(binding.content.getText().toString().length() == 0){
             toast("请输入爆料类容");
+            if(progrossDialog!=null){
+                progrossDialog.dismiss();
+            }
             return;
         }
         if(binding.content.getText().length()>60){
             toast("爆料内容长度超过限制");
+            if(progrossDialog!=null){
+                progrossDialog.dismiss();
+            }
             return;
         }
         AddClueBurstVo addClueBurstVo = new AddClueBurstVo();
@@ -251,6 +298,9 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
 
                     @Override
                     public void onNext(Result<String> stringResult) {
+                        if(progrossDialog!=null){
+                            progrossDialog.dismiss();
+                        }
                         if(!stringResult.getCode().equals("200")){
                             toast(stringResult.getMessage());
                             return;
@@ -262,6 +312,9 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
 
                     @Override
                     public void onError(Throwable e) {
+                        if(progrossDialog!=null){
+                            progrossDialog.dismiss();
+                        }
                         if(e == null){
                             toast(e.getMessage());
                         }
@@ -321,39 +374,50 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            return;
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                // 图片选择结果回调
+                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                // 例如 LocalMedia 里面返回三种path
+                // 1.media.getPath(); 为原图path
+                // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                for(int i=0;i<selectList.size();i++) {
+                    LocalMedia media = selectList.get(i);
+                    String headImgPath = "";
+                    if (media.isCut()) {
+                        headImgPath = media.getCutPath();
+                    } else {
+                        headImgPath = media.getPath();
+                    }
+                    imagesUrl.add(headImgPath);
+                }
+                showImageUrl();
+            }
         }
-        if (resultCode == RESULT_OK && requestCode == 1) {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(imageUri, "image/*");
-            intent.putExtra("scale", true);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(intent, 2); // 启动裁剪程序
+    }
+
+    private void showImageUrl(){
+        if(imagesUrl.size() == 1){
+            Glide.with(this)
+                    .load(imagesUrl.get(0))
+                    .apply(RequestOptions.placeholderOf(R.color.gray))
+                    .into(binding.pic1);
         }
-        if (requestCode == 2 && resultCode == RESULT_OK) {
-            imagesUrl.add(tempFile.getAbsolutePath());
-            if(imagesUrl.size() == 1){
-                Glide.with(this)
-                        .load(imagesUrl.get(0))
-                        .apply(RequestOptions.placeholderOf(R.color.gray))
-                        .into(binding.pic1);
-            }
 
-            if(imagesUrl.size() == 2){
-                Glide.with(this)
-                        .load(imagesUrl.get(1))
-                        .apply(RequestOptions.placeholderOf(R.color.gray))
-                        .into(binding.pic2);
-            }
+        if(imagesUrl.size() == 2){
+            Glide.with(this)
+                    .load(imagesUrl.get(1))
+                    .apply(RequestOptions.placeholderOf(R.color.gray))
+                    .into(binding.pic2);
+        }
 
-            if(imagesUrl.size() == 3){
-                Glide.with(this)
-                        .load(imagesUrl.get(2))
-                        .apply(RequestOptions.placeholderOf(R.color.gray))
-                        .into(binding.pic3);
-            }
-
+        if(imagesUrl.size() == 3){
+            Glide.with(this)
+                    .load(imagesUrl.get(2))
+                    .apply(RequestOptions.placeholderOf(R.color.gray))
+                    .into(binding.pic3);
         }
     }
 

@@ -162,7 +162,7 @@
             android:id="@+id/idcard"
             android:layout_width="wrap_content"
             android:text="电子保安证"
-            android:drawableLeft="@mipmap/icon_idf"
+            android:drawableLeft="@mipmap/ic_me_card"
             android:drawablePadding="6dp"
             android:textColor="@color/text_color1"
             android:gravity="center"

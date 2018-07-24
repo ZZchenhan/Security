@@ -150,6 +150,10 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
 
         tvAdjust.setOnClickListener(this);
         btnTime.setOnClickListener(this);
+        mapView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            ViewGroup child = (ViewGroup)  mapView.getChildAt(0);//地图框架
+            child.getChildAt(2).setVisibility(View.GONE);//logo
+        });
         tvDate = root.findViewById(R.id.date);
         getNumbers(0);
     }

@@ -5,4 +5,13 @@
         <attr name="border_width" format="dimension" />  //边界线的宽度
         <attr name="border_color" format="color" />  //边界线的颜色
     </declare-styleable>
+
+
+    <style name="progross" parent="android:Theme.Light">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+    </style>
 </resources>

@@ -269,6 +269,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                             return;
                         }
                         toast("打卡成功");
+                        getOneDayDuty(date);
                     }
 
                     @Override

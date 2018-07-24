@@ -43,6 +43,10 @@ android {
     }
     productFlavors {
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
@@ -77,4 +81,5 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:latest.release'
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     compile 'com.android.support:multidex:1.0.1'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.0'
 }

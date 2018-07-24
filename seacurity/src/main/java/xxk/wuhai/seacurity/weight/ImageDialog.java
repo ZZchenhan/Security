@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -40,14 +41,34 @@ public class ImageDialog extends Dialog {
         Glide.with(getContext())
                 .load(url)
                 .into(ivCode);
+        TextView tvNam1 = findViewById(R.id.tv_name1);
+        TextView tvNam2 = findViewById(R.id.tv_name2);
+        TextView rank = findViewById(R.id.rank);
+        if(MyApplication.userDetailInfo.getUserInfo() == null && MyApplication.userDetailInfo.getUserInfo().getName() == null){
+
+        }else {
+            if (MyApplication.userDetailInfo.getUserInfo().getName() != null && MyApplication.userDetailInfo.getUserInfo().getName().length() < 2) {
+                tvNam1.setText(MyApplication.userDetailInfo.getUserInfo().getName());
+            }else{
+                tvNam1.setText(
+                        MyApplication.userDetailInfo.getUserInfo().getName().
+                                substring(MyApplication.userDetailInfo.getUserInfo().getName().length()-2,
+                                        MyApplication.userDetailInfo.getUserInfo().getName().length()));
+            }
+        }
+        tvNam2.setText(MyApplication.userDetailInfo.getUserInfo().getName());
+        try {
+            rank.setText(MyApplication.userDetailInfo.getUserInfo().getRelUserDeptOrgVo().getRank());
+        }catch (RuntimeException e){}
+
         Window window = getWindow();
         window.setGravity(Gravity.CENTER);
 
         WindowManager m = window.getWindowManager();
         Display d = m.getDefaultDisplay(); //为获取屏幕宽、高
         WindowManager.LayoutParams p = getWindow().getAttributes(); //获取对话框当前的参数值
-        p.width =  WindowManager.LayoutParams.WRAP_CONTENT;
-        p.height =  WindowManager.LayoutParams.WRAP_CONTENT;
+        p.width =  WindowManager.LayoutParams.MATCH_PARENT;
+        p.height =  WindowManager.LayoutParams.MATCH_PARENT;
         getWindow().setAttributes(p); //设置生效
     }
 }

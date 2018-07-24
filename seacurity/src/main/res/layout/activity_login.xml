@@ -91,7 +91,7 @@
                 android:scaleType="center"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:src="@mipmap/icon_see"
+                android:src="@mipmap/ic_no_see"
                 android:padding="5dp"
                 android:layout_height="match_parent" />
         </LinearLayout>

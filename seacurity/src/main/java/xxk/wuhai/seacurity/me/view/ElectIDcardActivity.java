@@ -83,26 +83,28 @@ public class ElectIDcardActivity extends BaseActivity {
             &&userDetailInfo.getUserInfo().getResidenceCityName() !=null
                 &&userDetailInfo.getUserInfo().getResidenceDistrictName() !=null
                 ) {
-            binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceProvinceName() + "" + userDetailInfo.getUserInfo().getResidenceCityName()+userDetailInfo.getUserInfo().getResidenceDistrictName());
+            binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceProvinceName() + "" +
+                    userDetailInfo.getUserInfo().getResidenceCityName()+
+                    userDetailInfo.getUserInfo().getResidenceDistrictName() + userDetailInfo.getUserInfo().getResidenceAddress());
         }else{
-            binding.nativePlace.setText("");
+            binding.nativePlace.setText(userDetailInfo.getUserInfo().getResidenceAddress());
         }
         //binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard() + "");
         binding.company.setText(userDetailInfo.getOrgVo() == null ? "" : userDetailInfo.getOrgVo().getName() + "");
         binding.phone.setText(userDetailInfo.getUserInfo().getPhone());
-        binding.liveaddress.setText(userDetailInfo.getUserInfo().getLivingAddress());
+        binding.liveaddress.setText(userDetailInfo.getUserInfo().getLivingProvinceName()+userDetailInfo.getUserInfo().getLivingCityName()+userDetailInfo.getUserInfo().getLivingDistrictName()+""+userDetailInfo.getUserInfo().getLivingAddress());
         binding.tvName.setText(userDetailInfo.getUserInfo().getName() == null ? "" : userDetailInfo.getUserInfo().getName().length() < 2 ? userDetailInfo.getUserInfo().getName()
                 : userDetailInfo.getUserInfo().getName().substring(userDetailInfo.getUserInfo().getName().length() - 2, userDetailInfo.getUserInfo().getName().length()));
         //http://47.98.241.211//client-api/user/getQRCodeImg?x-terminal-type=5&x-access-token=837Yx8wSU6xYLXa16Q/+J0PlGlNo/E8GfbnoX7yfk7nGyPoceFa60NUORwLusyQj&x-username=CE5D55AE79D4F853B3F5EFFF1A1F0EAF&x-random=1532092291005
         //NSString *common = @"http://47.98.241.211/client-api/user/getQRCodeImg";
 
-        String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
-                ,MyApplication.baseUrl,
-                URLEncoder.encode(BaseInterceptor.type), BaseInterceptor.random, URLEncoder.encode(BaseInterceptor.token), URLEncoder.encode(BaseInterceptor.name)
-        );
-        Glide.with(this)
-                .load(url)
-                .into(binding.qrcode);
+//        String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
+//                ,MyApplication.baseUrl,
+//                URLEncoder.encode(BaseInterceptor.type), BaseInterceptor.random, URLEncoder.encode(BaseInterceptor.token), URLEncoder.encode(BaseInterceptor.name)
+//        );
+//        Glide.with(this)
+//                .load(url)
+//                .into(binding.qrcode);
 
         binding.qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,10 +169,15 @@ public class ElectIDcardActivity extends BaseActivity {
                 &&userCertificateInfoVoBean.getResidenceCityName() !=null
                 &&userCertificateInfoVoBean.getResidenceDistrictName() !=null
                 ) {
-            binding.nativePlace.setText(userCertificateInfoVoBean.getResidenceProvinceName() + "" + userCertificateInfoVoBean.getResidenceCityName()+userCertificateInfoVoBean.getResidenceDistrictName());
+            binding.nativePlace.setText(userCertificateInfoVoBean.getResidenceProvinceName() + "" +
+                    userCertificateInfoVoBean.getResidenceCityName()+
+                    userCertificateInfoVoBean.getResidenceDistrictName() + userCertificateInfoVoBean.getResidenceAddress());
         }else{
-            binding.nativePlace.setText("");
+            binding.nativePlace.setText(userCertificateInfoVoBean.getResidenceAddress());
         }
-        binding.idcard.setText(userCertificateInfoVoBean.getCertificateNo() == null?"":userCertificateInfoVoBean.getCertificateNo());
+        binding.liveaddress.setText(userCertificateInfoVoBean.getLivingProvinceName()+
+                userCertificateInfoVoBean.getLivingCityName()+
+                userCertificateInfoVoBean.getLivingDistrictName()+"" +
+                userCertificateInfoVoBean.getLivingAddress());
     }
 }

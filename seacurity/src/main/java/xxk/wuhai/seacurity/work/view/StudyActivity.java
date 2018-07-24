@@ -117,13 +117,13 @@ public class StudyActivity extends BaseActivity {
                             if(!studyListResultResult.getResult().isHaveNext()){
                                 studyAdapter.loadMoreEnd();
                             }
-                            datas.addAll(studyListResultResult.getResult().getStudyNoticeInfoList());
-                            studyAdapter.notifyDataSetChanged();
                         if(studyListResultResult.getResult().getStudyNoticeInfoList() == null){
                             studyAdapter.loadMoreEnd();
                             toast("当前没有更多数据了");
                             return;
-                        }
+                         }
+                         datas.addAll(studyListResultResult.getResult().getStudyNoticeInfoList());
+                         studyAdapter.notifyDataSetChanged();
                     }
 
                     @Override

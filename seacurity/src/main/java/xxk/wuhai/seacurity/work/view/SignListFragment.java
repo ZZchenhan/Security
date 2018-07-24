@@ -66,6 +66,7 @@ public class SignListFragment extends Fragment {
                 open();
             }
         });
+
     }
     private int page = 1;
     @Override
