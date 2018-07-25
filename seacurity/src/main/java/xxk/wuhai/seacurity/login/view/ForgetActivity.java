@@ -109,8 +109,10 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
                 isShow1 = !isShow1;
                 if(isShow1){
                     etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivSee1.setImageResource(R.mipmap.ic_no_see);
                 }else{
                     etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivSee1.setImageResource(R.mipmap.icon_see);
                 }
             }
         });
@@ -120,8 +122,10 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
                 isSho2 = !isSho2;
                 if(isSho2){
                     etConfirmPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivSee2.setImageResource(R.mipmap.ic_no_see);
                 }else{
                     etConfirmPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivSee2.setImageResource(R.mipmap.icon_see);
                 }
             }
         });

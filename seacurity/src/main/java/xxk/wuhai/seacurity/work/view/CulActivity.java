@@ -1,28 +1,17 @@
 package xxk.wuhai.seacurity.work.view;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -42,14 +31,14 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
@@ -58,9 +47,7 @@ import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
-import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityCulBinding;
-import xxk.wuhai.seacurity.me.view.MeInfoActivity;
 import xxk.wuhai.seacurity.oss.PutObjectSamples;
 import xxk.wuhai.seacurity.weight.dialog.ActionSheetDialog;
 import xxk.wuhai.seacurity.weight.record.AudioRecorder;
@@ -223,7 +210,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 .addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue, which -> PictureSelector.create(CulActivity.this)
                         .openGallery(PictureMimeType.ofImage())
                         .maxSelectNum(3-imagesUrl.size())
-                        .enableCrop(false)
+                        .enableCrop(true)
                         .withAspectRatio(1, 1)
                         .isCamera(false)
                         .forResult(PictureConfig.CHOOSE_REQUEST))
@@ -238,7 +225,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     ProgrossDialog progrossDialog;
     private void submit() throws Exception{
         if(binding.content.getText().toString().length() == 0){
-            toast("请输入爆料类容");
+            toast("请输入爆料内容");
             if(progrossDialog!=null){
                 progrossDialog.dismiss();
             }
@@ -256,26 +243,15 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
         addClueBurstVo.setAddress(binding.location.getText().toString());
         addClueBurstVo.setLatitude(currentLatLng == null?"0":currentLatLng.latitude+"");
         addClueBurstVo.setLongitude(currentLatLng == null?"0":currentLatLng.longitude+"");
-        if(voiceUrl == null || voiceUrl.equals("")){
-
-        }else{
-            String objName = MyApplication.userDetailInfo.getUserInfo().getUserId()+System.currentTimeMillis()+"";
-            PutObjectSamples putObjectSamples = new PutObjectSamples(MyApplication.oss,objName,voiceUrl);
-            putObjectSamples.putObjectFromLocalFile();
-            addClueBurstVo.setTapeUrl(MyApplication.aluyun+objName);
-        }
-
-        List<String> subImags = new ArrayList<>();
-        for(int i=0;i<imagesUrl.size();i++){
-            String objName = MyApplication.userDetailInfo.getUserInfo().getUserId()+System.currentTimeMillis()+""+i;
-            subImags.add(MyApplication.aluyun+objName);
-            PutObjectSamples putObjectSamples = new PutObjectSamples(MyApplication.oss,objName,imagesUrl.get(i));
-            putObjectSamples.putObjectFromLocalFile();
-        }
-        addClueBurstVo.setPictureUrls(subImags);
-        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .addClueBurst(addClueBurstVo)
-                .subscribeOn(Schedulers.newThread())
+        PutObjectSamples.upLoadFile(MyApplication.userDetailInfo.getUserInfo().getUserId()+System.currentTimeMillis()+"",voiceUrl)
+                .flatMap(string -> {
+                    addClueBurstVo.setTapeUrl(string);
+                    return   PutObjectSamples.upLoadFils(imagesUrl);
+                }).flatMap(strings -> {
+                    addClueBurstVo.setPictureUrls(strings);
+                    return    MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                            .addClueBurst(addClueBurstVo);
+                })  .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<String>>() {
                     @Override
@@ -311,52 +287,13 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                     public void onComplete() {
 
                     }
-                });
+                });;
     }
 
 
 
 
-    private void upLoadMp3(String path){
 
-    }
-
-    private File tempFile;
-    private Uri imageUri;
-    public void openCamera(Activity activity) {
-        //獲取系統版本
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        // 激活相机
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // 判断存储卡是否可以用，可用进行存储
-        if ( Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            SimpleDateFormat timeStampFormat = new SimpleDateFormat(
-                    "yyyy_MM_dd_HH_mm_ss");
-            String filename = timeStampFormat.format(new Date());
-            tempFile = new File(Environment.getExternalStorageDirectory(),
-                    filename + ".jpg");
-            if (currentapiVersion < 24) {
-                // 从文件中创建uri
-                imageUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            } else {
-                //兼容android7.0 使用共享文件的形式
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, tempFile.getAbsolutePath());
-                //检查是否有存储权限，以免崩溃
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //申请WRITE_EXTERNAL_STORAGE权限
-                    Toast.makeText(this,"请开启存储权限",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                imageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            }
-        }
-        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
-        activity.startActivityForResult(intent, 1);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -386,25 +323,47 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
     }
 
     private void showImageUrl(){
-        if(imagesUrl.size() == 1){
+        binding.ivDe1.setVisibility(View.GONE);
+        binding.ivDe2.setVisibility(View.GONE);
+        binding.ivDe3.setVisibility(View.GONE);
+        binding.ivPic1.setImageResource(0);
+        binding.ivPic2.setImageResource(0);
+        binding.ivPic3.setImageResource(0);
+        binding.ivDe1.setOnClickListener(view -> {
+            imagesUrl.remove(0);
+            showImageUrl();
+        });
+        binding.ivDe2.setOnClickListener(view -> {
+            imagesUrl.remove(1);
+            showImageUrl();
+        });
+        binding.ivDe3.setOnClickListener(view -> {
+            imagesUrl.remove(2);
+            showImageUrl();
+        });
+
+        if(imagesUrl.size() >=1){
             Glide.with(this)
                     .load(imagesUrl.get(0))
                     .apply(RequestOptions.placeholderOf(R.color.gray))
-                    .into(binding.pic1);
+                    .into(binding.ivPic1);
+            binding.ivDe1.setVisibility(View.VISIBLE);
         }
 
-        if(imagesUrl.size() == 2){
+        if(imagesUrl.size() >=2){
             Glide.with(this)
                     .load(imagesUrl.get(1))
                     .apply(RequestOptions.placeholderOf(R.color.gray))
-                    .into(binding.pic2);
+                    .into(binding.ivPic2);
+            binding.ivDe2.setVisibility(View.VISIBLE);
         }
 
-        if(imagesUrl.size() == 3){
+        if(imagesUrl.size()>=3){
             Glide.with(this)
                     .load(imagesUrl.get(2))
                     .apply(RequestOptions.placeholderOf(R.color.gray))
-                    .into(binding.pic3);
+                    .into(binding.ivPic3);
+            binding.ivDe3.setVisibility(View.VISIBLE);
         }
     }
 
@@ -481,13 +440,10 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 binding.ivRecode.setVisibility(View.VISIBLE);
                 binding.lvPlayer.setVisibility(View.VISIBLE);
                 binding.recordVoice.setVisibility(View.GONE);
-                binding.lvPlayer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        animator = (AnimationDrawable) binding.voiceImg.getBackground();
-                        animator.start();
-                        mediaPlayer.start();
-                    }
+                binding.lvPlayer.setOnClickListener(view -> {
+                    animator = (AnimationDrawable) binding.voiceImg.getBackground();
+                    animator.start();
+                    mediaPlayer.start();
                 });
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override

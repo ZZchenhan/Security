@@ -37,6 +37,7 @@ public class ProgrossDialog extends Dialog{
         Display d = m.getDefaultDisplay(); //为获取屏幕宽、高
         WindowManager.LayoutParams p = getWindow().getAttributes(); //获取对话框当前的参数值
         p.width =  WindowManager.LayoutParams.WRAP_CONTENT;
+        p.height =  WindowManager.LayoutParams.WRAP_CONTENT;
         p.gravity = Gravity.CENTER;
         getWindow().setAttributes(p); //设置生效
         setOnDismissListener(new OnDismissListener() {

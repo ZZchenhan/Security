@@ -33,12 +33,7 @@ public class ApplyActivity extends BaseActivity {
                 return "审批申请";
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
-        leftIconNavagation.setIconClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        leftIconNavagation.setIconClick(view -> finish());
         leftIconNavagation.setTitleColor(R.color.white);
         return leftIconNavagation;
     }

@@ -21,6 +21,7 @@ import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityExamine2Binding;
 import xxk.wuhai.seacurity.databinding.ActivityExamineBinding;
 import xxk.wuhai.seacurity.utils.PesonInfoHelper;
+import xxk.wuhai.seacurity.weight.photoview.PhoneDialog;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.ApDetailResult;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
@@ -71,7 +72,7 @@ public class ExamineActivity2 extends BaseActivity {
      *
      * @param context
      * @param id
-     * @param 消息id
+     * @param
      */
     public static void openActivity(Context context,int id,int msgId){
         context.startActivity(new Intent(context,ExamineActivity2.class)
@@ -103,7 +104,7 @@ public class ExamineActivity2 extends BaseActivity {
                             toast("获取详情为空");
                             return;
                         }
-                       if(apDetailBean.getPatchTime() == null){
+                       if(apDetailBean.getPatchTime() == null || apDetailBean.getPatchTime().equals("")){
                             setLeave(apDetailBean);
                        }else{
                             setExam(apDetailBean);
@@ -142,10 +143,28 @@ public class ExamineActivity2 extends BaseActivity {
             }else {
                 Glide.with(ExamineActivity2.this)
                         .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
+                binding.pic1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PhoneDialog.seePic(ExamineActivity2.this,apDetailBean.getPictureUrls(),0);
+                    }
+                });
                 Glide.with(ExamineActivity2.this)
                         .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
+                binding.pic2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PhoneDialog.seePic(ExamineActivity2.this,apDetailBean.getPictureUrls(),1);
+                    }
+                });
                 Glide.with(ExamineActivity2.this)
                         .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                binding.pic3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PhoneDialog.seePic(ExamineActivity2.this,apDetailBean.getPictureUrls(),2);
+                    }
+                });
             }
         }catch (Exception e){
 
@@ -175,10 +194,28 @@ public class ExamineActivity2 extends BaseActivity {
             }else {
                 Glide.with(ExamineActivity2.this)
                         .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
+                binding.pic1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PhoneDialog.seePic(ExamineActivity2.this,apDetailBean.getPictureUrls(),0);
+                    }
+                });
                 Glide.with(ExamineActivity2.this)
                         .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
+                binding.pic2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PhoneDialog.seePic(ExamineActivity2.this,apDetailBean.getPictureUrls(),1);
+                    }
+                });
                 Glide.with(ExamineActivity2.this)
                         .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                binding.pic3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        PhoneDialog.seePic(ExamineActivity2.this,apDetailBean.getPictureUrls(),2);
+                    }
+                });
             }
         }catch (Exception e){
             e.getMessage();

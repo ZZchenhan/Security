@@ -82,4 +82,5 @@ dependencies {
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     compile 'com.android.support:multidex:1.0.1'
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.0'
+    api 'com.github.chrisbanes.photoview:library:+'
 }

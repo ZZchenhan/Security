@@ -89,7 +89,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         leftIconNavagation.setIconClick(view -> finish());
         leftIconNavagation.setRight("切换");
         leftIconNavagation.setRightOnclickListner(view -> {
-
+            duyteHead.showYear();
         });
         leftIconNavagation.setTitleColor(R.color.white);
         return leftIconNavagation;

@@ -23,6 +23,10 @@ import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.ServiceException;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.text.ParseException;
@@ -39,6 +43,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+import sz.tianhe.baselib.weight.ProgrossDialog;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
@@ -48,6 +53,7 @@ import xxk.wuhai.seacurity.oss.PutObjectSamples;
 import xxk.wuhai.seacurity.weight.ApplyUsersWindows;
 import xxk.wuhai.seacurity.weight.LevaeTypeWindows;
 import xxk.wuhai.seacurity.weight.date.DatePickerDialogFragment;
+import xxk.wuhai.seacurity.weight.dialog.ActionSheetDialog;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.AplyUser;
 import xxk.wuhai.seacurity.work.bean.AplyUserResult;
@@ -116,7 +122,7 @@ public class ApplyLeaveActivity extends BaseActivity {
                     toast("最多只能拍三张招片");
                     return;
                 }
-                openCamera(ApplyLeaveActivity.this);
+                choosePic();
             }
         });
         binding.type.setOnClickListener(new View.OnClickListener() {
@@ -174,11 +180,12 @@ public class ApplyLeaveActivity extends BaseActivity {
                 datePickerDialogFragment.show(getSupportFragmentManager(), "DatePickerDialogFragment");
             }
         });
-        binding.submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                subimit();
+        binding.submit.setOnClickListener(view -> {
+            if(progrossDialog == null){
+                progrossDialog = new ProgrossDialog(ApplyLeaveActivity.this);
             }
+            progrossDialog.show();
+            subimit();
         });
     }
 
@@ -192,77 +199,95 @@ public class ApplyLeaveActivity extends BaseActivity {
 
     private File tempFile;
     private Uri imageUri;
-    public void openCamera(Activity activity) {
-        //獲取系統版本
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        // 激活相机
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // 判断存储卡是否可以用，可用进行存储
-        if ( Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            SimpleDateFormat timeStampFormat = new SimpleDateFormat(
-                    "yyyy_MM_dd_HH_mm_ss");
-            String filename = timeStampFormat.format(new Date());
-            tempFile = new File(Environment.getExternalStorageDirectory(),
-                    filename + ".jpg");
-            if (currentapiVersion < 24) {
-                // 从文件中创建uri
-                imageUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            } else {
-                //兼容android7.0 使用共享文件的形式
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, tempFile.getAbsolutePath());
-                //检查是否有存储权限，以免崩溃
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //申请WRITE_EXTERNAL_STORAGE权限
-                    Toast.makeText(this,"请开启存储权限",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                imageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            }
-        }
-        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
-        activity.startActivityForResult(intent, 1);
+
+
+    private void choosePic() {
+        ActionSheetDialog dialog = new ActionSheetDialog(this).builder()
+                .addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue, which -> PictureSelector.create(ApplyLeaveActivity.this)
+                        .openGallery(PictureMimeType.ofImage())
+                        .maxSelectNum(3-imagesUrl.size())
+                        .enableCrop(true)
+                        .withAspectRatio(1, 1)
+                        .isCamera(false)
+                        .forResult(PictureConfig.CHOOSE_REQUEST))
+                .addSheetItem("拍照", ActionSheetDialog.SheetItemColor.Blue, which -> PictureSelector.create(ApplyLeaveActivity.this)
+                        .openCamera(PictureMimeType.ofImage())
+                        .enableCrop(true)
+                        .withAspectRatio(1, 1)
+                        .forResult(PictureConfig.CHOOSE_REQUEST))
+                .setCancelable(true);
+        dialog.show();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            return;
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                // 图片选择结果回调
+                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                // 例如 LocalMedia 里面返回三种path
+                // 1.media.getPath(); 为原图path
+                // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                for(int i=0;i<selectList.size();i++) {
+                    LocalMedia media = selectList.get(i);
+                    String headImgPath = "";
+                    if (media.isCut()) {
+                        headImgPath = media.getCutPath();
+                    } else {
+                        headImgPath = media.getPath();
+                    }
+                    imagesUrl.add(headImgPath);
+                }
+                showImageUrl();
+            }
         }
-        if (resultCode == RESULT_OK && requestCode == 1) {
-            Intent intent = new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(imageUri, "image/*");
-            intent.putExtra("scale", true);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(intent, 2); // 启动裁剪程序
+    }
+
+    private void showImageUrl(){
+        binding.ivDe1.setVisibility(View.GONE);
+        binding.ivDe2.setVisibility(View.GONE);
+        binding.ivDe3.setVisibility(View.GONE);
+        binding.ivPic1.setImageResource(0);
+        binding.ivPic2.setImageResource(0);
+        binding.ivPic3.setImageResource(0);
+        binding.ivDe1.setOnClickListener(view -> {
+            imagesUrl.remove(0);
+            showImageUrl();
+        });
+        binding.ivDe2.setOnClickListener(view -> {
+            imagesUrl.remove(1);
+            showImageUrl();
+        });
+        binding.ivDe3.setOnClickListener(view -> {
+            imagesUrl.remove(2);
+            showImageUrl();
+        });
+
+        if(imagesUrl.size() >=1){
+            Glide.with(this)
+                    .load(imagesUrl.get(0))
+                    .apply(RequestOptions.placeholderOf(R.color.gray))
+                    .into(binding.ivPic1);
+            binding.ivDe1.setVisibility(View.VISIBLE);
         }
-        if (requestCode == 2 && resultCode == RESULT_OK) {
-            imagesUrl.add(tempFile.getAbsolutePath());
-            if(imagesUrl.size() == 1){
-                Glide.with(this)
-                        .load(imagesUrl.get(0))
-                        .apply(RequestOptions.placeholderOf(R.color.gray))
-                        .into(binding.ivPic1);
-            }
 
-            if(imagesUrl.size() == 2){
-                Glide.with(this)
-                        .load(imagesUrl.get(1))
-                        .apply(RequestOptions.placeholderOf(R.color.gray))
-                        .into(binding.ivPic2);
-            }
+        if(imagesUrl.size() >=2){
+            Glide.with(this)
+                    .load(imagesUrl.get(1))
+                    .apply(RequestOptions.placeholderOf(R.color.gray))
+                    .into(binding.ivPic2);
+            binding.ivDe2.setVisibility(View.VISIBLE);
+        }
 
-            if(imagesUrl.size() == 3){
-                Glide.with(this)
-                        .load(imagesUrl.get(2))
-                        .apply(RequestOptions.placeholderOf(R.color.gray))
-                        .into(binding.ivPic3);
-            }
-
+        if(imagesUrl.size()>=3){
+            Glide.with(this)
+                    .load(imagesUrl.get(2))
+                    .apply(RequestOptions.placeholderOf(R.color.gray))
+                    .into(binding.ivPic3);
+            binding.ivDe3.setVisibility(View.VISIBLE);
         }
     }
 
@@ -271,17 +296,14 @@ public class ApplyLeaveActivity extends BaseActivity {
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
                 .getLeaverList().subscribeOn(Schedulers.newThread())
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Function<Result<AplyUserResult>, ObservableSource<Result<ApproverUser>>>() {
-                    @Override
-                    public ObservableSource<Result<ApproverUser>> apply(Result<AplyUserResult> aplyUserResultResult) throws Exception {
-                        if(!aplyUserResultResult.getCode().equals("200")){
-                            toast(aplyUserResultResult.getMessage());
-                            throw new NullPointerException("获取请假人错误");
-                        }
-                        aplyUserList.addAll(aplyUserResultResult.getResult().getLerverInfoList());
-
-                        return  MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover(new GetApproverVo(MyApplication.userDetailInfo.getUserInfo().getUserId()));
+                .flatMap(aplyUserResultResult -> {
+                    if(!aplyUserResultResult.getCode().equals("200")){
+                        toast(aplyUserResultResult.getMessage());
+                        throw new NullPointerException("获取请假人错误");
                     }
+                    aplyUserList.addAll(aplyUserResultResult.getResult().getLerverInfoList());
+
+                    return  MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApprover(new GetApproverVo(MyApplication.userDetailInfo.getUserInfo().getUserId()));
                 })
          .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Result<ApproverUser>>() {
             @Override
@@ -397,14 +419,20 @@ public class ApplyLeaveActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
-
+    ProgrossDialog progrossDialog;
     private void subimit(){
         if(binding.days.getText().toString().equals("")){
             toast("请选择开始结束时间");
+            if(progrossDialog!=null){
+                progrossDialog.dismiss();
+            }
             return;
         }
         if(Integer.parseInt(binding.days.getText().toString())<0){
             toast("请设置正确的请假时间");
+            if(progrossDialog!=null){
+                progrossDialog.dismiss();
+            }
             return;
         }
         ApplyLeaveVo applyLeaveVo = new ApplyLeaveVo();
@@ -415,59 +443,45 @@ public class ApplyLeaveActivity extends BaseActivity {
         applyLeaveVo.setLeaveRequestTypeId(leaveTye);
         applyLeaveVo.setSupplement(binding.result.getText().toString());
         applyLeaveVo.setLeaveUserId(aplyUser == null?MyApplication.userDetailInfo.getUserInfo().getUserId()+"":aplyUser.getUserId()+"");
-        List<String> subImags = new ArrayList<>();
-        for(int i=0;i<imagesUrl.size();i++){
-            String objName = MyApplication.userDetailInfo.getUserInfo().getUserId()+System.currentTimeMillis()+"";
-            subImags.add(MyApplication.aluyun+objName);
-            PutObjectSamples putObjectSamples = new PutObjectSamples(MyApplication.oss,objName,imagesUrl.get(i));
-            try {
-                putObjectSamples.putObjectFromLocalFile();
-            } catch (ClientException e) {
-                e.printStackTrace();
-                toast(e.getMessage());
-                return;
-            } catch (ServiceException e) {
-                e.printStackTrace();
-                toast(e.getMessage());
-                return;
-            }catch (Exception e){
-                toast(e.getMessage());
-                return;
-            }
-        }
-        applyLeaveVo.setLrPictureUrls(subImags);
+        PutObjectSamples.upLoadFils(imagesUrl).flatMap(strings -> {
+            applyLeaveVo.setLrPictureUrls(strings);
+            return  MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                    .applyLeave(applyLeaveVo);
+        }) .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .applyLeave(applyLeaveVo)
-        .subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Observer<Result<String>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+                    }
 
-            }
+                    @Override
+                    public void onNext(Result<String> stringResult) {
+                        if(progrossDialog!=null){
+                            progrossDialog.dismiss();
+                        }
+                        if(stringResult.getCode().equals("200")){
+                            toast("提交成功");
+                            finish();
+                        }else{
+                            toast(stringResult.getMessage());
+                        }
+                    }
 
-            @Override
-            public void onNext(Result<String> stringResult) {
-                if(stringResult.getCode().equals("200")){
-                    toast("提交成功");
-                    finish();
-                }else{
-                    toast(stringResult.getMessage());
-                }
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        if(progrossDialog!=null){
+                            progrossDialog.dismiss();
+                        }
+                        if(e!=null){
+                            toast(e.getMessage());
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                if(e!=null){
-                    toast(e.getMessage());
-                }
-            }
+                    @Override
+                    public void onComplete() {
 
-            @Override
-            public void onComplete() {
-
-            }
-        });
+                    }
+                });
     }
 }

@@ -147,7 +147,7 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
                     InputMethodManager imm = (InputMethodManager) LocationUpdateActivity.this
                             .getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                    updateLocaionPresenter.search(editText.getText().toString(),city);
+                    updateLocaionPresenter.search(editText,city);
                     return true;
                 }
                 return false;
@@ -188,7 +188,7 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
         empty.setGravity(Gravity.CENTER);
         empty.setBackgroundColor(Color.WHITE);
         empty.setLayoutParams(params);
-        empty.setText("暂无数据");
+        empty.setText("");
         poiAdapter.setEmptyView(empty);
     }
 

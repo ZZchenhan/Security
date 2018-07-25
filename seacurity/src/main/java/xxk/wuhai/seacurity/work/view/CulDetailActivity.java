@@ -38,6 +38,9 @@ import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityApplyLeaveBinding;
 import xxk.wuhai.seacurity.databinding.ActivityCulDetailBinding;
+import xxk.wuhai.seacurity.weight.date.DatePickerDialogFragment;
+import xxk.wuhai.seacurity.weight.photoview.PhoneDialog;
+import xxk.wuhai.seacurity.weight.photoview.PhotoFragment;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.ClueBurstDetailResult;
 import xxk.wuhai.seacurity.work.vo.GetClueBurstDetailsVo;
@@ -169,12 +172,21 @@ public class CulDetailActivity extends BaseActivity {
                                 Glide.with(CulDetailActivity.this)
                                         .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(0))
                                         .into(binding.ivPic1);
+                                binding.ivPic1.setOnClickListener(view -> {
+                                    PhoneDialog.seePic(CulDetailActivity.this,clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls(),0);
+                                });
                                 Glide.with(CulDetailActivity.this)
                                         .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(1))
                                         .into(binding.ivPic2);
+                                binding.ivPic2.setOnClickListener(view -> {
+                                    PhoneDialog.seePic(CulDetailActivity.this,clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls(),1);
+                                });
                                 Glide.with(CulDetailActivity.this)
                                         .load(clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls().get(2))
                                         .into(binding.ivPic3);
+                                binding.ivPic3.setOnClickListener(view -> {
+                                    PhoneDialog.seePic(CulDetailActivity.this,clueBurstDetailResultResult.getResult().getClueBurstDetail().getPictureUrls(),2);
+                                });
                             }
                         }catch (Exception e){
 

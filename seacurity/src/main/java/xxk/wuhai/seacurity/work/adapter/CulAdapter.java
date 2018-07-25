@@ -1,9 +1,12 @@
 package xxk.wuhai.seacurity.work.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -29,7 +32,9 @@ public class CulAdapter extends BaseQuickAdapter<ClueBursList.ClueBurstListBean,
     @Override
     protected void convert(BaseViewHolder helper, ClueBursList.ClueBurstListBean item) {
         try {
+            helper.setImageResource(R.id.image,R.mipmap.ic_no_pic);
             Glide.with(mContext)
+                    .setDefaultRequestOptions(new RequestOptions().placeholder(R.color.gray).error(R.mipmap.ic_no_pic).diskCacheStrategy(DiskCacheStrategy.ALL))
                     .load(item.getPictureUrls().get(0))
                     .into((ImageView) helper.getView(R.id.image));
         }catch (Exception e){

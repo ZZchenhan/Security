@@ -35,10 +35,10 @@ public class MyApplyAdapter extends BaseQuickAdapter<ApprovalRecordListBean,Base
     @Override
     protected void convert(BaseViewHolder helper, ApprovalRecordListBean item) {
         if(type == 0) {
-            helper.setText(R.id.type, item.getPatchTime() != null ? "补签申请" : "请假申请")
+            helper.setText(R.id.type, item.getPatchTime() != null && !item.getPatchTime().equals("")? "补签申请" : "请假申请")
                     .setText(R.id.status, PesonInfoHelper.aplyStatus2(item.getStatus()))
                     .setText(R.id.name, "姓名:" + item.getApName())
-                    .setText(R.id.time, item.getPatchTime() != null ? "补签时间：" +
+                    .setText(R.id.time, item.getPatchTime() != null &&!item.getPatchTime().equals("") ? "补签时间：" +
                             item.getPatchTime().replace("-", ".") :
                             "请假时间:" + item.getLrBeginTime().replace("-", ".") +
                                     "-" + item.getLrEndTime().replace("-", "."))
@@ -50,10 +50,10 @@ public class MyApplyAdapter extends BaseQuickAdapter<ApprovalRecordListBean,Base
                 helper.setTextColor(R.id.status, Color.parseColor("#49B1FA"));
             }
         }else{
-            helper.setText(R.id.type, item.getPatchTime() != null ? "补签申请" : "请假申请")
+            helper.setText(R.id.type, item.getPatchTime() != null && !item.getPatchTime().equals("") ? "补签申请" : "请假申请")
                     .setText(R.id.status, PesonInfoHelper.aplyStatus2(item.getStatus()))
                     .setText(R.id.name, "姓名:" + item.getApName())
-                    .setText(R.id.time, item.getPatchTime() != null ? "补签时间：" +
+                    .setText(R.id.time, item.getPatchTime() != null &&!item.getPatchTime().equals("") ? "补签时间：" +
                             item.getPatchTime().replace("-", ".") :
                             "请假时间:" + item.getLrBeginTime().replace("-", ".") +
                                     "-" + item.getLrEndTime().replace("-", "."))

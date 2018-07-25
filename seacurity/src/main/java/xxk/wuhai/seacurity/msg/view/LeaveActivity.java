@@ -22,6 +22,7 @@ import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityLeaveBinding;
 import xxk.wuhai.seacurity.utils.GlideUtils;
 import xxk.wuhai.seacurity.utils.PesonInfoHelper;
+import xxk.wuhai.seacurity.weight.photoview.PhoneDialog;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.ApDetailResult;
 import xxk.wuhai.seacurity.work.vo.ApDetailVo;
@@ -123,10 +124,19 @@ public class LeaveActivity extends BaseActivity {
                             }else {
                                 Glide.with(LeaveActivity.this)
                                         .load(apDetailBean.getPictureUrls().get(0)).into(binding.pic1);
+                                binding.pic1.setOnClickListener(view -> {
+                                    PhoneDialog.seePic(LeaveActivity.this,apDetailBean.getPictureUrls(),0);
+                                });
                                 Glide.with(LeaveActivity.this)
                                         .load(apDetailBean.getPictureUrls().get(1)).into(binding.pic2);
+                                binding.pic2.setOnClickListener(view -> {
+                                    PhoneDialog.seePic(LeaveActivity.this,apDetailBean.getPictureUrls(),1);
+                                });
                                 Glide.with(LeaveActivity.this)
                                         .load(apDetailBean.getPictureUrls().get(2)).into(binding.pic3);
+                                binding.pic3.setOnClickListener(view -> {
+                                    PhoneDialog.seePic(LeaveActivity.this,apDetailBean.getPictureUrls(),2);
+                                });
                             }
                         }catch (Exception e){
                             e.getMessage();

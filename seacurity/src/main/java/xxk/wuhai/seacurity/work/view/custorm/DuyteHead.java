@@ -37,7 +37,7 @@ public class DuyteHead extends LinearLayout{
     public DuyteHead(Context context) {
         this(context,null);
     }
-
+    int mYear = 0;
     public DuyteHead(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs,0);
     }
@@ -57,6 +57,12 @@ public class DuyteHead extends LinearLayout{
         addView(view);
         calendarView = findViewById(R.id.calendarView);
 //        initView();
+
+    }
+
+    public void showYear(){
+        mYear = calendarView.getCurYear();
+        calendarView.showYearSelectLayout(mYear);
     }
 
     //设置标签

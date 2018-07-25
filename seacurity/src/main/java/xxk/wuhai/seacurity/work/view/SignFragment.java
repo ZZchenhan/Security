@@ -181,6 +181,10 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
                     toast("请您打开定位（GPS）");
                     return;
                 }
+                if(location == null || location.equals("")){
+                    toast("由于未知原因获取定位失败，请稍后再试。");
+                    return;
+                }
                 SignComfirmActivity.openActivity(getActivity(),location,new SimpleDateFormat("HH:mm").format(date),currentLatLng);
                 break;
         }

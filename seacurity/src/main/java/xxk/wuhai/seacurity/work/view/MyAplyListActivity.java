@@ -123,7 +123,7 @@ public class MyAplyListActivity extends BaseActivity implements TextView.OnEdito
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (datas.get(position).getPatchTime() != null) {
+                if (datas.get(position).getPatchTime() != null && !datas.get(position).getPatchTime().equals("")) {
                     //补签
                     ExamineActivity.openActivity(MyAplyListActivity.this,
                             datas.get(position).getApprovalRecordId(), type);
