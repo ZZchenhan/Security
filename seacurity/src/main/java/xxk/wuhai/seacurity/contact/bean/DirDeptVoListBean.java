@@ -19,6 +19,7 @@ public class DirDeptVoListBean {
     private int orgId;
     private int parentId;
     private int sortNum;
+    private int staffNum;
 
     public int getDeptId() {
         return deptId;
@@ -58,5 +59,13 @@ public class DirDeptVoListBean {
 
     public void setSortNum(int sortNum) {
         this.sortNum = sortNum;
+    }
+
+    public int getStaffNum() {
+        return staffNum;
+    }
+
+    public void setStaffNum(int staffNum) {
+        this.staffNum = staffNum;
     }
 }

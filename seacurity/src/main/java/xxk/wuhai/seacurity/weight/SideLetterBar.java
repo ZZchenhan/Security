@@ -1,10 +1,13 @@
 package xxk.wuhai.seacurity.weight;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -16,52 +19,25 @@ import xxk.wuhai.seacurity.R;
 
 
 public class SideLetterBar extends View {
-    public  static List<String> b = new ArrayList<>();
-    static {
-        b.add("#");
-        b.add("A");
-        b.add("B");
-        b.add("C");
-        b.add("D");
-        b.add("E");
-        b.add("F");
-        b.add("G");
-        b.add("H");
-        b.add("I");
-        b.add("J");
-        b.add("K");
-        b.add("L");
-        b.add("M");
-        b.add("N");
-        b.add("O");
-        b.add("P");
-        b.add("Q");
-        b.add("R");
-        b.add("S");
-        b.add("T");
-        b.add("U");
-        b.add("V");
-        b.add("W");
-        b.add("X");
-        b.add("Y");
-        b.add("Z");
-    }
+    public   List<String> b = new ArrayList<>();
+
     private int choose = -1;
     private Paint paint = new Paint();
     private boolean showBg = false;
     private OnLetterChangedListener onLetterChangedListener;
     private TextView overlay;
-
+    int singleHeight = 0;
     public SideLetterBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        singleHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,15,getContext().getResources().getDisplayMetrics());
     }
 
     public SideLetterBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public SideLetterBar(Context context) {
-        super(context);
+        this(context,null);
     }
 
     /**
@@ -76,25 +52,28 @@ public class SideLetterBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int height = getHeight();
+        int width = getWidth();
+        paint.setAntiAlias(true);
         if (showBg) {
             canvas.drawColor(Color.TRANSPARENT);
         }
         if(b.size() == 0){
             return;
         }
-        int height = getHeight();
-        int width = getWidth();
-        int singleHeight = height / b.size();
-        for (int i = 0; i < b.size(); i++) {
+        int singleHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,15,getContext().getResources().getDisplayMetrics());
+        Bitmap bitmap = ((BitmapDrawable)this.getResources().getDrawable(R.mipmap.ic_contact_search_draw)).getBitmap();
+        canvas.drawBitmap(bitmap,0,singleHeight,paint);
+        for (int i = 1; i < b.size(); i++) {
+            paint.setColor(getResources().getColor(R.color.cp_gray));
             paint.setTextSize(getResources().getDimension(R.dimen.side_letter_bar_letter_size));
             paint.setColor(getResources().getColor(R.color.cp_gray));
-            paint.setAntiAlias(true);
             if (i == choose) {
                 paint.setColor(getResources().getColor(R.color.cp_gray_deep));
 //                paint.setFakeBoldText(true);  //加粗
             }
             float xPos = width / 2 - paint.measureText(b.get(i)) / 2;
-            float yPos = singleHeight * i + singleHeight;
+            float yPos = singleHeight * (i+1) + singleHeight;
             canvas.drawText(b.get(i), xPos, yPos, paint);
             paint.reset();
         }
@@ -107,8 +86,7 @@ public class SideLetterBar extends View {
         final float y = event.getY();
         final int oldChoose = choose;
         final OnLetterChangedListener listener = onLetterChangedListener;
-        final int c = (int) (y / getHeight() * b.size());
-
+        final int c = (int) (y / (singleHeight * (b.size())) * b.size());
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 showBg = true;
@@ -119,8 +97,12 @@ public class SideLetterBar extends View {
                         invalidate();
                         if (overlay != null){
                             overlay.setVisibility(VISIBLE);
-                            overlay.setText( b.get(c));
-                        }
+                            if(b.get(c).equals("")){
+                                overlay.setText("搜索");
+                            }else{
+                                overlay.setText( b.get(c));
+                            }
+                          }
                     }
                 }
 
@@ -132,8 +114,13 @@ public class SideLetterBar extends View {
                         choose = c;
                         invalidate();
                         if (overlay != null){
-                            overlay.setVisibility(VISIBLE);
-                            overlay.setText( b.get(c));
+                            if(b.get(c).equals("")){
+                                //overlay.setText("搜索");
+                                overlay.setVisibility(GONE);
+                            }else{
+                                overlay.setVisibility(VISIBLE);
+                                overlay.setText( b.get(c));
+                            }
                         }
                     }
                 }
@@ -168,6 +155,10 @@ public class SideLetterBar extends View {
     }
 
     public void setB(List<String> b) {
-        this.b = b;
+        this.b.clear();
+        this.b.add(0,"");
+        this.b.add(0,"#");
+        this.b.addAll(b);
+        invalidate();
     }
 }

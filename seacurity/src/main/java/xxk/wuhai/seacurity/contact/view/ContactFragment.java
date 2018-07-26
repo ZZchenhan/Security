@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +18,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -56,7 +57,7 @@ import xxk.wuhai.seacurity.weight.SideLetterBar;
  * @email 869360026@qq.com
  * @创建时间 2018/6/24 22:22
  */
-public class ContactFragment extends Fragment {
+public class ContactFragment extends Fragment{
     private List<String> strings = new ArrayList();
     private Map<String, Integer> maps = new HashMap<>();
     private RecyclerView recyclerView;
@@ -144,20 +145,24 @@ public class ContactFragment extends Fragment {
     private void initView(){
         sideLetterBar.setOverlay(tvHint);
         adapter = new ContactAdapter(datas);
-        sideLetterBar.setOnLetterChangedListener(new SideLetterBar.OnLetterChangedListener() {
-            @Override
-            public void onLetterChanged(String letter) {
-                Integer location = maps.get(letter);
-                if(null == location){
-                    return;
-                }
-                Log.i("TAG","Location"+location);
-                if(location!=-1) {
-                    recyclerView.scrollToPosition(adapter.getHeaderLayoutCount() + location);
-                    LinearLayoutManager mLayoutManager =
-                            (LinearLayoutManager) recyclerView.getLayoutManager();
-                    mLayoutManager.scrollToPositionWithOffset(adapter.getHeaderLayoutCount() + location, 0);
-                }
+        sideLetterBar.setOnLetterChangedListener(letter -> {
+            Integer location = maps.get(letter);
+            if(letter.equals("")){
+                recyclerView.scrollToPosition(0);
+                LinearLayoutManager mLayoutManager =
+                        (LinearLayoutManager) recyclerView.getLayoutManager();
+                mLayoutManager.scrollToPositionWithOffset(0, 0);
+                return;
+            }
+            if(null == location){
+                return;
+            }
+            Log.i("TAG","Location"+location);
+            if(location!=-1) {
+                recyclerView.scrollToPosition(adapter.getHeaderLayoutCount() + location);
+                LinearLayoutManager mLayoutManager =
+                        (LinearLayoutManager) recyclerView.getLayoutManager();
+                mLayoutManager.scrollToPositionWithOffset(adapter.getHeaderLayoutCount() + location, 0);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -252,7 +257,9 @@ public class ContactFragment extends Fragment {
                 datas.add(new ContactGroup(contactBean));
             }
         }
-        adapter.notifyDataSetChanged();
+        sideLetterBar.setB(strings);
+//        recyclerView.addOnLayoutChangeListener(this);
+//        adapter.notifyDataSetChanged();
 //        sideLetterBar.b = strings;
 //        sideLetterBar.invalidate();
     }
@@ -264,13 +271,19 @@ public class ContactFragment extends Fragment {
         for (DirDeptVoListBean vo:dirDeptVoListBeans){
             initHeadItem(vo);
         }
+        int height = (int) (dirDeptVoListBeans.size()* TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,40,getContext().getResources().getDisplayMetrics()));
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) sideLetterBar.getLayoutParams();
+        layoutParams.topMargin = height;
+        sideLetterBar.setLayoutParams(layoutParams);
     }
 
 
     private void initHeadItem(final DirDeptVoListBean deptVoListBean){
         View view = LayoutInflater.from(getContext()).inflate(R.layout.item_contact_head,null);
         TextView tvName = view.findViewById(R.id.name);
+        TextView size = view.findViewById(R.id.size);
         tvName.setText(deptVoListBean.getDeptName()+"");
+        size.setText(deptVoListBean.getStaffNum()+"");
         adapter.addHeaderView(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -289,4 +302,5 @@ public class ContactFragment extends Fragment {
     public void toast(String msg){
         ToastUtils.makeText(getActivity(),msg,ToastUtils.LENGTH_LONG).show();
     }
+
 }
