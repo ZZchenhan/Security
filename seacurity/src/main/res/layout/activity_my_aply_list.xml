@@ -21,7 +21,7 @@
             <EditText
                 android:id="@+id/edit"
                 android:layout_width="260dp"
-                android:hint="搜索姓名 内容"
+                android:hint="搜索姓名"
                 android:textSize="16sp"
                 android:textColor="#7D7D7D"
                 android:paddingLeft="41dp"

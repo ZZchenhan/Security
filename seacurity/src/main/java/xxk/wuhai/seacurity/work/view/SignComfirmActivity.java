@@ -316,13 +316,6 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
 
     ProgrossDialog progrossDialog;
     private void submit() {
-        if (tvExtra.getText().toString().length() == 0 && imagesUrl.size()==0) {
-            toast("图片和备注选填");
-            if(progrossDialog!=null){
-                progrossDialog.dismiss();
-            }
-            return;
-        }
         UserSignVo signVo = new UserSignVo();
         signVo.setPoiName(adrress);
         signVo.setAttendanceLat(latlng!=null?latlng.latitude + "":"0");

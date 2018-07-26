@@ -27,7 +27,7 @@
                     android:id="@+id/tv_work"
                     android:layout_width="wrap_content"
                     android:drawableTop="@mipmap/icon_work_workn"
-                    android:text="上下班卡"
+                    android:text="上下班打卡"
                     android:onClick="onClick"
                     android:textSize="15sp"
                     android:drawablePadding="4dp"
