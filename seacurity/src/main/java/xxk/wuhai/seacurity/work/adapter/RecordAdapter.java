@@ -13,7 +13,6 @@ import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -22,11 +21,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.weight.mapwindows.MapWindows;
 import xxk.wuhai.seacurity.work.bean.scheduling.AttendanceInfoVoListBean;
-import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
 
 /**
  * Created by 86936 on 2018/6/29.
@@ -208,15 +207,15 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                 mapView.onCreate(null);
             }
             if(item.getRange() == null || item.getRange().equals("")){
-                ToastUtils.showShort("后台传递范围为："+item.getRange());
+               toast("后台传递范围为："+item.getRange());
                 return;
             }
             if(item.getAttendanceLatExpect() != null && item.getAttendanceLonExpect() == null){
-                ToastUtils.showShort("后台传递维度为："+item.getAttendanceLatExpect());
+               toast("后台传递维度为："+item.getAttendanceLatExpect());
                 return;
             }
             if(item.getAttendanceLonExpect() == null || item.getAttendanceLonExpect().equals("")){
-                ToastUtils.showShort("后台传递精度为："+item.getAttendanceLatExpect());
+               toast("后台传递精度为："+item.getAttendanceLatExpect());
                 return;
             }
             helper.setText(R.id.range,item.getRange()==null?"0米":item.getRange()+"米范围");
@@ -371,5 +370,8 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
         int minute = (int) (times%(60*60*1000))/60/1000;
         int second = (int) ((times%(60*60*1000))%(60*1000)/1000);
         return String.format("%d小时%d分%d秒",hour,minute,second);
+    }
+    public void toast(String msg) {
+        ToastUtils.makeText(mContext, msg, ToastUtils.LENGTH_LONG).show();
     }
 }

@@ -14,9 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -26,6 +24,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
@@ -231,7 +230,7 @@ public class MsgFragment extends Fragment {
                             }
                         } else {
                             msgAdapter.loadMoreFail();
-                            Toast.makeText(getContext(), stringResult.getMessage(), Toast.LENGTH_LONG).show();
+                            toast(stringResult.getMessage());
                         }
                     }
 
@@ -244,7 +243,7 @@ public class MsgFragment extends Fragment {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         msgAdapter.loadMoreFail();
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        toast(e.getMessage());
                     }
 
                     @Override
@@ -280,7 +279,7 @@ public class MsgFragment extends Fragment {
                     @Override
                     public void onNext(Result<GetMessageDetailResult> getMessageDetailResultResult) {
                         if (!getMessageDetailResultResult.getCode().equals("200")) {
-                            ToastUtils.showShort(getMessageDetailResultResult.getMessage());
+                           toast(getMessageDetailResultResult.getMessage());
                             return;
                         }
                         datas.clear();
@@ -290,7 +289,7 @@ public class MsgFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showShort(e.getMessage());
+                       toast(e.getMessage());
                     }
 
                     @Override
@@ -298,5 +297,9 @@ public class MsgFragment extends Fragment {
 
                     }
                 });
+    }
+
+    public void toast(String msg) {
+        ToastUtils.makeText(getContext(), msg, ToastUtils.LENGTH_LONG).show();
     }
 }

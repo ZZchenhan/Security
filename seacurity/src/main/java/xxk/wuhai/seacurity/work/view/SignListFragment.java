@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +26,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
@@ -142,7 +142,7 @@ public class SignListFragment extends Fragment {
                     @Override
                     public void onNext(Result<UserSignListResult> userSignListResultResult) {
                         if(!userSignListResultResult.getCode().equals("200")){
-                            ToastUtils.showLong(userSignListResultResult.getMessage());
+                            show(userSignListResultResult.getMessage());
                             return;
                         }
                         signDetailHead.signNumbers.setText(String.format("本月已签到%d次",userSignListResultResult.getResult().getCount()));
@@ -169,7 +169,7 @@ public class SignListFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                             if(e != null){
-                                ToastUtils.showShort(e.getMessage());
+                                show(e.getMessage());
                             }
                     }
 
@@ -202,4 +202,8 @@ public class SignListFragment extends Fragment {
 
 
     public static boolean isShow = false;
+
+    public void show(String msg){
+        ToastUtils.makeText(getActivity(),msg,ToastUtils.LENGTH_LONG).show();
+    }
 }

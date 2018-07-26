@@ -11,12 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ToastUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
@@ -25,6 +25,7 @@ import xxk.wuhai.seacurity.login.api.UserApi;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.bean.UserInfoBean;
 import xxk.wuhai.seacurity.login.vo.UpdateUsers;
+import xxk.wuhai.seacurity.main.view.MainActivity;
 import xxk.wuhai.seacurity.utils.PesonInfoHelper;
 import xxk.wuhai.seacurity.weight.dialog.BottomDialog;
 import xxk.wuhai.seacurity.weight.dialog.TypeHelp;
@@ -316,18 +317,18 @@ public class MeInfoUpdateFragment extends Fragment {
                     public void onNext(Result<RecordBean> result) {
                         if (result.getCode().equals("200")) {
                             if (result.getResult().getStatus().equals("1")) {
-                                ToastUtils.showShort("修改成功");
+                                showMsg("修改成功");
                                 getActivity().setResult(Activity.RESULT_OK);
                                 getActivity().finish();
                             } else {
-                                ToastUtils.showLong(result.getMessage());
+                                showMsg(result.getMessage());
                             }
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showShort(e.getMessage());
+                        showMsg(e.getMessage());
                     }
 
                     @Override
@@ -335,5 +336,9 @@ public class MeInfoUpdateFragment extends Fragment {
 
                     }
                 });
+    }
+
+    public void showMsg(String msg){
+        ToastUtils.makeText(getActivity(),msg,ToastUtils.LENGTH_LONG).show();
     }
 }

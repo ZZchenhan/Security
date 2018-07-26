@@ -10,8 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
-import com.haibin.calendarview.CalendarView;
+
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +22,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
@@ -50,6 +50,10 @@ public class WorkFragment extends Fragment {
     private TextView tvDay5;
     private TextView tvDay6;
     private TextView tvDay7;
+
+
+
+
 
     @Nullable
     @Override
@@ -130,11 +134,11 @@ public class WorkFragment extends Fragment {
                     @Override
                     public void onNext(Result<PersonSchedulingResult> personSchedulingResultResult) {
                             if(!personSchedulingResultResult.getCode().equals("200")){
-                                ToastUtils.showShort(personSchedulingResultResult.getMessage());
+                                toast(personSchedulingResultResult.getMessage());
                                 return;
                             }
                             if(personSchedulingResultResult.getResult().getPersonSchedulingMap() == null){
-                                ToastUtils.showShort("没有更多数据");
+                                toast("没有更多数据");
                                 return;
                             }
                         for (Iterator<Map.Entry<String, TextView>> it = datesViews.entrySet().iterator(); it.hasNext(); ) {
@@ -168,4 +172,8 @@ public class WorkFragment extends Fragment {
 
     Drawable blue;
     Drawable red;
+
+    public void toast(String msg) {
+        ToastUtils.makeText(getContext(), msg, ToastUtils.LENGTH_LONG).show();
+    }
 }

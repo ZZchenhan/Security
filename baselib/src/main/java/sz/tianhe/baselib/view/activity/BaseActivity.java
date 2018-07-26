@@ -16,6 +16,7 @@ import android.widget.Toast;
 import sz.tianhe.baselib.R;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.presenter.IBasePresenter;
+import sz.tianhe.baselib.utils.ToastUtils;
 import sz.tianhe.baselib.view.IBaseView;
 
 /**
@@ -92,13 +93,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         super.onDestroy();
         if (null != presenter)
             this.presenter.dettacheView();
+        ToastUtils.reset();
     }
 
     @Override
     public void showLoadingView() {
 
     }
-
     @Override
     public void hideLoadingView() {
 
@@ -106,7 +107,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     @Override
     public void toast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        ToastUtils.makeText(this,msg,ToastUtils.LENGTH_LONG).show();
     }
 
     public  IBasePresenter createPrensenter(){

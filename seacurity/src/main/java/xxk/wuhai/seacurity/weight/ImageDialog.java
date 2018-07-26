@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.net.URLEncoder;
 
@@ -26,20 +28,18 @@ import xxk.wuhai.seacurity.R;
  */
 
 public class ImageDialog extends Dialog {
-    public ImageDialog(@NonNull Context context) {
-        this(context,R.style.bootomDialog);
+    String pic;
+    public ImageDialog(@NonNull Context context,String qrPic) {
+        this(context,R.style.bootomDialog,qrPic);
     }
 
-    public ImageDialog(@NonNull Context context, int themeResId) {
+    public ImageDialog(@NonNull Context context, int themeResId,String qrPic) {
         super(context, themeResId);
         setContentView(LayoutInflater.from(context).inflate(R.layout.dialog_qr_code,null,false));
         ImageView ivCode = findViewById(R.id.qrcode);
-        String url = String.format("%sclient-api/user/getQRCodeImg?x-terminal-type=%s&x-random=%s&x-access-token=%s&x-username=%s"
-                ,MyApplication.baseUrl,
-                URLEncoder.encode(BaseInterceptor.type), BaseInterceptor.random, URLEncoder.encode(BaseInterceptor.token), URLEncoder.encode(BaseInterceptor.name)
-        );
         Glide.with(getContext())
-                .load(url)
+                .setDefaultRequestOptions(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .load(qrPic)
                 .into(ivCode);
         TextView tvNam1 = findViewById(R.id.tv_name1);
         TextView tvNam2 = findViewById(R.id.tv_name2);

@@ -26,7 +26,6 @@ import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,6 +42,7 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.utils.DeviceUtils;
+import sz.tianhe.baselib.utils.ToastUtils;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
@@ -390,7 +390,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
 
                         @Override
                         public void onError(Throwable e) {
-                            ToastUtils.showShort(e.getMessage());
+                            ToastUtils.makeText(MainActivity.this,e.getMessage(),ToastUtils.LENGTH_LONG).show();
                         }
 
                         @Override

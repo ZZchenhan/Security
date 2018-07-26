@@ -8,14 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.luck.picture.lib.photoview.OnPhotoTapListener;
 import com.luck.picture.lib.photoview.PhotoView;
 
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 import xxk.wuhai.seacurity.R;
 
 /**

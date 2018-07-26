@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.LatLng;
@@ -28,10 +27,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.presenter.IBasePresenter;
 import sz.tianhe.baselib.utils.DeviceUtils;
+import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
-import xxk.wuhai.seacurity.utils.SignUtils;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.SignResult;
 import xxk.wuhai.seacurity.work.presenter.ISignPresenter;
@@ -246,7 +245,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
 
     @Override
     public void toast(String msg) {
-        Toast.makeText(this.getContext(),msg,Toast.LENGTH_LONG).show();
+        ToastUtils.makeText(getActivity(),msg,ToastUtils.LENGTH_LONG).show();
     }
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public void getData(){

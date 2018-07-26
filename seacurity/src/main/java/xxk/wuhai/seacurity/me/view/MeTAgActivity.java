@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
+import sz.tianhe.baselib.utils.ToastUtils;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
@@ -121,7 +121,7 @@ public class MeTAgActivity extends BaseActivity {
                     @Override
                     public void onNext(TagResult s) {
                         if (!s.getCode().equals("200")) {
-                            ToastUtils.showShort(s.getMessage());
+                           toast(s.getMessage());
                             return;
                         }
                         datas.clear();

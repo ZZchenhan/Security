@@ -3,15 +3,12 @@ package xxk.wuhai.seacurity.contact.view;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -29,7 +26,6 @@ import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.contact.bean.DirectoryVo;
 import xxk.wuhai.seacurity.contact.bean.StaffResult;
 import xxk.wuhai.seacurity.login.api.UserApi;
-import xxk.wuhai.seacurity.login.bean.UserInfoBean;
 import xxk.wuhai.seacurity.login.result.TagResult;
 import xxk.wuhai.seacurity.login.vo.GetPraiseAndLabelVo;
 import xxk.wuhai.seacurity.me.adapter.GridSpacingItemDecoration;
@@ -165,7 +161,6 @@ public class UserInfoActivity extends BaseActivity {
                     @Override
                     public void onNext(TagResult s) {
                         if(!s.getCode().equals("200")){
-                            //ToastUtils.showShort(s.getMessage());
                             return;
                         }
                         datas.clear();

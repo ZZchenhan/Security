@@ -1,6 +1,5 @@
 package xxk.wuhai.seacurity;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.support.multidex.MultiDex;
@@ -11,7 +10,7 @@ import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -26,7 +25,6 @@ import sz.tianhe.baselib.http.RetrofitClient;
 import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.interceptor.LoginInterceptor;
-import xxk.wuhai.seacurity.login.result.LoginResult;
 import xxk.wuhai.seacurity.utils.ShareUtlts;
 
 

@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -33,6 +32,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
@@ -198,7 +198,7 @@ public class ContactFragment extends Fragment {
                     @Override
                     public void onNext(Result<ContanctResult> contanctResultResult) {
                         if(!contanctResultResult.getCode().equals("200")){
-                            Toast.makeText(getContext(),contanctResultResult.getMessage(),Toast.LENGTH_LONG).show();
+                            toast(contanctResultResult.getMessage());
                             return;
                         }
                         setData(contanctResultResult.getResult());
@@ -206,7 +206,7 @@ public class ContactFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                        toast(e.getMessage());
                     }
 
                     @Override
@@ -286,4 +286,7 @@ public class ContactFragment extends Fragment {
                 hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    public void toast(String msg){
+        ToastUtils.makeText(getActivity(),msg,ToastUtils.LENGTH_LONG).show();
+    }
 }

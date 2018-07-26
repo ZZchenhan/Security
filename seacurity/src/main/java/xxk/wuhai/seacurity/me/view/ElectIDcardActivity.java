@@ -26,6 +26,7 @@ import sz.tianhe.baselib.utils.DeviceUtils;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivityElectIdcardBinding;
 import xxk.wuhai.seacurity.login.api.UserApi;
@@ -34,6 +35,7 @@ import xxk.wuhai.seacurity.login.bean.UserDetailInfo;
 import xxk.wuhai.seacurity.login.vo.GetElecCard;
 import xxk.wuhai.seacurity.utils.PesonInfoHelper;
 import xxk.wuhai.seacurity.weight.ImageDialog;
+import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 
 public class ElectIDcardActivity extends BaseActivity {
     ImageDialog imageDialog;
@@ -71,6 +73,7 @@ public class ElectIDcardActivity extends BaseActivity {
     @Override
     public void findViews() {
         getElect();
+        getQRCode();
     }
 
     boolean isMin = true;
@@ -109,8 +112,12 @@ public class ElectIDcardActivity extends BaseActivity {
         binding.qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(qrPic == null || qrPic.equals("")){
+                    toast("没有二维码");
+                    return;
+                }
                 if (imageDialog == null) {
-                    imageDialog = new ImageDialog(ElectIDcardActivity.this);
+                    imageDialog = new ImageDialog(ElectIDcardActivity.this,qrPic);
                 }
                 imageDialog.show();
             }
@@ -179,5 +186,36 @@ public class ElectIDcardActivity extends BaseActivity {
                 userCertificateInfoVoBean.getLivingCityName()+
                 userCertificateInfoVoBean.getLivingDistrictName()+"" +
                 userCertificateInfoVoBean.getLivingAddress());
+    }
+    private String qrPic=null;
+    public void  getQRCode(){
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                .getQRCode().subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<String> string) {
+                        if(!string.getCode().equals("200")){
+                            toast(string.getResult());
+                            return;
+                        }
+                        qrPic = string.getResult();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

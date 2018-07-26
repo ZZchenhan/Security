@@ -9,7 +9,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 
-import com.blankj.utilcode.util.ToastUtils;
 
 import org.reactivestreams.Subscription;
 
@@ -27,6 +26,7 @@ import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.model.IBaseModel;
 import sz.tianhe.baselib.model.bean.Result;
 import sz.tianhe.baselib.presenter.AbstarctPresenter;
+import sz.tianhe.baselib.utils.ToastUtils;
 import sz.tianhe.baselib.utils.VersionUtils;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
@@ -148,7 +148,7 @@ public class GuidPrensenter extends AbstarctPresenter {
                     @Override
                     public void onNext(xxk.wuhai.seacurity.bean.Result<UserDetailInfo> result) {
                         if(iGuideView==null){
-                            ToastUtils.showShort(result.getMessage());
+                           toast(result.getMessage());
                             return;
                         }
                         if(result.getCode().equals("200")){
@@ -159,7 +159,7 @@ public class GuidPrensenter extends AbstarctPresenter {
                     @Override
                     public void onError(Throwable e) {
                         if(iGuideView!=null){
-                            ToastUtils.showShort(e.getMessage());
+                           toast(e.getMessage());
                         }
                     }
 
@@ -203,5 +203,9 @@ public class GuidPrensenter extends AbstarctPresenter {
                         iGuideView.handover();
                     }
                 });
+    }
+
+    public void toast(String msg){
+        ToastUtils.makeText(mContext,msg,ToastUtils.LENGTH_LONG).show();
     }
 }

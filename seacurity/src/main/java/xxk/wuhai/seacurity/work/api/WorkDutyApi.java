@@ -213,4 +213,8 @@ public interface WorkDutyApi {
     @POST("/client-api/user/logout")
     Observable<Result<RecordBean>> logout(@Body GetUserInfoVo getUserInfoVo);
 
+
+    @POST("/client-api/staff/getQRCodeImg")
+    Observable<Result<String>> getQRCode();
+
 }
