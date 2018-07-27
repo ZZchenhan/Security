@@ -50,6 +50,7 @@ public class WorkFragment extends Fragment {
     private TextView tvDay5;
     private TextView tvDay6;
     private TextView tvDay7;
+    private TextView title;
 
     @Nullable
     @Override
@@ -70,6 +71,7 @@ public class WorkFragment extends Fragment {
         tvDay5 = root.findViewById(R.id.day5);
         tvDay6 = root.findViewById(R.id.day6);
         tvDay7 = root.findViewById(R.id.day7);
+        title = root.findViewById(R.id.tv_title);
 
         root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
             @Override

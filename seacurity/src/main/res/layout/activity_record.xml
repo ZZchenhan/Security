@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/bgColor"
     android:layout_height="match_parent"
+    android:layout_marginBottom="7dp"
     tools:context="xxk.wuhai.seacurity.work.view.RecordActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -54,18 +54,22 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_marginRight="4dp"
+            android:src="@mipmap/icon_times"
+            android:layout_height="18dp" />
         <TextView
-            android:layout_width="100dp"
-            android:text="时间要求："
+            android:layout_width="77dp"
+            android:text="要求时间："
             android:textColor="@color/text_color1"
             android:textSize="14sp"
             android:drawablePadding="4dp"
-            android:drawableLeft="@mipmap/icon_times"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
-            android:text=""
+            android:text="无"
             android:textColor="@color/text_color1"
             android:textSize="14sp"
             android:layout_height="wrap_content" />
@@ -82,20 +86,31 @@
             android:layout_width="100dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="100dp"
-            android:text="位置要求："
-            android:textColor="@color/text_color1"
-            android:textSize="14sp"
-            android:drawableLeft="@mipmap/icn_locaion"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_marginRight="4dp"
+                    android:src="@mipmap/ic_sign_locaion"
+                    android:layout_height="18dp" />
+                <TextView
+                    android:layout_width="77dp"
+                    android:text="要求位置："
+                    android:textColor="@color/text_color1"
+                    android:textSize="14sp"
+                    android:drawablePadding="4dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <TextView
                 android:id="@+id/range"
                 android:layout_width="wrap_content"
                 android:text="0米"
                 android:textColor="#999999"
                 android:textSize="12sp"
-                android:layout_marginLeft="20dp"
+                android:maxWidth="77dp"
+                android:layout_marginLeft="17dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <TextView
@@ -148,13 +163,17 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="6dp"
             android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_marginRight="4dp"
+                android:src="@mipmap/icon_times"
+                android:layout_height="18dp" />
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="77dp"
                 android:text="打卡时间："
                 android:textColor="@color/text_color1"
                 android:textSize="14sp"
                 android:drawablePadding="4dp"
-                android:drawableLeft="@mipmap/icon_times"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/attention_times"
@@ -170,12 +189,17 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="6dp"
             android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_marginRight="4dp"
+                android:src="@mipmap/ic_sign_locaion"
+                android:layout_height="18dp" />
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="77dp"
                 android:text="打卡位置："
                 android:textColor="@color/text_color1"
                 android:textSize="14sp"
-                android:drawableLeft="@mipmap/icn_locaion"
+                android:drawablePadding="4dp"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/attention_addreess"

@@ -113,7 +113,7 @@ public class DutyMsgActivity extends BaseActivity {
         binding.dutyTime.setText(result.getCardPosition().getName());
         binding.changeTime.setText(result.getCardPosition().getScheduleTime());
         binding.workTimes.setText(result.getCardPosition().getScheduleName()
-       +" " +result.getCardPosition().getBeginAttendanceTime()+"-"+result.getCardPosition().getEndAttendanceTime());
+       +" " +result.getCardPosition().getBeginAttendanceTime()+"-"+result.getCardPosition().getEndAttendanceTime() +" "+result.getCardPosition().getWorkTime()+"小时");
         try{
             binding.startLocation.setText(type(result.getCardPosition().getCardPositionInfoVoList().get(0).getAttendanceType()) +"位置:"+result.getCardPosition().getCardPositionInfoVoList().get(0).getAttendanceLocation());
            if(result.getCardPosition().getCardPositionInfoVoList().size()-1 == 0){

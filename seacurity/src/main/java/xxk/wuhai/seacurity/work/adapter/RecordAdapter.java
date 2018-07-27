@@ -218,7 +218,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                toast("后台传递精度为："+item.getAttendanceLatExpect());
                 return;
             }
-            helper.setText(R.id.range,item.getRange()==null?"0米":item.getRange()+"米范围");
+            helper.setText(R.id.range,item.getRange()==null?"0米":item.getRange()+"米内");
             mapView.getMap().clear();
             Marker marker = null;
             if(RecoderBean.currentLatLng != null) {
