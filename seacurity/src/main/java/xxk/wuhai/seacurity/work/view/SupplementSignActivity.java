@@ -3,6 +3,7 @@ package xxk.wuhai.seacurity.work.view;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -29,6 +30,9 @@ import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.databinding.ActivitySupplementSignBinding;
 import xxk.wuhai.seacurity.oss.PutObjectSamples;
+import xxk.wuhai.seacurity.weight.date.DatePickerDialogFragment;
+import xxk.wuhai.seacurity.weight.date.TimePicker;
+import xxk.wuhai.seacurity.weight.date.TimePickerDialogFragment;
 import xxk.wuhai.seacurity.weight.dialog.ActionSheetDialog;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.ApproverUser;
@@ -86,6 +90,22 @@ public class SupplementSignActivity extends BaseActivity{
         getAppro();
         binding.tvTime.setText(getIntent().getStringExtra("time"));
         date = getIntent().getStringExtra("time");
+        binding.tvTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialogFragment datePickerDialogFragment = new TimePickerDialogFragment();
+                datePickerDialogFragment.setOnDateChooseListener(new TimePicker.OnDateSelectedListener() {
+                    @Override
+                    public void onDateSelected(int year, int month, int day, int hour, int minu) {
+                        Log.i("TAG","");
+                        binding.tvTime.setText(String.format("%d-%02d-%02d %02d:%02d:00",year,month,day,hour,minu));
+                        date = String.format("%d-%02d-%02d %02d:%02d:00",year,month,day,hour,minu);
+                    }
+                });
+                datePickerDialogFragment.show(getSupportFragmentManager(), "DatePickerDialogFragment");
+            }
+        });
+
         binding.etName.setText(MyApplication.userDetailInfo.getUserInfo().getName());
         binding.ivCamero.setOnClickListener(new View.OnClickListener() {
             @Override

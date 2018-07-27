@@ -62,9 +62,9 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 	 */
 	public TimePicker(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		LayoutInflater.from(context).inflate(R.layout.layout_date, this);
+		LayoutInflater.from(context).inflate(R.layout.layout_time, this);
 		initChild();
-		initAttrs(context, attrs);
+		//initAttrs(context, attrs);
 		mYearPicker.setBackgroundDrawable(getBackground());
 		mMonthPicker.setBackgroundDrawable(getBackground());
         mDayPicker.setBackgroundDrawable(getBackground());
@@ -73,47 +73,47 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 	}
 
 	private void initAttrs(Context context, @Nullable AttributeSet attrs) {
-		if (attrs == null) {
-			return;
-		}
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DatePicker);
-		int textSize = a.getDimensionPixelSize(R.styleable.DatePicker_itemTextSize,
-				getResources().getDimensionPixelSize(R.dimen.WheelItemTextSize));
-		int textColor = a.getColor(R.styleable.DatePicker_itemTextColor,
-				Color.BLACK);
-		boolean isTextGradual = a.getBoolean(R.styleable.DatePicker_textGradual, true);
-		boolean isCyclic = a.getBoolean(R.styleable.DatePicker_wheelCyclic, false);
-		int halfVisibleItemCount = a.getInteger(R.styleable.DatePicker_halfVisibleItemCount, 2);
-		int selectedItemTextColor = a.getColor(R.styleable.DatePicker_selectedTextColor,
-				getResources().getColor(R.color.com_ycuwq_datepicker_selectedTextColor));
-		int selectedItemTextSize = a.getDimensionPixelSize(R.styleable.DatePicker_selectedTextSize,
-				getResources().getDimensionPixelSize(R.dimen.WheelSelectedItemTextSize));
-		int itemWidthSpace = a.getDimensionPixelSize(R.styleable.DatePicker_itemWidthSpace,
-				getResources().getDimensionPixelOffset(R.dimen.WheelItemWidthSpace));
-		int itemHeightSpace = a.getDimensionPixelSize(R.styleable.DatePicker_itemHeightSpace,
-				getResources().getDimensionPixelOffset(R.dimen.WheelItemHeightSpace));
-		boolean isZoomInSelectedItem = a.getBoolean(R.styleable.DatePicker_zoomInSelectedItem, true);
-		boolean isShowCurtain = a.getBoolean(R.styleable.DatePicker_wheelCurtain, true);
-		int curtainColor = a.getColor(R.styleable.DatePicker_wheelCurtainColor, Color.WHITE);
-		boolean isShowCurtainBorder = a.getBoolean(R.styleable.DatePicker_wheelCurtainBorder, true);
-		int curtainBorderColor = a.getColor(R.styleable.DatePicker_wheelCurtainBorderColor,
-				getResources().getColor(R.color.com_ycuwq_datepicker_divider));
-		a.recycle();
+//		if (attrs == null) {
+//			return;
+//		}
+//		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DatePicker);
+//		int textSize = a.getDimensionPixelSize(R.styleable.DatePicker_itemTextSize,
+//				getResources().getDimensionPixelSize(R.dimen.WheelItemTextSize));
+//		int textColor = a.getColor(R.styleable.DatePicker_itemTextColor,
+//				Color.BLACK);
+//		boolean isTextGradual = a.getBoolean(R.styleable.DatePicker_textGradual, true);
+//		boolean isCyclic = a.getBoolean(R.styleable.DatePicker_wheelCyclic, false);
+//		int halfVisibleItemCount = a.getInteger(R.styleable.DatePicker_halfVisibleItemCount, 2);
+//		int selectedItemTextColor = a.getColor(R.styleable.DatePicker_selectedTextColor,
+//				getResources().getColor(R.color.com_ycuwq_datepicker_selectedTextColor));
+//		int selectedItemTextSize = a.getDimensionPixelSize(R.styleable.DatePicker_selectedTextSize,
+//				getResources().getDimensionPixelSize(R.dimen.WheelSelectedItemTextSize));
+//		int itemWidthSpace = a.getDimensionPixelSize(R.styleable.DatePicker_itemWidthSpace,
+//				getResources().getDimensionPixelOffset(R.dimen.WheelItemWidthSpace));
+//		int itemHeightSpace = a.getDimensionPixelSize(R.styleable.DatePicker_itemHeightSpace,
+//				getResources().getDimensionPixelOffset(R.dimen.WheelItemHeightSpace));
+//		boolean isZoomInSelectedItem = a.getBoolean(R.styleable.DatePicker_zoomInSelectedItem, true);
+//		boolean isShowCurtain = a.getBoolean(R.styleable.DatePicker_wheelCurtain, true);
+//		int curtainColor = a.getColor(R.styleable.DatePicker_wheelCurtainColor, Color.WHITE);
+//		boolean isShowCurtainBorder = a.getBoolean(R.styleable.DatePicker_wheelCurtainBorder, true);
+//		int curtainBorderColor = a.getColor(R.styleable.DatePicker_wheelCurtainBorderColor,
+//				getResources().getColor(R.color.com_ycuwq_datepicker_divider));
+//		a.recycle();
 
-		setTextSize(textSize);
-		setTextColor(textColor);
-		setTextGradual(isTextGradual);
-		setCyclic(isCyclic);
-		setHalfVisibleItemCount(halfVisibleItemCount);
-		setSelectedItemTextColor(selectedItemTextColor);
-		setSelectedItemTextSize(selectedItemTextSize);
-		setItemWidthSpace(itemWidthSpace);
-		setItemHeightSpace(itemHeightSpace);
-		setZoomInSelectedItem(isZoomInSelectedItem);
-		setShowCurtain(isShowCurtain);
-		setCurtainColor(curtainColor);
-		setShowCurtainBorder(isShowCurtainBorder);
-		setCurtainBorderColor(curtainBorderColor);
+//		setTextSize(textSize);
+//		setTextColor(textColor);
+//		setTextGradual(isTextGradual);
+//		setCyclic(isCyclic);
+//		setHalfVisibleItemCount(halfVisibleItemCount);
+//		setSelectedItemTextColor(selectedItemTextColor);
+//		setSelectedItemTextSize(selectedItemTextSize);
+//		setItemWidthSpace(itemWidthSpace);
+//		setItemHeightSpace(itemHeightSpace);
+//		setZoomInSelectedItem(isZoomInSelectedItem);
+//		setShowCurtain(isShowCurtain);
+//		setCurtainColor(curtainColor);
+//		setShowCurtainBorder(isShowCurtainBorder);
+//		setCurtainBorderColor(curtainBorderColor);
 	}
 	private void initChild() {
 		mYearPicker = findViewById(R.id.yearPicker_layout_date);
@@ -122,40 +122,28 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 		mMonthPicker.setOnMonthSelectedListener(this);
 		mDayPicker = findViewById(R.id.dayPicker_layout_date);
 		mDayPicker.setOnDaySelectedListener(this);
-		mHourPicker = findViewById(R.id.dayPicker_layout_date);
+		mHourPicker = findViewById(R.id.hourPicker_layout_time);
 		mHourPicker.setmOnHourSelectedListener(this);
-		mMinPicker = findViewById(R.id.dayPicker_layout_date);
+		mMinPicker = findViewById(R.id.minutePicker_layout_time);
 		mMinPicker.setmOnMinSelectedListener(this);
 	}
 
     @Override
     public void setBackgroundColor(int color) {
         super.setBackgroundColor(color);
-        if (mYearPicker != null && mMonthPicker != null && mDayPicker != null) {
-            mYearPicker.setBackgroundColor(color);
-            mMonthPicker.setBackgroundColor(color);
-            mDayPicker.setBackgroundColor(color);
-        }
+
     }
 
     @Override
     public void setBackgroundResource(int resid) {
         super.setBackgroundResource(resid);
-        if (mYearPicker != null && mMonthPicker != null && mDayPicker != null) {
-            mYearPicker.setBackgroundResource(resid);
-            mMonthPicker.setBackgroundResource(resid);
-            mDayPicker.setBackgroundResource(resid);
-        }
+
     }
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
         super.setBackgroundDrawable(background);
-        if (mYearPicker != null && mMonthPicker != null && mDayPicker != null) {
-            mYearPicker.setBackgroundDrawable(background);
-            mMonthPicker.setBackgroundDrawable(background);
-            mDayPicker.setBackgroundDrawable(background);
-        }
+
     }
 
     private void onDateSelected() {
@@ -181,7 +169,6 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 	public void onYearSelected(int year) {
 		int month = getMonth();
 		mDayPicker.setMonth(year, month);
-		onDateSelected();
 	}
 
 	/**
@@ -264,11 +251,11 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 	}
 
 	public int getHour() {
-		return mDayPicker.getSelectedDay();
+		return mHourPicker.getSelectedMonth();
 	}
 
 	public int getMinut() {
-		return mDayPicker.getSelectedDay();
+		return mMinPicker.getSelectedMonth();
 	}
 
 	/**
@@ -304,9 +291,7 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 	 * @param textColor 文本颜色
 	 */
 	public void setTextColor(@ColorInt int textColor) {
-		mDayPicker.setTextColor(textColor);
-		mMonthPicker.setTextColor(textColor);
-		mYearPicker.setTextColor(textColor);
+
 	}
 
 	/**
@@ -521,7 +506,7 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 		 * @param month the month
 		 * @param day   the day
 		 */
-		void onDateSelected(int year, int month, int day,int hour,int minut);
+		void onDateSelected(int year, int month, int day,int hour,int minu);
 	}
 
 	public void dismissDay(){

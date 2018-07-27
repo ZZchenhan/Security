@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="45dp">
+        <Button
+            android:id="@+id/btn_dialog_date_cancel"
+            android:background="#ffffffff"
+            android:text="取消"
+            android:layout_marginLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:textColor="#444444"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/btn_dialog_date_decide"
+            android:background="#ffffffff"
+            android:text="确定"
+            android:layout_alignParentRight="true"
+            android:textColor="#2196F3"
+            android:layout_marginRight="15dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <xxk.wuhai.seacurity.weight.date.TimePicker
+        android:background="@color/white"
+        android:id="@+id/dayPicker_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </xxk.wuhai.seacurity.weight.date.TimePicker>
+
+</LinearLayout>

@@ -271,7 +271,7 @@ public class ContactFragment extends Fragment{
         for (DirDeptVoListBean vo:dirDeptVoListBeans){
             initHeadItem(vo);
         }
-        int height = (int) (dirDeptVoListBeans.size()* TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,40,getContext().getResources().getDisplayMetrics()));
+        int height = (int) (dirDeptVoListBeans.size()* TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,40,getContext().getResources().getDisplayMetrics())+TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,16,getContext().getResources().getDisplayMetrics()));
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) sideLetterBar.getLayoutParams();
         layoutParams.topMargin = height;
         sideLetterBar.setLayoutParams(layoutParams);

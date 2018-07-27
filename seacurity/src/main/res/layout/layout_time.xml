@@ -6,27 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <xxk.wuhai.seacurity.weight.date.YearPicker
-        app:selectedTextColor="#3F3F3F"
-        app:selectedTextSize="20sp"
         android:id="@+id/yearPicker_layout_date"
+        app:wheelCyclic="true"
+        app:indicatorTextSize="20sp"
         app:halfVisibleItemCount="2"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        app:selectedTextColor="#3F3F3F"
+        app:selectedTextSize="20sp"
         app:wheelCurtain="false"
         app:wheelCurtainBorder="false"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
     <xxk.wuhai.seacurity.weight.date.MonthPicker
         android:id="@+id/monthPicker_layout_date"
+        app:wheelCyclic="true"
+        app:indicatorTextSize="20sp"
         app:halfVisibleItemCount="2"
-        app:wheelCurtain="false"
-        app:selectedTextSize="20sp"
-        app:selectedTextColor="#3F3F3F"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        app:selectedTextColor="#3F3F3F"
+        app:selectedTextSize="20sp"
+        app:wheelCurtain="false"
         app:wheelCurtainBorder="false"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
     <xxk.wuhai.seacurity.weight.date.DayPicker
         android:id="@+id/dayPicker_layout_date"
+        app:wheelCyclic="true"
+        app:indicatorTextSize="20sp"
         app:halfVisibleItemCount="2"
         android:layout_weight="1"
         app:selectedTextColor="#3F3F3F"
@@ -35,7 +41,7 @@
         app:wheelCurtainBorder="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
-    <com.ycuwq.datepicker.time.HourPicker
+    <xxk.wuhai.seacurity.weight.date.HourPiker
         android:id="@+id/hourPicker_layout_time"
         app:halfVisibleItemCount="2"
         app:wheelCyclic="true"
@@ -47,7 +53,7 @@
         app:wheelCurtainBorder="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
-    <com.ycuwq.datepicker.time.MinutePicker
+    <xxk.wuhai.seacurity.weight.date.MinutePiker
         android:id="@+id/minutePicker_layout_time"
         app:wheelCyclic="true"
         app:indicatorTextSize="20sp"

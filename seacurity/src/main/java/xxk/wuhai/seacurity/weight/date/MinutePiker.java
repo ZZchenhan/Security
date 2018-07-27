@@ -38,7 +38,7 @@ public class MinutePiker extends WheelPicker<Integer> {
         setDataFormat(numberFormat);
 
         Calendar.getInstance().clear();
-        mSelectedMinute = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        mSelectedMinute = Calendar.getInstance().get(Calendar.MINUTE);
         updateMonth();
         setSelectedMonth(mSelectedMinute, false);
         setOnWheelChangeListener(new OnWheelChangeListener<Integer>() {
@@ -54,9 +54,10 @@ public class MinutePiker extends WheelPicker<Integer> {
 
     public void updateMonth() {
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i <= 59; i++) {
+        for (int i = 1; i <= 59; i++) {
             list.add(i);
         }
+        list.add(0);
         setDataList(list);
     }
 

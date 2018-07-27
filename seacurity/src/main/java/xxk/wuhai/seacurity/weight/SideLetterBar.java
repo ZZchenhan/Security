@@ -61,7 +61,6 @@ public class SideLetterBar extends View {
         if(b.size() == 0){
             return;
         }
-        int singleHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,15,getContext().getResources().getDisplayMetrics());
         Bitmap bitmap = ((BitmapDrawable)this.getResources().getDrawable(R.mipmap.ic_contact_search_draw)).getBitmap();
         canvas.drawBitmap(bitmap,0,singleHeight,paint);
         for (int i = 1; i < b.size(); i++) {
@@ -157,7 +156,7 @@ public class SideLetterBar extends View {
     public void setB(List<String> b) {
         this.b.clear();
         this.b.add(0,"");
-        this.b.add(0,"#");
+        this.b.add(1,"#");
         this.b.addAll(b);
         invalidate();
     }

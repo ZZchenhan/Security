@@ -38,9 +38,10 @@ public class HourPiker extends WheelPicker<Integer> {
         setDataFormat(numberFormat);
 
         Calendar.getInstance().clear();
-        mSelectedHour = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        mSelectedHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         updateMonth();
         setSelectedMonth(mSelectedHour, false);
+        mSelectedHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         setOnWheelChangeListener(new OnWheelChangeListener<Integer>() {
             @Override
             public void onWheelSelected(Integer item, int position) {
@@ -54,9 +55,10 @@ public class HourPiker extends WheelPicker<Integer> {
 
     public void updateMonth() {
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i <= 23; i++) {
+        for (int i = 1; i <= 23; i++) {
             list.add(i);
         }
+        list.add(0);
         setDataList(list);
     }
 

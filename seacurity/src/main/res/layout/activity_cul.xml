@@ -217,23 +217,29 @@
                     android:scaleType="center"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:elevation="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:background="@color/gray"
-                android:layout_weight="0"
-                android:layout_height="165dp">
-                <com.amap.api.maps2d.MapView
-                    android:id="@+id/mapview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-            </FrameLayout>
         </LinearLayout>
+
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="175dp">
+        <FrameLayout
+            android:layout_width="294dp"
+            android:elevation="5dp"
+            android:layout_centerInParent="true"
+            android:background="@color/gray"
+            android:layout_weight="0"
+            android:layout_height="165dp">
+            <com.amap.api.maps2d.MapView
+                android:id="@+id/mapview"
+                android:layout_width="294dp"
+                android:layout_height="165dp"
+                />
+        </FrameLayout>
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
