@@ -25,10 +25,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -37,6 +39,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- 7.0适配 -->
         <meta-data
             android:name="android.support.FILE_PROVIDER_PATHS"
@@ -49,29 +52,29 @@
 
         <activity
             android:name=".main.view.MainActivity"
-            android:label="@string/app_name" android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-        <activity android:name=".guide.view.GuideActivity" >
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".guide.view.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.view.LoginActivity">
-
-        </activity>
+        <activity android:name=".login.view.LoginActivity"></activity>
         <activity android:name=".msg.view.CompanyMsgActivity" />
         <activity android:name=".login.view.ForgetActivity" />
         <activity android:name=".main.view.UpdateUserInfoActivity" />
         <activity android:name=".main.view.SettingActivity" />
-        <activity android:name=".work.view.SupplementSignActivity" >
-        </activity>
+        <activity android:name=".work.view.SupplementSignActivity"></activity>
         <activity android:name=".work.view.SignComfirmActivity" />
         <activity android:name=".work.view.SignActivity" />
         <activity android:name=".work.view.LocationUpdateActivity" />
         <activity android:name=".work.view.RecordFaileActivity" />
         <activity android:name=".work.view.RecordActivity" />
-        <activity android:name=".contact.view.ContactActivity" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity
+            android:name=".contact.view.ContactActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".contact.view.UserInfoActivity" />
         <activity android:name=".contact.view.AddImpressionActivity" />
         <activity android:name=".me.view.MeTAgActivity" />
@@ -106,11 +109,12 @@
         <activity android:name=".work.view.CulListActivity" />
         <activity android:name=".work.view.CulDetailActivity" />
         <activity android:name=".work.view.MyAplyListActivity" />
-        <activity android:name=".me.view.ElectIDcardActivity"></activity>
-        <activity android:name=".work.view.SuggestActivity"/>
-        <activity android:name=".work.view.SystemSettinActivity"/>
-        <activity android:name=".work.TrajectoryActivity"/>
-        <activity android:name=".msg.view.ExamineActivity2"/>
+        <activity android:name=".me.view.ElectIDcardActivity" />
+        <activity android:name=".work.view.SuggestActivity" />
+        <activity android:name=".work.view.SystemSettinActivity" />
+        <activity android:name=".work.TrajectoryActivity" />
+        <activity android:name=".msg.view.ExamineActivity2" />
+        <activity android:name=".work.view.WebViewActivity"></activity>
     </application>
 
 </manifest>

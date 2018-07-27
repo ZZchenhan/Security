@@ -69,6 +69,7 @@ import xxk.wuhai.seacurity.work.view.SignActivity;
 import xxk.wuhai.seacurity.work.view.StudyActivity;
 import xxk.wuhai.seacurity.work.view.SuggestActivity;
 import xxk.wuhai.seacurity.work.view.SystemSettinActivity;
+import xxk.wuhai.seacurity.work.view.WebViewActivity;
 import xxk.wuhai.seacurity.work.vo.UploadTrajectoryVo;
 
 public class MainActivity extends BaseActivity implements OnTabItemSelectedListener,AMapLocationListener {
@@ -207,6 +208,13 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                 break;
             case R.id.tv_apply:
                 ApplyActivity.openActivity(this,ApplyActivity.class);
+                break;
+            case R.id.tv_examination:
+                if(MyApplication.userDetailInfo.getUserInfo() == null || MyApplication.userDetailInfo.getUserInfo().getIdCard() == null){
+                    toast("当前用户没有设置身份证信息");
+                    return;
+                }
+                startActivity(new Intent(this, WebViewActivity.class).putExtra("idCard",MyApplication.userDetailInfo.getUserInfo().getIdCard()));
                 break;
         }
     }

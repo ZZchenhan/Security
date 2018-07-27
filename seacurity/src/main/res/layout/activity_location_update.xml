@@ -26,30 +26,32 @@
             android:layout_height="48dp"
             android:background="@drawable/bg_item"
             android:layout_marginRight="16dp"
-            android:paddingLeft="16dp">
+            >
             <EditText
                 android:id="@+id/et_input"
                 android:layout_width="match_parent"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:elevation="2dp"
-                android:paddingLeft="50dp"
+                android:paddingLeft="48dp"
                 android:singleLine="true"
-                android:textColor="@color/text_color3"
+                android:textColor="#999999"
+                android:textColorHint="#999999"
                 android:imeOptions="actionSearch"
                 android:hint="搜索位置"
                 android:background="@null"
                 android:maxLines="1"
                 android:layout_height="48dp" />
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="15dp"
+                android:layout_marginLeft="16dp"
+                android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/icon_search" />
         </FrameLayout>
 
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
-        android:background="@color/text_color3"
+        android:background="#E5E5E5"
         android:elevation="2dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

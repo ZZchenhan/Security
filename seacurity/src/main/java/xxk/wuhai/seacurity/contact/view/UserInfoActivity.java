@@ -2,6 +2,7 @@ package xxk.wuhai.seacurity.contact.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,11 +23,13 @@ import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.contact.bean.DirectoryVo;
 import xxk.wuhai.seacurity.contact.bean.StaffResult;
 import xxk.wuhai.seacurity.login.api.UserApi;
 import xxk.wuhai.seacurity.login.result.TagResult;
+import xxk.wuhai.seacurity.login.vo.AddLabelInfoApiVo;
 import xxk.wuhai.seacurity.login.vo.GetPraiseAndLabelVo;
 import xxk.wuhai.seacurity.me.adapter.GridSpacingItemDecoration;
 import xxk.wuhai.seacurity.me.adapter.TagAdapter;
@@ -85,6 +88,16 @@ public class UserInfoActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if(datas.get(position).getLabelName().equals("查看更多")){
                     startActivity(new Intent(UserInfoActivity.this,MeTAgActivity.class).putExtra("id",directoryVo.getUserId()));
+                }else{
+                    if (datas.get(position).getIsLightUp().equals("1")) {
+                        toast("已经点过，不能再点了哦");
+                        return;
+                    }
+                    TextView textView = (TextView) view;
+                    textView.setBackground(getResources().getDrawable(R.drawable.bg_info_blue));
+                    textView.setTextColor(Color.WHITE);
+                    textView.setText(datas.get(position).getLabelName() + " " + (datas.get(position).getLabelNum() + 1));
+                    addTags(datas.get(position).getLabelId(), directoryVo.getUserId());
                 }
             }
         });
@@ -204,7 +217,7 @@ public class UserInfoActivity extends BaseActivity {
                             return;
                         }
                         try {
-                            age.setText(s.getResult().getStaffInfoVo().getAge() + "");
+                            age.setText(s.getResult().getStaffInfoVo().getAge() + "岁");
                         }catch (Exception e){}
                     }
 
@@ -220,5 +233,38 @@ public class UserInfoActivity extends BaseActivity {
                 });
     }
 
+    public void addTags(int labelid, int usrId) {
+        MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
+                .doPraise(new AddLabelInfoApiVo(labelid, usrId))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Result<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Result<String> stringResult) {
+                        if (!stringResult.getCode().equals("200")) {
+                            toast(stringResult.getMessage());
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e != null) {
+                            toast(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        ;
+    }
 
 }
