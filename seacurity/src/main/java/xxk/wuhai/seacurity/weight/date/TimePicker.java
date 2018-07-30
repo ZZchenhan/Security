@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -66,10 +69,15 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 		initChild();
 		//initAttrs(context, attrs);
 		mYearPicker.setBackgroundDrawable(getBackground());
+		mYearPicker.setDataFormat(new StringFormat("年"));
 		mMonthPicker.setBackgroundDrawable(getBackground());
+		mMonthPicker.setDataFormat(new StringFormat("月"));
         mDayPicker.setBackgroundDrawable(getBackground());
+		mDayPicker.setDataFormat(new StringFormat("日"));
         mHourPicker.setBackgroundDrawable(getBackground());
+		mHourPicker.setDataFormat(new StringFormat("时"));
         mMinPicker.setBackgroundDrawable(getBackground());
+		mMinPicker.setDataFormat(new StringFormat("分"));
 	}
 
 	private void initAttrs(Context context, @Nullable AttributeSet attrs) {
@@ -511,5 +519,23 @@ public class TimePicker extends LinearLayout implements YearPicker.OnYearSelecte
 
 	public void dismissDay(){
 		mDayPicker.setVisibility(View.GONE);
+	}
+
+
+	public static class StringFormat extends Format {
+		String string;
+		public StringFormat(String str){
+			this.string = str;
+		}
+
+		@Override
+		public StringBuffer format(Object o,  StringBuffer stringBuffer,  FieldPosition fieldPosition) {
+			return stringBuffer.append(o).append(string);
+		}
+
+		@Override
+		public Object parseObject(String s, ParsePosition parsePosition) {
+			return null;
+		}
 	}
 }
