@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -54,6 +55,7 @@ public class MsgFragment extends Fragment {
 
     private TextView tvSelect;
 
+    private LinearLayout llSelect;
     private RecyclerView recyclerView;
 
     private View root;
@@ -77,6 +79,7 @@ public class MsgFragment extends Fragment {
     MyPopWindows popWindows;
 
     private void findViews() {
+        llSelect = root.findViewById(R.id.ll_select);
         tvSelect = root.findViewById(R.id.select_text);
         recyclerView = root.findViewById(R.id.recyclerView);
         hinit = root.findViewById(R.id.hinit);
@@ -140,7 +143,7 @@ public class MsgFragment extends Fragment {
                 getMsg(page);
             }
         }, recyclerView);
-        tvSelect.setOnClickListener(new View.OnClickListener() {
+        llSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (popWindows == null) {
@@ -163,7 +166,7 @@ public class MsgFragment extends Fragment {
                     });
                 }
                 darkenBackground(0.4f);
-                popWindows.showAsDropDown(tvSelect);
+                popWindows.showAsDropDown(llSelect);
             }
         });
 

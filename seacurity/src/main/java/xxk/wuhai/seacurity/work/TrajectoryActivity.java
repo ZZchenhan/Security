@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps2d.CameraUpdate;
@@ -39,6 +40,8 @@ public class TrajectoryActivity extends BaseActivity {
     private MapView mapView;
     private TextView tvStart;
     private TextView tvEnd;
+    private TextView tvEmpty;
+    private FrameLayout fragmentContainer;
     @Override
     public int layoutId() {
         return R.layout.activity_trajectory;
@@ -97,6 +100,8 @@ public class TrajectoryActivity extends BaseActivity {
         mapView = findViewById(R.id.map);
         tvStart = findViewById(R.id.start);
         tvEnd = findViewById(R.id.end);
+        tvEmpty = findViewById(R.id.empty);
+        fragmentContainer = findViewById(R.id.fragment_container);
     }
 
 
@@ -120,11 +125,12 @@ public class TrajectoryActivity extends BaseActivity {
                             }
                             if(getTrajectoryResponseResult.getResult().getTrajectoryVoList() == null
                                     || getTrajectoryResponseResult.getResult().getTrajectoryVoList().size() == 0){
-                                toast("没有更多轨迹");
+                                tvEmpty.setVisibility(View.VISIBLE);
+                                fragmentContainer.setVisibility(View.GONE);
                                 return;
                             }
-
-
+                        tvEmpty.setVisibility(View.GONE);
+                        fragmentContainer.setVisibility(View.VISIBLE);
                         List<LatLng> latLngs = new ArrayList<LatLng>();
                          for(GetTrajectoryResponse.TrajectoryVoListBean item:getTrajectoryResponseResult.getResult().getTrajectoryVoList()){
                              try {

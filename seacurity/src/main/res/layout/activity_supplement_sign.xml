@@ -246,7 +246,6 @@
                     android:layout_marginLeft="30dp"
                     android:paddingRight="15dp"
                     android:background="@null"
-                    android:drawableRight="@mipmap/ic_supp_times"
                     android:hint="用户名"
                     android:textColor="#B2B2B2"
                     android:textSize="17sp" />
