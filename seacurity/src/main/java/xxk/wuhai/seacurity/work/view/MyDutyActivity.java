@@ -1,6 +1,8 @@
 package xxk.wuhai.seacurity.work.view;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,7 +27,9 @@ import com.haibin.calendarview.CalendarView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -67,6 +71,48 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     private RelativeLayout btnTrajectory;
     private DuyteHead duyteHead;
     private  View empty;
+
+    Observable observable;
+    public void startTimer(){
+        observable =  Observable.interval(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread());
+        observable.subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        if(adapter != null){
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public void destroyTimer(){
+        if(observable!=null)
+        observable.unsubscribeOn(Schedulers.newThread());
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        startTimer();
+    }
+
 
 
     private ImageView ivPre;
@@ -251,6 +297,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     @Override
     protected void onDestroy() {
         mlocationClient.stopLocation();
+        destroyTimer();
         super.onDestroy();
     }
 

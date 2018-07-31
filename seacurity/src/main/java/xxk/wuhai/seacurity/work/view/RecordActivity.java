@@ -1,6 +1,8 @@
 package xxk.wuhai.seacurity.work.view;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -61,10 +65,52 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     private  View empty;
     private List<AttendanceInfoVoListBean> data = new ArrayList<>();
 
+    Observable observable;
+    public void startTimer(){
+        observable =  Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                if(adapter != null){
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    public void destroyTimer(){
+        if(observable!=null)
+        observable.unsubscribeOn(Schedulers.newThread());
+    }
     @Override
     public int layoutId() {
         return R.layout.activity_record;
     }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        startTimer();
+    }
+
+
 
     @Override
     public IBaseNavagation navagation() {
@@ -179,6 +225,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     @Override
     protected void onDestroy() {
         mlocationClient.onDestroy();
+        destroyTimer();
         super.onDestroy();
     }
 
