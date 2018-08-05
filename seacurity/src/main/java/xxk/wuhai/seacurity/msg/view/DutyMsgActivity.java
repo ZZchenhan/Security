@@ -45,7 +45,7 @@ public class DutyMsgActivity extends BaseActivity {
         LeftIconNavagation leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this) {
             @Override
             public String title() {
-                return "排班变动信息";
+                return "排班变动消息";
             }
         };
         leftIconNavagation.setIconClick(new View.OnClickListener() {

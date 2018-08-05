@@ -93,11 +93,15 @@ public class UserInfoActivity extends BaseActivity {
                         toast("已经点过，不能再点了哦");
                         return;
                     }
-                    TextView textView = (TextView) view;
-                    textView.setBackground(getResources().getDrawable(R.drawable.bg_info_blue));
-                    textView.setTextColor(Color.WHITE);
-                    textView.setText(datas.get(position).getLabelName() + " " + (datas.get(position).getLabelNum() + 1));
-                    addTags(datas.get(position).getLabelId(), directoryVo.getUserId());
+                    if( directoryVo.getUserId() == MyApplication.userDetailInfo.getUserInfo().getUserId()){
+                        toast("不能给自己点赞哦");
+                    }else {
+                        TextView textView = (TextView) view;
+                        textView.setBackground(getResources().getDrawable(R.drawable.bg_info_blue));
+                        textView.setTextColor(Color.WHITE);
+                        textView.setText(datas.get(position).getLabelName() + " " + (datas.get(position).getLabelNum() + 1));
+                        addTags(datas.get(position).getLabelId(), directoryVo.getUserId());
+                    }
                 }
             }
         });

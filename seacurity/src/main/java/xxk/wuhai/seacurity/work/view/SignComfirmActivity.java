@@ -185,13 +185,6 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
 
     private void choosePic() {
         ActionSheetDialog dialog = new ActionSheetDialog(this).builder()
-                .addSheetItem("相册", ActionSheetDialog.SheetItemColor.Blue, which -> PictureSelector.create(SignComfirmActivity.this)
-                        .openGallery(PictureMimeType.ofImage())
-                        .maxSelectNum(3-imagesUrl.size())
-                        .enableCrop(true)
-                        .withAspectRatio(1, 1)
-                        .isCamera(false)
-                        .forResult(PictureConfig.CHOOSE_REQUEST))
                 .addSheetItem("拍照", ActionSheetDialog.SheetItemColor.Blue, which -> PictureSelector.create(SignComfirmActivity.this)
                         .openCamera(PictureMimeType.ofImage())
                         .enableCrop(true)

@@ -75,7 +75,7 @@ public class CulListActivity extends BaseActivity {
                 CulDetailActivity.openActivity(CulListActivity.this,data.get(position).getClueBurstId());
             }
         });
-        culAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            culAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 getData(page);

@@ -239,7 +239,7 @@ public class MsgFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getActivity().isFinishing()) {
+                        if (getActivity()== null|| getActivity().isFinishing()) {
                             return;
                         }
                         if (swipeRefreshLayout.isRefreshing()) {

@@ -28,6 +28,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -154,6 +155,23 @@ public class ApplyLeaveActivity extends BaseActivity {
                 datePickerDialogFragment.setOnDateChooseListener(new DatePickerDialogFragment.OnDateChooseListener() {
                     @Override
                     public void onDateChoose(int year, int month, int day) {
+                       Calendar calendar =  Calendar.getInstance();
+                       if(calendar.get(Calendar.YEAR)>year){
+                           toast("请假日期不能在当日之前");
+                           return;
+                       }
+                       if(calendar.get(Calendar.MONTH)+1 > month){
+                           toast("请假日期不能在当日之前");
+                           return;
+                       }
+                        if(calendar.get(Calendar.DAY_OF_MONTH) > day){
+                            toast("请假日期不能在当日之前");
+                            return;
+                        }
+                        if(!binding.endTime.getText().equals("") && binding.endTime.getText().toString().compareTo(String.format("%02d-%02d-%02d",year,month,day))<0){
+                            toast("开始日期不能小于结束日期");
+                            return;
+                        }
                         binding.startTime.setText(String.format("%02d-%02d-%02d",year,month,day));
                         cacultDays();
                     }
@@ -169,6 +187,23 @@ public class ApplyLeaveActivity extends BaseActivity {
                 datePickerDialogFragment.setOnDateChooseListener(new DatePickerDialogFragment.OnDateChooseListener() {
                     @Override
                     public void onDateChoose(int year, int month, int day) {
+                        Calendar calendar =  Calendar.getInstance();
+                        if(calendar.get(Calendar.YEAR)>year){
+                            toast("请假日期不能在当日之前");
+                            return;
+                        }
+                        if(calendar.get(Calendar.MONTH)+1 > month){
+                            toast("请假日期不能在当日之前");
+                            return;
+                        }
+                        if(calendar.get(Calendar.DAY_OF_MONTH) > day){
+                            toast("请假日期不能在当日之前");
+                            return;
+                        }
+                        if(!binding.startTime.getText().equals("") && binding.startTime.getText().toString().compareTo(String.format("%02d-%02d-%02d",year,month,day))>0){
+                            toast("开始日期不能大于结束日期");
+                            return;
+                        }
                         binding.endTime.setText(String.format("%02d-%02d-%02d",year,month,day));
                         cacultDays();
                     }

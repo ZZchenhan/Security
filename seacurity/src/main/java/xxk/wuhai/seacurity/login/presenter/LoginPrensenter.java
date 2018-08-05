@@ -103,8 +103,10 @@ public class LoginPrensenter implements IBasePresenter {
                     BaseInterceptor.random = loginResultResult.getResult().getRandom()+"";
                     return MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                             .getUserInfo(new GetUserInfoVo());
-                }else{
+                }else if(!loginResultResult.getCode().equals("1038")){
                     throw new RuntimeException(loginResultResult.getMessage());
+                }else{
+                    throw new RuntimeException("");
                 }
             }
         }).observeOn(AndroidSchedulers.mainThread())
@@ -128,6 +130,8 @@ public class LoginPrensenter implements IBasePresenter {
                     tags.add(MyApplication.userDetailInfo.getDeptVo().getDeptId()+"");
                     JPushInterface.setTags(mContext,3123,tags);
                     loginView.loginSuccess(result.getResult());
+                }else if(result.getCode().equals("1038")){
+                    throw new RuntimeException("");
                 }else{
                     if(loginView!=null){
                         loginView.toast(result.getMessage() == null || result.getMessage().equals("")?"系统错误码:"+result.getCode():result.getMessage());
@@ -138,7 +142,9 @@ public class LoginPrensenter implements IBasePresenter {
             @Override
             public void onError(Throwable e) {
                 if(loginView!=null){
-                    loginView.toast(e.getMessage());
+                    if(!e.getMessage().equals("")) {
+                        loginView.toast(e.getMessage());
+                    }
                 }
             }
 

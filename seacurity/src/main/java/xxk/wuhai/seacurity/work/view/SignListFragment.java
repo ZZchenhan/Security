@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -31,6 +32,7 @@ import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.weight.date.DatePickerDialogFragment;
+import xxk.wuhai.seacurity.weight.photoview.PhoneDialog;
 import xxk.wuhai.seacurity.work.adapter.SignListAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.UserSignListResult;
@@ -65,6 +67,19 @@ public class SignListFragment extends Fragment {
             public void onClick(View view) {
                 open();
             }
+        });
+        signListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                switch (view.getId()){
+                    case R.id.pic1:
+                        PhoneDialog.seePic((AppCompatActivity) getActivity(),this.datas.get(position).getImageUrls(),0);
+                        break;
+                    case R.id.pic2:
+                        PhoneDialog.seePic((AppCompatActivity) getActivity(),this.datas.get(position).getImageUrls(),1);
+                        break;
+                    case R.id.pic3:
+                        PhoneDialog.seePic((AppCompatActivity) getActivity(),this.datas.get(position).getImageUrls(),2);
+                        break;
+                }
         });
 
     }

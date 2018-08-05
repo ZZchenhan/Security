@@ -36,9 +36,9 @@ public class MsgAdapter extends BaseMultiItemQuickAdapter<MessageInfoListBean,Ba
                 .setTextColor(R.id.status,"1".equals(item.getStatus())? Color.parseColor("#888888")
                         :Color.parseColor("#00C200"));
         if(helper.getItemViewType() == 1){
-            helper.setBackgroundColor(R.id.pic1,Color.parseColor("#00C200"));
-            helper.setBackgroundColor(R.id.pic2,Color.parseColor("#00C200"));
-            helper.setBackgroundColor(R.id.pic3,Color.parseColor("#00C200"));
+            helper.setBackgroundColor(R.id.pic1,Color.TRANSPARENT);
+            helper.setBackgroundColor(R.id.pic2,Color.TRANSPARENT);
+            helper.setBackgroundColor(R.id.pic3,Color.TRANSPARENT);
             try {
                 Glide.with(mContext).asBitmap().load(item.getMessagePictureUrls().get(0)).into((ImageView) helper.getView(R.id.pic1));
                 Glide.with(mContext).asBitmap().load(item.getMessagePictureUrls().get(1)).into((ImageView) helper.getView(R.id.pic2));

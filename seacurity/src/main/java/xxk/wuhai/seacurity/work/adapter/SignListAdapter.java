@@ -10,7 +10,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.util.List;
 
 import xxk.wuhai.seacurity.R;
+import xxk.wuhai.seacurity.weight.photoview.PhoneDialog;
 import xxk.wuhai.seacurity.work.bean.UserSignListResult;
+import xxk.wuhai.seacurity.work.view.CulDetailActivity;
 
 /**
  * Created by 86936 on 2018/6/29.
@@ -34,6 +36,10 @@ public class SignListAdapter extends BaseQuickAdapter<UserSignListResult.UserSig
                 .setText(R.id.locaion,item.getAttendanceLocation()==null?"":item.getAttendanceLocation());
         try{
             if(item.getImageUrls() == null ||item.getImageUrls().size() == 0){
+                helper.setGone(R.id.ll_pic,false);
+                helper.setGone(R.id.pic1,false);
+                helper.setGone(R.id.pic2,false);
+                helper.setGone(R.id.pic3,false);
                 return;
             }
             helper.setGone(R.id.ll_pic,true);
@@ -42,10 +48,16 @@ public class SignListAdapter extends BaseQuickAdapter<UserSignListResult.UserSig
             ((ImageView) helper.getView(R.id.pic3)).setImageResource(R.color.white);
             Glide.with(mContext).load(item.getImageUrls().get(0))
                     .into((ImageView) helper.getView(R.id.pic1));
+            helper.setGone(R.id.pic1,true);
+            helper.addOnClickListener(R.id.pic1);
             Glide.with(mContext).load(item.getImageUrls().get(1))
                     .into((ImageView) helper.getView(R.id.pic2));
+            helper.setGone(R.id.pic2,true);
+            helper.addOnClickListener(R.id.pic2);
             Glide.with(mContext).load(item.getImageUrls().get(2))
                     .into((ImageView) helper.getView(R.id.pic3));
+            helper.setGone(R.id.pic3,true);
+            helper.addOnClickListener(R.id.pic3);
         }catch (Exception e){
 
         }

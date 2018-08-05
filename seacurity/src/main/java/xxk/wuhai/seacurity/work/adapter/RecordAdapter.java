@@ -170,7 +170,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    } else if(currentTime>realTime+item.getPostLimit()*1000*60){
+                    } else if(currentTime>realTime+item.getPostLimit()*1000*60+1000*60){
                         //太晚，让他补卡
                         helper.setText(R.id.btn_record,"未打卡");
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
@@ -290,7 +290,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply,false);
-                    } else if(currentTime>realTime+item.getPostLimit()*1000*60){
+                    } else if(currentTime>realTime+item.getPostLimit()*1000*60 +1000*60){
                         //太晚，让他补卡
                         helper.setText(R.id.btn_record,"未打卡");
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
