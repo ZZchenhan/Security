@@ -50,6 +50,7 @@ import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.oss.PutObjectSamples;
 import xxk.wuhai.seacurity.utils.SignUtils;
 import xxk.wuhai.seacurity.weight.dialog.ActionSheetDialog;
+import xxk.wuhai.seacurity.weight.photoview.PhoneDialog;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.UserSignResult;
 import xxk.wuhai.seacurity.work.vo.UserSignVo;
@@ -249,6 +250,11 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
                     .load(imagesUrl.get(0))
                     .apply(RequestOptions.placeholderOf(R.color.gray))
                     .into(pic1);
+            pic1.setOnClickListener(view -> {
+                if(imagesUrl.size()>0) {
+                    PhoneDialog.seePic(SignComfirmActivity.this, imagesUrl, 0);
+                }
+            });
             ivDe1.setVisibility(View.VISIBLE);
         }
 
@@ -258,6 +264,11 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
                     .apply(RequestOptions.placeholderOf(R.color.gray))
                     .into(pic2);
             ivDe2.setVisibility(View.VISIBLE);
+            pic2.setOnClickListener(view -> {
+                if(imagesUrl.size()>1) {
+                    PhoneDialog.seePic(SignComfirmActivity.this, imagesUrl, 1);
+                }
+            });
         }
 
         if(imagesUrl.size()>=3){
@@ -266,46 +277,14 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
                     .apply(RequestOptions.placeholderOf(R.color.gray))
                     .into(pic3);
             ivDe3.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private File tempFile;
-    private Uri imageUri;
-
-    public void openCamera(Activity activity) {
-        //獲取系統版本
-        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        // 激活相机
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // 判断存储卡是否可以用，可用进行存储
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            SimpleDateFormat timeStampFormat = new SimpleDateFormat(
-                    "yyyy_MM_dd_HH_mm_ss");
-            String filename = timeStampFormat.format(new Date());
-            tempFile = new File(Environment.getExternalStorageDirectory(),
-                    filename + ".jpg");
-            if (currentapiVersion < 24) {
-                // 从文件中创建uri
-                imageUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            } else {
-                //兼容android7.0 使用共享文件的形式
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, tempFile.getAbsolutePath());
-                //检查是否有存储权限，以免崩溃
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    //申请WRITE_EXTERNAL_STORAGE权限
-                    Toast.makeText(this, "请开启存储权限", Toast.LENGTH_SHORT).show();
-                    return;
+            pic3.setOnClickListener(view -> {
+                if(imagesUrl.size()>2) {
+                    PhoneDialog.seePic(SignComfirmActivity.this, imagesUrl, 2);
                 }
-                imageUri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            }
+            });
         }
-        // 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
-        activity.startActivityForResult(intent, 1);
     }
+
 
     ProgrossDialog progrossDialog;
     private void submit() {

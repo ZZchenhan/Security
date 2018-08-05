@@ -446,6 +446,11 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                 binding.ivRecode.setVisibility(View.VISIBLE);
                 binding.lvPlayer.setVisibility(View.VISIBLE);
                 binding.recordVoice.setVisibility(View.GONE);
+                binding.del.setVisibility(View.VISIBLE);
+                binding.del.setOnClickListener(view -> {
+                    voiceUrl = "";
+                    refreRidioView();
+                });
                 binding.lvPlayer.setOnClickListener(view -> {
                     animator = (AnimationDrawable) binding.voiceImg.getBackground();
                     animator.start();
@@ -461,6 +466,11 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else{
+            binding.ivRecode.setVisibility(View.GONE);
+            binding.lvPlayer.setVisibility(View.GONE);
+            binding.recordVoice.setVisibility(View.VISIBLE);
+            binding.del.setVisibility(View.GONE);
         }
     }
 
