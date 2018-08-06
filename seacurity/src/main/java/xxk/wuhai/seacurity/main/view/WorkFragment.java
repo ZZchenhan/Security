@@ -1,5 +1,6 @@
 package xxk.wuhai.seacurity.main.view;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +30,7 @@ import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.utils.DateUtils;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
 import xxk.wuhai.seacurity.work.bean.PersonSchedulingResult;
+import xxk.wuhai.seacurity.work.view.MyDutyActivity;
 import xxk.wuhai.seacurity.work.vo.GetSchedulingByTimeVo;
 
 /**
@@ -40,7 +42,7 @@ import xxk.wuhai.seacurity.work.vo.GetSchedulingByTimeVo;
  * @email 869360026@qq.com
  * @创建时间 2018/6/24 22:22
  */
-public class WorkFragment extends Fragment {
+public class WorkFragment extends Fragment implements View.OnClickListener{
     View root;
     private TextView tvDate;
     private TextView tvDay1;
@@ -71,6 +73,16 @@ public class WorkFragment extends Fragment {
         tvDay5 = root.findViewById(R.id.day5);
         tvDay6 = root.findViewById(R.id.day6);
         tvDay7 = root.findViewById(R.id.day7);
+
+
+        tvDay1.setOnClickListener(this);
+        tvDay2.setOnClickListener(this);
+        tvDay3.setOnClickListener(this);
+        tvDay4.setOnClickListener(this);
+        tvDay5.setOnClickListener(this);
+        tvDay6.setOnClickListener(this);
+        tvDay7.setOnClickListener(this);
+
         title = root.findViewById(R.id.tv_title);
 
         root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
@@ -170,4 +182,9 @@ public class WorkFragment extends Fragment {
 
     Drawable blue;
     Drawable red;
+
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(getContext(), MyDutyActivity.class));
+    }
 }

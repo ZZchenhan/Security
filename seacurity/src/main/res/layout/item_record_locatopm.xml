@@ -42,12 +42,15 @@
             android:layout_marginLeft="14dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
-    <com.amap.api.maps2d.MapView
-        android:id="@+id/map_view"
+    <xxk.wuhai.seacurity.weight.MapContainer
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_height="170dp"/>
+        android:layout_height="170dp">
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"/>
+    </xxk.wuhai.seacurity.weight.MapContainer>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -83,7 +86,7 @@
         android:paddingRight="16dp"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -130,9 +133,10 @@
         android:orientation="horizontal"
         android:layout_marginTop="17dp"
         android:layout_height="wrap_content">
-        <Button
+        <xxk.wuhai.seacurity.weight.record.CountTimeText
             android:id="@+id/btn_record"
             android:layout_width="120dp"
+            android:gravity="center"
             android:textColor="@color/white"
             android:text="4小时36分20秒"
             android:layout_marginLeft="-3dp"

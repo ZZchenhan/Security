@@ -11,13 +11,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:text="内容"
                 android:textColor="@color/text_color1"
@@ -25,9 +26,11 @@
 
             <TextView
                 android:id="@+id/summary"
+                android:layout_gravity="top"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@null"
+                android:text=""
                 android:gravity="center_vertical"
                 android:hint="最多不超过60个字"
                 android:paddingLeft="15dp"

@@ -61,21 +61,32 @@ public class MyReceiver extends BroadcastReceiver {
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-
+                String string = bundle.getString(JPushInterface.EXTRA_EXTRA);
                 JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
-
-                switch (json.getString("messageTypeId")){
+                String jsonString = json.getString("json");
+                JSONObject jsonObject = new JSONObject(jsonString);
+                Intent sendIntent = new Intent();
+                sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                switch (jsonObject.getString("messageTypeId")){
                     case "0":
                         break;
                     case "1":
-                        CompanyMsgActivity.openActivity(context,"1",json.getInt("associatedId"));
+                        sendIntent.setClass(context,CompanyMsgActivity.class);
+                        sendIntent.putExtra("msgType","1");
+                        sendIntent.putExtra("msgId",jsonObject.getInt("messageId"));
+                        context.startActivity(sendIntent);
                         break;
                     case "2":
-                        context.startActivity(new Intent(context,DutyMsgActivity.class)
-                                .putExtra("msgId",json.getInt("associatedId")).putExtra("msgType","1"));
+                        sendIntent.setClass(context,DutyMsgActivity.class);
+                        sendIntent.putExtra("msgType","2");
+                        sendIntent.putExtra("msgId",jsonObject.getInt("messageId"));
+                        context.startActivity(sendIntent);
                         break;
                     case "3":
-                        ExamineActivity2.openActivity(context,json.getInt("associatedId"),json.getInt("messageId"));
+                        sendIntent.setClass(context,ExamineActivity2.class);
+                        sendIntent.putExtra("id",jsonObject.getInt("messageId"));
+                        sendIntent.putExtra("msgId",jsonObject.getInt("messageId")+"");
+                        context.startActivity(sendIntent);
                         break;
                     case "4":
 //                        NotifyMsgActivity.openActivity(getContext(),datas.get(position));
@@ -93,7 +104,7 @@ public class MyReceiver extends BroadcastReceiver {
             }
 
         }catch (Exception e){
-
+            Log.e("Load",e.getMessage());
         }
 
 

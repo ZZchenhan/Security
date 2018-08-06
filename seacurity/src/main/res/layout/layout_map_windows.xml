@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="114dp"
+    android:background="#0000"
     android:layout_height="34dp">
 
     <ImageView
@@ -15,7 +16,7 @@
         android:layout_width="wrap_content"
         android:text="不在打卡范围"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:drawableRight="@mipmap/br_record_righ"
         android:textSize="13sp"

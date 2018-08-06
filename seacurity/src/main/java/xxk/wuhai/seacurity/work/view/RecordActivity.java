@@ -35,6 +35,7 @@ import xxk.wuhai.seacurity.MyApplication;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
+import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
 import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
 import xxk.wuhai.seacurity.msg.view.ExamineActivity;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
@@ -54,7 +55,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     /**
      * 导航栏
      */
-    LeftIconNavagation leftIconNavagation;
+    CommonNavagation leftIconNavagation;
 
 
     private RecyclerView recyclerView;
@@ -65,40 +66,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     private  View empty;
     private List<AttendanceInfoVoListBean> data = new ArrayList<>();
 
-    Observable observable;
-    public void startTimer(){
-        observable =  Observable.interval(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Observer<Long>() {
-            @Override
-            public void onSubscribe(Disposable d) {
 
-            }
-
-            @Override
-            public void onNext(Long aLong) {
-                if(adapter != null){
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-    }
-
-    public void destroyTimer(){
-        if(observable!=null)
-        observable.unsubscribeOn(Schedulers.newThread());
-    }
     @Override
     public int layoutId() {
         return R.layout.activity_record;
@@ -107,19 +75,31 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startTimer();
+
     }
 
 
 
     @Override
     public IBaseNavagation navagation() {
-        leftIconNavagation = (LeftIconNavagation) new LeftIconNavagation(this);
-        leftIconNavagation.setTvTitle(new SimpleDateFormat("上班打卡 MM月dd日").format(new Date()));
+        leftIconNavagation = (CommonNavagation) new CommonNavagation(this){
+
+            @Override
+            public String title() {
+                return new SimpleDateFormat("上班打卡 MM月dd日").format(new Date());
+            }
+        };
         leftIconNavagation.setIconClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        leftIconNavagation.setRight("排班");
+        leftIconNavagation.setRightOnclickListner(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyDutyActivity.openActivity(RecordActivity.this,MyDutyActivity.class);
             }
         });
         return leftIconNavagation;
@@ -194,8 +174,9 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                         }
 
                         data.clear();
-                        if(result.getResult().getSchedulingInfoAttVo()!=null)
+                        if(result.getResult().getSchedulingInfoAttVo()!=null) {
                             data.addAll(mergeData(result.getResult().getSchedulingInfoAttVo()));
+                        }
                         adapter.notifyDataSetChanged();
                     }
 
@@ -225,7 +206,6 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     @Override
     protected void onDestroy() {
         mlocationClient.onDestroy();
-        destroyTimer();
         super.onDestroy();
     }
 
@@ -241,8 +221,9 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
             mlocationClient = new AMapLocationClient(this);
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
+            mLocationOption.setInterval(30*1000);
             //设置未签到模式
-            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
+//            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
             //指定位一次
 //            mLocationOption.setOnceLocation(true);
             //设置定位回调监听
@@ -316,6 +297,8 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                             return;
                         }
                         toast("打卡成功");
+                        data.clear();
+                        adapter.notifyDataSetChanged();
                         getOneDayDuty(date);
                     }
 

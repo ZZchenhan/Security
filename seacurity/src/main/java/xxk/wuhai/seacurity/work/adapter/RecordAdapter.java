@@ -25,6 +25,7 @@ import sz.tianhe.baselib.utils.ToastUtils;
 import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.weight.mapwindows.MapWindows;
+import xxk.wuhai.seacurity.weight.record.CountTimeText;
 import xxk.wuhai.seacurity.work.bean.scheduling.AttendanceInfoVoListBean;
 
 /**
@@ -124,6 +125,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                 || item.getStatus().equals("5")
                 ?Color.parseColor("#F43530"):mContext.getResources().getColor(R.color.colorPrimary));
         helper.setText(R.id.time,"要求时间："+item.getAttendanceTimeExpect()==null?"":item.getAttendanceTimeExpect());
+        ((CountTimeText)helper.getView(R.id.btn_record)).changeNomarl();
         if((item.getAttendanceLatExpect() == null
                 || item.getAttendanceLatExpect().equals("")) ||
                 (item.getAttendanceLonExpect() == null || item.getAttendanceLonExpect().equals(""))){
@@ -165,7 +167,19 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                         helper.setGone(R.id.tv_apply,false);
                     }else if(currentTime<realTime-item.getPreLimit()*60*1000){
                         //显示倒计时
-                        helper.setText(R.id.btn_record,getOverTimes(realTime-currentTime-item.getPreLimit()*60*1000));
+                        ((CountTimeText)helper.getView(R.id.btn_record)).changesTimer();
+                        final long distance = realTime-item.getPreLimit()*60*1000;
+                        ((CountTimeText)helper.getView(R.id.btn_record)).setTimeChangeListener(new CountTimeText.OnTimeChangeListener() {
+                            @Override
+                            public void timeChanges() {
+                                if(distance-System.currentTimeMillis()<=0){
+                                    notifyDataSetChanged();
+                                    return;
+                                }
+                                helper.setText(R.id.btn_record,getOverTimes(distance-System.currentTimeMillis()));
+                            }
+                        });
+
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
@@ -222,7 +236,8 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
             mapView.getMap().clear();
             Marker marker = null;
             if(RecoderBean.currentLatLng != null) {
-                marker = mapView.getMap().addMarker(new MarkerOptions().position(RecoderBean.currentLatLng).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                marker = mapView.getMap().addMarker(new MarkerOptions().position(RecoderBean.currentLatLng).title("打卡地址").snippet("打卡地址").
+                        icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));
                 float range = Float.parseFloat(item.getRange());
                 if(range<50){
@@ -244,9 +259,6 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                     fillColor(Color.parseColor("#20197ABD")).
                     strokeColor(Color.parseColor("#197ABD")).
                     strokeWidth(1));
-
-
-
 
             ////这里0 做倒计时 5做未打卡 6请假
             if(item.getStatus().equals("0") || item.getStatus().equals("5") || item.getStatus().equals("6")){
@@ -285,6 +297,18 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                         helper.setGone(R.id.tv_apply,false);
                     }else if(currentTime<realTime-item.getPreLimit()*60*1000){
                         //显示倒计时
+                            ((CountTimeText)helper.getView(R.id.btn_record)).changesTimer();
+                        final long distance = realTime-item.getPreLimit()*60*1000;
+                        ((CountTimeText)helper.getView(R.id.btn_record)).setTimeChangeListener(new CountTimeText.OnTimeChangeListener() {
+                            @Override
+                            public void timeChanges() {
+                                if(distance-System.currentTimeMillis()<=0){
+                                    notifyDataSetChanged();
+                                    return;
+                                }
+                                helper.setText(R.id.btn_record,getOverTimes(distance-System.currentTimeMillis()));
+                            }
+                        });
                         helper.setText(R.id.btn_record,getOverTimes(realTime-currentTime-item.getPreLimit()*60*1000));
                         helper.setTextColor(R.id.btn_record,Color.parseColor("#F4F4F4"));
                         helper.setBackgroundRes(R.id.btn_record,R.drawable.bg_record_no_click);
@@ -304,7 +328,9 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                         helper.setBackgroundRes(R.id.btn_record, R.drawable.bg_record_no_click);
                         helper.getView(R.id.btn_record).setEnabled(false);
                         helper.setGone(R.id.tv_apply, false);
-                        mapView.getMap().setInfoWindowAdapter(new MapWindows(mContext));
+                        MapWindows mapWindows =    new MapWindows(mContext);
+                        mapWindows.initData( AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)+"",item.getAttendanceLocationExpect()+"",RecoderBean.poi);
+                        mapView.getMap().setInfoWindowAdapter(mapWindows);
                         marker.showInfoWindow();
                     }else{
                         helper.setText(R.id.btn_record, "打卡");
@@ -322,11 +348,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                 helper.setText(R.id.attention_addreess,item.getAttendanceLocation());
                 helper.setText(R.id.attention_times,item.getAttendanceTime());
             }
-
         }
-
-
-
     }
 
 
@@ -374,4 +396,6 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
     public void toast(String msg) {
         ToastUtils.makeText(mContext, msg, ToastUtils.LENGTH_LONG).show();
     }
+
+
 }

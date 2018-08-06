@@ -76,7 +76,7 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.name.setText(userDetailInfo.getUserInfo().getName());
         binding.phone.setText(userDetailInfo.getUserInfo().getPhone());
         binding.idcard.setText(userDetailInfo.getUserInfo().getIdCard());
-        binding.age.setText(userDetailInfo.getUserInfo().getAge()+"");
+        binding.age.setText(userDetailInfo.getUserInfo().getAge()+"岁");
         if (userDetailInfo.getUserInfo().getResidenceProvinceName()
                 == null
                 || userDetailInfo.getUserInfo().getResidenceCityName() == null
@@ -117,9 +117,9 @@ public class MeInfoUpdateFragment extends Fragment {
         binding.marry.setText(PesonInfoHelper.marryStatus(userDetailInfo.getUserInfo().getMaritalStatus()));
         userInfoBean.setMaritalStatus(userDetailInfo.getUserInfo().getMaritalStatus() == null ? "0" : userDetailInfo.getUserInfo().getMaritalStatus());
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
-        binding.height.setText(userDetailInfo.getUserInfo().getHeight() + "");
+        binding.height.setText(userDetailInfo.getUserInfo().getHeight() + "CM");
         binding.workAge.setText(PesonInfoHelper.getWorkAge(userDetailInfo.getUserInfo().getWorkYear()));
-        binding.weight.setText(userDetailInfo.getUserInfo().getWeight() + "斤");
+        binding.weight.setText(userDetailInfo.getUserInfo().getWeight() + "KG");
         binding.blood.setText(PesonInfoHelper.bloodType(userDetailInfo.getUserInfo().getBloodType()));
 
         sexCode = userDetailInfo.getUserInfo().getSex();
@@ -300,9 +300,9 @@ public class MeInfoUpdateFragment extends Fragment {
     public void update() {
         userInfoBean.setNation(binding.nation.getText().toString());
         userInfoBean.setLivingAddress(binding.adress.getText().toString());
-        userInfoBean.setHeight(Integer.parseInt(binding.height.getText().toString()));
+        userInfoBean.setHeight(Integer.parseInt(binding.height.getText().toString().replace("CM","")));
 //        userInfoBean.setAge(Integer.parseInt(binding.age.getText().toString()));
-        userInfoBean.setWeight(Integer.parseInt(binding.weight.getText().toString().replace("斤","")));
+        userInfoBean.setWeight(Integer.parseInt(binding.weight.getText().toString().replace("KG","")));
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .modify(userInfoBean)
                 .subscribeOn(Schedulers.newThread())

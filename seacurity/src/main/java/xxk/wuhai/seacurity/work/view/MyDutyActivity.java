@@ -21,16 +21,13 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -42,16 +39,14 @@ import xxk.wuhai.seacurity.R;
 import xxk.wuhai.seacurity.bean.RecoderBean;
 import xxk.wuhai.seacurity.bean.Result;
 import xxk.wuhai.seacurity.common.navagation.CommonNavagation;
-import xxk.wuhai.seacurity.common.navagation.LeftIconNavagation;
-import xxk.wuhai.seacurity.msg.view.ExamineActivity;
 import xxk.wuhai.seacurity.utils.DateUtils;
 import xxk.wuhai.seacurity.work.TrajectoryActivity;
 import xxk.wuhai.seacurity.work.adapter.RecordAdapter;
 import xxk.wuhai.seacurity.work.api.WorkDutyApi;
-import xxk.wuhai.seacurity.work.bean.scheduling.AttendanceInfoVoListBean;
-import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
 import xxk.wuhai.seacurity.work.bean.PersonSchedulingResult;
 import xxk.wuhai.seacurity.work.bean.RecordBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.AttendanceInfoVoListBean;
+import xxk.wuhai.seacurity.work.bean.scheduling.GetPersonSchedulingByDateResponse;
 import xxk.wuhai.seacurity.work.bean.scheduling.SchedulingInfoAttVoBean;
 import xxk.wuhai.seacurity.work.bean.scheduling.SchedulingWithAttVo;
 import xxk.wuhai.seacurity.work.view.custorm.DuyteHead;
@@ -73,45 +68,11 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     private DuyteHead duyteHead;
     private  View empty;
 
-    Observable observable;
-    public void startTimer(){
-        observable =  Observable.interval(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread());
-        observable.subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        if(adapter != null){
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    public void destroyTimer(){
-        if(observable!=null)
-        observable.unsubscribeOn(Schedulers.newThread());
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startTimer();
     }
 
 
@@ -261,7 +222,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
             //设置未签到模式
-            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
+            mLocationOption.setInterval(1000*30);
             //指定位一次
 //            mLocationOption.setOnceLocation(true);
             //设置定位回调监听
@@ -289,6 +250,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                     && aMapLocation.getErrorCode() == 0) {
                 RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
                 RecordAdapter.timeLong = System.currentTimeMillis();
+                RecoderBean.poi = poi;
                 poi =  aMapLocation.getPoiName();
                 adapter.notifyDataSetChanged();
             }
@@ -298,7 +260,6 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     @Override
     protected void onDestroy() {
         mlocationClient.stopLocation();
-        destroyTimer();
         super.onDestroy();
     }
 

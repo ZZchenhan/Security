@@ -41,7 +41,7 @@ public class RecordFaileActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        distance.setText(  getIntent().getStringExtra("distance") == null?"未知": getIntent().getStringExtra("distance"));
+        distance.setText(  getIntent().getStringExtra("distance") == null?"未知": getIntent().getStringExtra("distance")+"米");
         location.setText(  getIntent().getStringExtra("location") == null?"未知": getIntent().getStringExtra("location"));
         current.setText(  getIntent().getStringExtra("current") == null?"未知": getIntent().getStringExtra("current"));
     }

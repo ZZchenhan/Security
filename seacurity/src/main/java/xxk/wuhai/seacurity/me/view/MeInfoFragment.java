@@ -90,10 +90,10 @@ public class MeInfoFragment extends Fragment {
         }
         binding.marry.setText(PesonInfoHelper.marryStatus(userDetailInfo.getUserInfo().getMaritalStatus()));
         binding.political.setText(PesonInfoHelper.politicsType(userDetailInfo.getUserInfo().getPoliticsType()));
-        binding.height.setText(userDetailInfo.getUserInfo().getHeight()+"");
-        binding.age.setText(userDetailInfo.getUserInfo().getAge()+"");
+        binding.height.setText(userDetailInfo.getUserInfo().getHeight()+"CM");
+        binding.age.setText(userDetailInfo.getUserInfo().getAge()+"岁");
         binding.workAge.setText(PesonInfoHelper.getWorkAge(userDetailInfo.getUserInfo().getWorkYear()));
-        binding.weight.setText(userDetailInfo.getUserInfo().getWeight()+"斤");
+        binding.weight.setText(userDetailInfo.getUserInfo().getWeight()+"KG");
         binding.blood.setText(PesonInfoHelper.bloodType(userDetailInfo.getUserInfo().getBloodType()));
     }
 
