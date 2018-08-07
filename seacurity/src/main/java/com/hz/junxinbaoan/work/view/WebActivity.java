@@ -3,6 +3,7 @@ package com.hz.junxinbaoan.work.view;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.hz.junxinbaoan.databinding.ActivityWebBinding;
 import com.hz.junxinbaoan.work.api.WorkDutyApi;
 import com.hz.junxinbaoan.work.bean.StudyDetail;
 import com.hz.junxinbaoan.work.vo.GetStudyNoticeVo;
+
+import java.net.URL;
 
 public class WebActivity extends BaseActivity {
 
@@ -94,7 +97,7 @@ public class WebActivity extends BaseActivity {
                         }
                         binding.title.setText(studyDetailResult.getResult().getStudyNoticeVo().getStudyTitle());
                         binding.time.setText(studyDetailResult.getResult().getStudyNoticeVo().getStudyCreateTime());
-                        binding.content.setText(Html.fromHtml(studyDetailResult.getResult().getStudyNoticeVo().getStudyContent()));
+                        binding.content.setText(Html.fromHtml(studyDetailResult.getResult().getStudyNoticeVo().getStudyContent(),imgGetter,null));
                         binding.from.setText(studyDetailResult.getResult().getStudyNoticeVo().getCompanyName());
                     }
 
@@ -111,5 +114,19 @@ public class WebActivity extends BaseActivity {
                     }
                 });
     }
-
+    Html.ImageGetter imgGetter = new Html.ImageGetter() {
+        public Drawable getDrawable(String source) {
+            Drawable drawable = null;
+            URL url;
+            try {
+                url = new URL(source);
+                drawable = Drawable.createFromStream(url.openStream(), "");  //获取网路图片
+            } catch (Exception e) {
+                return null;
+            }
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable
+                    .getIntrinsicHeight());
+            return drawable;
+        }
+    };
 }

@@ -77,26 +77,22 @@ public class MeTAgActivity extends BaseActivity {
         tagAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (getIntent().getIntExtra("id", 0) == MyApplication.userDetailInfo.getUserInfo().getUserId()
-                        ) {
-                    return;
-                }
                 if (datas.get(position).getIsLightUp().equals("1")) {
                     toast("已经点过，不能再点了哦");
                     return;
                 }
-                if(getIntent().getIntExtra("id", 0) == MyApplication.userDetailInfo.getUserInfo().getUserId()){
+                if(getIntent().getLongExtra("id", 0) == MyApplication.userDetailInfo.getUserInfo().getUserId()){
                     toast("不能给自己点赞哦");
                 }else {
                     TextView textView = (TextView) view;
                     textView.setBackground(getResources().getDrawable(R.drawable.bg_info_blue));
                     textView.setTextColor(Color.WHITE);
                     textView.setText(datas.get(position).getLabelName() + " " + (datas.get(position).getLabelNum() + 1));
-                    addTags(datas.get(position).getLabelId(), getIntent().getIntExtra("id", 0));
+                    addTags(datas.get(position).getLabelId(), getIntent().getLongExtra("id", 0));
                 }
             }
         });
-        getTags(getIntent().getIntExtra("id", 0));
+        getTags(getIntent().getLongExtra("id", 0));
     }
 
     @Override
@@ -104,7 +100,7 @@ public class MeTAgActivity extends BaseActivity {
         tvNumbers = findViewById(R.id.numbers);
     }
 
-    public void getTags(int userId) {
+    public void getTags(long userId) {
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .getPraiseAndLabel(new GetPraiseAndLabelVo(userId))
                 .subscribeOn(Schedulers.newThread())
@@ -139,7 +135,7 @@ public class MeTAgActivity extends BaseActivity {
     }
 
 
-    public void addTags(int labelid, int usrId) {
+    public void addTags(int labelid, long usrId) {
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .doPraise(new AddLabelInfoApiVo(labelid, usrId))
                 .subscribeOn(Schedulers.newThread())

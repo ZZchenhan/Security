@@ -25,12 +25,14 @@ public abstract class CommonNavagation extends AbstarctNavagation {
     private TextView tvTitle;
     private ImageView ivLeft;
     private TextView tvRight;
+    private ImageView ivRight;
 
     public CommonNavagation(Context context) {
         super(context);
         tvTitle = (TextView) navagationView.findViewById(R.id.tv_title);
         ivLeft = navagationView.findViewById(R.id.iv_left);
         tvRight = navagationView.findViewById(R.id.tv_right);
+        ivRight = navagationView.findViewById(R.id.iv_right);
         tvTitle.setText(title());
     }
 
@@ -83,7 +85,8 @@ public abstract class CommonNavagation extends AbstarctNavagation {
     }
 
     public CommonNavagation setRight(int resouceId){
-        this.tvRight.setBackground(mContext.getResources().getDrawable(resouceId));
+        this.ivRight.setImageResource(resouceId);
+        this.tvRight.setVisibility(View.GONE);
         return this;
     }
 
@@ -94,6 +97,7 @@ public abstract class CommonNavagation extends AbstarctNavagation {
 
     public CommonNavagation setRightOnclickListner(View.OnClickListener onclickListner){
         this.tvRight.setOnClickListener(onclickListner);
+        this.ivRight.setOnClickListener(onclickListner);
         return this;
     }
 }

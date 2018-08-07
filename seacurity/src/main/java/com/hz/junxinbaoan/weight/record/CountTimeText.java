@@ -5,6 +5,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by 86936 on 2018/8/6.
@@ -13,30 +21,40 @@ import android.util.AttributeSet;
  */
 
 public class CountTimeText extends android.support.v7.widget.AppCompatButton {
-    boolean isStart = true;
 
-    Handler mHandler = new Handler(){
+    //观察者
+    Observable observable = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+
+    //订阅足额
+    Observer observer = new Observer() {
         @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case  100:
-                if(timeChangeListener != null){
-                    timeChangeListener.timeChanges();
-                }
-                if(isStart) {
-                    mHandler.sendEmptyMessageDelayed(100, 1000);
-                }
-                break;
-            }
+        public void onSubscribe(Disposable d) {
+
+        }
+
+        @Override
+        public void onNext(Object o) {
+            if (timeChangeListener != null)
+                timeChangeListener.timeChanges();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onComplete() {
+
         }
     };
 
     public CountTimeText(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public CountTimeText(Context context, AttributeSet attrs) {
-        super(context, attrs,0);
+        super(context, attrs, 0);
     }
 
     public CountTimeText(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -44,13 +62,12 @@ public class CountTimeText extends android.support.v7.widget.AppCompatButton {
     }
 
 
-
-    public void changesTimer(){
-        isStart =true;
-        mHandler.sendEmptyMessageDelayed(100, 0);
+    public void changesTimer() {
+        observable.subscribe(observer);
     }
-    public void changeNomarl(){
-        isStart =false;
+
+    public void changeNomarl() {
+        observable.unsubscribeOn(AndroidSchedulers.mainThread());
     }
 
     public void setTimeChangeListener(OnTimeChangeListener timeChangeListener) {
@@ -58,7 +75,8 @@ public class CountTimeText extends android.support.v7.widget.AppCompatButton {
     }
 
     OnTimeChangeListener timeChangeListener;
-    public interface  OnTimeChangeListener{
+
+    public interface OnTimeChangeListener {
         void timeChanges();
     }
 }

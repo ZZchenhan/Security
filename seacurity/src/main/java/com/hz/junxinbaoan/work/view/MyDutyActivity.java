@@ -430,8 +430,8 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                             }
                             return;
                         }
-                        getOneDayDuty(date);
                         toast("打卡成功");
+                        getOneDayDuty(date);
                     }
 
                     @Override

@@ -29,20 +29,28 @@
         android:text="title"
         android:textColor="@color/white"
         android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tv_right"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
         android:paddingLeft="10dp"
-        android:elevation="2dp"
-        android:paddingRight="10dp"
         android:layout_centerVertical="true"
-        android:text="title2"
         android:layout_alignParentRight="true"
-        android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:text="title2"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
 </RelativeLayout>

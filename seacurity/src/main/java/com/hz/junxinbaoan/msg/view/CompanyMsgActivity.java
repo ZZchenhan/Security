@@ -2,6 +2,7 @@ package com.hz.junxinbaoan.msg.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ import com.hz.junxinbaoan.common.navagation.LeftIconNavagation;
 import com.hz.junxinbaoan.msg.MsgApi;
 import com.hz.junxinbaoan.msg.bean.GetMessageDetailResult;
 import com.hz.junxinbaoan.msg.vo.GetMessageDetailVO;
+
+import java.net.URL;
 
 public class CompanyMsgActivity extends BaseActivity {
 
@@ -100,7 +103,7 @@ public class CompanyMsgActivity extends BaseActivity {
         if(result.getMessageDetail() != null){
             tvTile.setText(result.getMessageDetail().getMessageTitle());
             tvTimes.setText("发送时间:"+result.getMessageDetail().getMessageCreateTime());
-            tvContext.setText(Html.fromHtml(result.getMessageDetail().getMessageContent()));
+            tvContext.setText(Html.fromHtml(result.getMessageDetail().getMessageContent(),imgGetter,null));
             tvFrom.setText("来源:"+result.getMessageDetail().getCompanyName());
             return;
         }
@@ -108,7 +111,7 @@ public class CompanyMsgActivity extends BaseActivity {
             tvTile.setText("人事变动提醒");
             tvTimes.setText("发送时间:"+result.getPersonnelDetails().getGmtCreate());
 
-            tvContext.setText(Html.fromHtml(result.getPersonnelDetails().getPost())
+            tvContext.setText(Html.fromHtml(result.getPersonnelDetails().getPost(),imgGetter,null)
             );
             tvFrom.setText("来源:人事部");
             return;
@@ -130,4 +133,20 @@ public class CompanyMsgActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+
+    Html.ImageGetter imgGetter = new Html.ImageGetter() {
+        public Drawable getDrawable(String source) {
+            Drawable drawable = null;
+            URL url;
+            try {
+                url = new URL(source);
+                drawable = Drawable.createFromStream(url.openStream(), "");  //获取网路图片
+            } catch (Exception e) {
+                return null;
+            }
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable
+                    .getIntrinsicHeight());
+            return drawable;
+        }
+    };
 }

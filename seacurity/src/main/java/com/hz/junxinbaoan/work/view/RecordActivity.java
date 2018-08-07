@@ -91,7 +91,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                 finish();
             }
         });
-        leftIconNavagation.setRight("排班");
+        leftIconNavagation.setRight(R.mipmap.ic_change_duty);
         leftIconNavagation.setRightOnclickListner(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

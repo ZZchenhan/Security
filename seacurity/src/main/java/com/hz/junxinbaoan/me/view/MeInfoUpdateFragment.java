@@ -297,9 +297,12 @@ public class MeInfoUpdateFragment extends Fragment {
     public void update() {
         userInfoBean.setNation(binding.nation.getText().toString());
         userInfoBean.setLivingAddress(binding.adress.getText().toString());
-        userInfoBean.setHeight(Integer.parseInt(binding.height.getText().toString().replace("CM","")));
+        userInfoBean.setHeight(
+                getIntValue(binding.height.getText().toString())
+               );
 //        userInfoBean.setAge(Integer.parseInt(binding.age.getText().toString()));
-        userInfoBean.setWeight(Integer.parseInt(binding.weight.getText().toString().replace("KG","")));
+        userInfoBean.setWeight(getIntValue(binding.weight.getText().toString())
+               );
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .modify(userInfoBean)
                 .subscribeOn(Schedulers.newThread())
@@ -338,4 +341,24 @@ public class MeInfoUpdateFragment extends Fragment {
     public void showMsg(String msg){
         ToastUtils.makeText(getActivity(),msg,ToastUtils.LENGTH_LONG).show();
     }
+
+
+    public static int getIntValue(String str){
+        if(str==null){
+            return 0;
+        }
+        String valueSection=str.split("[a-zA-Z]")[0].trim();
+        if(valueSection.length()==0)
+        {
+            return 0;
+        }
+        int value=0;
+        try{
+            value=Integer.parseInt(valueSection);
+        }catch(Exception e){
+            value=0;
+        }
+        return value;
+    }
+
 }

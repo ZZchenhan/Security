@@ -81,13 +81,13 @@ public class MyReceiver extends BroadcastReceiver {
                         break;
                     case "3":
                         sendIntent.setClass(context,ExamineActivity2.class);
-                        sendIntent.putExtra("id",jsonObject.getInt("messageId"));
+                        sendIntent.putExtra("id",jsonObject.getInt("associatedId"));
                         sendIntent.putExtra("msgId",jsonObject.getInt("messageId")+"");
                         context.startActivity(sendIntent);
                         break;
                     case "4":
-//                        NotifyMsgActivity.openActivity(getContext(),datas.get(position));
                         break;
+
                 }
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
