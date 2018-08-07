@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
     </RelativeLayout>
-    <xxk.wuhai.seacurity.weight.dialog.TextPicker
+    <com.hz.junxinbaoan.weight.dialog.TextPicker
         android:id="@+id/monthPicker_layout_date"
         app:halfVisibleItemCount="2"
         app:wheelCurtain="false"

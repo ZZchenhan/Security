@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <xxk.wuhai.seacurity.weight.date.YearPicker
+    <com.hz.junxinbaoan.weight.date.YearPicker
         app:selectedTextColor="#3F3F3F"
         app:selectedTextSize="20sp"
         android:id="@+id/yearPicker_layout_date"
@@ -16,7 +16,7 @@
         app:wheelCurtain="false"
         app:wheelCurtainBorder="false"
         android:layout_height="wrap_content" />
-    <xxk.wuhai.seacurity.weight.date.MonthPicker
+    <com.hz.junxinbaoan.weight.date.MonthPicker
         android:id="@+id/monthPicker_layout_date"
         app:halfVisibleItemCount="2"
         app:wheelCurtain="false"
@@ -26,7 +26,7 @@
         android:layout_width="0dp"
         app:wheelCurtainBorder="false"
         android:layout_height="wrap_content" />
-    <xxk.wuhai.seacurity.weight.date.DayPicker
+    <com.hz.junxinbaoan.weight.date.DayPicker
         android:id="@+id/dayPicker_layout_date"
         app:halfVisibleItemCount="2"
         android:layout_weight="1"

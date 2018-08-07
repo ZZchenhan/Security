@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
-        <xxk.wuhai.seacurity.weight.site.LocaionPicker
+        <com.hz.junxinbaoan.weight.site.LocaionPicker
             android:id="@+id/province"
             app:halfVisibleItemCount="2"
             app:wheelCurtain="false"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             app:wheelCurtainBorder="false"
             android:layout_height="wrap_content" />
-        <xxk.wuhai.seacurity.weight.site.LocaionPicker
+        <com.hz.junxinbaoan.weight.site.LocaionPicker
             android:id="@+id/city"
             app:halfVisibleItemCount="2"
             app:wheelCurtain="false"
@@ -59,7 +59,7 @@
             app:wheelCurtainBorder="false"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
-        <xxk.wuhai.seacurity.weight.site.LocaionPicker
+        <com.hz.junxinbaoan.weight.site.LocaionPicker
             android:id="@+id/country"
             app:halfVisibleItemCount="2"
             app:wheelCurtain="false"

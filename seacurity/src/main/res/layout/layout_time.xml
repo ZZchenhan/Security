@@ -5,7 +5,7 @@
     android:background="#f7f7f7"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <xxk.wuhai.seacurity.weight.date.YearPicker
+    <com.hz.junxinbaoan.weight.date.YearPicker
         android:id="@+id/yearPicker_layout_date"
         app:wheelCyclic="true"
         app:indicatorTextSize="20sp"
@@ -17,7 +17,7 @@
         app:wheelCurtainBorder="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
-    <xxk.wuhai.seacurity.weight.date.MonthPicker
+    <com.hz.junxinbaoan.weight.date.MonthPicker
         android:id="@+id/monthPicker_layout_date"
         app:wheelCyclic="true"
         app:indicatorTextSize="20sp"
@@ -29,7 +29,7 @@
         app:wheelCurtainBorder="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"/>
-    <xxk.wuhai.seacurity.weight.date.DayPicker
+    <com.hz.junxinbaoan.weight.date.DayPicker
         android:id="@+id/dayPicker_layout_date"
         app:wheelCyclic="true"
         app:indicatorTextSize="20sp"
@@ -41,7 +41,7 @@
         app:wheelCurtainBorder="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
-    <xxk.wuhai.seacurity.weight.date.HourPiker
+    <com.hz.junxinbaoan.weight.date.HourPiker
         android:id="@+id/hourPicker_layout_time"
         app:halfVisibleItemCount="2"
         app:wheelCyclic="true"
@@ -53,7 +53,7 @@
         app:wheelCurtainBorder="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
-    <xxk.wuhai.seacurity.weight.date.MinutePiker
+    <com.hz.junxinbaoan.weight.date.MinutePiker
         android:id="@+id/minutePicker_layout_time"
         app:wheelCyclic="true"
         app:indicatorTextSize="20sp"

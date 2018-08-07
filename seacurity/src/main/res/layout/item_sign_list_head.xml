@@ -13,7 +13,7 @@
         android:background="@color/gray"
         android:elevation="5dp">
 
-        <xxk.wuhai.seacurity.weight.MapContainer
+        <com.hz.junxinbaoan.weight.MapContainer
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
@@ -21,7 +21,7 @@
                 android:id="@+id/tv_map"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
-        </xxk.wuhai.seacurity.weight.MapContainer>
+        </com.hz.junxinbaoan.weight.MapContainer>
 
         <LinearLayout
             android:layout_width="match_parent"

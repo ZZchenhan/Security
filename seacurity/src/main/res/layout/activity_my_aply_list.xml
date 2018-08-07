@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="xxk.wuhai.seacurity.work.view.MyAplyListActivity">
+    tools:context="com.hz.junxinbaoan.work.view.MyAplyListActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:focusable="true"

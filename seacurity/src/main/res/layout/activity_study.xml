@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="xxk.wuhai.seacurity.work.view.StudyActivity">
+    tools:context="com.hz.junxinbaoan.work.view.StudyActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_marginTop="7dp"

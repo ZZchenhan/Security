@@ -7,7 +7,7 @@
     android:padding="16dp"
     android:background="@color/gray"
     android:orientation="vertical"
-    tools:context="xxk.wuhai.seacurity.work.view.RecordFaileActivity">
+    tools:context="com.hz.junxinbaoan.work.view.RecordFaileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -42,7 +42,7 @@
             android:layout_marginLeft="14dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <xxk.wuhai.seacurity.weight.MapContainer
+    <com.hz.junxinbaoan.weight.MapContainer
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="170dp">
@@ -50,7 +50,7 @@
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="170dp"/>
-    </xxk.wuhai.seacurity.weight.MapContainer>
+    </com.hz.junxinbaoan.weight.MapContainer>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -133,7 +133,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="17dp"
         android:layout_height="wrap_content">
-        <xxk.wuhai.seacurity.weight.record.CountTimeText
+        <com.hz.junxinbaoan.weight.record.CountTimeText
             android:id="@+id/btn_record"
             android:layout_width="120dp"
             android:gravity="center"

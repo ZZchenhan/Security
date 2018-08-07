@@ -5,7 +5,7 @@ android {
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "xxk.wuhai.seacurity"
+        applicationId "com.hz.junxinbaoan"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 22001
@@ -18,7 +18,7 @@ android {
         }
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "f5f55b6b3374ef4476b80f16", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY : "bfcfe9fcd022d3653444814a", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
         multiDexEnabled true

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="xxk.wuhai.seacurity">
+    package="com.hz.junxinbaoan">
 
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -32,7 +32,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.hz.junxinbaoan.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -51,39 +51,39 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
-            android:name=".main.view.MainActivity"
+            android:name="com.hz.junxinbaoan.main.view.MainActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".guide.view.GuideActivity">
+        <activity android:name="com.hz.junxinbaoan.guide.view.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.view.LoginActivity"></activity>
-        <activity android:name=".msg.view.CompanyMsgActivity" />
-        <activity android:name=".login.view.ForgetActivity" />
-        <activity android:name=".main.view.UpdateUserInfoActivity" />
-        <activity android:name=".main.view.SettingActivity" />
-        <activity android:name=".work.view.SupplementSignActivity"></activity>
-        <activity android:name=".work.view.SignComfirmActivity" />
-        <activity android:name=".work.view.SignActivity" />
-        <activity android:name=".work.view.LocationUpdateActivity" />
-        <activity android:name=".work.view.RecordFaileActivity" />
-        <activity android:name=".work.view.RecordActivity" />
+        <activity android:name="com.hz.junxinbaoan.login.view.LoginActivity"></activity>
+        <activity android:name="com.hz.junxinbaoan.msg.view.CompanyMsgActivity" />
+        <activity android:name="com.hz.junxinbaoan.login.view.ForgetActivity" />
+        <activity android:name="com.hz.junxinbaoan.main.view.UpdateUserInfoActivity" />
+        <activity android:name="com.hz.junxinbaoan.main.view.SettingActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.SupplementSignActivity"></activity>
+        <activity android:name="com.hz.junxinbaoan.work.view.SignComfirmActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.SignActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.LocationUpdateActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.RecordFaileActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.RecordActivity" />
         <activity
-            android:name=".contact.view.ContactActivity"
+            android:name="com.hz.junxinbaoan.contact.view.ContactActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".contact.view.UserInfoActivity" />
-        <activity android:name=".contact.view.AddImpressionActivity" />
-        <activity android:name=".me.view.MeTAgActivity" />
-        <activity android:name=".me.view.MeInfoActivity" />
-        <activity android:name=".work.view.MyDutyActivity" />
+        <activity android:name="com.hz.junxinbaoan.contact.view.UserInfoActivity" />
+        <activity android:name="com.hz.junxinbaoan.contact.view.AddImpressionActivity" />
+        <activity android:name="com.hz.junxinbaoan.me.view.MeTAgActivity" />
+        <activity android:name="com.hz.junxinbaoan.me.view.MeInfoActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.MyDutyActivity" />
 
         <!-- 替换原生极光推送接收器 -->
         <receiver
-            android:name=".msg.recevi.MyReceiver"
+            android:name="com.hz.junxinbaoan.msg.recevi.MyReceiver"
             android:enabled="true"
             android:exported="false"
             tools:node="replace">
@@ -97,24 +97,24 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".msg.view.NotifyMsgActivity" />
-        <activity android:name=".msg.view.ExamineActivity" />
-        <activity android:name=".msg.view.LeaveActivity" />
-        <activity android:name=".msg.view.DutyMsgActivity" />
-        <activity android:name=".work.view.CulActivity" />
-        <activity android:name=".work.view.StudyActivity" />
-        <activity android:name=".work.view.WebActivity" />
-        <activity android:name=".work.view.ApplyActivity" />
-        <activity android:name=".work.view.ApplyLeaveActivity" />
-        <activity android:name=".work.view.CulListActivity" />
-        <activity android:name=".work.view.CulDetailActivity" />
-        <activity android:name=".work.view.MyAplyListActivity" />
-        <activity android:name=".me.view.ElectIDcardActivity" />
-        <activity android:name=".work.view.SuggestActivity" />
-        <activity android:name=".work.view.SystemSettinActivity" />
-        <activity android:name=".work.TrajectoryActivity" />
-        <activity android:name=".msg.view.ExamineActivity2" />
-        <activity android:name=".work.view.WebViewActivity"></activity>
+        <activity android:name="com.hz.junxinbaoan.msg.view.NotifyMsgActivity" />
+        <activity android:name="com.hz.junxinbaoan.msg.view.ExamineActivity" />
+        <activity android:name="com.hz.junxinbaoan.msg.view.LeaveActivity" />
+        <activity android:name="com.hz.junxinbaoan.msg.view.DutyMsgActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.CulActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.StudyActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.WebActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.ApplyActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.ApplyLeaveActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.CulListActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.CulDetailActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.MyAplyListActivity" />
+        <activity android:name="com.hz.junxinbaoan.me.view.ElectIDcardActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.SuggestActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.view.SystemSettinActivity" />
+        <activity android:name="com.hz.junxinbaoan.work.TrajectoryActivity" />
+        <activity android:name="com.hz.junxinbaoan.msg.view.ExamineActivity2" />
+        <activity android:name="com.hz.junxinbaoan.work.view.WebViewActivity"></activity>
     </application>
 
 </manifest>

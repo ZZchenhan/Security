@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:focusable="true"
     android:background="@color/white"
-    tools:context="xxk.wuhai.seacurity.work.view.LocationUpdateActivity">
+    tools:context="com.hz.junxinbaoan.work.view.LocationUpdateActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="365dp">

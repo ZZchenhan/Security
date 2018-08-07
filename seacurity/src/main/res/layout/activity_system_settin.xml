@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="xxk.wuhai.seacurity.work.view.SystemSettinActivity">
+    tools:context="com.hz.junxinbaoan.work.view.SystemSettinActivity">
     <LinearLayout
         android:id="@+id/rl_clean"
         android:layout_width="match_parent"

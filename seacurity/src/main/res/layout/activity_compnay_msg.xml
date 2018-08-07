@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/white"
-        tools:context="xxk.wuhai.seacurity.work.view.WebActivity">
+        tools:context="com.hz.junxinbaoan.work.view.WebActivity">
         <TextView
             android:id="@+id/title"
             android:textSize="24sp"
