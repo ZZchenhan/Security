@@ -25,44 +25,40 @@ public class GetTrajectoryResponse {
          * attendanceLat : string
          * attendanceLon : string
          * uploadTime : string
+         * 现在变成{
+         lat = "31.303366";
+         lon = "121.439633";
+         time = "2018-08-07 21:33:15";
+         },
          * userId : 0
          */
 
-        private String attendanceLat;
-        private String attendanceLon;
-        private String uploadTime;
-        private int userId;
+        private String lat ;
+        private String lon;
+        private String time;
 
-        public String getAttendanceLat() {
-            return attendanceLat;
+        public String getLat() {
+            return lat;
         }
 
-        public void setAttendanceLat(String attendanceLat) {
-            this.attendanceLat = attendanceLat;
+        public void setLat(String lat) {
+            this.lat = lat;
         }
 
-        public String getAttendanceLon() {
-            return attendanceLon;
+        public String getLon() {
+            return lon;
         }
 
-        public void setAttendanceLon(String attendanceLon) {
-            this.attendanceLon = attendanceLon;
+        public void setLon(String lon) {
+            this.lon = lon;
         }
 
-        public String getUploadTime() {
-            return uploadTime;
+        public String getTime() {
+            return time;
         }
 
-        public void setUploadTime(String uploadTime) {
-            this.uploadTime = uploadTime;
-        }
-
-        public int getUserId() {
-            return userId;
-        }
-
-        public void setUserId(int userId) {
-            this.userId = userId;
+        public void setTime(String time) {
+            this.time = time;
         }
     }
 }

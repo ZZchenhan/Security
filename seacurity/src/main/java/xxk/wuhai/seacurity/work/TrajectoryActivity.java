@@ -134,7 +134,7 @@ public class TrajectoryActivity extends BaseActivity {
                         List<LatLng> latLngs = new ArrayList<LatLng>();
                          for(GetTrajectoryResponse.TrajectoryVoListBean item:getTrajectoryResponseResult.getResult().getTrajectoryVoList()){
                              try {
-                                 latLngs.add(new LatLng(Float.parseFloat(item.getAttendanceLat()), Float.parseFloat(item.getAttendanceLon())));
+                                 latLngs.add(new LatLng(Float.parseFloat(item.getLat()), Float.parseFloat(item.getLon())));
                              }catch (Exception e){}
                          }
                          mapView.getMap().clear();
