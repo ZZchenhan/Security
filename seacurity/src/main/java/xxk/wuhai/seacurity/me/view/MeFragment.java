@@ -161,7 +161,7 @@ public class MeFragment extends Fragment {
 
 
 
-    public void getTags(int userId){
+    public void getTags(long userId){
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .getPraiseAndLabel(new GetPraiseAndLabelVo(userId))
             .subscribeOn(Schedulers.newThread())

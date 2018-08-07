@@ -125,7 +125,7 @@ public class StaffResult {
              * deptVo : {"deptId":15,"deptName":"未分组","parentId":0,"orgId":19,"sortNum":0,"completeName":null,"deptVoList":null}
              */
 
-            private int userId;
+            private long userId;
             private String userType;
             private String name;
             private String accountName;
@@ -178,11 +178,11 @@ public class StaffResult {
             private DeptVoBean deptVo;
             private List<RelRolesBean> relRoles;
 
-            public int getUserId() {
+            public long getUserId() {
                 return userId;
             }
 
-            public void setUserId(int userId) {
+            public void setUserId(long userId) {
                 this.userId = userId;
             }
 

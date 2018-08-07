@@ -164,7 +164,7 @@ public class UserInfoActivity extends BaseActivity {
     }
 
 
-    public void getTags(int userId){
+    public void getTags(long userId){
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .getPraiseAndLabel(new GetPraiseAndLabelVo(userId))
                 .subscribeOn(Schedulers.newThread())
@@ -203,7 +203,7 @@ public class UserInfoActivity extends BaseActivity {
     }
 
 
-    public void getAge(int userId){
+    public void getAge(long userId){
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .getStaffInfo(new GetPraiseAndLabelVo(userId))
                 .subscribeOn(Schedulers.newThread())
@@ -237,7 +237,7 @@ public class UserInfoActivity extends BaseActivity {
                 });
     }
 
-    public void addTags(int labelid, int usrId) {
+    public void addTags(int labelid, long usrId) {
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .doPraise(new AddLabelInfoApiVo(labelid, usrId))
                 .subscribeOn(Schedulers.newThread())

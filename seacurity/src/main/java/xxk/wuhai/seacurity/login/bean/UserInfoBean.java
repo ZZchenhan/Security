@@ -68,7 +68,7 @@ public class UserInfoBean {
      * deptVo : {"deptId":19,"deptName":"测试科技保安一部二大队","parentId":16,"orgId":19,"sortNum":2,"completeName":null,"deptVoList":null}
      */
 
-    private int userId;
+    private long userId;
     private String userType;
     private String name;
     private String accountName;
@@ -121,11 +121,11 @@ public class UserInfoBean {
     private DeptVoBean deptVo;
     private List<UpdateUsers.RelRolesBean> relRoles;
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

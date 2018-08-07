@@ -56,7 +56,7 @@ public class UserSignListResult {
         private String poiName;
         private String remark;
         private String signTime;
-        private int userId;
+        private long userId;
         private List<String> imageUrls;
 
         public String getAttendanceLat() {
@@ -115,11 +115,11 @@ public class UserSignListResult {
             this.signTime = signTime;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 

@@ -58,7 +58,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public void findViews() {
         mWebView = findViewById(R.id.webview);
-        mWebView.loadUrl("http://139.224.70.219:8088/apply/htm/apply.html?idcard="+getIntent().getStringExtra("idCard"));// 加载url，也可以执行js函数
+        mWebView.loadUrl("http://app.junxin-baoan.cn:9002/apply/htm/apply.html?idcard="+getIntent().getStringExtra("idCard"));// 加载url，也可以执行js函数
         mWebView.setWebViewClient(new SafeWebViewClient());// 设置 WebViewClient
 //        mWebView.setWebChromeClient(new SafeWebChromeClient());// 设置 WebChromeClient
 

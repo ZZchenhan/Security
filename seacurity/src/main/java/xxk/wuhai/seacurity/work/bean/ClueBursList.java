@@ -64,7 +64,7 @@ public class ClueBursList {
         private String longitude;
         private String name;
         private String status;
-        private int userId;
+        private long userId;
         private List<String> pictureUrls;
 
         public String getClueBurstContent() {
@@ -123,11 +123,11 @@ public class ClueBursList {
             this.status = status;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 

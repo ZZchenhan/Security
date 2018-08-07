@@ -8,7 +8,7 @@ package xxk.wuhai.seacurity.work.vo;
  */
 public class GetSchedulingByTimeVo {
 
-    public GetSchedulingByTimeVo(String endDay, String startDay, int userId) {
+    public GetSchedulingByTimeVo(String endDay, String startDay, long userId) {
         this.endDay = endDay;
         this.startDay = startDay;
         this.userId = userId;
@@ -23,7 +23,7 @@ public class GetSchedulingByTimeVo {
 
     private String endDay;
     private String startDay;
-    private int userId;
+    private long userId;
 
     public String getEndDay() {
         return endDay;
@@ -41,11 +41,11 @@ public class GetSchedulingByTimeVo {
         this.startDay = startDay;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

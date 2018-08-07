@@ -7,17 +7,17 @@ package xxk.wuhai.seacurity.work.vo;
  */
 
 public class GetApproverVo {
-    public GetApproverVo(int userId) {
+    public GetApproverVo(long userId) {
         this.userId = userId;
     }
 
-    private int userId;
+    private long userId;
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

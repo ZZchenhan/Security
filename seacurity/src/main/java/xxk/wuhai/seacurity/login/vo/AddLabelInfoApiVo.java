@@ -14,7 +14,7 @@ public class AddLabelInfoApiVo {
      */
 
     private int labelId;
-    private int userId;
+    private long userId;
 
     public int getLabelId() {
         return labelId;
@@ -24,15 +24,15 @@ public class AddLabelInfoApiVo {
         this.labelId = labelId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public AddLabelInfoApiVo(int labelId, int userId) {
+    public AddLabelInfoApiVo(int labelId, long userId) {
         this.labelId = labelId;
         this.userId = userId;
     }

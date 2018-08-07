@@ -7,17 +7,17 @@ package xxk.wuhai.seacurity.login.vo;
  */
 
 public class GetPraiseAndLabelVo {
-    private int userId;
+    private long userId;
 
-    public GetPraiseAndLabelVo(int userId) {
+    public GetPraiseAndLabelVo(long userId) {
         this.userId = userId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

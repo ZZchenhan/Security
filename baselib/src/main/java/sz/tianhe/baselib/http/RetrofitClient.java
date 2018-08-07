@@ -14,6 +14,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.MediaType;
@@ -116,7 +120,13 @@ public class RetrofitClient {
                 .addNetworkInterceptor(logInterceptor)
                 .connectionPool(new ConnectionPool(8, 10, TimeUnit.SECONDS))
                 .connectTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS).sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
+                .hostnameVerifier(new HostnameVerifier() {
+                    @Override
+                    public boolean verify(String s, SSLSession sslSession) {
+                        return true;
+                    }
+                })
                 ;
         addInterceptor(builder);
         this.okHttpClient = builder.build();

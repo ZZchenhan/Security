@@ -7,14 +7,14 @@ package xxk.wuhai.seacurity.work.bean;
  */
 
 public class ApproverUser {
-    private int approverId;
+    private long approverId;
     private String approverName;
 
-    public int getApproverId() {
+    public long getApproverId() {
         return approverId;
     }
 
-    public void setApproverId(int approverId) {
+    public void setApproverId(long approverId) {
         this.approverId = approverId;
     }
 

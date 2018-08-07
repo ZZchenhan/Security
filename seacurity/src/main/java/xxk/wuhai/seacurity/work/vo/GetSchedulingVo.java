@@ -14,9 +14,9 @@ public class GetSchedulingVo {
      */
 
     private String dayStr;
-    private int userId;
+    private long userId;
 
-    public GetSchedulingVo(String date, int userId) {
+    public GetSchedulingVo(String date, long userId) {
         this.dayStr = date;
         this.userId = userId;
     }
@@ -29,11 +29,11 @@ public class GetSchedulingVo {
         this.dayStr = dayStr;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

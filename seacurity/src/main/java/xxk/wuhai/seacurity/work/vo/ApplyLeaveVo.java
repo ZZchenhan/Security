@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class ApplyLeaveVo {
-    private int approverID;
+    private long approverID;
     private String leaveRequestBeginTime;
     private int leaveRequestDays;
     private String leaveRequestEndTime;
@@ -18,11 +18,11 @@ public class ApplyLeaveVo {
     private List<String> lrPictureUrls;
     private String supplement;
 
-    public int getApproverID() {
+    public long getApproverID() {
         return approverID;
     }
 
-    public void setApproverID(int approverID) {
+    public void setApproverID(long approverID) {
         this.approverID = approverID;
     }
 

@@ -11,17 +11,17 @@ import java.util.List;
  * 创建时间:2018/7/10 15:40
  */
 public class SupplementApplyVo {
-    private int approverID;
+    private long approverID;
     private String attendanceId;
     private List<String> paPictureUrls;
     private String patchTime;
     private String supplement;
 
-    public int getApproverID() {
+    public long getApproverID() {
         return approverID;
     }
 
-    public void setApproverID(int approverID) {
+    public void setApproverID(long approverID) {
         this.approverID = approverID;
     }
 

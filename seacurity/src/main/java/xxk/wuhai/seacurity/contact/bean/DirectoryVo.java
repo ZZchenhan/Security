@@ -35,7 +35,7 @@ public class DirectoryVo implements Serializable{
     private String rank;
     private String sex;
     private String status;
-    private int userId;
+    private long userId;
     private String userType;
 
     public String getEmail() {
@@ -110,11 +110,11 @@ public class DirectoryVo implements Serializable{
         this.status = status;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

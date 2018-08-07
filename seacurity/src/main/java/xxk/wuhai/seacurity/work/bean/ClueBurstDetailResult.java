@@ -49,7 +49,7 @@ public class ClueBurstDetailResult {
         private String name;
         private String status;
         private String tapeUrl;
-        private int userId;
+        private long userId;
         private List<String> pictureUrls;
 
         public String getAddress() {
@@ -124,11 +124,11 @@ public class ClueBurstDetailResult {
             this.tapeUrl = tapeUrl;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 

@@ -49,12 +49,13 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
     public static String deviceId;
 
     public static UserDetailInfo userDetailInfo;
-//外网
-//    public static String baseUrl = "http://101.37.136.249:9001";
+    //外网
+    public static String baseUrl = "https://app.junxin-baoan.cn/";
+
 
 
     //内网
-    public static String baseUrl = "http://47.98.241.211/";
+//    public static String baseUrl = "http://47.98.241.211/";
 
     public static String aluyun = "http://tongyongbucket.oss-cn-hangzhou.aliyuncs.com/";
 

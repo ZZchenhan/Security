@@ -47,7 +47,7 @@ public class ApDetailResult {
          */
 
         private String apName;
-        private int apUserId;
+        private long apUserId;
         private int approvalRecordId;
         private int approverId;
         private String approverName;
@@ -60,7 +60,7 @@ public class ApDetailResult {
         private String status;
         private String supplement;
         private String typeId;
-        private int userId;
+        private long userId;
         private List<String> pictureUrls;
 
         public String getApName() {
@@ -71,11 +71,11 @@ public class ApDetailResult {
             this.apName = apName;
         }
 
-        public int getApUserId() {
+        public long getApUserId() {
             return apUserId;
         }
 
-        public void setApUserId(int apUserId) {
+        public void setApUserId(long apUserId) {
             this.apUserId = apUserId;
         }
 
@@ -175,11 +175,11 @@ public class ApDetailResult {
             this.typeId = typeId;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 

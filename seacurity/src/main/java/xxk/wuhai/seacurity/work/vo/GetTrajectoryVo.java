@@ -14,7 +14,7 @@ public class GetTrajectoryVo {
      */
 
     private String dayStr;
-    private int userId;
+    private long userId;
 
     public String getDayStr() {
         return dayStr;
@@ -24,15 +24,15 @@ public class GetTrajectoryVo {
         this.dayStr = dayStr;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public GetTrajectoryVo(String dayStr, int userId) {
+    public GetTrajectoryVo(String dayStr, long userId) {
         this.dayStr = dayStr;
         this.userId = userId;
     }

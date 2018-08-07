@@ -102,17 +102,17 @@ public class ScheduingResult {
              * schedulingList : {"2018-07-05":null,"2018-07-27":null,"2018-07-04":null,"2018-07-26":null,"2018-07-03":null,"2018-07-25":null,"2018-07-02":null,"2018-07-24":null,"2018-07-09":null,"2018-07-08":null,"2018-07-07":null,"2018-07-29":null,"2018-07-06":null,"2018-07-28":null,"2018-07-30":null,"2018-07-12":[{"id":"5b4612eff899095abf2198a0","scheduleId":42,"depId":19,"scheduleName":"正常白班","scheduleShortName":"正白","color":"1","schedulingDate":"2018-07-12","type":"0","isCrossDay":"0","wordTime":"0","lateTime":5,"earlyRetreatTime":5,"beginTime":"2018-07-12 08:00:00","endTime":"2018-07-12 17:00:00","status":0}],"2018-07-11":null,"2018-07-10":null,"2018-07-31":null,"2018-07-16":null,"2018-07-15":null,"2018-07-14":null,"2018-07-13":null,"2018-07-19":null,"2018-07-18":null,"2018-07-17":null,"2018-07-01":null,"2018-07-23":null,"2018-07-22":null,"2018-07-21":null,"2018-07-20":null}
              */
 
-            private int userId;
+            private long userId;
             private String msisdn;
             private String name;
             private Object idCard;
             private Map<String,List<ScheduingDetails>> schedulingList;
 
-            public int getUserId() {
+            public long getUserId() {
                 return userId;
             }
 
-            public void setUserId(int userId) {
+            public void setUserId(long userId) {
                 this.userId = userId;
             }
 
