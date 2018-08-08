@@ -7,8 +7,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -17,9 +21,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -28,10 +35,18 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sz.tianhe.baselib.http.DownloadProgressHandler;
 import sz.tianhe.baselib.http.ProgressHelper;
+import sz.tianhe.baselib.utils.ToastUtils;
+import sz.tianhe.baselib.utils.VersionUtils;
+
+import com.hz.junxinbaoan.MyApplication;
+import com.hz.junxinbaoan.bean.Result;
 import com.hz.junxinbaoan.guide.view.GuideActivity;
 import com.hz.junxinbaoan.login.api.UserApi;
 import com.hz.junxinbaoan.weight.DowloadDialog;
 import com.hz.junxinbaoan.weight.HasNewVersionDialog;
+import com.hz.junxinbaoan.weight.JumpDialog;
+import com.hz.junxinbaoan.work.api.WorkDutyApi;
+import com.hz.junxinbaoan.work.bean.DownBean;
 
 /**
  * Created by 86936 on 2018/7/15.
@@ -42,51 +57,83 @@ import com.hz.junxinbaoan.weight.HasNewVersionDialog;
 public class UpdateUtils {
     private Context context;
     private HasNewVersionDialog hasNewVersionDialog;
-    public UpdateUtils(Context context){
+
+    public UpdateUtils(Context context) {
         this.context = context;
     }
 
-    public  void chekVersion(){
-        showVersionDialog("1、哎更新不更新\n2、这里是一个提差");
+    public UpdateUtils chekVersion() {
+        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class).getApkVersion().subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Result<DownBean>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Result<DownBean> downBeanResult) {
+                if (downBeanResult.getCode().equals("200")) {
+                    if (VersionUtils.getLocalVersionName(context).compareTo(downBeanResult.getResult().getVersionNo()) < 0)
+                        showVersionDialog(downBeanResult.getResult());
+                } else {
+                    ToastUtils.makeText(context, downBeanResult.getMessage(), ToastUtils.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtils.makeText(context, e.getMessage(), ToastUtils.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+        return this;
     }
 
 
-    private void showVersionDialog(String string){
-        if(hasNewVersionDialog==null){
+    private void showVersionDialog(DownBean downBean) {
+        if (hasNewVersionDialog == null) {
             hasNewVersionDialog = new HasNewVersionDialog(context);
             hasNewVersionDialog.setOnCofirmClickListener(new HasNewVersionDialog.OnCofirmClickListener() {
                 @Override
                 public void onConfirmClickListener() {
-                    showDownDialog();
+                    showDownDialog(downBean.getDownloadUrl());
                 }
             });
         }
-        hasNewVersionDialog.setContextString(string);
+        hasNewVersionDialog.setContextString(downBean.getUpdateContent());
         hasNewVersionDialog.show();
     }
 
     private DowloadDialog dowloadDialog;
-    private void showDownDialog(){
+
+    private void showDownDialog(String downUrl) {
         downFile("http://gdown.baidu.com/data/wisegame/72bd39d791bc2357/QQ_872.apk");
     }
+
     DownLoadManager downLoadManager;
 
     Observable observable;
-    public void downFile(String file){
-        if(dowloadDialog == null){
+
+    public void downFile(String file) {
+        if (dowloadDialog == null) {
             dowloadDialog = new DowloadDialog(context);
             dowloadDialog.setOnCancelListener(new DowloadDialog.OnCancelListener() {
                 @Override
                 public void onCancelListener() {
-                    if(observable!=null)
+                    if (observable != null)
                         observable.unsubscribeOn(AndroidSchedulers.mainThread());
                     dowloadDialog.dismiss();
                 }
             });
         }
         dowloadDialog.show();
-        if(downLoadManager == null)
-            downLoadManager = new DownLoadManager(new DownLoadManager.IProgrossListener(){
+        if (downLoadManager == null)
+            downLoadManager = new DownLoadManager(new DownLoadManager.IProgrossListener() {
 
                 @Override
                 public void progross(float progross) {
@@ -98,7 +145,7 @@ public class UpdateUtils {
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl("http://gdown.baidu.com/");
         OkHttpClient.Builder builder = ProgressHelper.addProgress(null);
-        UserApi userApi =  retrofitBuilder
+        UserApi userApi = retrofitBuilder
                 .client(builder.build())
                 .build().create(UserApi.class);
 
@@ -106,87 +153,121 @@ public class UpdateUtils {
             @Override
             protected void onProgress(long bytesRead, long contentLength, boolean done) {
                 Log.e("是否在主线程中运行", String.valueOf(Looper.getMainLooper() == Looper.myLooper()));
-                Log.e("onProgress",String.format("%d%% done\n",(100 * bytesRead) / contentLength));
-                Log.e("done","--->" + String.valueOf(done));
-                if((100 * bytesRead) / contentLength == 100){
+                Log.e("onProgress", String.format("%d%% done\n", (100 * bytesRead) / contentLength));
+                Log.e("done", "--->" + String.valueOf(done));
+                if ((100 * bytesRead) / contentLength == 100) {
                     dowloadDialog.dismiss();
                     return;
                 }
-                dowloadDialog.setProgross((100 *bytesRead) / contentLength);
+                dowloadDialog.setProgross((100 * bytesRead) / contentLength);
             }
         });
         observable = userApi.downloadFile(file).subscribeOn(Schedulers.newThread());
         observable.subscribe(new Observer<ResponseBody>() {
-          @Override
-          public void onSubscribe(Disposable d) {
+            @Override
+            public void onSubscribe(Disposable d) {
 
-          }
+            }
 
-          @Override
-          public void onNext(ResponseBody responseBody) {
-              try {
-                  InputStream is = responseBody.byteStream();
-                  File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "12345.apk");
-                  FileOutputStream fos = new FileOutputStream(file);
-                  BufferedInputStream bis = new BufferedInputStream(is);
-                  byte[] buffer = new byte[1024];
-                  int len;
-                  while ((len = bis.read(buffer)) != -1) {
-                      fos.write(buffer, 0, len);
-                      fos.flush();
-                  }
-                  fos.close();
-                  bis.close();
-                  is.close();
-              } catch (IOException e) {
-                  e.printStackTrace();
-              }
-          }
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/12345.apk";
 
-          @Override
-          public void onError(Throwable e) {
+                    File file = new File(filePath);
+                    if (Build.VERSION.SDK_INT >= 24) { //判读版本是否在7.0以上
+                        file = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "12345.apk");
+                    }
+                    InputStream is = responseBody.byteStream();
+                    FileOutputStream fos = new FileOutputStream(file);
+                    BufferedInputStream bis = new BufferedInputStream(is);
+                    byte[] buffer = new byte[1024];
+                    int len;
+                    while ((len = bis.read(buffer)) != -1) {
+                        fos.write(buffer, 0, len);
+                        fos.flush();
+                    }
+                    fos.close();
+                    bis.close();
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Observable.create(new ObservableOnSubscribe<String>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                        emitter.onNext("");
+                    }
+                }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String string) throws Exception {
+                        checkIsAndroidO();
+                    }
+                });
+            }
 
-          }
+            @Override
+            public void onError(Throwable e) {
 
-          @Override
-          public void onComplete() {
-              checkIsAndroidO();
-          }
-      });
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
 
     private void checkIsAndroidO() {
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             boolean b = context.getPackageManager().canRequestPackageInstalls();
             if (b) {
                 installApk();//安装应用的逻辑(写自己的就可以)
             } else {
-                context.startActivity(new Intent(context,GuideActivity.class));
-                ((Activity)context).finish();
-
+                JumpDialog jumpDialog = new JumpDialog(context);
+                jumpDialog.setOnCofirmClickListener(new JumpDialog.OnCofirmClickListener() {
+                    @Override
+                    public void onConfirmClickListener() {
+                        Uri packageURI = Uri.parse("package:" + context.getPackageName());
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ((Activity) context).startActivityForResult(intent, 10086);
+                        jumpDialog.dismiss();
+                    }
+                });
+                jumpDialog.show();
             }
         } else {
             installApk();
         }
-
     }
 
-    private void installApk(){
-        File file = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                , "12345.apk");
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 10086) {
+            checkIsAndroidO();
+        }
+    }
+
+
+    private void installApk() {
+        String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/12345.apk";
+        File file = new File(filePath);
+        if (Build.VERSION.SDK_INT >= 24) { //判读版本是否在7.0以上
+            file = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "12345.apk");
+        }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         // 由于没有在Activity环境下启动Activity,设置下面的标签
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if(Build.VERSION.SDK_INT>=24) { //判读版本是否在7.0以上
+        if (Build.VERSION.SDK_INT >= 24) { //判读版本是否在7.0以上
             //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
             Uri apkUri =
-                    FileProvider.getUriForFile(context, "xxk.wuhai.seacurity.fileprovider", file);
+                    FileProvider.getUriForFile(context, "com.hz.junxinbaoan.fileprovider", file);
             //添加这一句表示对目标应用临时授权该Uri所代表的文件
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-        }else{
+        } else {
             intent.setDataAndType(Uri.fromFile(file),
                     "application/vnd.android.package-archive");
         }

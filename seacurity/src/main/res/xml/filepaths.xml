@@ -4,8 +4,6 @@
         <external-path
             name="images"
             path="test/"/>
-        <external-path
-            name="download"
-            path="download/"/>
+        <external-files-path name="my_download" path="Download"/>
     </paths>
 </resources>

@@ -31,7 +31,7 @@ public class DowloadDialog extends Dialog {
     private float progroosTextWithd;
     private float viewWidth;
     public DowloadDialog(@NonNull Context context) {
-        this(context,0);
+        this(context,R.style.bootomDialog);
     }
 
     public DowloadDialog(@NonNull Context context, int themeResId) {
@@ -65,7 +65,7 @@ public class DowloadDialog extends Dialog {
     @Override
     public void show() {
         super.show();
-        progroosTextWithd =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,210,getContext().getResources().getDisplayMetrics());
+        progroosTextWithd =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,210-32,getContext().getResources().getDisplayMetrics());
         viewWidth =   TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,190,getContext().getResources().getDisplayMetrics());
         setProgross(0);
 

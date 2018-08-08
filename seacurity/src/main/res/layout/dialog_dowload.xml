@@ -57,6 +57,7 @@
         android:gravity="bottom"
         android:padding="15dp"
         android:text="取消"
+        android:visibility="gone"
         android:textColor="#ff444444"
         android:textSize="14sp"
         />

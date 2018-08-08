@@ -10,18 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="您需要升级APP"
+        android:text="开启权限"
         android:textColor="#ff4d4d4d"
         android:textSize="20sp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="更新的功能："
-        android:layout_marginTop="18dp"
-        android:textColor="#ff666666"
-        android:textSize="16sp"
-        android:layout_marginLeft="20dp"
         />
     <TextView
         android:id="@+id/cotent"
@@ -29,7 +20,7 @@
         android:layout_marginTop="10dp"
         android:textSize="14sp"
         android:textColor="#666666"
-        android:text="内容"
+        android:text="请开启“安装应用权限”"
         android:lineSpacingExtra="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -41,7 +32,7 @@
         <TextView
             android:id="@+id/accept"
             android:layout_width="wrap_content"
-            android:text="立即更新"
+            android:text="去开启"
             android:textColor="#2196F3"
             android:paddingTop="15dp"
             android:layout_gravity="center"

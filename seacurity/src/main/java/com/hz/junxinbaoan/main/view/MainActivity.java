@@ -48,6 +48,7 @@ import com.hz.junxinbaoan.login.bean.UserDetailInfo;
 import com.hz.junxinbaoan.login.view.LoginActivity;
 import com.hz.junxinbaoan.login.vo.GetUserInfoVo;
 import com.hz.junxinbaoan.main.view.custorm.MyNormalItem;
+import com.hz.junxinbaoan.main.view.custorm.UpdateUtils;
 import com.hz.junxinbaoan.me.view.MeFragment;
 import com.hz.junxinbaoan.msg.view.MsgFragment;
 import com.hz.junxinbaoan.utils.ShareUtlts;
@@ -124,7 +125,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     public int layoutId() {
         return R.layout.activity_main;
     }
-
+    UpdateUtils updateUtils;
     @Override
     public IBaseNavagation navagation() {
        return null;
@@ -134,7 +135,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     public void initView() {
         initBottom();
         initFragment();
-//        new UpdateUtils(this).chekVersion();
+        updateUtils =  new UpdateUtils(this).chekVersion();
     }
 
     @Override
@@ -365,6 +366,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        updateUtils.onActivityResult(requestCode,resultCode,data);
         if(requestCode == 200 && resultCode == RESULT_OK){
             MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                     .getUserInfo(new GetUserInfoVo())
@@ -401,4 +403,5 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
             return;
         }
     }
+
 }

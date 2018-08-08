@@ -18,19 +18,19 @@ import com.hz.junxinbaoan.R;
  * @QQ 869360026
  */
 
-public class HasNewVersionDialog extends Dialog {
+public class JumpDialog extends Dialog {
 
     private TextView tvContent;
     private TextView tvUpdate;
     private TextView cancel;
 
-    public HasNewVersionDialog(@NonNull Context context) {
+    public JumpDialog(@NonNull Context context) {
         this(context,R.style.bootomDialog);
     }
 
-    public HasNewVersionDialog(@NonNull Context context, int themeResId) {
+    public JumpDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
-        setContentView(R.layout.dialog_version_update);
+        setContentView(R.layout.dialog_jump);
         Window window = getWindow();
         window.setGravity(Gravity.CENTER);
 

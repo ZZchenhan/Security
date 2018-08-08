@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -40,10 +41,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- 7.0适配 -->
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/filepaths" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="4f3f918f81b55264e2157d875ea5be5e" />
@@ -115,6 +113,16 @@
         <activity android:name="com.hz.junxinbaoan.work.TrajectoryActivity" />
         <activity android:name="com.hz.junxinbaoan.msg.view.ExamineActivity2" />
         <activity android:name="com.hz.junxinbaoan.work.view.WebViewActivity"></activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.hz.junxinbaoan.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!-- 7.0适配 -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

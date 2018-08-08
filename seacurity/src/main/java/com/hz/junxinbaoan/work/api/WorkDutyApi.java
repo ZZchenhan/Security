@@ -1,6 +1,7 @@
 package com.hz.junxinbaoan.work.api;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import com.hz.junxinbaoan.bean.Result;
@@ -12,6 +13,7 @@ import com.hz.junxinbaoan.work.bean.AplyUserResult;
 import com.hz.junxinbaoan.work.bean.ApproverUser;
 import com.hz.junxinbaoan.work.bean.ClueBursList;
 import com.hz.junxinbaoan.work.bean.ClueBurstDetailResult;
+import com.hz.junxinbaoan.work.bean.DownBean;
 import com.hz.junxinbaoan.work.bean.SignResult;
 import com.hz.junxinbaoan.work.bean.scheduling.GetPersonSchedulingByDateResponse;
 import com.hz.junxinbaoan.work.bean.PersonSchedulingResult;
@@ -217,4 +219,7 @@ public interface WorkDutyApi {
     @POST("/client-api/staff/getQRCodeImg")
     Observable<Result<String>> getQRCode();
 
+
+    @POST("/client-api/sys/getTerminalUpdateInfo")
+    Observable<Result<DownBean>> getApkVersion();
 }
