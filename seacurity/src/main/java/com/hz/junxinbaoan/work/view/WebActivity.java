@@ -19,6 +19,7 @@ import com.hz.junxinbaoan.R;
 import com.hz.junxinbaoan.bean.Result;
 import com.hz.junxinbaoan.common.navagation.LeftIconNavagation;
 import com.hz.junxinbaoan.databinding.ActivityWebBinding;
+import com.hz.junxinbaoan.msg.view.CompanyMsgActivity;
 import com.hz.junxinbaoan.work.api.WorkDutyApi;
 import com.hz.junxinbaoan.work.bean.StudyDetail;
 import com.hz.junxinbaoan.work.vo.GetStudyNoticeVo;
@@ -97,7 +98,7 @@ public class WebActivity extends BaseActivity {
                         }
                         binding.title.setText(studyDetailResult.getResult().getStudyNoticeVo().getStudyTitle());
                         binding.time.setText(studyDetailResult.getResult().getStudyNoticeVo().getStudyCreateTime());
-                        binding.content.setText(Html.fromHtml(studyDetailResult.getResult().getStudyNoticeVo().getStudyContent(),imgGetter,null));
+                        binding.content.setText(Html.fromHtml(studyDetailResult.getResult().getStudyNoticeVo().getStudyContent(),new CompanyMsgActivity.URLImageGetter(binding.content,WebActivity.this),null));
                         binding.from.setText(studyDetailResult.getResult().getStudyNoticeVo().getCompanyName());
                     }
 
@@ -114,19 +115,4 @@ public class WebActivity extends BaseActivity {
                     }
                 });
     }
-    Html.ImageGetter imgGetter = new Html.ImageGetter() {
-        public Drawable getDrawable(String source) {
-            Drawable drawable = null;
-            URL url;
-            try {
-                url = new URL(source);
-                drawable = Drawable.createFromStream(url.openStream(), "");  //获取网路图片
-            } catch (Exception e) {
-                return null;
-            }
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable
-                    .getIntrinsicHeight());
-            return drawable;
-        }
-    };
 }

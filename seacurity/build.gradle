@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 22001
-        versionName "V3.0.0"
+        versionName "V3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //选择要添加的对应cpu类型的.so库。
@@ -82,4 +82,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.0'
     api 'com.github.chrisbanes.photoview:library:+'
+    api 'com.squareup.picasso:picasso:2.5.2'
 }

@@ -128,7 +128,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:background="@null"
-                    android:hint="补签"
+                    android:hint=""
                     android:textColorHint="#B2B2B2"
                     android:textColor="@color/text_color1" />
             </LinearLayout>

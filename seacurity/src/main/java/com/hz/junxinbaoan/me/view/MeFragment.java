@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -24,6 +23,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import sz.tianhe.baselib.utils.ToastUtils;
+
 import com.hz.junxinbaoan.MyApplication;
 import com.hz.junxinbaoan.R;
 import com.hz.junxinbaoan.login.api.UserApi;
@@ -142,6 +143,8 @@ public class MeFragment extends Fragment {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if(datas.get(position).getLabelName().equals("查看更多")){
                     startActivity(new Intent(getContext(),MeTAgActivity.class).putExtra("id",MyApplication.userDetailInfo.getUserInfo().getUserId()));
+                }else{
+                    ToastUtils.makeText(getContext(),"不能给自己点赞哦",ToastUtils.LENGTH_LONG).show();
                 }
             }
         });
@@ -171,7 +174,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onNext(TagResult s) {
                 if(!s.getCode().equals("200")){
-                    ToastUtils.showShort(s.getMessage());
+                    ToastUtils.makeText(getContext(),"不能给自己点赞哦",ToastUtils.LENGTH_LONG).show();
                     return;
                 }
                 datas.clear();

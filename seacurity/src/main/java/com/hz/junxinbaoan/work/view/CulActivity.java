@@ -7,6 +7,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -267,7 +268,7 @@ public class CulActivity extends BaseActivity implements AMapLocationListener {
                             return;
                         }else{
                             toast("添加线索成功");
-                            finish();
+                            new Handler().postDelayed(() -> finish(),1000);
                         }
                     }
 
