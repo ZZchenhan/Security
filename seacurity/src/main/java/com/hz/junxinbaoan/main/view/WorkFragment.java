@@ -83,7 +83,7 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
         tvDay7.setOnClickListener(this);
 
         title = root.findViewById(R.id.tv_title);
-
+        title.setText(MyApplication.userDetailInfo.getOrgVo()==null||MyApplication.userDetailInfo.getOrgVo().getName() == null ?"工作台":MyApplication.userDetailInfo.getOrgVo().getName());
         root.findViewById(R.id.left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
