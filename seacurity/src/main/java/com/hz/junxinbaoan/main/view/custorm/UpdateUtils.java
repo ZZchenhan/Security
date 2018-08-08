@@ -101,6 +101,7 @@ public class UpdateUtils {
             hasNewVersionDialog.setOnCofirmClickListener(new HasNewVersionDialog.OnCofirmClickListener() {
                 @Override
                 public void onConfirmClickListener() {
+                    hasNewVersionDialog.dismiss();
                     showDownDialog(downBean.getDownloadUrl());
                 }
             });
@@ -127,7 +128,6 @@ public class UpdateUtils {
                 public void onCancelListener() {
                     if (observable != null)
                         observable.unsubscribeOn(AndroidSchedulers.mainThread());
-                    dowloadDialog.dismiss();
                 }
             });
         }
@@ -191,7 +191,17 @@ public class UpdateUtils {
                     bis.close();
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Observable.create(new ObservableOnSubscribe<String>() {
+                        @Override
+                        public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                            emitter.onNext("");
+                        }
+                    }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(String string) throws Exception {
+                            ToastUtils.makeText(context,"下载失败，请骚后再试",ToastUtils.LENGTH_LONG).show();
+                        }
+                    });
                 }
                 Observable.create(new ObservableOnSubscribe<String>() {
                     @Override
