@@ -144,10 +144,11 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
                     public void onNext(Result<PersonSchedulingResult> personSchedulingResultResult) {
                             if(!personSchedulingResultResult.getCode().equals("200")){
                                 ToastUtils.showShort(personSchedulingResultResult.getMessage());
+                                sz.tianhe.baselib.utils.ToastUtils.makeText(getContext(),personSchedulingResultResult.getMessage(), sz.tianhe.baselib.utils.ToastUtils.LENGTH_LONG).show();
                                 return;
                             }
                             if(personSchedulingResultResult.getResult().getPersonSchedulingMap() == null){
-                                ToastUtils.showShort("没有更多数据");
+                                sz.tianhe.baselib.utils.ToastUtils.makeText(getContext(),"没有更多数据", sz.tianhe.baselib.utils.ToastUtils.LENGTH_LONG).show();
                                 return;
                             }
                         for (Iterator<Map.Entry<String, TextView>> it = datesViews.entrySet().iterator(); it.hasNext(); ) {
