@@ -21,7 +21,7 @@ public class ToastUtils {
 
     public static final int LENGTH_SHORT = 0x00;
     public static final int LENGTH_LONG = 0x01;
-    private static ToastUtils mInstance;
+
     // 动画时间
     private final int ANIMATION_DURATION = 600;
     private static TextView mTextView;
@@ -33,15 +33,20 @@ public class ToastUtils {
     private AlphaAnimation mFadeOutAnimation;
     private AlphaAnimation mFadeInAnimation;
     private boolean isShow = false;
-    private static Context mContext;
+    private  Context mContext;
     private Handler mHandler = new Handler();
 
     private ToastUtils(Context context) {
         mContext = context;
         container = (ViewGroup) ((Activity) context)
                 .findViewById(android.R.id.content);
-        mView = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.toast_layout, container);
+        if(container.findViewById(R.id.mbContainer) == null) {
+            mView = ((Activity) context).getLayoutInflater().inflate(
+                    R.layout.toast_layout, container);
+        }else{
+            mView = container.findViewById(R.id.mbContainer);
+        }
+
         mContainer = (LinearLayout) mView.findViewById(R.id.mbContainer);
         mContainer.setVisibility(View.GONE);
         mTextView = (TextView) mView.findViewById(R.id.mbMessage);
@@ -49,14 +54,7 @@ public class ToastUtils {
 
     public static ToastUtils makeText(Context context, String message,
                                       int HIDE_DELAY) {
-        if (mInstance == null) {
-            mInstance = new ToastUtils(context);
-        } else {
-            // 考虑Activity切换时，Toast依然显示
-            if (!mContext.getClass().getName().endsWith(context.getClass().getName())) {
-                mInstance = new ToastUtils(context);
-            }
-        }
+        ToastUtils mInstance = new ToastUtils(context);
 
         if (HIDE_DELAY == LENGTH_LONG) {
             mInstance.HIDE_DELAY = 2500;
@@ -136,12 +134,10 @@ public class ToastUtils {
      * 所以使用上还需要在BaseActivity的onDestroy()方法中调用
      */
     public static void reset() {
-        mInstance = null;
+
     }
 
     public void setText(CharSequence s) {
-        if (mInstance == null) return;
-
         TextView mTextView = (TextView) mView.findViewById(R.id.mbMessage);
         if (mTextView == null) {
             throw new RuntimeException(
