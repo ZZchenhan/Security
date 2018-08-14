@@ -41,7 +41,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
+        <meta-data android:name="android.max_aspect" android:value="2.4" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="4f3f918f81b55264e2157d875ea5be5e" />
@@ -91,9 +91,22 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="xxk.wuhai.seacurity" />
+                <category android:name="com.hz.junxinbaoan" />
             </intent-filter>
         </receiver>
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter >
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+                <category android:name="com.hz.junxinbaoan"/>
+            </intent-filter>
+        </service>
+
 
         <activity android:name="com.hz.junxinbaoan.msg.view.NotifyMsgActivity" />
         <activity android:name="com.hz.junxinbaoan.msg.view.ExamineActivity" />

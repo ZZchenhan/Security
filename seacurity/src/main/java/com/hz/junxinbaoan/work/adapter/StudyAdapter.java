@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -30,6 +31,7 @@ public class StudyAdapter extends BaseQuickAdapter<StudyListResult.StudyNoticeIn
                     .setText(R.id.status,item.getIsRead() == null || item.getIsRead().equals("0")?"未读":"已读")
                     .setText(R.id.content,item.getStudySummary());
         Glide.with(mContext)
+                .applyDefaultRequestOptions(new RequestOptions().error(R.mipmap.bg_no_pic))
                 .load(item.getStudyPictureUrl())
                 .into((ImageView) helper.getView(R.id.pic));
     }
