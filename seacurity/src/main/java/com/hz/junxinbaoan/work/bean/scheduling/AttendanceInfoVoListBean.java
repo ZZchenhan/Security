@@ -209,7 +209,8 @@ public class AttendanceInfoVoListBean implements MultiItemEntity{
         return (this.getAttendanceLatExpect() == null
                 || this.getAttendanceLatExpect().equals(""))
                 || (this.getAttendanceLonExpect() == null
-                        || this.getAttendanceLonExpect().equals(""))?0:1;
+                        || this.getAttendanceLonExpect().equals("") ||
+                this.getAttendanceLocationExpect().equals("任意位置"))?0:1;
     }
 
     public String getScheduleName() {
