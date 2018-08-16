@@ -71,6 +71,12 @@ public abstract class CommonNavagation extends AbstarctNavagation {
         return this;
     }
 
+    public CommonNavagation setRight(String title,int bg){
+        this.tvRight.setText(title);
+        this.tvRight.setBackgroundResource(bg);
+        return this;
+    }
+
 
     public CommonNavagation setRightImageResouce(int resouce){
         Drawable drawable = mContext.getResources().getDrawable(resouce);
@@ -86,6 +92,7 @@ public abstract class CommonNavagation extends AbstarctNavagation {
 
     public CommonNavagation setRight(int resouceId){
         this.ivRight.setImageResource(resouceId);
+        this.ivRight.setVisibility(View.VISIBLE);
         this.tvRight.setVisibility(View.GONE);
         return this;
     }

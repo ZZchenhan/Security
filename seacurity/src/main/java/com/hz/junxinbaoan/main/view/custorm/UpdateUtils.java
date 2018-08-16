@@ -113,7 +113,7 @@ public class UpdateUtils {
     private DowloadDialog dowloadDialog;
 
     private void showDownDialog(String downUrl) {
-        downFile("http://gdown.baidu.com/data/wisegame/72bd39d791bc2357/QQ_872.apk");
+        downFile(downUrl);
     }
 
     DownLoadManager downLoadManager;
@@ -143,7 +143,7 @@ public class UpdateUtils {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://gdown.baidu.com/");
+                .baseUrl("http://oss-cn-hangzhou.aliyuncs.com/");
         OkHttpClient.Builder builder = ProgressHelper.addProgress(null);
         UserApi userApi = retrofitBuilder
                 .client(builder.build())

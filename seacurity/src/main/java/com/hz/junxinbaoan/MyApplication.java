@@ -94,7 +94,7 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         // 初始化Bugly
        CrashReport.initCrashReport(getApplicationContext(), "9800fce075", true,strategy);
-       String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
+       String endpoint = "DUp";
        BaseInterceptor.random = ShareUtlts.getRandom(this);
        BaseInterceptor.token = ShareUtlts.getToken(this);
        BaseInterceptor.name = ShareUtlts.getName(this);

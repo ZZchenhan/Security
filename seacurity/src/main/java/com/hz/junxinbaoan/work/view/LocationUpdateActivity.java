@@ -111,7 +111,7 @@ public class LocationUpdateActivity extends BaseActivity implements IUpdateLocat
             public String title() {
                 return "地点微调";
             }
-        }.setRight("确定").setRight(R.drawable.bg_item).setRight(new View.OnClickListener() {
+        }.setRight("确定",R.drawable.bg_item).setRight(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(selectLatLng == null){
