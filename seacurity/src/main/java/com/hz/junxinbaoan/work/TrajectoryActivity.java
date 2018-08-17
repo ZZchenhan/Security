@@ -1,5 +1,6 @@
 package com.hz.junxinbaoan.work;
 
+import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +9,10 @@ import android.widget.TextView;
 
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.PolylineOptions;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeResult;
@@ -27,6 +31,7 @@ import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import com.hz.junxinbaoan.MyApplication;
 import com.hz.junxinbaoan.R;
+import com.hz.junxinbaoan.bean.RecoderBean;
 import com.hz.junxinbaoan.bean.Result;
 import com.hz.junxinbaoan.common.navagation.LeftIconNavagation;
 import com.hz.junxinbaoan.work.api.WorkDutyApi;
@@ -175,6 +180,10 @@ public class TrajectoryActivity extends BaseActivity {
         });
         RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,GeocodeSearch.AMAP);
         geocodeSearch.getFromLocationAsyn(query);
+
+       Marker marker = mapView.getMap().addMarker(new MarkerOptions().position(new LatLng(latLonPoint.getLatitude(),latLonPoint.getLongitude())).title("起始地址").snippet("起始地址").
+                icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(this.getResources(), R.mipmap.ic_start))));
     }
 
     private void getEnd(LatLonPoint latLonPoint){
@@ -197,5 +206,8 @@ public class TrajectoryActivity extends BaseActivity {
         });
         RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,GeocodeSearch.AMAP);
         geocodeSearch.getFromLocationAsyn(query);
+        Marker marker = mapView.getMap().addMarker(new MarkerOptions().position(new LatLng(latLonPoint.getLatitude(),latLonPoint.getLongitude())).title("结束地址").snippet("结束地址").
+                icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(this.getResources(), R.mipmap.ic_end))));
     }
 }
