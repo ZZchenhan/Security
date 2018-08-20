@@ -38,6 +38,7 @@ import sz.tianhe.baselib.http.interceptor.BaseInterceptor;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.utils.DeviceUtils;
 import sz.tianhe.baselib.utils.ToastUtils;
+import sz.tianhe.baselib.utils.VersionUtils;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import com.hz.junxinbaoan.MyApplication;
 import com.hz.junxinbaoan.R;
@@ -75,6 +76,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
     private TextView tvName2;
     private TextView tvPhone;
 
+    private TextView tvVersion;
     DrawerLayout drawerLayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -147,7 +149,7 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
        View headerView =  nav_view.getHeaderView(0);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         params.weight = 1;
-       headerView.setLayoutParams(params);
+        headerView.setLayoutParams(params);
         headerView.findViewById(R.id.sugest).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,6 +170,9 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                 logout();
             }
         });
+        tvVersion = headerView.findViewById(R.id.tv_version);
+        String verionName = this.getResources().getString(R.string.app_name)+VersionUtils.getLocalVersionName(this);
+        tvVersion.setText(String.format("%s  ©钧信保安2018",verionName));
         tvName1 = headerView.findViewById(R.id.person_icon);
         tvName2 = headerView.findViewById(R.id.user_name);
         tvPhone = headerView.findViewById(R.id.phone);

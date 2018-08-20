@@ -77,13 +77,13 @@ public class MeTAgActivity extends BaseActivity {
         tagAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (datas.get(position).getIsLightUp().equals("1")) {
-                    toast("已经点过，不能再点了哦");
-                    return;
-                }
                 if(getIntent().getLongExtra("id", 0) == MyApplication.userDetailInfo.getUserInfo().getUserId()){
                     toast("不能给自己点赞哦");
                 }else {
+                    if (datas.get(position).getIsLightUp().equals("1")) {
+                        toast("已经点过，不能再点了哦");
+                        return;
+                    }
                     TextView textView = (TextView) view;
                     textView.setBackground(getResources().getDrawable(R.drawable.bg_info_blue));
                     textView.setTextColor(Color.WHITE);
