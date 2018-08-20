@@ -94,12 +94,12 @@ public class MyApplication extends MultiDexApplication implements Application.Ac
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         // 初始化Bugly
        CrashReport.initCrashReport(getApplicationContext(), "9800fce075", true,strategy);
-       String endpoint = "DUp";
        BaseInterceptor.random = ShareUtlts.getRandom(this);
        BaseInterceptor.token = ShareUtlts.getToken(this);
        BaseInterceptor.name = ShareUtlts.getName(this);
        ToastUtils.setBgColor(getResources().getColor(R.color.gray));
         ToastUtils.setMsgColor(getResources().getColor(R.color.white));
+        String endpoint = "http://oss-cn-hangzhou.aliyuncs.com";
        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAIqNxd4rFLe0l6","xZEViV4zH0VaVza8kd4cdNZ8TGvFLS");
         oss = new OSSClient(this, endpoint, credentialProvider);
         registerActivityLifecycleCallbacks(this);

@@ -128,7 +128,8 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
         ((CountTimeText)helper.getView(R.id.btn_record)).changeNomarl();
         if((item.getAttendanceLatExpect() == null
                 || item.getAttendanceLatExpect().equals("")) ||
-                (item.getAttendanceLonExpect() == null || item.getAttendanceLonExpect().equals(""))){
+                (item.getAttendanceLonExpect() == null || item.getAttendanceLonExpect().equals("")) ||
+                item.getAttendanceLocationExpect().equals("任意位置")){
             ////这里0 做倒计时 5做未打卡 6请假
             if(item.getStatus().equals("0") || item.getStatus().equals("5") || item.getStatus().equals("6")){
                 helper.setGone(R.id.ll_can_apply,true);
