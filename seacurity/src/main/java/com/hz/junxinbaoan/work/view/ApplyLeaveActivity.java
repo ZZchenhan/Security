@@ -10,8 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.hz.junxinbaoan.MyApplication;
+import com.hz.junxinbaoan.R;
+import com.hz.junxinbaoan.bean.Result;
+import com.hz.junxinbaoan.common.navagation.LeftIconNavagation;
+import com.hz.junxinbaoan.databinding.ActivityApplyLeaveBinding;
+import com.hz.junxinbaoan.oss.PutObjectSamples;
+import com.hz.junxinbaoan.weight.ApplyUsersWindows;
+import com.hz.junxinbaoan.weight.LevaeTypeWindows;
+import com.hz.junxinbaoan.weight.date.DatePickerDialogFragment;
+import com.hz.junxinbaoan.weight.dialog.ActionSheetDialog;
+import com.hz.junxinbaoan.work.api.WorkDutyApi;
+import com.hz.junxinbaoan.work.bean.AplyUser;
+import com.hz.junxinbaoan.work.bean.ApproverUser;
+import com.hz.junxinbaoan.work.vo.ApplyLeaveVo;
+import com.hz.junxinbaoan.work.vo.GetApproverVo;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -32,21 +48,6 @@ import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
 import sz.tianhe.baselib.weight.ProgrossDialog;
-import com.hz.junxinbaoan.MyApplication;
-import com.hz.junxinbaoan.R;
-import com.hz.junxinbaoan.bean.Result;
-import com.hz.junxinbaoan.common.navagation.LeftIconNavagation;
-import com.hz.junxinbaoan.databinding.ActivityApplyLeaveBinding;
-import com.hz.junxinbaoan.oss.PutObjectSamples;
-import com.hz.junxinbaoan.weight.ApplyUsersWindows;
-import com.hz.junxinbaoan.weight.LevaeTypeWindows;
-import com.hz.junxinbaoan.weight.date.DatePickerDialogFragment;
-import com.hz.junxinbaoan.weight.dialog.ActionSheetDialog;
-import com.hz.junxinbaoan.work.api.WorkDutyApi;
-import com.hz.junxinbaoan.work.bean.AplyUser;
-import com.hz.junxinbaoan.work.bean.ApproverUser;
-import com.hz.junxinbaoan.work.vo.ApplyLeaveVo;
-import com.hz.junxinbaoan.work.vo.GetApproverVo;
 
 public class ApplyLeaveActivity extends BaseActivity {
     /**
@@ -150,11 +151,11 @@ public class ApplyLeaveActivity extends BaseActivity {
                            toast("请假日期不能在当日之前");
                            return;
                        }
-                       if(calendar.get(Calendar.MONTH)+1 > month){
+                       if(calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)+1 > month){
                            toast("请假日期不能在当日之前");
                            return;
                        }
-                        if(calendar.get(Calendar.DAY_OF_MONTH) > day){
+                        if(calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)+1 == month && calendar.get(Calendar.DAY_OF_MONTH) > day){
                             toast("请假日期不能在当日之前");
                             return;
                         }
@@ -182,11 +183,11 @@ public class ApplyLeaveActivity extends BaseActivity {
                             toast("请假日期不能在当日之前");
                             return;
                         }
-                        if(calendar.get(Calendar.MONTH)+1 > month){
+                        if(calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)+1 > month){
                             toast("请假日期不能在当日之前");
                             return;
                         }
-                        if(calendar.get(Calendar.DAY_OF_MONTH) > day){
+                        if(calendar.get(Calendar.YEAR)==year && calendar.get(Calendar.MONTH)+1 == month && calendar.get(Calendar.DAY_OF_MONTH) > day){
                             toast("请假日期不能在当日之前");
                             return;
                         }
@@ -434,8 +435,8 @@ public class ApplyLeaveActivity extends BaseActivity {
         try {
             Date start = simpleDateFormat.parse(binding.startTime.getText().toString());
             Date end = simpleDateFormat.parse(binding.endTime.getText().toString());
-            int days = (int) (end.getTime() - start.getTime())/(1000*60*60*24)+1;
-            binding.days.setText(days+"");
+            int days =(int) ((end.getTime() - start.getTime()) / (1000*3600*24));
+            binding.days.setText((days+1)+"");
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -137,11 +137,13 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
     private static String adrress;
     private static String time;
     private static LatLng latlng;
+    private static String poi;
 
-    public static void openActivity(Activity activity, String adrress, String time, LatLng latLng) {
+    public static void openActivity(Activity activity, String poi,String adrress, String time, LatLng latLng) {
         SignComfirmActivity.adrress = adrress;
         SignComfirmActivity.time = time;
         SignComfirmActivity.latlng = latLng;
+        SignComfirmActivity.poi = poi;
         openActivity(activity, SignComfirmActivity.class, 1);
     }
 
@@ -273,7 +275,7 @@ public class SignComfirmActivity extends BaseActivity implements View.OnClickLis
     ProgrossDialog progrossDialog;
     private void submit() {
         UserSignVo signVo = new UserSignVo();
-        signVo.setPoiName(adrress);
+        signVo.setPoiName(poi);
         signVo.setAttendanceLat(latlng!=null?latlng.latitude + "":"0");
         signVo.setAttendanceLon(latlng!=null?latlng.longitude + "":"0");
         signVo.setAttendanceLocation(adrress);

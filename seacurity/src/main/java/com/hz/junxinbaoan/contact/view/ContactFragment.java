@@ -175,7 +175,8 @@ public class ContactFragment extends Fragment{
                 }
             }
         });
-        currentDepartment.setText(getArguments() == null ||getArguments().getString("title") == null?"公司":getArguments().getString("title"));
+        currentDepartment.setText(getArguments() == null ||getArguments().getString("title") == null?
+                (MyApplication.userDetailInfo.getOrgVo()!=null?MyApplication.userDetailInfo.getOrgVo().getName():"公司"):getArguments().getString("title"));
         getData();
     }
     List<ContactGroup> datas = new ArrayList<>();
@@ -265,6 +266,7 @@ public class ContactFragment extends Fragment{
     }
 
     private void setHead(List<DirDeptVoListBean> dirDeptVoListBeans){
+        adapter.removeAllHeaderView();
         if(dirDeptVoListBeans == null){
             return;
         }

@@ -117,7 +117,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
                      mlocationClient.stopLocation();
                  }
                 if (iSignView != null) {
-                    iSignView.locaionSuccess(aMapLocation.getCity(),aMapLocation.getAddress(),latLng);
+                    iSignView.locaionSuccess(aMapLocation.getCity(),aMapLocation.getPoiName()+"",aMapLocation.getAddress(),latLng);
                 }
             }
         }

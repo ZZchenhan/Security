@@ -184,7 +184,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
                     toast("由于未知原因获取定位失败，请稍后再试。");
                     return;
                 }
-                SignComfirmActivity.openActivity(getActivity(),location,new SimpleDateFormat("HH:mm").format(date),currentLatLng);
+                SignComfirmActivity.openActivity(getActivity(),poi,location,new SimpleDateFormat("HH:mm").format(date),currentLatLng);
                 break;
         }
     }
@@ -205,7 +205,7 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
             currentLatLng = data.getParcelableExtra("latlng");
             location = data.getStringExtra("address") == null ?"":data.getStringExtra("address");
             ((ISignPresenter)presenter).refresh(currentLatLng);
-            locaionSuccess(city,location,currentLatLng);
+            locaionSuccess(city,poi,location,currentLatLng);
         }
     }
 
@@ -217,11 +217,13 @@ public class SignFragment extends Fragment implements View.OnClickListener,ISign
      * 当前地址
      */
     private String location = "";
+    private String poi = "";
     private String city;
     @Override
-    public void locaionSuccess(String city,String adrss, LatLng latLng) {
+    public void locaionSuccess(String city,String poi,String adrss, LatLng latLng) {
         this.location = adrss;
         this.city = city;
+        this.poi = poi;
         this.currentLatLng = latLng;
         this.tvLocation.setText(this.location);
     }
