@@ -15,6 +15,7 @@ import cn.jpush.android.api.JPushInterface;
 import com.hz.junxinbaoan.msg.view.CompanyMsgActivity;
 import com.hz.junxinbaoan.msg.view.DutyMsgActivity;
 import com.hz.junxinbaoan.msg.view.ExamineActivity2;
+import com.hz.junxinbaoan.work.view.RecordActivity;
 
 /**
  * Created by 86936 on 2018/7/1.
@@ -85,6 +86,9 @@ public class MyReceiver extends BroadcastReceiver {
                         context.startActivity(sendIntent);
                         break;
                     case "4":
+                        sendIntent.setClass(context,RecordActivity.class);
+                        sendIntent.putExtra("messageId",jsonObject.getInt("messageId"));
+                        context.startActivity(sendIntent);
                         break;
 
                 }

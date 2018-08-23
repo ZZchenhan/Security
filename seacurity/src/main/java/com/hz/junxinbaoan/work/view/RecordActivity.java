@@ -107,35 +107,32 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
         adapter = new RecordAdapter(data);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.bindToRecyclerView(recyclerView);
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()){
-                    case R.id.btn_record:
-                        AttendanceInfoVoListBean item =   data.get(position);
-                        String distance = "未设置";
-                        try {
-                            if (item.getAttendanceLatExpect() != null || item.getAttendanceLonExpect() != null) {
-                                LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()), Float.parseFloat(item.getAttendanceLonExpect()));
-                                if (RecoderBean.currentLatLng == null) {
-                                    distance = "未知";
-                                } else {
-                                    distance = AMapUtils.calculateLineDistance(RecoderBean.currentLatLng, latLng) + "米";
-                                }
-
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()){
+                case R.id.btn_record:
+                    AttendanceInfoVoListBean item =   data.get(position);
+                    String distance = "未设置";
+                    try {
+                        if (item.getAttendanceLatExpect() != null || item.getAttendanceLonExpect() != null) {
+                            LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()), Float.parseFloat(item.getAttendanceLonExpect()));
+                            if (RecoderBean.currentLatLng == null) {
+                                distance = "未知";
+                            } else {
+                                distance = AMapUtils.calculateLineDistance(RecoderBean.currentLatLng, latLng) + "米";
                             }
-                        }catch (Exception e){
 
                         }
-                        record(data.get(position).getSchedulingId(),
-                                data.get(position).getId(),distance,item.getAttendanceLocationExpect());
-                        break;
-                    case R.id.tv_apply:
-                        startActivity(new Intent(RecordActivity.this,SupplementSignActivity.class)
-                                .putExtra("id", data.get(position).getId())
-                                .putExtra("time", date + " " + data.get(position).getAttendanceTimeExpect()));
-                        break;
-                }
+                    }catch (Exception e){
+
+                    }
+                    record(data.get(position).getSchedulingId(),
+                            data.get(position).getId(),distance,item.getAttendanceLocationExpect());
+                    break;
+                case R.id.tv_apply:
+                    startActivity(new Intent(RecordActivity.this,SupplementSignActivity.class)
+                            .putExtra("id", data.get(position).getId())
+                            .putExtra("time", date + " " + data.get(position).getAttendanceTimeExpect()));
+                    break;
             }
         });
         empty = LayoutInflater.from(this).inflate(R.layout.empty_view,null,false);
@@ -155,7 +152,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     private void getOneDayDuty(final String date){
         this.date = date;
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId()))
+                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId(),getIntent().getIntExtra("messageId",0)))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<GetPersonSchedulingByDateResponse>>() {
