@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -113,13 +114,17 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                     case R.id.btn_record:
                         AttendanceInfoVoListBean item =   data.get(position);
                         String distance = "未设置";
-                        if(item.getAttendanceLatExpect() != null|| item.getAttendanceLonExpect() != null){
-                            LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()),Float.parseFloat(item.getAttendanceLonExpect()));
-                            if(RecoderBean.currentLatLng == null){
-                                distance = "未知";
-                            }else{
-                                distance = AMapUtils.calculateLineDistance(RecoderBean.currentLatLng,latLng)+"米";
+                        try {
+                            if (item.getAttendanceLatExpect() != null || item.getAttendanceLonExpect() != null) {
+                                LatLng latLng = new LatLng(Float.parseFloat(item.getAttendanceLatExpect()), Float.parseFloat(item.getAttendanceLonExpect()));
+                                if (RecoderBean.currentLatLng == null) {
+                                    distance = "未知";
+                                } else {
+                                    distance = AMapUtils.calculateLineDistance(RecoderBean.currentLatLng, latLng) + "米";
+                                }
+
                             }
+                        }catch (Exception e){
 
                         }
                         record(data.get(position).getSchedulingId(),

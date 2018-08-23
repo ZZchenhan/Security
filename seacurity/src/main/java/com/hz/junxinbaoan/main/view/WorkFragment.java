@@ -158,7 +158,7 @@ public class WorkFragment extends Fragment implements View.OnClickListener{
                                     if(recode != null) {
                                         if (recode.getStatus() == 0) {
                                             //999 的话 不显示点
-                                        } else if (recode.getStatus() ==2 || recode.getStatus() == 3 || recode.getStatus() == 5) {
+                                        } else if (recode.getStatus() ==2 || recode.getStatus() == 3 || recode.getStatus() == 4) {
                                             entity.getValue().setCompoundDrawables(null, null, null, red);
                                         } else {
                                             entity.getValue().setCompoundDrawables(null, null, null, blue);
