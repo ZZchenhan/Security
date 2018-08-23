@@ -206,9 +206,7 @@ public class MsgFragment extends Fragment {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                         if (stringResult.getCode().equals("200")) {
-
-
-                            if (stringResult.getResult().getUnreadNum() > 0) {
+                            if (stringResult.getResult().getUnreadNum() >= 0) {
                                 hinit.setText("最近有" + stringResult.getResult().getUnreadNum() + "条消息未读");
                                 hinit.setVisibility(View.VISIBLE);
                                 hinit.postDelayed(new Runnable() {
