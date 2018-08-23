@@ -249,6 +249,13 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
                RecordAdapter.timeLong = System.currentTimeMillis();
                 poi =  aMapLocation.getPoiName();
+                if(poi== null ||poi.equals("")){
+                    poi = aMapLocation.getStreet();
+                }
+                if(poi == null || poi.equals("")){
+                    mlocationClient.stopLocation();
+                    startLocaion();
+                }
                adapter.notifyDataSetChanged();
             }
         }

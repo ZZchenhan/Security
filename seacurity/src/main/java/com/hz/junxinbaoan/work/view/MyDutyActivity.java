@@ -222,7 +222,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
             //设置未签到模式
-            mLocationOption.setInterval(1000*30);
+            mLocationOption.setInterval(1000*5);
             //指定位一次
 //            mLocationOption.setOnceLocation(true);
             //设置定位回调监听
@@ -248,10 +248,17 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
         if (aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
-                RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
+                RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
                 RecordAdapter.timeLong = System.currentTimeMillis();
-                RecoderBean.poi = poi;
                 poi =  aMapLocation.getPoiName();
+                if(poi== null ||poi.equals("")){
+                    poi = aMapLocation.getStreet();
+                }
+                if(poi == null || poi.equals("")){
+                    mlocationClient.stopLocation();
+                    startLocaion();
+                }
+                RecoderBean.poi = poi;
                 adapter.notifyDataSetChanged();
             }
         }
