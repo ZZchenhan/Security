@@ -15,10 +15,25 @@ public class GetSchedulingVo {
 
     private String dayStr;
     private long userId;
+    private long messageId;
 
     public GetSchedulingVo(String date, long userId) {
         this.dayStr = date;
         this.userId = userId;
+    }
+
+    public GetSchedulingVo(String dayStr, long userId, long messageId) {
+        this.dayStr = dayStr;
+        this.userId = userId;
+        this.messageId = messageId;
+    }
+
+    public long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
     }
 
     public String getDayStr() {

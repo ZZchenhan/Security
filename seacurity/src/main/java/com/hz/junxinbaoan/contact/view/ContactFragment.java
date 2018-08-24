@@ -196,7 +196,7 @@ public class ContactFragment extends Fragment{
                 .subscribe(new Observer<Result<ContanctResult>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                            etSearch.setText("");
+                            //etSearch.setText("");
                             datas.clear();
                             adapter.notifyDataSetChanged();
                     }

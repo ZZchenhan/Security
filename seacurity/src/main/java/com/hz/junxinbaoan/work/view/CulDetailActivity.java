@@ -150,7 +150,7 @@ public class CulDetailActivity extends BaseActivity {
                                binding.ivRecode.setText((mediaPlayer.getDuration() / 1000)+2 + "\"");
                            }catch (IOException e){}
                         }else{
-                            binding.ivRecode.setText("无录音");
+                            binding.ivRecode.setText("无");
                             binding.lvPlayer.setVisibility(View.GONE);
                         }
                         binding.location.setText(clueBurstDetailResultResult.getResult().getClueBurstDetail().getAddress()

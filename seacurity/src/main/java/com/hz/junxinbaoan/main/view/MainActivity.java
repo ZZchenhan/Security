@@ -176,10 +176,11 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
         tvName1 = headerView.findViewById(R.id.person_icon);
         tvName2 = headerView.findViewById(R.id.user_name);
         tvPhone = headerView.findViewById(R.id.phone);
+        tvName2.setText(MyApplication.userDetailInfo.getUserInfo().getName());
+        tvPhone.setText(MyApplication.userDetailInfo.getUserInfo().getPhone());
         try {
-            tvName1.setText(MyApplication.userDetailInfo.getUserInfo().getName().length() > 2 ? MyApplication.userDetailInfo.getUserInfo().getName().substring(0, 2) : MyApplication.userDetailInfo.getUserInfo().getName());
-            tvName2.setText(MyApplication.userDetailInfo.getUserInfo().getName());
-            tvPhone.setText(MyApplication.userDetailInfo.getUserInfo().getPhone());
+            tvName1.setText(MyApplication.userDetailInfo.getUserInfo().getName().length() > 2 ? MyApplication.userDetailInfo.getUserInfo().getName().substring(MyApplication.userDetailInfo.getUserInfo().getName().length()-2,
+                    MyApplication.userDetailInfo.getUserInfo().getName().length()) : MyApplication.userDetailInfo.getUserInfo().getName());
         }catch (Exception e){}
     }
 

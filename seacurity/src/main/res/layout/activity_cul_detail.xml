@@ -72,7 +72,6 @@
             </RelativeLayout>
             <TextView
                 android:id="@+id/iv_recode"
-                android:textSize="12sp"
                 android:layout_marginLeft="15dp"
                 android:textColor="#888888"
                 android:layout_width="wrap_content"
@@ -97,7 +96,7 @@
                 android:visibility="gone"
                 android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
-                android:text="无图片"
+                android:text="无"
                 android:textColor="#888888"
                 android:layout_height="wrap_content" />
             <LinearLayout
