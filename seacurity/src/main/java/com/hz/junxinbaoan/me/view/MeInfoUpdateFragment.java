@@ -88,6 +88,9 @@ public class MeInfoUpdateFragment extends Fragment {
                             + userDetailInfo.getUserInfo().getResidenceDistrictName()
             );
         }
+        binding.nativePlaceDetail.setText(
+                userDetailInfo.getUserInfo().getResidenceAddress() == null?
+                        "未设置":userDetailInfo.getUserInfo().getResidenceAddress());
         binding.nation.setText(userDetailInfo.getUserInfo().getNation());
         binding.sex.setText(userDetailInfo.getUserInfo().getSex().equals("0") ? "女" : "男");
         binding.department.setText(userDetailInfo.getDeptVo().getDeptName());
@@ -303,6 +306,7 @@ public class MeInfoUpdateFragment extends Fragment {
 //        userInfoBean.setAge(Integer.parseInt(binding.age.getText().toString()));
         userInfoBean.setWeight(getIntValue(binding.weight.getText().toString())
                );
+        userInfoBean.setResidenceAddress(binding.nativePlaceDetail.getText().toString());
         MyApplication.retrofitClient.getRetrofit().create(UserApi.class)
                 .modify(userInfoBean)
                 .subscribeOn(Schedulers.newThread())

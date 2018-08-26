@@ -23,6 +23,21 @@
             android:background="@drawable/bg_item"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="9dp"
+                android:paddingTop="9dp"
+                android:gravity="center"
+                android:text="全部消息"
+                android:textColor="#3F3F3F"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color" />
+            <TextView
                 android:id="@+id/compnay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

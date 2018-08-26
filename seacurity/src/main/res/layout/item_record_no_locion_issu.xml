@@ -25,24 +25,32 @@
             android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:textColor="@color/text_color1"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="上班打卡"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/cls_name"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="8dp"
             android:layout_width="wrap_content"
             android:textColor="@color/text_color1"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="班次:白班"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginLeft="8dp"
+            android:text="类型：临时"
+            android:textColor="#3F3F3F"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="@color/red"
             android:text="未打卡"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="8dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout

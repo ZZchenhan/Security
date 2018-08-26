@@ -21,6 +21,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
@@ -386,6 +387,8 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                 boolean postionAfterIsCross = false;
                 for(AttendanceInfoVoListBean attendanceInfoVoListBean:schedulingWithAttVo.getAttendanceInfoVoList() ){
                     attendanceInfoVoListBean.setScheduleName(schedulingWithAttVo.getScheduleName());
+                    attendanceInfoVoListBean.setScheduleShortName(schedulingWithAttVo.getScheduleShortName());
+                    attendanceInfoVoListBean.setType(schedulingWithAttVo.getType());
                     attendanceInfoVoListBeans.add(attendanceInfoVoListBean);
                     if(postionAfterIsCross!=true && isLastPostime != null && compareProssIsCross(isLastPostime,attendanceInfoVoListBean.getAttendanceTimeExpect())){
                         attendanceInfoVoListBean.setLastDay(true);
@@ -409,14 +412,19 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
     }
 
     public void record(String scheId, String id, final String distance, final String location){
+        if(poi == null || poi.equals("")){
+            toast("定位地址信息获取失败，请重试");
+            return;
+        }
         RecordVo recordVo = new RecordVo();
         recordVo.setAttendanceId(id+"");
         try {
+            recordVo.setAttendanceLocation(poi);
             recordVo.setAttendanceLat(RecoderBean.currentLatLng.latitude + "");
             recordVo.setAttendanceLon(RecoderBean.currentLatLng.longitude + "");
-            recordVo.setAttendanceLocation(poi);
         }catch (Exception e){}
         recordVo.setSchedulingId(scheId);
+        toast("上传数据:"+new Gson().toJson(recordVo));
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
                 .record(recordVo)
                 .subscribeOn(Schedulers.newThread())

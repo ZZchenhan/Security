@@ -15,24 +15,24 @@ public class GetSchedulingVo {
 
     private String dayStr;
     private long userId;
-    private long messageId;
+    private String messageId;
 
     public GetSchedulingVo(String date, long userId) {
         this.dayStr = date;
         this.userId = userId;
     }
 
-    public GetSchedulingVo(String dayStr, long userId, long messageId) {
+    public GetSchedulingVo(String dayStr, long userId, String messageId) {
         this.dayStr = dayStr;
         this.userId = userId;
         this.messageId = messageId;
     }
 
-    public long getMessageId() {
+    public String getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(long messageId) {
+    public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
 

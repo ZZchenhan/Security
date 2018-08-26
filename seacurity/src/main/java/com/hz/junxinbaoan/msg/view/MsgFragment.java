@@ -109,8 +109,9 @@ public class MsgFragment extends Fragment {
                         break;
                     case "4":
                         //NotifyMsgActivity.openActivity(getContext(),datas.get(position));
-                        RecordActivity.openActivity(getContext(),RecordActivity.class);
-                        getNotifyMsg(datas.get(position).getMessageId(),datas.get(position).getMessageTypeId());
+//                        RecordActivity.openActivity(getContext(),RecordActivity.class);
+                        startActivity(new Intent(getContext(),RecordActivity.class).putExtra("messageId",datas.get(position).getMessageId()));
+//                        getNotifyMsg(datas.get(position).getMessageId(),datas.get(position).getMessageTypeId());
                         break;
                     case "6":
                         CompanyMsgActivity.openActivity(getContext(), datas.get(position).getMessageTypeId(), datas.get(position).getMessageId());
@@ -209,12 +210,7 @@ public class MsgFragment extends Fragment {
                             if (stringResult.getResult().getUnreadNum() >= 0) {
                                 hinit.setText("最近有" + stringResult.getResult().getUnreadNum() + "条消息未读");
                                 hinit.setVisibility(View.VISIBLE);
-                                hinit.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        hinit.setVisibility(View.GONE);
-                                    }
-                                }, 3000);
+                                hinit.postDelayed(() -> hinit.setVisibility(View.GONE), 3000);
                             }
 
                             if (stringResult.getResult().getMessageInfoList() != null && stringResult.getResult().getMessageInfoList().size() != 0) {

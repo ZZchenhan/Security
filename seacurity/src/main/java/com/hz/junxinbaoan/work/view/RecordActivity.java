@@ -30,6 +30,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sz.tianhe.baselib.navagation.IBaseNavagation;
 import sz.tianhe.baselib.view.activity.BaseActivity;
+
+import com.google.gson.Gson;
 import com.hz.junxinbaoan.MyApplication;
 import com.hz.junxinbaoan.R;
 import com.hz.junxinbaoan.bean.RecoderBean;
@@ -152,7 +154,8 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     private void getOneDayDuty(final String date){
         this.date = date;
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId(),getIntent().getIntExtra("messageId",0)))
+                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId(),
+                        getIntent().getIntExtra("messageId",0) == 0?"":getIntent().getIntExtra("messageId",0)+""))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<GetPersonSchedulingByDateResponse>>() {
@@ -255,6 +258,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                     poi = aMapLocation.getStreet();
                 }
                 if(poi == null || poi.equals("")){
+                    poi = aMapLocation.getAoiName();
                     mlocationClient.stopLocation();
                     startLocaion();
                 }
@@ -270,14 +274,20 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
 
     public void record(String scheId, String id, final String distance, final String location){
+        if(poi == null || poi.equals("")){
+            toast("定位地址信息获取失败，请重试");
+            return;
+        }
         RecordVo recordVo = new RecordVo();
         recordVo.setAttendanceId(id+"");
         try {
+            recordVo.setAttendanceLocation(poi);
             recordVo.setAttendanceLat(RecoderBean.currentLatLng.latitude + "");
             recordVo.setAttendanceLon(RecoderBean.currentLatLng.longitude + "");
-            recordVo.setAttendanceLocation(poi);
         }catch (Exception e){}
         recordVo.setSchedulingId(scheId);
+
+        toast("上传数据:"+new Gson().toJson(recordVo));
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
                 .record(recordVo)
                 .subscribeOn(Schedulers.newThread())
@@ -336,6 +346,8 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                 boolean postionAfterIsCross = false;
                 for(AttendanceInfoVoListBean attendanceInfoVoListBean:schedulingWithAttVo.getAttendanceInfoVoList() ){
                     attendanceInfoVoListBean.setScheduleName(schedulingWithAttVo.getScheduleName());
+                    attendanceInfoVoListBean.setScheduleShortName(schedulingWithAttVo.getScheduleShortName());
+                    attendanceInfoVoListBean.setType(schedulingWithAttVo.getType());
                     attendanceInfoVoListBeans.add(attendanceInfoVoListBean);
                     if(postionAfterIsCross!=true && isLastPostime != null && compareProssIsCross(isLastPostime,attendanceInfoVoListBean.getAttendanceTimeExpect())){
                         attendanceInfoVoListBean.setLastDay(true);

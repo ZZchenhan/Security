@@ -44,6 +44,11 @@ public class AttendanceInfoVoListBean implements MultiItemEntity{
     private int preLimit;
     private String range;
     private String schedulingId;
+
+    /**
+     * 0-日常 1-加班 2-临时
+     */
+    private String type;
     /**
      * 真实打卡日期
      */
@@ -61,6 +66,11 @@ public class AttendanceInfoVoListBean implements MultiItemEntity{
      * 班次名称
      */
     private String scheduleName;
+
+    /**
+     * 班次简称
+     */
+    private String scheduleShortName;
 
     /**
      * 打卡状态，0 初始 1.补卡 2.迟到 3.早退 4.正常 5.缺卡 6请假
@@ -221,4 +231,19 @@ public class AttendanceInfoVoListBean implements MultiItemEntity{
         this.scheduleName = scheduleName;
     }
 
+    public String getScheduleShortName() {
+        return scheduleShortName;
+    }
+
+    public void setScheduleShortName(String scheduleShortName) {
+        this.scheduleShortName = scheduleShortName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

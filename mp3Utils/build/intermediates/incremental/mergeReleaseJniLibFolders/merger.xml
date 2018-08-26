@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\project\Security\mp3Utils\libs"><file name="arm64-v8a/libmp3lame.so" path="D:\project\Security\mp3Utils\libs\arm64-v8a\libmp3lame.so"/><file name="armeabi/libmp3lame.so" path="D:\project\Security\mp3Utils\libs\armeabi\libmp3lame.so"/><file name="armeabi-v7a/libmp3lame.so" path="D:\project\Security\mp3Utils\libs\armeabi-v7a\libmp3lame.so"/></source></dataSet><dataSet config="release"><source path="D:\project\Security\mp3Utils\src\release\jniLibs"/></dataSet></merger>

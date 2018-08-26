@@ -64,6 +64,9 @@ public class MeInfoFragment extends Fragment {
                     +userDetailInfo.getUserInfo().getResidenceDistrictName()
             );
         }
+        binding.nativePlaceDetail.setText(
+                userDetailInfo.getUserInfo().getResidenceAddress() == null?
+                        "未设置":userDetailInfo.getUserInfo().getResidenceAddress());
         binding.nation.setText(userDetailInfo.getUserInfo().getNation());
         binding.sex.setText(userDetailInfo.getUserInfo().getSex().equals("0") ? "女" : "男");
         binding.department.setText(userDetailInfo.getDeptVo().getDeptName());

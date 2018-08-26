@@ -167,7 +167,35 @@
                         android:textColor="@color/text_b2b2b2"
                         android:textSize="17sp" />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="@color/line_color" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="详细地址"
+                        android:textColor="@color/text_color1"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/native_place_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text=""
+                        android:textColor="@color/text_b2b2b2"
+                        android:textSize="17sp" />
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.3dp"
@@ -399,7 +427,7 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="街道"
+                        android:text="详细地址"
                         android:textColor="@color/text_color1"
                         android:textSize="17sp" />
 

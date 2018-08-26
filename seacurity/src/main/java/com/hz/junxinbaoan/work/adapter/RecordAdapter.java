@@ -61,6 +61,20 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
         return "错误";
     }
 
+
+    public String getType(String type){
+        if(null == type) return "错误";
+        switch (type){
+            case "0":
+                return "日常";
+            case "1":
+                return "加班";
+            case "2":
+                return "临时";
+        }
+        return "错误";
+    }
+
     //，0 初始 1.补卡 2.迟到 3.早退 4.正常 5.缺卡 6请假
     private  String status(String status ){
         if(status == null){
@@ -119,7 +133,8 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
         }catch (Exception e){
             helper.setText(R.id.record_type,"错误");
         }
-        helper.setText(R.id.cls_name,"班次："+item.getScheduleName());
+        helper.setText(R.id.type,"类型:"+getType(item.getType()));
+        helper.setText(R.id.cls_name,"班次:"+item.getScheduleShortName());
         helper.setText(R.id.status,status(item.getStatus()));
         helper.setTextColor(R.id.status,item.getStatus()!=null && item.getStatus().equals("0")
                 || item.getStatus().equals("5")

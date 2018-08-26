@@ -102,6 +102,13 @@ public class MyPopWindows extends PopupWindow {
                     onItemClickListener.onItemnClick("公司消息","1");
             }
         });
+        root.findViewById(R.id.all).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onItemClickListener != null)
+                    onItemClickListener.onItemnClick("全部消息","");
+            }
+        });
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
