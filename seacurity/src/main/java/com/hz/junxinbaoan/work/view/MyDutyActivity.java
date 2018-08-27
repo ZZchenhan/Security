@@ -424,7 +424,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             recordVo.setAttendanceLon(RecoderBean.currentLatLng.longitude + "");
         }catch (Exception e){}
         recordVo.setSchedulingId(scheId);
-        toast("上传数据:"+new Gson().toJson(recordVo));
+//        toast("上传数据:"+new Gson().toJson(recordVo));
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
                 .record(recordVo)
                 .subscribeOn(Schedulers.newThread())

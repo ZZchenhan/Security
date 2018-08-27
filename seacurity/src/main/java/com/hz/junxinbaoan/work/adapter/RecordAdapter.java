@@ -121,9 +121,6 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
     }
 
 
-
-
-
     @Override
     protected void convert(BaseViewHolder helper, AttendanceInfoVoListBean item) {
         helper.addOnClickListener(R.id.btn_record);

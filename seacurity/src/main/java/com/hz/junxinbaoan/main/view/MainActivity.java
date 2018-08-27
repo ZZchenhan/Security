@@ -146,9 +146,11 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
         tab = findViewById(R.id.tab);
         drawerLayout = findViewById(R.id.drawer_layout);
         nav_view = findViewById(R.id.nav_view);
-       View headerView =  nav_view.getHeaderView(0);
+        nav_view.getMenu().clear();
+        View headerView =  nav_view.getHeaderView(0);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         params.weight = 1;
+        params.height = getResources().getDisplayMetrics().heightPixels;
         headerView.setLayoutParams(params);
         headerView.findViewById(R.id.sugest).setOnClickListener(new View.OnClickListener() {
             @Override
