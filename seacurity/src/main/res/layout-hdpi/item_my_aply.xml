@@ -55,6 +55,7 @@
                 android:text="请假时间:2018.04.16-2018.04.19"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="#888888"
                 android:layout_height="wrap_content" />
