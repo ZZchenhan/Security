@@ -148,11 +148,12 @@
         android:layout_weight="1"
         android:layout_height="match_parent" />
     <TextView
+        android:id="@+id/call"
         android:layout_width="wrap_content"
         android:layout_weight="0"
         android:layout_marginBottom="29dp"
         android:layout_gravity="center_horizontal"
-        android:text="客服热线:400-666-1234"
+        android:text="客服电话：0571-87246950"
         android:textSize="12sp"
         android:textColor="@color/text_color6"
         android:layout_height="wrap_content" />
