@@ -351,18 +351,21 @@ public class MeInfoUpdateFragment extends Fragment {
         if(str==null){
             return 0;
         }
-        String valueSection=str.split("[a-zA-Z]")[0].trim();
-        if(valueSection.length()==0)
-        {
+        try {
+            String valueSection = str.split("[a-zA-Z]")[0].trim();
+            if (valueSection.length() == 0) {
+                return 0;
+            }
+            int value = 0;
+            try {
+                value = Integer.parseInt(valueSection);
+            } catch (Exception e) {
+                value = 0;
+            }
+            return value;
+        }catch (Exception e){
             return 0;
         }
-        int value=0;
-        try{
-            value=Integer.parseInt(valueSection);
-        }catch(Exception e){
-            value=0;
-        }
-        return value;
     }
 
 }
