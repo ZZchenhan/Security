@@ -274,10 +274,10 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
 
     public void record(String scheId, String id, final String distance, final String location){
-        if(poi == null || poi.equals("")){
-            toast("定位地址信息获取失败，请重试");
-            return;
-        }
+//        if(poi == null || poi.equals("")){
+//            toast("定位地址信息获取失败，请重试");
+//            return;
+//        }
         RecordVo recordVo = new RecordVo();
         recordVo.setAttendanceId(id+"");
         try {
