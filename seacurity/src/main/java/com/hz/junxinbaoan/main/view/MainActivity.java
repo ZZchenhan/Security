@@ -315,8 +315,16 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                     float distance = AMapUtils.calculateLineDistance(latLng,currentLatLng);
                     if(distance>50){
                         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                                .uploadTrajectory(new UploadTrajectoryVo(currentLatLng.latitude+"",
-                                        currentLatLng.longitude+""))
+                                .uploadTrajectory(new UploadTrajectoryVo(latLng.latitude+"",
+                                        latLng.longitude+""))
+                                .subscribeOn(Schedulers.newThread())
+                                .subscribe();
+                    }
+                }else{
+                    if(currentLatLng == null && null !=latLng){
+                        MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
+                                .uploadTrajectory(new UploadTrajectoryVo(latLng.latitude+"",
+                                        latLng.longitude+""))
                                 .subscribeOn(Schedulers.newThread())
                                 .subscribe();
                     }
