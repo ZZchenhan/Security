@@ -135,7 +135,12 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
         helper.setText(R.id.status,status(item.getStatus()));
         helper.setTextColor(R.id.status,item.getStatus()!=null && item.getStatus().equals("0")
                 || item.getStatus().equals("5")
-                ?Color.parseColor("#F43530"):mContext.getResources().getColor(R.color.colorPrimary));
+                ||
+                item.getStatus().equals("2")
+                ||
+                item.getStatus().equals("3")
+                ?Color.parseColor("#F43530"):
+                mContext.getResources().getColor(R.color.colorPrimary));
         helper.setText(R.id.time,"要求时间："+item.getAttendanceTimeExpect()==null?"":item.getAttendanceTimeExpect());
         ((CountTimeText)helper.getView(R.id.btn_record)).changeNomarl();
         if((item.getAttendanceLatExpect() == null

@@ -110,6 +110,7 @@ public class ISignPresenter implements IBasePresenter, AMapLocationListener {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
                 LatLng latLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+                mapView.getMap().clear();
                 mapView.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,18));
                  marker = mapView.getMap().addMarker(new MarkerOptions().position(latLng).title(aMapLocation.getPoiName()).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(mContext.getResources(), R.mipmap.icon_poi_select))));

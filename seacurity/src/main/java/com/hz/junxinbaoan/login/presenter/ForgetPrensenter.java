@@ -57,6 +57,10 @@ public class ForgetPrensenter implements IBasePresenter {
             iForgetView.toast("请输入手机号码");
             return;
         }
+        if(!PhoneUtils.isMobile0(etPhone.getText().toString())){
+            iForgetView.toast("请输入正确的手机号码");
+            return;
+        }
 
         if(TextUtils.isEmpty(etCode.getText().toString())){
             iForgetView.toast("请输入验证码");
@@ -171,6 +175,7 @@ public class ForgetPrensenter implements IBasePresenter {
                                         public void onComplete() {
                                             if(tvShow!=null)
                                             tvShow.setClickable(true);
+                                            tvShow.setText("获取验证码");
                                         }
                                     });
                         }else{

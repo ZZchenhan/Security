@@ -101,7 +101,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
@@ -132,12 +131,12 @@
     <orderEntry type="library" name="Gradle: com.android.support:transition-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="Gradle: com.mylhyl:acp-1.1.7" level="project" />
+    <orderEntry type="library" name="Gradle: com.aliyun.dpa:oss-android-sdk-2.9.1" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:annotations:4.5.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable-28.0.0-alpha3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:multidex-1.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:multidex-1.0.2" level="project" />
-    <orderEntry type="library" name="Gradle: com.aliyun.dpa:oss-android-sdk-2.9.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:cursoradapter-28.0.0-alpha3" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.1.2" level="project" />
     <orderEntry type="library" name="Gradle: com.tencent.bugly:nativecrashreport-3.3.1" level="project" />
