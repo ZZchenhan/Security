@@ -1,9 +1,14 @@
 package com.hz.junxinbaoan.login.view;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,6 +74,7 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
 
     private boolean isSho2 = false;
 
+    private TextView tvCall;
 
     @Override
     public int layoutId() {
@@ -139,6 +145,23 @@ public class ForgetActivity extends BaseActivity implements IForgetView {
             @Override
             public void onClick(View view) {
                 ((ForgetPrensenter)presenter).updatePass(ForgetActivity.this,etPhone,etCode,etPass,etConfirmPass);
+            }
+        });
+        tvCall = findViewById(R.id.tv_call);
+        SpannableString spannableString = new SpannableString("客服电话：0571-87246950");
+        ForegroundColorSpan span = new ForegroundColorSpan(Color.parseColor("#2196F3"));
+        spannableString.setSpan(span, 5, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvCall.setText(spannableString);
+        tvCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:0571-87246950"));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }catch (Exception e){
+
+                }
             }
         });
     }
