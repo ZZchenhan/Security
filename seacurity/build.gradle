@@ -8,8 +8,8 @@ android {
         applicationId "com.hz.junxinbaoan"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 22011
-        versionName "V3.0.2.7"
+        versionCode 22012
+        versionName "V3.0.2.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //选择要添加的对应cpu类型的.so库。
