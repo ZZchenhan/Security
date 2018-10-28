@@ -226,6 +226,7 @@ public class RecordAdapter extends BaseMultiItemQuickAdapter<AttendanceInfoVoLis
                 helper.setText(R.id.attention_times,item.getAttendanceTime());
             }
         }else{
+            helper.addOnClickListener(R.id.refresh);
             //有打卡位置
             helper.setText(R.id.adress,item.getAttendanceLocationExpect());
             MapView mapView = helper.getView(R.id.map_view);

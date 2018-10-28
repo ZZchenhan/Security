@@ -84,6 +84,15 @@
             android:textColor="@color/text_color1"
             android:textSize="14sp"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:text="刷新"
+            android:textSize="13sp"
+            android:gravity="right"
+            android:layout_marginRight="15dp"
+            android:textColor="#49B1FA"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout

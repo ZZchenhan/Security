@@ -50,7 +50,7 @@ import com.hz.junxinbaoan.work.vo.RecordVo;
 /**
  * 用户打卡页面
  */
-public class RecordActivity extends BaseActivity implements AMapLocationListener{
+public class RecordActivity extends BaseActivity implements AMapLocationListener {
     /**
      * 导航栏
      */
@@ -62,7 +62,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
     private RecordAdapter adapter;
 
-    private  View empty;
+    private View empty;
     private List<AttendanceInfoVoListBean> data = new ArrayList<>();
 
 
@@ -78,10 +78,9 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     }
 
 
-
     @Override
     public IBaseNavagation navagation() {
-        leftIconNavagation = (CommonNavagation) new CommonNavagation(this){
+        leftIconNavagation = (CommonNavagation) new CommonNavagation(this) {
 
             @Override
             public String title() {
@@ -98,7 +97,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
         leftIconNavagation.setRightOnclickListner(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyDutyActivity.openActivity(RecordActivity.this,MyDutyActivity.class);
+                MyDutyActivity.openActivity(RecordActivity.this, MyDutyActivity.class);
             }
         });
         return leftIconNavagation;
@@ -110,9 +109,9 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.bindToRecyclerView(recyclerView);
         adapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.btn_record:
-                    AttendanceInfoVoListBean item =   data.get(position);
+                    AttendanceInfoVoListBean item = data.get(position);
                     String distance = "未设置";
                     try {
                         if (item.getAttendanceLatExpect() != null || item.getAttendanceLonExpect() != null) {
@@ -124,20 +123,23 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                             }
 
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                     record(data.get(position).getSchedulingId(),
-                            data.get(position).getId(),distance,item.getAttendanceLocationExpect());
+                            data.get(position).getId(), distance, item.getAttendanceLocationExpect());
                     break;
                 case R.id.tv_apply:
-                    startActivity(new Intent(RecordActivity.this,SupplementSignActivity.class)
+                    startActivity(new Intent(RecordActivity.this, SupplementSignActivity.class)
                             .putExtra("id", data.get(position).getId())
                             .putExtra("time", date + " " + data.get(position).getAttendanceTimeExpect()));
                     break;
+                case R.id.refresh:
+                    startLocaion();
+                    break;
             }
         });
-        empty = LayoutInflater.from(this).inflate(R.layout.empty_view,null,false);
+        empty = LayoutInflater.from(this).inflate(R.layout.empty_view, null, false);
         empty.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         adapter.setEmptyView(empty);
         startLocaion();
@@ -151,11 +153,12 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     }
 
     private String date;
-    private void getOneDayDuty(final String date){
+
+    private void getOneDayDuty(final String date) {
         this.date = date;
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
-                .getOwnScheduling(new GetSchedulingVo(date,MyApplication.userDetailInfo.getUserInfo().getUserId(),
-                        getIntent().getIntExtra("messageId",0) == 0?"":getIntent().getIntExtra("messageId",0)+""))
+                .getOwnScheduling(new GetSchedulingVo(date, MyApplication.userDetailInfo.getUserInfo().getUserId(),
+                        getIntent().getIntExtra("messageId", 0) == 0 ? "" : getIntent().getIntExtra("messageId", 0) + ""))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Result<GetPersonSchedulingByDateResponse>>() {
@@ -166,16 +169,16 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
                     @Override
                     public void onNext(Result<GetPersonSchedulingByDateResponse> result) {
-                        if(!result.getCode().equals("200")){
+                        if (!result.getCode().equals("200")) {
                             toast(result.getMessage());
                             return;
                         }
-                        if(result.getResult() == null){
+                        if (result.getResult() == null) {
                             return;
                         }
 
                         data.clear();
-                        if(result.getResult().getSchedulingInfoAttVo()!=null) {
+                        if (result.getResult().getSchedulingInfoAttVo() != null) {
                             data.addAll(mergeData(result.getResult().getSchedulingInfoAttVo()));
                         }
                         adapter.notifyDataSetChanged();
@@ -183,7 +186,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
                     @Override
                     public void onError(Throwable e) {
-                        if(e!=null){
+                        if (e != null) {
                             toast(e.getMessage());
                         }
                     }
@@ -196,14 +199,14 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     }
 
 
-
-    private boolean compareProssIsCross(String last,String current){
-        if(last.compareTo(current)>0){
+    private boolean compareProssIsCross(String last, String current) {
+        if (last.compareTo(current) > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
+
     @Override
     protected void onDestroy() {
         mlocationClient.onDestroy();
@@ -212,6 +215,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
     LatLng latLng;
     String addrrss;
+
     /***
      * 开始定位
      */
@@ -222,7 +226,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
             mlocationClient = new AMapLocationClient(this);
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
-            mLocationOption.setInterval(30*1000);
+            mLocationOption.setInterval(30 * 1000);
             //设置未签到模式
 //            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.Sport);
             //指定位一次
@@ -245,24 +249,26 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     AMapLocationClient mlocationClient;
     AMapLocationClientOption mLocationOption;
     Marker marker;
-    String poi="";
+    String poi = "";
+
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
-               RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());;
-               RecordAdapter.timeLong = System.currentTimeMillis();
-                poi =  aMapLocation.getPoiName();
-                if(poi== null ||poi.equals("")){
+                RecoderBean.currentLatLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                ;
+                RecordAdapter.timeLong = System.currentTimeMillis();
+                poi = aMapLocation.getPoiName();
+                if (poi == null || poi.equals("")) {
                     poi = aMapLocation.getStreet();
                 }
-                if(poi == null || poi.equals("")){
+                if (poi == null || poi.equals("")) {
                     poi = aMapLocation.getAoiName();
                     mlocationClient.stopLocation();
                     startLocaion();
                 }
-               adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -273,18 +279,19 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
     }
 
 
-    public void record(String scheId, String id, final String distance, final String location){
+    public void record(String scheId, String id, final String distance, final String location) {
 //        if(poi == null || poi.equals("")){
 //            toast("定位地址信息获取失败，请重试");
 //            return;
 //        }
         RecordVo recordVo = new RecordVo();
-        recordVo.setAttendanceId(id+"");
+        recordVo.setAttendanceId(id + "");
         try {
             recordVo.setAttendanceLocation(poi);
             recordVo.setAttendanceLat(RecoderBean.currentLatLng.latitude + "");
             recordVo.setAttendanceLon(RecoderBean.currentLatLng.longitude + "");
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         recordVo.setSchedulingId(scheId);
         MyApplication.retrofitClient.getRetrofit().create(WorkDutyApi.class)
                 .record(recordVo)
@@ -298,13 +305,13 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
 
                     @Override
                     public void onNext(Result<RecordBean> recoderBeanResult) {
-                        if(!recoderBeanResult.getCode().equals("200")){
+                        if (!recoderBeanResult.getCode().equals("200")) {
                             toast(recoderBeanResult.getMessage());
-                            if(!recoderBeanResult.getMessage().equals("不在打卡范围")){
-                                Intent intent = new Intent(RecordActivity.this,RecordFaileActivity.class);
-                                intent.putExtra("distance",distance);
-                                intent.putExtra("location",location);
-                                intent.putExtra("current",poi);
+                            if (!recoderBeanResult.getMessage().equals("不在打卡范围")) {
+                                Intent intent = new Intent(RecordActivity.this, RecordFaileActivity.class);
+                                intent.putExtra("distance", distance);
+                                intent.putExtra("location", location);
+                                intent.putExtra("current", poi);
                                 startActivity(intent);
                             }
                             return;
@@ -327,7 +334,7 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
                 });
     }
 
-    private  List<AttendanceInfoVoListBean> mergeData(SchedulingInfoAttVoBean schedulingInfoAttVoBean){
+    private List<AttendanceInfoVoListBean> mergeData(SchedulingInfoAttVoBean schedulingInfoAttVoBean) {
         List<AttendanceInfoVoListBean> attendanceInfoVoListBeans = new ArrayList<>();
         attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getDailySchedulingInfoVoList()));
         attendanceInfoVoListBeans.addAll(mergeData(schedulingInfoAttVoBean.getOvertimeSchedulingInfoVoList()));
@@ -335,22 +342,24 @@ public class RecordActivity extends BaseActivity implements AMapLocationListener
         return attendanceInfoVoListBeans;
     }
 
-    private List<AttendanceInfoVoListBean>  mergeData(List<SchedulingWithAttVo> withAttVos){
+    private List<AttendanceInfoVoListBean> mergeData(List<SchedulingWithAttVo> withAttVos) {
         List<AttendanceInfoVoListBean> attendanceInfoVoListBeans = new ArrayList<>();
-        if(withAttVos == null){return attendanceInfoVoListBeans;}
-        for(SchedulingWithAttVo schedulingWithAttVo:withAttVos){
-            if(schedulingWithAttVo.getAttendanceInfoVoList() != null){
+        if (withAttVos == null) {
+            return attendanceInfoVoListBeans;
+        }
+        for (SchedulingWithAttVo schedulingWithAttVo : withAttVos) {
+            if (schedulingWithAttVo.getAttendanceInfoVoList() != null) {
                 String isLastPostime = null;
                 boolean postionAfterIsCross = false;
-                for(AttendanceInfoVoListBean attendanceInfoVoListBean:schedulingWithAttVo.getAttendanceInfoVoList() ){
+                for (AttendanceInfoVoListBean attendanceInfoVoListBean : schedulingWithAttVo.getAttendanceInfoVoList()) {
                     attendanceInfoVoListBean.setScheduleName(schedulingWithAttVo.getScheduleName());
                     attendanceInfoVoListBean.setScheduleShortName(schedulingWithAttVo.getScheduleShortName());
                     attendanceInfoVoListBean.setType(schedulingWithAttVo.getType());
                     attendanceInfoVoListBeans.add(attendanceInfoVoListBean);
-                    if(postionAfterIsCross!=true && isLastPostime != null && compareProssIsCross(isLastPostime,attendanceInfoVoListBean.getAttendanceTimeExpect())){
+                    if (postionAfterIsCross != true && isLastPostime != null && compareProssIsCross(isLastPostime, attendanceInfoVoListBean.getAttendanceTimeExpect())) {
                         attendanceInfoVoListBean.setLastDay(true);
                         postionAfterIsCross = true;
-                    }else if(postionAfterIsCross){
+                    } else if (postionAfterIsCross) {
                         attendanceInfoVoListBean.setLastDay(true);
                     }
                     isLastPostime = attendanceInfoVoListBean.getAttendanceTimeExpect();

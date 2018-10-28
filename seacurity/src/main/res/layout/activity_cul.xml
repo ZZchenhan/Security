@@ -89,6 +89,7 @@
                         android:id="@+id/voice_img"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
+                        android:scaleType="center"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/voice_animation" />

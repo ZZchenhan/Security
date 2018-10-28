@@ -53,6 +53,7 @@
                 android:layout_marginLeft="4dp"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/icon_arrow_down"
+                android:scaleType="center"
                 android:layout_height="15dp" />
         </LinearLayout>
 

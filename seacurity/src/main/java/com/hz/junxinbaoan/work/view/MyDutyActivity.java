@@ -96,10 +96,10 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
         leftIconNavagation.setIconClick(view -> finish());
-        leftIconNavagation.setRight("切换");
-        leftIconNavagation.setRightOnclickListner(view -> {
-            duyteHead.showYear();
-        });
+//        leftIconNavagation.setRight("切换");
+//        leftIconNavagation.setRightOnclickListner(view -> {
+//            duyteHead.showYear();
+//        });
         leftIconNavagation.setTitleColor(R.color.white);
         return leftIconNavagation;
     }
@@ -190,6 +190,9 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
                                     .putExtra("id", data.get(position).getId())
                                     .putExtra("time", date + " " + data.get(position).getAttendanceTimeExpect()));
 
+                        break;
+                    case R.id.refresh:
+                        startLocaion();
                         break;
                 }
             }

@@ -215,7 +215,8 @@ public class MainActivity extends BaseActivity implements OnTabItemSelectedListe
                     toast("当前用户没有设置身份证信息");
                     return;
                 }
-                startActivity(new Intent(this, WebViewActivity.class).putExtra("idCard",MyApplication.userDetailInfo.getUserInfo().getIdCard()));
+                startActivity(new Intent(this, WebViewActivity.class).putExtra("idCard",
+                        MyApplication.userDetailInfo.getUserInfo().getIdCard()));
                 break;
         }
     }
