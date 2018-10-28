@@ -166,8 +166,10 @@ public class DuyteHead extends LinearLayout{
                 //休息
                   return Color.LTGRAY;
             }
+            //4未打卡
             if (recode.getStatus() == 2
                 || recode.getStatus() == 3
+                    || recode.getStatus() == 4
                 || recode.getStatus() == 5) {
                 //考勤失败
                 return Color.parseColor("#F43530");
