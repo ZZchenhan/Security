@@ -96,7 +96,7 @@ public class MyDutyActivity extends BaseActivity implements AMapLocationListener
             }
         }.setNavagationBackgroudColor(R.color.colorPrimary);
         leftIconNavagation.setIconClick(view -> finish());
-//        leftIconNavagation.setRight("切换");
+        leftIconNavagation.setRight("");
 //        leftIconNavagation.setRightOnclickListner(view -> {
 //            duyteHead.showYear();
 //        });
